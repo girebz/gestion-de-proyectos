@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
 // Identidad técnica del plugin. El prefijo "gdp_" se usa en tablas, opciones,
 // ganchos y capacidades para no colisionar con otros plugins.
 define( 'GDP_VERSION', '0.2.0' );
-define( 'GDP_DB_VERSION', '2' );
+define( 'GDP_DB_VERSION', '3' );
 define( 'GDP_FILE', __FILE__ );
 define( 'GDP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'GDP_URL', plugin_dir_url( __FILE__ ) );

@@ -36,6 +36,7 @@ $gdp_tables = array(
 	'gdp_baseline_activities',
 	'gdp_assignments',
 	'gdp_progress',
+	'gdp_schedule_snapshots',
 );
 
 /**

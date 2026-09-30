@@ -98,7 +98,7 @@ final class PlanningTools {
 
 		$definitions['weekly-report'] = array(
 			'label'            => __( 'Informe semanal', 'gestion-de-proyectos' ),
-			'description'      => __( 'Devuelve los datos del informe semanal de un proyecto para la semana indicada (por defecto, la actual): avance por frente de trabajo, avances registrados, terminado, iniciado, en ejecución, próxima semana, hitos próximos, vencidas, desviación respecto de la línea base vigente y alertas. Con include_activities=true añade el cronograma completo. El panel exporta el mismo informe en LaTeX, CSV e iCalendar.', 'gestion-de-proyectos' ),
+			'description'      => __( 'Devuelve los datos del informe semanal de un proyecto para la semana indicada (por defecto, la actual): avance por frente de trabajo, avances registrados, terminado, iniciado, en ejecución, próxima semana, hitos próximos, vencidas, desviación respecto de la línea base vigente, alertas, curva S (planificado frente a real, en "curve") y cambios respecto de la semana anterior (frentes que se abren o cierran, entradas y salidas de la ruta crítica, en "changes"). Con include_activities=true añade el cronograma completo. El panel exporta el mismo informe en LaTeX, CSV e iCalendar.', 'gestion-de-proyectos' ),
 			'input_schema'     => array(
 				'type'                 => 'object',
 				'properties'           => $project_props + array(

@@ -74,6 +74,7 @@ final class Schema {
 		$baseline_act = self::table( 'baseline_activities' );
 		$assignments  = self::table( 'assignments' );
 		$progress     = self::table( 'progress' );
+		$snapshots    = self::table( 'schedule_snapshots' );
 
 		return array(
 			'activities'          => "CREATE TABLE {$activities} (
@@ -212,6 +213,17 @@ final class Schema {
 	PRIMARY KEY  (id),
 	KEY activity_id (activity_id),
 	KEY project_reported (project_id,reported_at)
+) {$collate};",
+
+			'schedule_snapshots'  => "CREATE TABLE {$snapshots} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	week_start date NOT NULL,
+	taken_at datetime NOT NULL,
+	stats longtext NULL,
+	data longtext NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY project_week (project_id,week_start)
 ) {$collate};",
 		);
 	}

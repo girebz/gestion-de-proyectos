@@ -169,6 +169,20 @@ final class WeeklyReport {
 		$alerts = array_values( array_filter( ScheduleService::alerts( $project_id, $to ), static fn( array $al ): bool => 'high' === $al['severity'] ) );
 		$curve  = ProgressCurve::build( $project_id, min( $to, current_time( 'Y-m-d' ) ) );
 
+		// Fotografía de la semana (solo semanas en curso o pasadas) y comparación con la anterior.
+		$today_week = self::monday( current_time( 'Y-m-d' ) )->format( 'Y-m-d' );
+		if ( $from <= $today_week ) {
+			$snapshot = SnapshotRepository::take( $project_id, $from );
+		} else {
+			$snapshot = SnapshotRepository::get( $project_id, $from );
+		}
+		$changes = $snapshot ? SnapshotRepository::compare( $snapshot, SnapshotRepository::previous( $project_id, $from ) ) : null;
+		if ( $changes ) {
+			$label_front = static fn( string $slug ): string => $front_labels[ $slug ] ?? ( 'sin_frente' === $slug ? __( 'Sin frente asignado', 'gestion-de-proyectos' ) : $slug );
+			$changes['fronts_opened'] = array_map( $label_front, $changes['fronts_opened'] );
+			$changes['fronts_closed'] = array_map( $label_front, $changes['fronts_closed'] );
+		}
+
 		return array(
 			'generated_at' => current_time( 'c' ),
 			'week'         => array(
@@ -203,6 +217,7 @@ final class WeeklyReport {
 			'variance'     => $variance,
 			'alerts'       => $alerts,
 			'curve'        => $curve,
+			'changes'      => $changes,
 			'activities'   => $schedule['activities'],
 		);
 	}
@@ -430,6 +445,33 @@ final class WeeklyReport {
 			$out[] = '\end{axis}';
 			$out[] = '\end{tikzpicture}';
 			$out[] = '\end{center}';
+			$out[] = '';
+		}
+
+		// Cambios respecto de la semana anterior.
+		$ch = $report['changes'] ?? null;
+		if ( $ch ) {
+			$out[] = '\section*{Cambios respecto de la semana anterior}';
+			if ( ! $ch['has_previous'] ) {
+				$out[] = 'Primera fotografía del cronograma: no hay semana anterior con la que comparar.';
+			} else {
+				$lines = array();
+				$lines[] = 'Frentes que se abren: ' . ( empty( $ch['fronts_opened'] ) ? 'ninguno' : $e( implode( ', ', $ch['fronts_opened'] ) ) ) . '.';
+				$lines[] = 'Frentes que se cierran: ' . ( empty( $ch['fronts_closed'] ) ? 'ninguno' : $e( implode( ', ', $ch['fronts_closed'] ) ) ) . '.';
+				$lines[] = 'Entran en la ruta crítica: ' . ( empty( $ch['critical_in'] ) ? 'ninguna actividad' : $e( implode( ', ', array_map( static fn( array $x ): string => $x['code'] . ' ' . $x['name'], $ch['critical_in'] ) ) ) ) . '.';
+				$lines[] = 'Salen de la ruta crítica: ' . ( empty( $ch['critical_out'] ) ? 'ninguna actividad' : $e( implode( ', ', array_map( static fn( array $x ): string => $x['code'] . ' ' . $x['name'], $ch['critical_out'] ) ) ) ) . '.';
+				if ( $ch['finish_before'] && $ch['finish_now'] && $ch['finish_before'] !== $ch['finish_now'] ) {
+					$lines[] = 'El término programado pasa del ' . $e( self::human_date( $ch['finish_before'] ) ) . ' al ' . $e( self::human_date( $ch['finish_now'] ) ) . '.';
+				}
+				if ( null !== $ch['percent_before'] && null !== $ch['percent_now'] ) {
+					$lines[] = 'Avance global: de \SI{' . (int) $ch['percent_before'] . '}{\percent} a \SI{' . (int) $ch['percent_now'] . '}{\percent} (semana anterior comparada: ' . $e( self::human_date( (string) $ch['previous_week'] ) ) . ').';
+				}
+				$out[] = '\begin{itemize}';
+				foreach ( $lines as $line ) {
+					$out[] = '\item ' . $line;
+				}
+				$out[] = '\end{itemize}';
+			}
 			$out[] = '';
 		}
 

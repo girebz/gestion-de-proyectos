@@ -148,6 +148,25 @@ final class PlanningReportPage extends Page {
 			</div>
 
 			<div class="gdp-card">
+				<h2><?php esc_html_e( 'Cambios respecto de la semana anterior', 'gestion-de-proyectos' ); ?></h2>
+				<?php $ch = $report['changes']; ?>
+				<?php if ( ! $ch ) : ?>
+					<p class="gdp-muted"><?php esc_html_e( 'Semana futura: sin fotografía del cronograma todavía.', 'gestion-de-proyectos' ); ?></p>
+				<?php elseif ( ! $ch['has_previous'] ) : ?>
+					<p class="gdp-muted"><?php esc_html_e( 'Primera fotografía del cronograma: la comparación empieza la próxima semana.', 'gestion-de-proyectos' ); ?></p>
+				<?php else : ?>
+					<table class="gdp-facts">
+						<tr><th><?php esc_html_e( 'Frentes que se abren', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( empty( $ch['fronts_opened'] ) ? '—' : implode( ', ', $ch['fronts_opened'] ) ); ?></td></tr>
+						<tr><th><?php esc_html_e( 'Frentes que se cierran', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( empty( $ch['fronts_closed'] ) ? '—' : implode( ', ', $ch['fronts_closed'] ) ); ?></td></tr>
+						<tr><th><?php esc_html_e( 'Entran en la ruta crítica', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( empty( $ch['critical_in'] ) ? '—' : implode( ', ', array_map( static fn( array $x ): string => $x['code'] . ' ' . $x['name'], $ch['critical_in'] ) ) ); ?></td></tr>
+						<tr><th><?php esc_html_e( 'Salen de la ruta crítica', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( empty( $ch['critical_out'] ) ? '—' : implode( ', ', array_map( static fn( array $x ): string => $x['code'] . ' ' . $x['name'], $ch['critical_out'] ) ) ); ?></td></tr>
+						<tr><th><?php esc_html_e( 'Término programado', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( $ch['finish_before'] && $ch['finish_now'] && $ch['finish_before'] !== $ch['finish_now'] ? $ch['finish_before'] . ' → ' . $ch['finish_now'] : ( $ch['finish_now'] ?? '—' ) ); ?></td></tr>
+						<tr><th><?php esc_html_e( 'Avance global', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( null !== $ch['percent_before'] ? $ch['percent_before'] . ' % → ' . $ch['percent_now'] . ' %' : (string) $ch['percent_now'] . ' %' ); ?> <span class="gdp-muted">(<?php echo esc_html( sprintf( __( 'semana comparada: %s', 'gestion-de-proyectos' ), (string) $ch['previous_week'] ) ); ?>)</span></td></tr>
+					</table>
+				<?php endif; ?>
+			</div>
+
+			<div class="gdp-card">
 				<h2><?php esc_html_e( 'Curva S de avance', 'gestion-de-proyectos' ); ?></h2>
 				<?php $curve = $report['curve']; ?>
 				<?php if ( ! empty( $curve['points'] ) ) : ?>

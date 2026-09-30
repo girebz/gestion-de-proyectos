@@ -100,6 +100,7 @@ final class PlanningModule implements ModuleInterface {
 		ProgressRepository::delete_for_project( $project_id );
 		BaselineRepository::delete_for_project( $project_id );
 		CalendarRepository::delete_for_project( $project_id );
+		SnapshotRepository::delete_for_project( $project_id );
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$wpdb->delete( \GDP\Core\Schema::table( 'activities' ), array( 'project_id' => $project_id ), array( '%d' ) );
 	}
