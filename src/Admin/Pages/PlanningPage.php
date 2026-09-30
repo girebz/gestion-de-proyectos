@@ -13,6 +13,7 @@ use GDP\Admin\Admin;
 use GDP\Core\Access;
 use GDP\Core\Catalogs;
 use GDP\Core\Roles;
+use GDP\Domain\Projects\MemberRepository;
 use GDP\Domain\Projects\ProjectRepository;
 use GDP\Modules\Planning\ActivityRepository;
 use GDP\Modules\Planning\AssignmentRepository;
@@ -99,6 +100,8 @@ final class PlanningPage extends Page {
 				'zoomQuarter' => __( 'Trimestre', 'gestion-de-proyectos' ),
 				'allFronts'  => __( 'Todos los frentes', 'gestion-de-proyectos' ),
 				'allOwners'  => __( 'Todos los responsables', 'gestion-de-proyectos' ),
+				'noFront'    => __( 'Sin frente', 'gestion-de-proyectos' ),
+				'noOwner'    => __( 'Sin responsable', 'gestion-de-proyectos' ),
 				'linkTo'     => __( 'Suelte sobre la actividad sucesora', 'gestion-de-proyectos' ),
 				'unlink'     => __( '¿Quitar la dependencia %s?', 'gestion-de-proyectos' ),
 				'collapse'   => __( 'Contraer', 'gestion-de-proyectos' ),
@@ -490,7 +493,16 @@ final class PlanningPage extends Page {
 			<?php
 		} else {
 			?>
-			<p class="gdp-muted gdp-small"><?php esc_html_e( 'Arrastre las tarjetas entre columnas para cambiar su estado. Marcar como terminada fija el avance en 100 % y la fecha real de término en hoy.', 'gestion-de-proyectos' ); ?></p>
+			<div class="gdp-planning-toolbar">
+				<label for="gdp-board-group"><?php esc_html_e( 'Agrupar por', 'gestion-de-proyectos' ); ?></label>
+				<select id="gdp-board-group">
+					<option value="status"><?php esc_html_e( 'Estado', 'gestion-de-proyectos' ); ?></option>
+					<option value="front"><?php esc_html_e( 'Frente de trabajo', 'gestion-de-proyectos' ); ?></option>
+					<option value="owner"><?php esc_html_e( 'Responsable', 'gestion-de-proyectos' ); ?></option>
+				</select>
+				<label><input type="checkbox" id="gdp-board-hide-done"> <?php esc_html_e( 'Ocultar terminadas y canceladas', 'gestion-de-proyectos' ); ?></label>
+				<span class="gdp-muted gdp-small"><?php esc_html_e( 'Arrastre las tarjetas entre columnas: cambia el estado, el frente o el responsable según la agrupación. Marcar como terminada fija el avance en 100 % y la fecha real de término en hoy.', 'gestion-de-proyectos' ); ?></span>
+			</div>
 			<div id="gdp-board" class="gdp-board" data-project="<?php echo (int) $project_id; ?>"></div>
 			<?php
 		}
@@ -524,6 +536,8 @@ final class PlanningPage extends Page {
 				'level'       => $a['level'],
 				'parent'      => $a['parent_id'],
 				'front'       => $fronts[ $a['work_front'] ] ?? $a['work_front'],
+				'frontSlug'   => $a['work_front'],
+				'ownerId'     => $a['owner_id'],
 				'status'      => $a['status'],
 				'priority'    => $a['priority'],
 				'duration'    => $a['duration'],
@@ -562,6 +576,18 @@ final class PlanningPage extends Page {
 		}
 		ksort( $owners );
 
+		// Opciones para agrupar el tablero: frentes del catálogo y miembros del proyecto.
+		$owner_options = array();
+		foreach ( MemberRepository::for_project( $project_id ) as $m ) {
+			$owner_options[ (string) $m['user_id'] ] = $m['display_name'];
+		}
+		foreach ( $activities as $a ) {
+			if ( $a['ownerId'] > 0 && ! isset( $owner_options[ (string) $a['ownerId'] ] ) ) {
+				$owner_options[ (string) $a['ownerId'] ] = $a['owner'];
+			}
+		}
+		asort( $owner_options );
+
 		return array(
 			'activities'   => $activities,
 			'dependencies' => $deps,
@@ -572,6 +598,8 @@ final class PlanningPage extends Page {
 			'statuses'     => ActivityRepository::status_labels(),
 			'fronts'       => array_values( $fronts ),
 			'owners'       => array_values( $owners ),
+			'frontOptions' => $fronts,
+			'ownerOptions' => $owner_options,
 		);
 	}
 
@@ -1257,6 +1285,12 @@ final class PlanningPage extends Page {
 				}
 				// Las reglas de coherencia del repositorio ajustan avance y fechas reales según el estado.
 				$data = array( 'status' => $status );
+				break;
+			case 'front':
+				$data = array( 'work_front' => isset( $_POST['work_front'] ) ? sanitize_key( wp_unslash( (string) $_POST['work_front'] ) ) : '' );
+				break;
+			case 'owner':
+				$data = array( 'owner_id' => isset( $_POST['owner_id'] ) ? (int) $_POST['owner_id'] : 0 );
 				break;
 			case 'clear_constraint':
 				$data = array( 'constraint_type' => 'asap', 'constraint_date' => null );

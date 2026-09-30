@@ -867,20 +867,86 @@
 	function Board( container, data ) {
 		this.container = container;
 		this.data = data;
+		this.group = 'status';
+		this.hideDone = false;
+		var self = this;
+		var select = document.getElementById( 'gdp-board-group' );
+		if ( select ) {
+			select.addEventListener( 'change', function () {
+				self.group = select.value;
+				self.render();
+			} );
+		}
+		var hide = document.getElementById( 'gdp-board-hide-done' );
+		if ( hide ) {
+			hide.addEventListener( 'change', function () {
+				self.hideDone = hide.checked;
+				self.render();
+			} );
+		}
 		this.render();
 	}
 
+	/**
+	 * Columnas según la agrupación: [clave, rótulo, campo del ajax, valor a enviar].
+	 */
+	Board.prototype.columns = function () {
+		var cols = [];
+		var self = this;
+		if ( 'front' === this.group ) {
+			cols.push( { key: '', label: strings.noFront, op: 'front', field: 'work_front', value: '' } );
+			var known = {};
+			Object.keys( this.data.frontOptions || {} ).forEach( function ( slug ) {
+				known[ slug ] = true;
+				cols.push( { key: slug, label: self.data.frontOptions[ slug ], op: 'front', field: 'work_front', value: slug } );
+			} );
+			// Frentes usados por actividades pero ausentes del catálogo (por ejemplo, importados).
+			this.data.activities.forEach( function ( a ) {
+				if ( a.frontSlug && ! known[ a.frontSlug ] ) {
+					known[ a.frontSlug ] = true;
+					cols.push( { key: a.frontSlug, label: a.frontSlug, op: 'front', field: 'work_front', value: a.frontSlug } );
+				}
+			} );
+		} else if ( 'owner' === this.group ) {
+			cols.push( { key: '0', label: strings.noOwner, op: 'owner', field: 'owner_id', value: 0 } );
+			Object.keys( this.data.ownerOptions || {} ).forEach( function ( id ) {
+				cols.push( { key: String( id ), label: self.data.ownerOptions[ id ], op: 'owner', field: 'owner_id', value: +id } );
+			} );
+		} else {
+			Object.keys( this.data.statuses || {} ).forEach( function ( status ) {
+				cols.push( { key: status, label: self.data.statuses[ status ], op: 'status', field: 'status', value: status } );
+			} );
+		}
+		return cols;
+	};
+
+	Board.prototype.keyOf = function ( a ) {
+		if ( 'front' === this.group ) {
+			return a.frontSlug || '';
+		}
+		if ( 'owner' === this.group ) {
+			return String( a.ownerId || 0 );
+		}
+		return a.status;
+	};
+
 	Board.prototype.render = function () {
 		var self = this;
-		var statuses = this.data.statuses || {};
 		var today = this.data.today;
+		var columns = this.columns();
 		this.container.innerHTML = '';
-		Object.keys( statuses ).forEach( function ( status ) {
-			var cards = self.data.activities.filter( function ( a ) { return 'summary' !== a.kind && a.status === status; } );
-			var column = el( 'div', { 'class': 'gdp-board__column', 'data-status': status } );
-			column.appendChild( el( 'h3', { 'class': 'gdp-board__title', html: '<span>' + statuses[ status ] + '</span><span>' + cards.length + '</span>' } ) );
+		this.container.style.gridTemplateColumns = 'repeat(' + Math.max( 1, columns.length ) + ', minmax(180px, 1fr))';
+		columns.forEach( function ( col ) {
+			var cards = self.data.activities.filter( function ( a ) {
+				if ( 'summary' === a.kind || self.keyOf( a ) !== col.key ) {
+					return false;
+				}
+				return ! ( self.hideDone && ( 'terminada' === a.status || 'cancelada' === a.status ) );
+			} );
+			var column = el( 'div', { 'class': 'gdp-board__column', 'data-key': col.key } );
+			column.appendChild( el( 'h3', { 'class': 'gdp-board__title', html: '<span>' + col.label + '</span><span>' + cards.length + '</span>' } ) );
 			cards.forEach( function ( a ) {
-				var overdue = a.end && a.end < today && 'terminada' !== status && 'cancelada' !== status;
+				var overdue = a.end && a.end < today && 'terminada' !== a.status && 'cancelada' !== a.status;
 				var card = el( 'div', { 'class': 'gdp-board__card' + ( a.critical ? ' gdp-board__card--critical' : '' ) + ( 'milestone' === a.kind ? ' gdp-board__card--milestone' : '' ), draggable: cfg.canEdit ? 'true' : 'false', 'data-id': a.id } );
 				card.appendChild( el( 'code', { text: a.code } ) );
 				var title = cfg.canEdit && cfg.editUrl ? el( 'a', { href: cfg.editUrl.replace( /([?&])id=0/, '$1id=' + a.id ), text: a.name } ) : el( 'span', { text: a.name } );
@@ -890,10 +956,13 @@
 					meta.push( ( 'milestone' === a.kind ? '◆ ' : '' ) + a.end );
 				}
 				meta.push( a.percent + ' %' );
-				if ( a.owner ) {
+				if ( 'status' !== self.group ) {
+					meta.push( self.data.statuses[ a.status ] || a.status );
+				}
+				if ( a.owner && 'owner' !== self.group ) {
 					meta.push( a.owner );
 				}
-				if ( a.front ) {
+				if ( a.front && 'front' !== self.group ) {
 					meta.push( a.front );
 				}
 				card.appendChild( el( 'div', { 'class': 'gdp-board__meta' + ( overdue ? ' gdp-board__overdue' : '' ), text: meta.join( ' · ' ) } ) );
@@ -923,10 +992,12 @@
 					column.classList.remove( 'is-over' );
 					var id = parseInt( event.dataTransfer.getData( 'text/plain' ), 10 );
 					var activity = self.data.activities.filter( function ( a ) { return a.id === id; } )[0];
-					if ( ! activity || activity.status === status ) {
+					if ( ! activity || self.keyOf( activity ) === col.key ) {
 						return;
 					}
-					ajax( { op: 'status', activity_id: id, status: status, version: activity.version }, function ( data ) {
+					var params = { op: col.op, activity_id: id, version: activity.version };
+					params[ col.field ] = col.value;
+					ajax( params, function ( data ) {
 						self.data = data;
 						self.render();
 					}, function ( message ) {

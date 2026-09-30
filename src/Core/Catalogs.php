@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace GDP\Core;
 
+use WP_Error;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -149,6 +151,136 @@ final class Catalogs {
 		}
 
 		return array_values( $by_slug );
+	}
+
+	/**
+	 * Nombres visibles de los catálogos editables.
+	 *
+	 * @return array<string,string>
+	 */
+	public static function labels(): array {
+		return array(
+			self::WORK_FRONT         => __( 'Frentes de trabajo', 'gestion-de-proyectos' ),
+			self::BUDGET_LINE        => __( 'Partidas presupuestarias', 'gestion-de-proyectos' ),
+			self::DOCUMENT_TYPE      => __( 'Tipos de documento', 'gestion-de-proyectos' ),
+			self::PROCUREMENT_STAGE  => __( 'Etapas de compra', 'gestion-de-proyectos' ),
+			self::VERIFICATION_MEANS => __( 'Medios de verificación', 'gestion-de-proyectos' ),
+			self::ACCREDITATION      => __( 'Criterios de acreditación', 'gestion-de-proyectos' ),
+			self::PROJECT_STATUS     => __( 'Estados de proyecto', 'gestion-de-proyectos' ),
+		);
+	}
+
+	/**
+	 * Todas las entradas de un catálogo y ámbito (activas o no), sin combinar.
+	 *
+	 * @param string $catalog    Catálogo.
+	 * @param int    $project_id Ámbito (0 = global).
+	 * @return array<int,array<string,mixed>>
+	 */
+	public static function all_items( string $catalog, int $project_id ): array {
+		global $wpdb;
+
+		$table = Schema::table( 'catalog_items' );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$table} WHERE catalog = %s AND project_id = %d ORDER BY sort_order ASC, label ASC", $catalog, $project_id ), ARRAY_A );
+		if ( ! is_array( $rows ) ) {
+			return array();
+		}
+		foreach ( $rows as &$row ) {
+			$row['id']         = (int) $row['id'];
+			$row['project_id'] = (int) $row['project_id'];
+			$row['sort_order'] = (int) $row['sort_order'];
+			$row['active']     = ! empty( $row['active'] );
+			$row['meta']       = self::decode( $row['meta'] );
+		}
+		unset( $row );
+
+		return $rows;
+	}
+
+	/**
+	 * Crea o actualiza una entrada de catálogo.
+	 *
+	 * @param string $catalog     Catálogo.
+	 * @param int    $project_id  Ámbito (0 = global).
+	 * @param string $slug        Clave (se genera del nombre si viene vacía).
+	 * @param string $label       Nombre visible.
+	 * @param string $description Descripción.
+	 * @param int    $sort_order  Orden.
+	 * @param bool   $active      Activa.
+	 * @return int|WP_Error Identificador de la entrada.
+	 */
+	public static function save_item( string $catalog, int $project_id, string $slug, string $label, string $description = '', int $sort_order = 0, bool $active = true ) {
+		global $wpdb;
+
+		$catalog = sanitize_key( $catalog );
+		if ( ! isset( self::labels()[ $catalog ] ) ) {
+			return new WP_Error( 'catalog', __( 'Catálogo desconocido.', 'gestion-de-proyectos' ) );
+		}
+		$label = sanitize_text_field( $label );
+		if ( '' === $label ) {
+			return new WP_Error( 'label', __( 'La entrada necesita un nombre.', 'gestion-de-proyectos' ) );
+		}
+		$slug = sanitize_key( str_replace( '-', '_', sanitize_title( '' !== trim( $slug ) ? $slug : $label ) ) );
+		if ( '' === $slug ) {
+			return new WP_Error( 'slug', __( 'La clave no es válida.', 'gestion-de-proyectos' ) );
+		}
+
+		$table = Schema::table( 'catalog_items' );
+		$now   = current_time( 'mysql', true );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$existing = (int) $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$table} WHERE project_id = %d AND catalog = %s AND slug = %s", $project_id, $catalog, $slug ) );
+
+		$data = array(
+			'label'       => $label,
+			'description' => sanitize_textarea_field( $description ),
+			'sort_order'  => $sort_order,
+			'active'      => $active ? 1 : 0,
+			'updated_at'  => $now,
+		);
+		if ( $existing > 0 ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->update( $table, $data, array( 'id' => $existing ), array( '%s', '%s', '%d', '%d', '%s' ), array( '%d' ) );
+			Audit::log( 'catalog_item', $existing, 'update', $project_id, sprintf( 'Catálogo %s: %s', $catalog, $label ) );
+
+			return $existing;
+		}
+
+		$data['project_id'] = $project_id;
+		$data['catalog']    = $catalog;
+		$data['slug']       = $slug;
+		$data['created_at'] = $now;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$ok = $wpdb->insert( $table, $data, array( '%s', '%s', '%d', '%d', '%s', '%d', '%s', '%s', '%s' ) );
+		if ( false === $ok ) {
+			return new WP_Error( 'db', __( 'No se pudo guardar la entrada.', 'gestion-de-proyectos' ) );
+		}
+		$id = (int) $wpdb->insert_id;
+		Audit::log( 'catalog_item', $id, 'create', $project_id, sprintf( 'Catálogo %s: %s', $catalog, $label ) );
+
+		return $id;
+	}
+
+	/**
+	 * Elimina una entrada de catálogo (los registros que la usan conservan la clave).
+	 *
+	 * @param int $id Entrada.
+	 * @return bool
+	 */
+	public static function delete_item( int $id ): bool {
+		global $wpdb;
+
+		$table = Schema::table( 'catalog_items' );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$table} WHERE id = %d", $id ), ARRAY_A );
+		if ( ! $row ) {
+			return false;
+		}
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->delete( $table, array( 'id' => $id ), array( '%d' ) );
+		Audit::log( 'catalog_item', $id, 'delete', (int) $row['project_id'], sprintf( 'Catálogo %s: %s', $row['catalog'], $row['label'] ), $row, null );
+
+		return true;
 	}
 
 	/**
