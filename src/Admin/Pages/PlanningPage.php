@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 final class PlanningPage extends Page {
 
 	public const SLUG  = 'planning';
-	public const VIEWS = array( 'list', 'gantt', 'board', 'edit', 'calendars', 'baselines', 'alerts', 'report', 'workload' );
+	public const VIEWS = array( 'list', 'gantt', 'board', 'edit', 'calendars', 'baselines', 'alerts', 'report', 'workload', 'calendar' );
 
 	/**
 	 * Submenú.
@@ -60,6 +60,7 @@ final class PlanningPage extends Page {
 		add_action( 'wp_ajax_gdp_planning', array( self::class, 'handle_ajax' ) );
 
 		PlanningCalendarsPage::register_handlers();
+		PlanningCalendarViewPage::register_handlers();
 		PlanningBaselinesPage::register_handlers();
 		PlanningReportPage::register_handlers();
 	}
@@ -216,6 +217,9 @@ final class PlanningPage extends Page {
 			case 'workload':
 				PlanningReportPage::render_workload( $project );
 				break;
+			case 'calendar':
+				PlanningCalendarViewPage::render( $project );
+				break;
 			default:
 				self::render_list( $project );
 		}
@@ -236,6 +240,7 @@ final class PlanningPage extends Page {
 			'list'      => __( 'Actividades', 'gestion-de-proyectos' ),
 			'gantt'     => __( 'Carta Gantt', 'gestion-de-proyectos' ),
 			'board'     => __( 'Tablero', 'gestion-de-proyectos' ),
+			'calendar'  => __( 'Calendario', 'gestion-de-proyectos' ),
 			'alerts'    => __( 'Alertas', 'gestion-de-proyectos' ),
 			'workload'  => __( 'Carga de trabajo', 'gestion-de-proyectos' ),
 			'report'    => __( 'Informe semanal', 'gestion-de-proyectos' ),
