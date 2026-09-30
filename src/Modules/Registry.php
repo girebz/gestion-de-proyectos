@@ -10,6 +10,7 @@ declare( strict_types=1 );
 namespace GDP\Modules;
 
 use GDP\Domain\Projects\ProjectRepository;
+use GDP\Modules\Planning\PlanningModule;
 use GDP\Modules\Projects\ProjectsModule;
 
 defined( 'ABSPATH' ) || exit;
@@ -93,6 +94,7 @@ final class Registry {
 	 */
 	public function register_all(): void {
 		$this->add( new ProjectsModule() );
+		$this->add( new PlanningModule() );
 
 		/**
 		 * Permite registrar módulos adicionales (propios o de extensiones).

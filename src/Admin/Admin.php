@@ -10,14 +10,17 @@ declare( strict_types=1 );
 namespace GDP\Admin;
 
 use GDP\Admin\Pages\AuditPage;
+use GDP\Admin\Pages\CatalogsPage;
 use GDP\Admin\Pages\ConnectorPage;
 use GDP\Admin\Pages\DashboardPage;
 use GDP\Admin\Pages\OperationsPage;
 use GDP\Admin\Pages\ProjectsPage;
 use GDP\Admin\Pages\SettingsPage;
+use GDP\Admin\Pages\TrashPage;
 use GDP\Core\Access;
 use GDP\Core\Identity;
 use GDP\Core\Roles;
+use GDP\Core\TwoFactor;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -44,6 +47,13 @@ final class Admin {
 		ConnectorPage::register_handlers();
 		SettingsPage::register_handlers();
 		OperationsPage::register_handlers();
+		TrashPage::register_handlers();
+		CatalogsPage::register_handlers();
+
+		/**
+		 * Permite a los módulos registrar sus manejadores de formularios y peticiones.
+		 */
+		do_action( 'gdp_admin_register' );
 	}
 
 	/**
@@ -67,7 +77,17 @@ final class Admin {
 
 		add_submenu_page( self::SLUG, __( 'Panel', 'gestion-de-proyectos' ), __( 'Panel', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG, array( DashboardPage::class, 'render' ) );
 		add_submenu_page( self::SLUG, __( 'Proyectos', 'gestion-de-proyectos' ), __( 'Proyectos', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-projects', array( ProjectsPage::class, 'render' ) );
+
+		/**
+		 * Permite a los módulos añadir sus pantallas tras la de proyectos.
+		 *
+		 * @param string $slug Slug del menú principal.
+		 */
+		do_action( 'gdp_admin_menu', self::SLUG );
+
 		add_submenu_page( self::SLUG, __( 'Operaciones', 'gestion-de-proyectos' ), __( 'Operaciones', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-operations', array( OperationsPage::class, 'render' ) );
+		add_submenu_page( self::SLUG, __( 'Catálogos', 'gestion-de-proyectos' ), __( 'Catálogos', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-catalogs', array( CatalogsPage::class, 'render' ) );
+		add_submenu_page( self::SLUG, __( 'Papelera', 'gestion-de-proyectos' ), __( 'Papelera', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-trash', array( TrashPage::class, 'render' ) );
 		add_submenu_page( self::SLUG, __( 'Bitácora', 'gestion-de-proyectos' ), __( 'Bitácora', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-audit', array( AuditPage::class, 'render' ) );
 		add_submenu_page( self::SLUG, __( 'Conector', 'gestion-de-proyectos' ), __( 'Conector', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-connector', array( ConnectorPage::class, 'render' ) );
 		add_submenu_page( self::SLUG, __( 'Ajustes', 'gestion-de-proyectos' ), __( 'Ajustes', 'gestion-de-proyectos' ), Roles::CAP_MANAGE, self::SLUG . '-settings', array( SettingsPage::class, 'render' ) );
@@ -96,6 +116,13 @@ final class Admin {
 				'confirmDel' => __( '¿Confirma la eliminación? Esta acción queda registrada en la bitácora.', 'gestion-de-proyectos' ),
 			)
 		);
+
+		/**
+		 * Permite a los módulos encolar sus propios estilos y scripts.
+		 *
+		 * @param string $hook Pantalla actual.
+		 */
+		do_action( 'gdp_admin_assets', $hook );
 	}
 
 	/**
@@ -129,6 +156,12 @@ final class Admin {
 		$screen = get_current_screen();
 		if ( ! $screen || false === strpos( (string) $screen->id, self::SLUG ) ) {
 			return;
+		}
+
+		if ( TwoFactor::blocks( get_current_user_id() ) ) {
+			echo '<div class="notice notice-warning"><p>' . wp_kses_post( TwoFactor::blocked_message() ) . '</p></div>';
+		} elseif ( TwoFactor::is_required() && ! TwoFactor::active_provider() && Access::is_manager() ) {
+			echo '<div class="notice notice-warning"><p>' . esc_html__( 'Los ajustes exigen doble factor de autenticación, pero no hay ningún plugin de doble factor activo: la exigencia no se está aplicando.', 'gestion-de-proyectos' ) . ' <a href="' . esc_url( self::url( 'settings' ) ) . '">' . esc_html__( 'Ajustes', 'gestion-de-proyectos' ) . '</a></p></div>';
 		}
 
 		$message = isset( $_GET['gdp_notice'] ) ? sanitize_key( wp_unslash( (string) $_GET['gdp_notice'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended

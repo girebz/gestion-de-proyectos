@@ -12,6 +12,7 @@ namespace GDP\Connector;
 use GDP\Core\Access;
 use GDP\Core\Audit;
 use GDP\Core\Catalogs;
+use GDP\Core\TwoFactor;
 use GDP\Domain\Projects\MemberRepository;
 use GDP\Domain\Projects\ProjectRepository;
 use GDP\Modules\Registry;
@@ -68,6 +69,12 @@ final class Tools {
 				'is_manager'   => Access::is_manager(),
 				'auth'         => Auth::authenticated_by_token() ? 'token' : 'wordpress',
 				'can_write'    => Auth::can_write(),
+				'two_factor'   => array(
+					'required' => TwoFactor::is_required(),
+					'provider' => TwoFactor::active_provider()['label'] ?? null,
+					'has'      => TwoFactor::user_has( (int) $user->ID ),
+					'blocked'  => TwoFactor::blocks( (int) $user->ID ),
+				),
 			),
 			'operations' => array(
 				'pending' => count( OperationManager::find_by_status( OperationManager::STATUS_PROPOSED, null, 500 ) ),
@@ -249,6 +256,9 @@ final class Tools {
 		$project_id = isset( $input['project_id'] ) ? (int) $input['project_id'] : null;
 		$limit      = isset( $input['limit'] ) ? max( 1, min( 200, (int) $input['limit'] ) ) : 50;
 
+		if ( TwoFactor::blocks( get_current_user_id() ) ) {
+			return new WP_Error( 'two_factor_required', wp_strip_all_tags( TwoFactor::blocked_message() ), array( 'status' => 403 ) );
+		}
 		if ( null === $project_id ) {
 			if ( ! Access::is_manager() ) {
 				return new WP_Error( 'forbidden', __( 'Indique un proyecto: la bitácora global solo la ven los administradores del plugin.', 'gestion-de-proyectos' ), array( 'status' => 403 ) );

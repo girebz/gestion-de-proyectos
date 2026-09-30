@@ -58,7 +58,7 @@
 
 \title{\color{marino}\bfseries Gestión de Proyectos\\[4pt]\large\mdseries Especificación funcional del plugin de WordPress}
 \author{Giorgio Reveco Barraza}
-\date{30 de septiembre de 2026 \quad\textcolor{grismedio}{versión 0.1, en construcción}}
+\date{30 de septiembre de 2026 \quad\textcolor{grismedio}{versión 0.2, en construcción}}
 
 \begin{document}
 \maketitle
@@ -169,12 +169,38 @@ Las tablas llevan el prefijo del sitio seguido de \codigo{gdp_}. Todo registro d
 \bottomrule
 \end{longtable}
 
+\subsection{Planificación y tiempo (implementado en 0.2.0)}
+
+La estructura de desglose no necesita tabla propia: cada actividad lleva \codigo{parent_id}, \codigo{sort_order} y un código jerárquico (\codigo{code}) que se recalcula al crear, mover o eliminar. Las columnas de programación (inicio, término, fechas tardías, holguras, criticidad, conflictos) son una caché del motor: se recalculan en cada lectura y solo se escriben las filas cuyo resultado cambió.
+
+\begin{longtable}{p{4.3cm}p{10.5cm}}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endfirsthead
+\continuacion{2}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endhead
+\codigo{gdp_activities} & Proyecto, padre, código jerárquico, nombre, descripción, tipo (summary, activity, milestone), frente de trabajo, estado (pendiente, en curso, terminada, suspendida, cancelada), prioridad, orden, duración en días hábiles, restricción de fecha y su fecha, fechas reales de inicio y término, avance, responsable, entregable, partida y costo planificado, notas; columnas calculadas de programación; versión. \\
+\codigo{gdp_dependencies} & Proyecto, tipo de entidad predecesora (hoy solo actividad; reservado para compras, cartas y resultados), predecesora, sucesora, tipo (FS, SS, FF, SF) y retraso en días hábiles (\codigo{lag_days}, negativo para adelantos). \\
+\codigo{gdp_calendars} & Proyecto (0 = global), nombre, días de la semana laborables, por defecto. \\
+\codigo{gdp_calendar_exceptions} & Calendario, fecha, laborable o no, motivo. Los feriados de Chile se cargan por rango de años con las reglas legales de traslado. \\
+\codigo{gdp_baselines} & Proyecto, nombre, motivo, vigente, autor, fecha. \\
+\codigo{gdp_baseline_activities} & Línea base, actividad, código y nombre en ese momento, tipo, inicio, término, duración, avance, costo planificado. \\
+\codigo{gdp_assignments} & Proyecto, actividad, usuario, rol (responsable, participante, revisor), dedicación. \\
+\codigo{gdp_progress} & Proyecto, actividad, usuario, fecha, avance anterior y nuevo, estado, fechas reales, nota, origen (admin, connector, import, cron). Solo anexado; alimenta el informe semanal. \\
+\codigo{gdp_schedule_snapshots} & Proyecto, lunes de la semana, fotografía del cronograma (actividades con estado, criticidad y fechas, frentes abiertos, término previsto, avance). Una por semana, tomada por el recálculo diario y al generar el informe; permite comparar con la semana anterior. \\
+\bottomrule
+\end{longtable}
+
 \subsection{Módulos (a implementar)}
 
 Cada módulo define sus tablas siguiendo las convenciones anteriores. El detalle de campos se fija en la subsección de cada módulo (sección \ref{sec:modulos}); aquí se enumeran las entidades para tener a la vista el conjunto.
 
 \begin{itemize}
-\item \textbf{Planificación y tiempo:} estructura de desglose (\codigo{gdp_wbs}), actividades e hitos (\codigo{gdp_activities}), dependencias (\codigo{gdp_dependencies}), calendarios (\codigo{gdp_calendars}, \codigo{gdp_calendar_exceptions}), líneas base (\codigo{gdp_baselines}, \codigo{gdp_baseline_activities}), asignaciones (\codigo{gdp_assignments}), registro de horas (\codigo{gdp_timesheets}), cortes de avance (\codigo{gdp_progress}).
+\item \textbf{Planificación y tiempo (pendientes):} registro de horas (\codigo{gdp_timesheets}) y recursos no humanos (\codigo{gdp_resources}), etapa 2.
 \item \textbf{Control documental:} documentos (\codigo{gdp_documents}), versiones (\codigo{gdp_document_versions}), vínculos (\codigo{gdp_links}, tabla genérica de relaciones entre entidades), referencias externas (\codigo{gdp_external_refs}: sistema, número, estado, enlace).
 \item \textbf{Adquisiciones y presupuesto:} proveedores (\codigo{gdp_suppliers}), compras (\codigo{gdp_purchases}) con su etapa, cotizaciones (\codigo{gdp_quotes}) e ítems (\codigo{gdp_quote_items}), partidas (\codigo{gdp_budget_lines}), movimientos (\codigo{gdp_budget_movements}: comprometido, ejecutado), valores de la unidad de fomento (\codigo{gdp_uf_rates}).
 \item \textbf{Reuniones y acuerdos:} reuniones (\codigo{gdp_meetings}), asistentes (\codigo{gdp_meeting_attendees}), acuerdos (\codigo{gdp_agreements}) con enlace a la actividad creada.
@@ -225,7 +251,7 @@ La importación de archivos usa exactamente este ciclo con un manejador por mód
 \section{Módulos}
 \label{sec:modulos}
 
-Entre corchetes va la etapa de implementación: \etapa{1} primera versión funcional, \etapa{2} módulo técnico, \etapa{3} evidencias y difusión. Lo implementado en 0.1.0 se marca como tal.
+Entre corchetes va la etapa de implementación: \etapa{1} primera versión funcional, \etapa{2} módulo técnico, \etapa{3} evidencias y difusión. Lo implementado se marca con la versión que lo incorporó (0.1.0, 0.2.0).
 
 \subsection{Núcleo, usuarios y seguridad}
 
@@ -235,8 +261,8 @@ Entre corchetes va la etapa de implementación: \etapa{1} primera versión funci
 \item Bitácora de auditoría de cada creación, modificación, eliminación, importación y llamada del conector. \textbf{(0.1.0)}
 \item Almacenamiento de adjuntos en un directorio privado con acceso web denegado y entrega controlada por permiso. \textbf{(0.1.0)}
 \item Panel de inicio con proyectos, operaciones pendientes y actividad reciente. \textbf{(0.1.0)}
-\item Doble factor de autenticación obligatorio para perfiles con acceso a documentos y montos, delegado en un plugin de autenticación reconocido y comprobado por el diagnóstico. \etapa{1}
-\item Papelera con recuperación para las entidades de los módulos: nada se borra definitivamente sin una segunda confirmación. \etapa{1}
+\item Doble factor de autenticación exigible a los perfiles con acceso a documentos, montos, exportaciones y bitácora (administradores del plugin incluidos), delegado en un plugin de autenticación reconocido (Two Factor, WP 2FA, Wordfence Login Security; otros mediante los filtros \codigo{gdp_two_factor_provider} y \codigo{gdp_user_has_two_factor}). Con la exigencia activa y un proveedor presente, los permisos sensibles se niegan a quien no tenga configurado el segundo factor, con aviso y enlace a su perfil; el diagnóstico del conector informa el estado (no exigido, exigido sin proveedor, usuarios afectados sin segundo factor). \textbf{(0.2.0)}
+\item Papelera con recuperación: toda eliminación (actividades con sus contenidas, líneas base, calendarios) queda registrada como operación reversible con instantánea previa y se restaura desde la papelera; la eliminación de un proyecto exige teclear su código. \textbf{(0.2.0)}
 \end{itemize}
 
 \subsection{Gestión del tiempo y planificación}
@@ -244,18 +270,18 @@ Entre corchetes va la etapa de implementación: \etapa{1} primera versión funci
 
 \subsubsection{Estructura del proyecto}
 \begin{itemize}
-\item Estructura de desglose del trabajo en niveles (fase, frente, paquete de trabajo, actividad) con código jerárquico (por ejemplo, 3.2.1). \etapa{1}
-\item Calendario del proyecto con fecha de inicio y término contractual y plazo restante siempre visible. \etapa{1}
-\item Calendario laboral con días hábiles, feriados chilenos y períodos no laborables de la institución, configurables. \etapa{1}
-\item Distinción entre actividades, hitos (duración cero) y actividades resumen calculadas a partir de sus hijas. \etapa{1}
+\item Estructura de desglose del trabajo en niveles (fase, paquete de trabajo, actividad) con código jerárquico (por ejemplo, 3.2.1) recalculado al mover, anidar o eliminar; el frente de trabajo es un atributo de la actividad tomado del catálogo. \textbf{(0.2.0)}
+\item Calendario del proyecto con fecha de inicio y término contractual; holgura respecto del término contractual visible en la lista, la ficha del proyecto y el informe. \textbf{(0.2.0)}
+\item Calendario laboral con días hábiles, feriados chilenos (fijos y movibles, con las reglas de traslado de las leyes 19.973, 20.215, 20.299, 20.983 y 21.357) y excepciones de la institución, por proyecto o global. \textbf{(0.2.0)}
+\item Distinción entre actividades, hitos (duración cero) y resúmenes calculados a partir de sus hijas (fechas por envolvente, avance ponderado por duración). \textbf{(0.2.0)}
 \end{itemize}
 
 \subsubsection{Programación}
 \begin{itemize}
-\item Actividades con duración, fechas de inicio y término, responsable y porcentaje de avance. \etapa{1}
-\item Cuatro tipos de dependencia (término a inicio, inicio a inicio, término a término, inicio a término) con adelantos y retrasos en días. \etapa{1}
-\item Restricciones de fecha: no comenzar antes de, debe terminar el, entre otras. \etapa{1}
-\item Cálculo de fechas tempranas y tardías, holgura total y holgura libre; ruta crítica resaltada y recalculada con cada cambio. \etapa{1}
+\item Actividades con duración en días hábiles, fechas programadas y reales, responsable, prioridad, entregable, partida y porcentaje de avance; reglas de coherencia entre avance, estado y fechas reales. \textbf{(0.2.0)}
+\item Cuatro tipos de dependencia (término a inicio, inicio a inicio, término a término, inicio a término) con adelantos y retrasos en días hábiles; detección de ciclos antes de guardar. \textbf{(0.2.0)}
+\item Restricciones de fecha: lo antes posible, no empezar antes o después de, no terminar antes o después de, debe empezar el, debe terminar el; las obligatorias prevalecen y la discrepancia con las dependencias se informa como conflicto. \textbf{(0.2.0)}
+\item Cálculo de fechas tempranas y tardías, holgura total y holgura libre; ruta crítica resaltada y recalculada con cada cambio (convenciones en la decisión 0011). \textbf{(0.2.0)}
 \item Dependencias con elementos de otros módulos: una actividad puede depender de una orden de compra, de la respuesta a una carta o de la llegada de un resultado de laboratorio. \etapa{1}
 \end{itemize}
 
@@ -265,39 +291,40 @@ Sea una actividad \emph{habilitar laboratorio} con 20 días hábiles de holgura 
 
 \subsubsection{Carta Gantt}
 \begin{itemize}
-\item Carta Gantt interactiva: arrastre para mover y redimensionar, creación de dependencias con el ratón, zoom por día, semana, mes y trimestre. \etapa{1}
-\item Barras de avance real sobre la barra planificada, línea de fecha actual y ruta crítica en color distinto; superposición de la línea base. \etapa{1}
-\item Filtros por frente, responsable, estado o criticidad. \etapa{1}
-\item Exportación en LaTeX (\codigo{pgfgantt}) para informes formales, en PDF de impresión, en XLSX y en XML compatible con Microsoft Project; importación desde Excel y desde Microsoft Project. \etapa{1}
+\item Carta Gantt interactiva propia (SVG, sin bibliotecas externas): arrastre para fijar el inicio (restricción \emph{no empezar antes de}) y para cambiar la duración, contraer y expandir fases, zoom por día, semana y mes, información al pasar el ratón; creación de dependencias arrastrando desde el conector de una barra a otra, desenlace con un clic sobre la flecha, borrado de la restricción con doble clic, zoom trimestral e impresión con hoja de estilos propia. \textbf{(0.2.0)}
+\item Barras de avance sobre la barra planificada, línea de fecha actual, término contractual, días no laborables sombreados, ruta crítica en el color de acento del sitio, flechas de dependencia y superposición de la línea base vigente. \textbf{(0.2.0)}
+\item Filtros por frente, estado, criticidad, responsable y texto en la lista de actividades y en la carta Gantt. \textbf{(0.2.0)}
+\item Exportación del cronograma en CSV, XLSX (hojas Cronograma, Dependencias y Frentes; escritor propio sin bibliotecas), XML compatible con Microsoft Project y ProjectLibre (MSPDI: jerarquía, duraciones, hitos, predecesoras con tipo y retraso, restricciones, fechas reales, avance y calendario) e iCalendar; carta Gantt resumida en LaTeX (\codigo{pgfgantt}) dentro del informe semanal e impresión de la carta interactiva desde el navegador. \textbf{(0.2.0)}
+\item Importación desde CSV, XLSX y XML de Microsoft Project, con reconocimiento de cabeceras en español e inglés, jerarquía por código (1.2.3) o por nivel de esquema, predecesoras en notación compacta (\codigo{1.2FS+3}) que pueden apuntar a filas del archivo o a actividades ya existentes, frentes y responsables resueltos contra el catálogo y los usuarios, y restricción \emph{no empezar antes de} para las filas sin predecesoras con fecha. La vista previa muestra filas, jerarquía y advertencias; la importación es una operación reversible y también está disponible por el conector (acción \codigo{import}). \textbf{(0.2.0)}
 \end{itemize}
 
 \subsubsection{Línea base y control de cambios}
 \begin{itemize}
-\item Congelamiento de la línea base aprobada (el cronograma comprometido con el financiador). \etapa{1}
-\item Reprogramaciones como nuevas líneas base con motivo, fecha, documento de respaldo y comparación entre versiones. \etapa{1}
-\item Alerta cuando una desviación exige aprobación formal del financiador. \etapa{1}
+\item Congelamiento de la línea base aprobada (el cronograma comprometido con el financiador). \textbf{(0.2.0)}
+\item Reprogramaciones como nuevas líneas base con motivo y fecha, línea base vigente y comparación actividad por actividad con desviación en días hábiles. \textbf{(0.2.0)} Documento de respaldo enlazado. \etapa{1}
+\item Alerta cuando una desviación del término previsto respecto de la línea base vigente supera el umbral de aprobación formal del financiador, configurable por proyecto en días hábiles. \textbf{(0.2.0)}
 \end{itemize}
 
 \subsubsection{Recursos y dedicación}
 \begin{itemize}
-\item Asignación de integrantes a actividades con porcentaje de dedicación; carga de trabajo por persona y semana con alerta de sobreasignación. \etapa{1}
+\item Asignación de integrantes a actividades con rol y porcentaje de dedicación; carga de trabajo por persona y semana (dedicación repartida por días hábiles) con alerta de sobreasignación cuando supera el cien por ciento. \textbf{(0.2.0)}
 \item Registro de horas por persona y actividad. \etapa{2}
 \item Recursos no humanos (laboratorio, prensa, cámara climática) con disponibilidad, para evitar programar dos ensayos en el mismo equipo el mismo día. \etapa{2}
 \end{itemize}
 
 \subsubsection{Control del avance}
 \begin{itemize}
-\item Actualización del avance por actividad con fecha de corte; curva S de avance planificado frente a real. \etapa{1}
+\item Actualización del avance por actividad con historial fechado (quién, cuándo, por qué canal); curva S de avance planificado (línea base vigente o cronograma actual) frente a real, ponderada por duración, en el informe semanal (en pantalla y en LaTeX con \codigo{pgfplots}). \textbf{(0.2.0)}
 \item Valor ganado vinculado al presupuesto: valor planificado, valor ganado, costo real, índices de desempeño de plazo y de costo, pronóstico de fecha y costo de término. \etapa{2}
 \item Simulación de escenarios: efecto sobre el término y la ruta crítica de un atraso de $n$ días en una actividad, sin alterar el cronograma vigente. \etapa{2}
 \end{itemize}
 
 \subsubsection{Seguimiento operativo}
 \begin{itemize}
-\item Kanban por frente y por persona sincronizado con el cronograma. \etapa{1}
-\item Calendario integrado (mes, semana, agenda) con hitos, vencimientos de documentos, compras, reuniones y ensayos; suscripción ICS. \etapa{1}
-\item Alertas de inicio atrasado, término atrasado, hito próximo y pérdida de holgura. \etapa{1}
-\item Informe semanal por frente con hitos, fechas, pendientes y porcentaje de avance, señalando los frentes que se abren y se cierran y las actividades que entraron o salieron de la ruta crítica. \etapa{1}
+\item Tablero con arrastre entre columnas, sincronizado con el cronograma, agrupado por estado, por frente de trabajo o por responsable. \textbf{(0.2.0)}
+\item Calendario integrado (mes, semana, agenda) con hitos e inicios y términos de actividades, y suscripción iCalendar con clave por usuario; los demás módulos añaden sus vencimientos (documentos, compras, reuniones, ensayos) mediante el filtro \codigo{gdp_calendar_events}. \textbf{(0.2.0)}
+\item Alertas de inicio atrasado, término vencido o próximo, holgura negativa, conflictos de fechas e incumplimiento del término contractual, calculadas en vivo, guardadas por el recálculo diario y avisadas por correo a directores e ingenieros. \textbf{(0.2.0)}
+\item Informe semanal por frente con avance ponderado, avances registrados, terminado, iniciado, en ejecución, próxima semana, hitos próximos, vencidas, desviación respecto de la línea base y alertas; exportable en LaTeX (documento completo), CSV, XLSX, JSON e iCalendar; resumen semanal por correo; comparación con la semana anterior (frentes que se abren y se cierran, entradas y salidas de la ruta crítica, término previsto y avance) a partir de las fotografías semanales. \textbf{(0.2.0)}
 \end{itemize}
 
 \subsection{Control documental}
@@ -408,9 +435,13 @@ Cada usuario genera sus propios tokens desde el panel, con etiqueta, alcance (so
 \codigo{list-operations}, \codigo{get-operation} & consulta & Operaciones por estado y detalle de una operación. \\
 \codigo{confirm-operation} & propuesta & Aplica una operación propuesta; exige \codigo{confirm=true} y revalida antes de aplicar. \\
 \codigo{cancel-operation}, \codigo{revert-operation} & propuesta & Cancela una propuesta; revierte una operación aplicada (exige \codigo{confirm=true}). \\
-\multicolumn{3}{l}{\textit{Planificación \etapa{1}}} \\
-\codigo{get-schedule}, \codigo{get-critical-path} & consulta & Cronograma, ruta crítica, holguras y atrasos por frente. \\
-\codigo{propose-schedule-change} & propuesta & Reprogramaciones y actualizaciones de avance. \\
+\multicolumn{3}{l}{\textit{Planificación (0.2.0)}} \\
+\codigo{get-schedule} & consulta & Cronograma completo en orden de la estructura de desglose, con fechas tempranas y tardías, holguras, criticidad, restricciones, fechas reales, predecesoras en notación compacta y filtros. \\
+\codigo{get-activity} & consulta & Una actividad con predecesoras, sucesoras, asignaciones, hijas e historial de avance. \\
+\codigo{get-critical-path}, \codigo{get-alerts} & consulta & Ruta crítica en orden de inicio; alertas de plazo con tipo y severidad. \\
+\codigo{list-baselines}, \codigo{get-calendar} & consulta & Líneas base y comparación con la vigente o con una dada; calendario laboral efectivo con excepciones. \\
+\codigo{weekly-report} & consulta & Datos del informe semanal de una semana dada, con el cronograma completo a petición. \\
+\codigo{propose-activity-change} & propuesta & Crear, actualizar, eliminar, registrar avance, fijar predecesoras, mover, asignar o retirar personas, crear y eliminar líneas base, eliminar calendarios e importar una estructura completa (acción \codigo{import} con filas); vista previa y \codigo{operation_id}. \\
 \codigo{get-earned-value}, \codigo{simulate-delay} & consulta & Valor ganado y pronóstico; simulación de atrasos. \etapa{2} \\
 \multicolumn{3}{l}{\textit{Documentos y compras \etapa{1}}} \\
 \codigo{list-documents}, \codigo{get-document} & consulta & Búsqueda y detalle, incluidos plazos vencidos. \\
@@ -419,8 +450,6 @@ Cada usuario genera sus propios tokens desde el panel, con etiqueta, alcance (so
 \multicolumn{3}{l}{\textit{Laboratorio \etapa{2}}} \\
 \codigo{list-samples}, \codigo{get-test-results} & consulta & Muestras, ensayos y resultados con excedencias. \\
 \codigo{propose-test-results} & propuesta & Carga de resultados a partir de planillas o informes leídos por el asistente. \\
-\multicolumn{3}{l}{\textit{Informes \etapa{1}}} \\
-\codigo{weekly-report} & consulta & Informe semanal por frente con el formato establecido. \\
 \bottomrule
 \end{longtable}
 
@@ -431,9 +460,9 @@ Las herramientas de propuesta llevan la anotación \codigo{readOnlyHint=false}; 
 La pantalla \emph{Conector} del panel guía la integración en cinco pasos, con enlaces a la documentación oficial de Anthropic y de WordPress para que un cambio de interfaz no la deje obsoleta sin aviso. Las instrucciones llevan número de versión propio, en la constante \codigo{INSTRUCTIONS_VERSION}:
 
 \begin{enumerate}
-\item \textbf{Diagnóstico:} versión de PHP y de WordPress, adaptador activo, conector habilitado, HTTPS, enlaces permanentes, directorio privado, cron real, permiso del usuario, alcance de la API REST y respuesta del punto de entrada MCP (que sin credenciales debe devolver 401), cada uno con su corrección.
+\item \textbf{Diagnóstico:} versión de PHP y de WordPress, adaptador activo, conector habilitado, uso de HTTPS, enlaces permanentes, directorio privado, cron real, permiso del usuario, alcance de la API REST y respuesta del punto de entrada MCP, que sin credenciales debe devolver 401; cada comprobación indica su corrección.
 \item \textbf{Credencial:} generación y revocación de tokens; alternativa de contraseña de aplicación.
-\item \textbf{Configuración en Claude:} URL lista para copiar, nombre de la cabecera, pasos para cuentas personales y de organización, orden equivalente para Claude Code y otros clientes.
+\item \textbf{Configuración en Claude:} URL lista para copiar, nombre de la cabecera, pasos para cuentas personales y de organización, y la orden equivalente para Claude Code y otros clientes.
 \item \textbf{Prueba desde fuera:} órdenes \codigo{curl} de inicialización y listado de herramientas con la interpretación de cada respuesta; tabla de herramientas disponibles.
 \item \textbf{Seguridad y mantenimiento:} bitácora, modo de solo lectura, revocación, origen de las peticiones, datos que salen del sitio.
 \end{enumerate}
@@ -477,7 +506,7 @@ Gobierno de datos & Los documentos sensibles pueden enlazarse desde el repositor
 \midrule
 \endhead
 0 & Base (versión 0.1.0, hecha) & Núcleo, proyectos y equipo, catálogos, bitácora, capa de operaciones, almacenamiento privado, identidad, conector con herramientas del núcleo, asistente de integración, integración continua, documentación. \\
-1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}), control documental, adquisiciones con unidades de fomento, reuniones, exportación e importación, informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
+1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental, adquisiciones con unidades de fomento, reuniones, exportación e importación, informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
 2 & Módulo técnico & Muestras, ensayos, mezclas y probetas; recursos no humanos y registro de horas; valor ganado y simulación; lectura asistida de informes. Debe estar listo antes de habilitar el laboratorio. \\
 3 & Evidencias y difusión & Criterios y medios de verificación, carpetas de evidencia e informes; publicaciones, difusión y tablero público. \\
 \bottomrule
@@ -495,6 +524,25 @@ Cada etapa se desarrolla en su propia rama, se integra a la principal cuando pas
 \item Una propuesta de actualización basada en una versión antigua se marca con conflicto y no es confirmable; una basada en la versión vigente se aplica, incrementa la versión y puede revertirse restaurando el estado anterior. \textbf{Verificado.}
 \item Un miembro con perfil investigador no ve montos, no puede proponer cambios de proyecto y, con token de solo lectura, no puede proponer nada; un token revocado recibe 401. \textbf{Verificado.}
 \item Todas las pantallas del panel se renderizan sin avisos de PHP; el diagnóstico del conector detecta el adaptador, la API REST y el punto de entrada. \textbf{Verificado.}
+\end{itemize}
+
+\section{Criterios de aceptación del módulo de planificación (0.2.0)}
+
+\begin{itemize}
+\item El motor de programación se prueba en aislamiento (41 pruebas, 317 aserciones): aritmética de días hábiles, feriados de Chile (Pascua, reglas de traslado, solsticio calculado), dependencias de los cuatro tipos con adelantos y retrasos, restricciones, fechas reales, holguras, ruta crítica, ciclos y agregación de resúmenes. \textbf{Verificado.}
+\item La activación crea las ocho tablas del módulo (versión de esquema 2) sin errores de análisis en MySQL ni en la integración SQLite. \textbf{Verificado.}
+\item Un cronograma de dos fases con dependencias FS, SS y FF, una restricción y un hito se calcula con las fechas esperadas; una dependencia que formaría un ciclo se rechaza antes de guardarse. \textbf{Verificado.}
+\item Por el conector, \codigo{propose-activity-change} con \codigo{create}, \codigo{set\_progress}, \codigo{set\_dependencies}, \codigo{delete} y \codigo{create\_baseline} produce vistas previas con cambios y advertencias; la confirmación aplica y recalcula; la reversión de una eliminación restaura las actividades contenidas y sus dependencias; una propuesta basada en una versión antigua no es confirmable; un token de solo lectura no puede proponer. \textbf{Verificado.}
+\item Las siete pantallas del módulo (actividades, carta Gantt, tablero, alertas, informe semanal, líneas base, calendarios) y la ficha del proyecto se renderizan sin avisos de PHP; arrastrar una barra fija la restricción y recalcula las sucesoras; arrastrar una tarjeta cambia el estado con las reglas de coherencia. \textbf{Verificado.}
+\item El informe semanal exportado en LaTeX compila con \codigo{pdflatex} sin errores ni cajas desbordadas, con carta Gantt resumida legible. \textbf{Verificado.}
+\item Las tareas diarias guardan las alertas por proyecto y las semanales generan el resumen por correo cuando las notificaciones están activas. \textbf{Verificado.}
+\item La activación crea las quince tablas del plugin (versión de esquema 3) tanto en MariaDB 10.11 como en la integración SQLite, y en ambas el recorrido completo (estructura, dependencias, operaciones, línea base, alertas, informe, fotografías, carga de trabajo, exportaciones, importación con reversión, herramientas del conector, tareas programadas y todas las pantallas) termina sin errores ni avisos de PHP. \textbf{Verificado.}
+\item En la carta Gantt, arrastrar desde el conector de una barra hasta otra crea una dependencia término a inicio y un clic sobre la flecha la elimina; el zoom trimestral y la vista de impresión muestran el cronograma completo. \textbf{Verificado.}
+\item Una eliminación de actividad hecha desde el panel aparece en la papelera y su restauración devuelve las actividades contenidas, dependencias, asignaciones e historial de avance. \textbf{Verificado.}
+\item La carga de trabajo marca sobreasignación cuando una persona supera el cien por ciento en una semana y la alerta aparece en la pantalla de alertas y en el informe. \textbf{Verificado.}
+\item El cronograma exportado en CSV, XLSX y XML de Microsoft Project se reimporta en el mismo proyecto con la misma jerarquía, tipos y dependencias (nueve filas, seis dependencias en la prueba), la vista previa muestra filas y advertencias, y la reversión de la importación deja el proyecto como estaba; por el conector, la acción \codigo{import} resuelve predecesoras que apuntan a actividades existentes. El XLSX se abre con una biblioteca independiente y el XML es bien formado. \textbf{Verificado.}
+\item Con la exigencia de doble factor activa y el plugin Two Factor presente, un administrador sin segundo factor pierde \codigo{audit.view} y \codigo{documents.view} pero conserva \codigo{planning.view}, ve el aviso en el panel y recibe un error del conector en \codigo{recent-audit}; al configurar el segundo factor recupera el acceso y el diagnóstico pasa a correcto. Sin proveedor, el diagnóstico falla y la exigencia no bloquea a nadie. \textbf{Verificado.}
+\item La suscripción iCalendar responde sin sesión con la clave por usuario y contiene los hitos y términos de las actividades; la alerta de aprobación del financiador aparece cuando la desviación supera el umbral configurado. \textbf{Verificado.}
 \end{itemize}
 
 \end{document}

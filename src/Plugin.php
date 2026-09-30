@@ -67,8 +67,9 @@ final class Plugin {
 	private function boot(): void {
 		add_action( 'init', array( $this, 'load_textdomain' ), 1 );
 
-		// Migraciones de esquema cuando cambia la versión del plugin.
-		Installer::maybe_upgrade();
+		// Migraciones de esquema cuando cambia la versión del plugin. Se ejecutan en init
+		// (tras cargar las traducciones) porque roles y catálogos usan cadenas traducibles.
+		add_action( 'init', array( Installer::class, 'maybe_upgrade' ), 2 );
 
 		// Acceso al panel para miembros de proyectos.
 		Access::register();

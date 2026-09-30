@@ -233,6 +233,15 @@ final class ProjectsPage extends Page {
 				<?php endif; ?>
 			</div>
 
+			<?php
+			/**
+			 * Permite a los módulos añadir tarjetas a la ficha del proyecto.
+			 *
+			 * @param array<string,mixed> $p Proyecto.
+			 */
+			do_action( 'gdp_project_view_cards', $p );
+			?>
+
 			<div class="gdp-card">
 				<h2><?php esc_html_e( 'Módulos', 'gestion-de-proyectos' ); ?></h2>
 				<ul class="gdp-list">
@@ -241,6 +250,7 @@ final class ProjectsPage extends Page {
 							<?php echo esc_html( $row['label'] ); ?>
 							<?php
 							if ( 'planificado' === $row['status'] ) {
+								/* translators: número de etapa. */
 								echo self::badge( 'planned', sprintf( __( 'etapa %d, planificado', 'gestion-de-proyectos' ), (int) $row['stage'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput
 							} else {
 								echo self::badge( $registry->is_enabled( $row['slug'], $id ) ? 'ejecucion' : 'suspendido', $registry->is_enabled( $row['slug'], $id ) ? __( 'activo', 'gestion-de-proyectos' ) : __( 'inactivo', 'gestion-de-proyectos' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
@@ -283,6 +293,7 @@ final class ProjectsPage extends Page {
 
 		$enabled_modules = isset( $p['settings']['modules'] ) && is_array( $p['settings']['modules'] ) ? $p['settings']['modules'] : array();
 
+		/* translators: nombre del proyecto. */
 		self::open( $is_new ? __( 'Nuevo proyecto', 'gestion-de-proyectos' ) : sprintf( __( 'Editar: %s', 'gestion-de-proyectos' ), $p['name'] ) );
 		?>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gdp-card gdp-card--form">
@@ -346,13 +357,20 @@ final class ProjectsPage extends Page {
 					<td><textarea id="gdp-description" name="description" rows="5" class="large-text"><?php echo esc_textarea( (string) $p['description'] ); ?></textarea></td>
 				</tr>
 				<tr>
+					<th scope="row"><label for="gdp-threshold"><?php esc_html_e( 'Desviación que exige aprobación', 'gestion-de-proyectos' ); ?></label></th>
+					<td>
+						<input type="number" id="gdp-threshold" name="approval_threshold_days" min="0" max="365" class="small-text" value="<?php echo (int) ( $p['settings']['planning']['approval_threshold_days'] ?? 10 ); ?>"> <?php esc_html_e( 'días hábiles', 'gestion-de-proyectos' ); ?>
+						<p class="description"><?php esc_html_e( 'Cuando una actividad o hito se atrasa respecto de la línea base vigente más allá de este umbral, o el término programado supera el contractual, el módulo de planificación alerta que la reprogramación exige aprobación formal del financiador.', 'gestion-de-proyectos' ); ?></p>
+					</td>
+				</tr>
+				<tr>
 					<th scope="row"><?php esc_html_e( 'Módulos opcionales', 'gestion-de-proyectos' ); ?></th>
 					<td>
 						<?php foreach ( Registry::roadmap() as $slug => $info ) : ?>
 							<?php if ( $info['core'] ) { continue; } ?>
 							<label class="gdp-check">
 								<input type="checkbox" name="modules[]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( in_array( $slug, $enabled_modules, true ) ); ?>>
-								<?php echo esc_html( $info['label'] ); ?> <span class="gdp-muted">(<?php printf( esc_html__( 'etapa %d', 'gestion-de-proyectos' ), (int) $info['stage'] ); ?>)</span>
+								<?php echo esc_html( $info['label'] ); ?> <span class="gdp-muted">(<?php printf( /* translators: número de etapa. */ esc_html__( 'etapa %d', 'gestion-de-proyectos' ), (int) $info['stage'] ); ?>)</span>
 							</label><br>
 						<?php endforeach; ?>
 						<p class="description"><?php esc_html_e( 'Los módulos del núcleo (planificación, documentos, adquisiciones, reuniones, datos) están siempre activos.', 'gestion-de-proyectos' ); ?></p>
@@ -371,8 +389,10 @@ final class ProjectsPage extends Page {
 				<?php wp_nonce_field( 'gdp_delete_project_' . (int) $p['id'] ); ?>
 				<input type="hidden" name="action" value="gdp_delete_project">
 				<input type="hidden" name="id" value="<?php echo (int) $p['id']; ?>">
+				<label for="gdp-confirm-code" class="screen-reader-text"><?php esc_html_e( 'Código del proyecto', 'gestion-de-proyectos' ); ?></label>
+				<input type="text" id="gdp-confirm-code" name="confirm_code" autocomplete="off" placeholder="<?php echo esc_attr( $p['code'] ); ?>" aria-describedby="gdp-confirm-help">
 				<button type="submit" class="button gdp-button-danger"><?php esc_html_e( 'Eliminar proyecto', 'gestion-de-proyectos' ); ?></button>
-				<span class="gdp-muted"><?php esc_html_e( 'Se eliminan el proyecto y sus miembros; los módulos limpian sus datos. La bitácora conserva el registro.', 'gestion-de-proyectos' ); ?></span>
+				<span class="gdp-muted" id="gdp-confirm-help"><?php esc_html_e( 'Eliminación definitiva: escriba el código del proyecto para confirmarla. Se eliminan el proyecto, sus miembros y los datos de todos los módulos; la bitácora conserva el registro. Las eliminaciones de actividades, calendarios y líneas base, en cambio, van a la papelera y pueden restaurarse.', 'gestion-de-proyectos' ); ?></span>
 			</form>
 		<?php endif; ?>
 		<?php
@@ -406,6 +426,10 @@ final class ProjectsPage extends Page {
 		$current = $id > 0 ? ProjectRepository::find( $id ) : null;
 		$settings = $current ? $current['settings'] : array();
 		$settings['modules'] = array_values( array_intersect( $modules, array_keys( Registry::roadmap() ) ) );
+		if ( isset( $_POST['approval_threshold_days'] ) ) {
+			$settings['planning']                            = is_array( $settings['planning'] ?? null ) ? $settings['planning'] : array();
+			$settings['planning']['approval_threshold_days'] = max( 0, min( 365, (int) $_POST['approval_threshold_days'] ) );
+		}
 		$data['settings']    = $settings;
 
 		if ( 0 === $id ) {
@@ -434,6 +458,13 @@ final class ProjectsPage extends Page {
 		$id = isset( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 		check_admin_referer( 'gdp_delete_project_' . $id );
 		self::require_manager();
+
+		// Segunda confirmación: la eliminación de un proyecto es definitiva (los módulos borran sus datos).
+		$project = ProjectRepository::find( $id );
+		$typed   = isset( $_POST['confirm_code'] ) ? sanitize_title( wp_unslash( (string) $_POST['confirm_code'] ) ) : '';
+		if ( ! $project || $typed !== $project['code'] ) {
+			Admin::redirect_with_notice( Admin::url( 'projects', array( 'action' => 'edit', 'id' => $id ) ), __( 'Para eliminar el proyecto escriba su código exactamente como aparece en la ficha.', 'gestion-de-proyectos' ), 'error' );
+		}
 
 		$result = ProjectRepository::delete( $id );
 		if ( is_wp_error( $result ) ) {

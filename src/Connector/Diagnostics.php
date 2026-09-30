@@ -13,6 +13,7 @@ use GDP\Core\Cron;
 use GDP\Core\Options;
 use GDP\Core\Roles;
 use GDP\Core\Storage;
+use GDP\Core\TwoFactor;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -45,6 +46,7 @@ final class Diagnostics {
 			__( 'Versión de PHP', 'gestion-de-proyectos' ),
 			$php_ok ? self::OK : self::FAIL,
 			sprintf( 'PHP %s', PHP_VERSION ),
+			/* translators: versión mínima de PHP. */
 			$php_ok ? '' : sprintf( __( 'Cambie la versión de PHP a %s o superior desde el panel del hosting (en cPanel: "Select PHP Version" o "MultiPHP Manager").', 'gestion-de-proyectos' ), GDP_MIN_PHP )
 		);
 
@@ -55,6 +57,7 @@ final class Diagnostics {
 			__( 'Versión de WordPress y API de habilidades', 'gestion-de-proyectos' ),
 			$wp_ok ? self::OK : self::FAIL,
 			sprintf( 'WordPress %s; API de habilidades: %s', (string) $wp_version, Connector::abilities_api_available() ? __( 'disponible', 'gestion-de-proyectos' ) : __( 'no disponible', 'gestion-de-proyectos' ) ),
+			/* translators: versión mínima de WordPress. */
 			$wp_ok ? '' : sprintf( __( 'Actualice WordPress a la versión %s o superior (Escritorio → Actualizaciones). La API de habilidades forma parte del núcleo desde 6.9.', 'gestion-de-proyectos' ), GDP_MIN_WP )
 		);
 
@@ -64,6 +67,7 @@ final class Diagnostics {
 			'mcp_adapter',
 			__( 'Plugin MCP Adapter (oficial de WordPress)', 'gestion-de-proyectos' ),
 			$adapter_ok ? self::OK : self::FAIL,
+			/* translators: versión del adaptador. */
 			$adapter_ok ? sprintf( __( 'Activo (versión %s)', 'gestion-de-proyectos' ), Connector::adapter_version() ) : __( 'No instalado o inactivo', 'gestion-de-proyectos' ),
 			$adapter_ok ? '' : __( 'Instálelo desde Plugins → Añadir nuevo, buscando "MCP Adapter" (autor: WordPress.org Contributors), o suba el ZIP de https://github.com/WordPress/mcp-adapter/releases. Luego actívelo.', 'gestion-de-proyectos' )
 		);
@@ -119,13 +123,17 @@ final class Diagnostics {
 			$cron['wp_cron_disabled'] ? '' : __( 'Para alertas puntuales, añada en wp-config.php la línea define( \'DISABLE_WP_CRON\', true ); y cree en cPanel un cron job cada 15 minutos con: wget -q -O /dev/null "' . site_url( 'wp-cron.php?doing_wp_cron' ) . '"', 'gestion-de-proyectos' )
 		);
 
-		// 9. Usuario actual: permiso y tokens.
+		// 9. Doble factor de autenticación delegado.
+		$checks[] = self::two_factor_check();
+
+		// 10. Usuario actual: permiso y tokens.
 		$user_ok  = current_user_can( Roles::CAP_MANAGE ) || current_user_can( Roles::CAP_CONNECTOR );
 		$tokens   = array_filter( Tokens::for_user( get_current_user_id() ), static fn( $t ) => empty( $t['revoked_at'] ) );
 		$checks[] = self::item(
 			'user',
 			__( 'Su usuario puede usar el conector', 'gestion-de-proyectos' ),
 			$user_ok ? ( empty( $tokens ) ? self::WARN : self::OK ) : self::FAIL,
+			/* translators: número de tokens. */
 			$user_ok ? sprintf( _n( '%d token activo', '%d tokens activos', count( $tokens ), 'gestion-de-proyectos' ), count( $tokens ) ) : __( 'Sin permiso', 'gestion-de-proyectos' ),
 			$user_ok ? ( empty( $tokens ) ? __( 'Genere un token en esta misma página (paso 2 del asistente).', 'gestion-de-proyectos' ) : '' ) : __( 'Pida a un administrador que le asigne el rol "Miembro de proyectos" o la capacidad gdp_use_connector.', 'gestion-de-proyectos' )
 		);
@@ -135,6 +143,47 @@ final class Diagnostics {
 		}
 
 		return $checks;
+	}
+
+	/**
+	 * Estado del doble factor: exigencia, proveedor y usuarios afectados.
+	 *
+	 * @return array{key:string,label:string,status:string,detail:string,fix:string}
+	 */
+	private static function two_factor_check(): array {
+		$label    = __( 'Doble factor de autenticación', 'gestion-de-proyectos' );
+		$provider = TwoFactor::active_provider();
+		$install  = __( 'Instale y active un plugin de doble factor reconocido: Two Factor (del equipo de WordPress, gratuito), WP 2FA o Wordfence Login Security. Otros proveedores pueden integrarse con los filtros gdp_two_factor_provider y gdp_user_has_two_factor.', 'gestion-de-proyectos' );
+
+		if ( ! TwoFactor::is_required() ) {
+			return self::item(
+				'two_factor',
+				$label,
+				self::WARN,
+				/* translators: nombre del plugin de doble factor. */
+				$provider ? sprintf( __( 'No exigido; proveedor disponible: %s', 'gestion-de-proyectos' ), $provider['label'] ) : __( 'No exigido; sin proveedor activo', 'gestion-de-proyectos' ),
+				__( 'Active "Exigir doble factor" en Ajustes → Seguridad para que los perfiles con acceso a documentos y montos deban configurar un segundo factor.', 'gestion-de-proyectos' ) . ( $provider ? '' : ' ' . $install )
+			);
+		}
+		if ( ! $provider ) {
+			return self::item( 'two_factor', $label, self::FAIL, __( 'Exigido, pero sin plugin de doble factor activo: la exigencia no se aplica', 'gestion-de-proyectos' ), $install );
+		}
+		$affected = TwoFactor::affected_users();
+		$missing  = array_filter( $affected, static fn( array $u ): bool => ! $u['has'] );
+		if ( empty( $missing ) ) {
+			/* translators: 1: nombre del plugin de doble factor, 2: usuarios afectados. */
+			return self::item( 'two_factor', $label, self::OK, sprintf( __( 'Exigido con %1$s; %2$d usuarios afectados, todos con segundo factor', 'gestion-de-proyectos' ), $provider['label'], count( $affected ) ), '' );
+		}
+		$names = array_map( static fn( array $u ): string => $u['name'], array_slice( $missing, 0, 8 ) );
+
+		return self::item(
+			'two_factor',
+			$label,
+			self::WARN,
+			/* translators: 1: nombre del plugin, 2: usuarios sin segundo factor, 3: usuarios afectados, 4: nombres. */
+			sprintf( __( 'Exigido con %1$s; %2$d de %3$d usuarios afectados aún sin segundo factor: %4$s', 'gestion-de-proyectos' ), $provider['label'], count( $missing ), count( $affected ), implode( ', ', $names ) . ( count( $missing ) > 8 ? '…' : '' ) ),
+			__( 'Esos usuarios no pueden abrir documentos, montos, exportaciones ni bitácora hasta configurar el segundo factor en su perfil; avíseles. Si alguno ya no debe tener acceso, cambie su perfil en el proyecto.', 'gestion-de-proyectos' )
+		);
 	}
 
 	/**
@@ -181,6 +230,7 @@ final class Diagnostics {
 		} else {
 			$code = (int) wp_remote_retrieve_response_code( $mcp );
 			if ( in_array( $code, array( 401, 403 ), true ) ) {
+				/* translators: código de estado HTTP. */
 				$checks[] = self::item( 'mcp_endpoint', __( 'Punto de entrada MCP', 'gestion-de-proyectos' ), self::OK, sprintf( __( 'Responde y exige autenticación (HTTP %d)', 'gestion-de-proyectos' ), $code ), '' );
 			} elseif ( 200 === $code ) {
 				$checks[] = self::item( 'mcp_endpoint', __( 'Punto de entrada MCP', 'gestion-de-proyectos' ), self::WARN, __( 'Responde sin exigir autenticación', 'gestion-de-proyectos' ), __( 'Revise que el servidor MCP del plugin esté usando el permiso de transporte esperado.', 'gestion-de-proyectos' ) );

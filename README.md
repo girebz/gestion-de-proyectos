@@ -6,10 +6,10 @@ Plugin de WordPress para la gestión integral de proyectos de investigación y d
 
 | Módulo | Estado | Contenido |
 |---|---|---|
-| Proyectos y equipo | disponible (0.1.0) | Ficha del proyecto, perfiles por proyecto (director, ingeniero, investigador, apoyo, observador), catálogos, bitácora de auditoría |
+| Proyectos y equipo | disponible (0.1.0) | Ficha del proyecto, perfiles por proyecto (director, ingeniero, investigador, apoyo, observador), catálogos, bitácora de auditoría, doble factor exigible delegado en Two Factor, WP 2FA o Wordfence (0.2.0) |
 | Operaciones en dos tiempos | disponible (0.1.0) | Toda escritura externa (conector, importación) se propone con vista previa y se aplica solo al confirmarla; reversible |
 | Conector para asistentes | disponible (0.1.0) | Herramientas MCP sobre la API de habilidades de WordPress, tokens por usuario, diagnóstico y asistente de integración |
-| Planificación y tiempo | etapa 1 | Estructura de desglose, cronograma, dependencias, ruta crítica, carta Gantt, línea base, valor ganado |
+| Planificación y tiempo | disponible (0.2.0) | Estructura de desglose, cronograma con dependencias y restricciones, ruta crítica, carta Gantt interactiva (dependencias con el ratón, zoom hasta trimestre, impresión), tableros por estado, frente o persona, calendario integrado con suscripción iCalendar, carga de trabajo con sobreasignación, curva S, calendarios con feriados de Chile, líneas base con alerta de aprobación del financiador, papelera, informe semanal con comparación semanal (LaTeX, CSV, XLSX, JSON, iCalendar), exportación a XML de Microsoft Project e importación desde CSV, XLSX y Project; valor ganado en etapa 2 |
 | Control documental | etapa 1 | Cartas, oficios, contratos y órdenes con numeración, versiones, vínculos cruzados y plazos |
 | Adquisiciones y presupuesto | etapa 1 | Ciclo de compra, proveedores, cotizaciones, partidas, unidades de fomento, rendición |
 | Reuniones y acuerdos | etapa 1 | Actas, acuerdos convertidos en tareas, seguimiento |
@@ -36,7 +36,7 @@ La especificación funcional completa está en [`docs/especificacion/`](docs/esp
 
 1. **Proyectos → Conector → paso 2**: genere un token (alcance de solo lectura o de lectura y propuestas).
 2. En Claude, **Conectores → Añadir conector personalizado**: pegue la URL `https://SU-SITIO/wp-json/gestion-de-proyectos/mcp` y añada la cabecera `X-GDP-Token` con el token. No requiere OAuth.
-3. Pida a Claude: *"Consulta el estado del sistema con gestion-de-proyectos-system-status"*.
+3. Pida a Claude: *"Consulta el estado del sistema con gestion-de-proyectos-system-status"* o *"Dame la ruta crítica del proyecto relaves-coquimbo y sus alertas de plazo"*.
 
 Las herramientas de escritura solo **proponen**; los cambios se aplican con `confirm-operation` o desde **Proyectos → Operaciones**, y todo queda en la bitácora.
 
@@ -46,7 +46,10 @@ Las herramientas de escritura solo **proponen**; los cambios se aplican con `con
 composer install            # dependencias de desarrollo (estándares, análisis, pruebas)
 composer run lint           # sintaxis PHP
 composer run phpcs          # estándares de codificación de WordPress
+composer run test           # pruebas unitarias con PHPUnit
+php tests/bin/run.php       # las mismas pruebas sin Composer (ejecutor mínimo)
 composer run zip            # paquete instalable en build/
+composer run make-pot       # plantilla de traducción languages/gestion-de-proyectos.pot (requiere WP-CLI)
 ```
 
 Estructura:
@@ -55,15 +58,18 @@ Estructura:
 gestion-de-proyectos.php   arranque, constantes, requisitos, ganchos de activación
 src/Core                   esquema, instalador, roles y permisos, identidad, almacenamiento, cron, bitácora, catálogos
 src/Domain                 repositorios por entidad (proyectos, miembros)
+src/Planning               motor de programación puro: calendario laboral, feriados de Chile, ruta crítica
 src/Operations             capa única de operaciones: proponer, previsualizar, confirmar, revertir
 src/Connector              habilidades, herramientas, tokens, autenticación, diagnóstico, servidor MCP
-src/Admin                  menú y pantallas del panel
-src/Modules                registro de módulos y hoja de ruta
-assets/                    estilos y scripts del panel
+src/Admin                  menú y pantallas del panel (incluidas las del módulo de planificación)
+src/Modules                registro de módulos, hoja de ruta y módulos (Planning: repositorios, servicio, manejador, herramientas, cron, informe)
+assets/                    estilos y scripts del panel (carta Gantt y tablero propios, sin dependencias)
+languages/                 plantilla de traducción (.pot); las traducciones .po/.mo van en esta misma carpeta
+tests/                     pruebas unitarias del motor y ejecutor mínimo
 docs/                      especificación (LaTeX) y decisiones de arquitectura
 ```
 
-Convenciones: espacio de nombres `GDP\`, prefijo `gdp_` en tablas, opciones, ganchos y capacidades; dominio de traducción `gestion-de-proyectos`; estándares de codificación de WordPress; ningún secreto en el repositorio.
+Convenciones: espacio de nombres `GDP\`, prefijo `gdp_` en tablas, opciones, ganchos y capacidades; dominio de traducción `gestion-de-proyectos` (los textos se escriben en español y la plantilla `.pot` permite traducir a otros idiomas; toda cadena con marcadores lleva su comentario `translators:`); estándares de codificación de WordPress; ningún secreto en el repositorio.
 
 ## Licencia
 

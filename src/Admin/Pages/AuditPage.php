@@ -12,6 +12,7 @@ namespace GDP\Admin\Pages;
 use GDP\Admin\Admin;
 use GDP\Core\Access;
 use GDP\Core\Audit;
+use GDP\Core\TwoFactor;
 use GDP\Domain\Projects\ProjectRepository;
 
 defined( 'ABSPATH' ) || exit;
@@ -28,6 +29,12 @@ final class AuditPage extends Page {
 	 */
 	public static function render(): void {
 		self::require_access();
+		if ( TwoFactor::blocks( get_current_user_id() ) ) {
+			self::open( __( 'Bitácora', 'gestion-de-proyectos' ), __( 'Registro de solo anexado: quién cambió qué, cuándo y por qué canal.', 'gestion-de-proyectos' ) );
+			echo '<p class="gdp-muted">' . esc_html__( 'La bitácora permanece cerrada hasta que configure el segundo factor de autenticación.', 'gestion-de-proyectos' ) . '</p>';
+			self::close();
+			return;
+		}
 
 		$project_id = isset( $_GET['project_id'] ) ? (int) $_GET['project_id'] : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$limit      = isset( $_GET['limit'] ) ? max( 10, min( 500, (int) $_GET['limit'] ) ) : 100; // phpcs:ignore WordPress.Security.NonceVerification.Recommended

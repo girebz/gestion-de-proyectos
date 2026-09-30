@@ -35,6 +35,8 @@
         "phpcs": "phpcs --standard=phpcs.xml.dist",
         "phpcbf": "phpcbf --standard=phpcs.xml.dist",
         "test": "phpunit",
-        "zip": "bash bin/build-zip.sh"
+        "zip": "bash bin/build-zip.sh",
+        "test:local": "php tests/bin/run.php",
+        "make-pot": "wp i18n make-pot . languages/gestion-de-proyectos.pot --slug=gestion-de-proyectos --domain=gestion-de-proyectos --exclude=vendor,node_modules,tests,docs,build,.github --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/girebz/gestion-de-proyectos/issues\"}'"
     }
 }

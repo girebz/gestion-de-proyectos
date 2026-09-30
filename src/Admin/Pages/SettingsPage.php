@@ -14,6 +14,7 @@ use GDP\Core\Cron;
 use GDP\Core\Identity;
 use GDP\Core\Options;
 use GDP\Core\Storage;
+use GDP\Core\TwoFactor;
 use GDP\Plugin;
 
 defined( 'ABSPATH' ) || exit;
@@ -110,6 +111,26 @@ final class SettingsPage extends Page {
 			</div>
 
 			<div class="gdp-card">
+				<h2><?php esc_html_e( 'Seguridad', 'gestion-de-proyectos' ); ?></h2>
+				<?php $provider = TwoFactor::active_provider(); ?>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Doble factor de autenticación', 'gestion-de-proyectos' ); ?></th>
+						<td>
+							<label><input type="checkbox" name="require_two_factor" value="1" <?php checked( ! empty( $o['require_two_factor'] ) ); ?>> <?php esc_html_e( 'Exigir un segundo factor a los perfiles con acceso a documentos, montos, exportaciones y bitácora (incluidos los administradores del plugin)', 'gestion-de-proyectos' ); ?></label>
+							<p class="description">
+								<?php if ( $provider ) : ?>
+									<?php printf( /* translators: nombre del plugin de doble factor. */ esc_html__( 'Proveedor detectado: %s. Quien no tenga configurado el segundo factor verá cerradas esas secciones hasta activarlo en su perfil.', 'gestion-de-proyectos' ), esc_html( $provider['label'] ) ); ?>
+								<?php else : ?>
+									<?php esc_html_e( 'No se detecta ningún plugin de doble factor. El plugin no implementa uno propio: instale y active Two Factor (del equipo de WordPress), WP 2FA o Wordfence Login Security; mientras tanto la exigencia no puede aplicarse y el diagnóstico del conector lo señalará.', 'gestion-de-proyectos' ); ?>
+								<?php endif; ?>
+							</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="gdp-card">
 				<h2><?php esc_html_e( 'Datos', 'gestion-de-proyectos' ); ?></h2>
 				<table class="form-table" role="presentation">
 					<tr>
@@ -129,7 +150,7 @@ final class SettingsPage extends Page {
 		<div class="gdp-card">
 			<h2><?php esc_html_e( 'Salud del sistema', 'gestion-de-proyectos' ); ?></h2>
 			<table class="gdp-facts">
-				<tr><th><?php esc_html_e( 'Versión del plugin', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( GDP_VERSION ); ?> (<?php printf( esc_html__( 'esquema %s', 'gestion-de-proyectos' ), esc_html( GDP_DB_VERSION ) ); ?>)</td></tr>
+				<tr><th><?php esc_html_e( 'Versión del plugin', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( GDP_VERSION ); ?> (<?php printf( /* translators: versión del esquema de base de datos. */ esc_html__( 'esquema %s', 'gestion-de-proyectos' ), esc_html( GDP_DB_VERSION ) ); ?>)</td></tr>
 				<tr><th><?php esc_html_e( 'Instalado el', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( self::date( (string) get_option( 'gdp_installed_at' ) ) ); ?></td></tr>
 				<tr><th><?php esc_html_e( 'Directorio privado', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( Storage::private_dir() ); ?> · <?php echo $storage['writable'] ? esc_html__( 'escribible', 'gestion-de-proyectos' ) : esc_html__( 'NO escribible', 'gestion-de-proyectos' ); ?> · <?php echo $storage['htaccess'] ? '.htaccess' : esc_html__( 'sin .htaccess', 'gestion-de-proyectos' ); ?></td></tr>
 				<tr><th><?php esc_html_e( 'Tarea diaria', 'gestion-de-proyectos' ); ?></th><td><?php echo $cron['next_daily'] ? esc_html( wp_date( (string) get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), (int) $cron['next_daily'] ) ) : esc_html__( 'no programada', 'gestion-de-proyectos' ); ?></td></tr>
@@ -186,6 +207,7 @@ final class SettingsPage extends Page {
 				'connector_enabled'     => ! empty( $_POST['connector_enabled'] ),
 				'connector_read_only'   => ! empty( $_POST['connector_read_only'] ),
 				'connector_token_days'  => isset( $_POST['connector_token_days'] ) ? max( 0, min( 3650, (int) $_POST['connector_token_days'] ) ) : 365,
+				'require_two_factor'    => ! empty( $_POST['require_two_factor'] ),
 				'operation_ttl_hours'   => isset( $_POST['operation_ttl_hours'] ) ? max( 1, min( 720, (int) $_POST['operation_ttl_hours'] ) ) : 24,
 				'private_dir'           => isset( $_POST['private_dir'] ) ? sanitize_file_name( wp_unslash( (string) $_POST['private_dir'] ) ) : 'gdp-privado',
 				'uninstall_remove_data' => ! empty( $_POST['uninstall_remove_data'] ),
