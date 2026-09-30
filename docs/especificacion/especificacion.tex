@@ -261,7 +261,7 @@ Entre corchetes va la etapa de implementación: \etapa{1} primera versión funci
 \item Bitácora de auditoría de cada creación, modificación, eliminación, importación y llamada del conector. \textbf{(0.1.0)}
 \item Almacenamiento de adjuntos en un directorio privado con acceso web denegado y entrega controlada por permiso. \textbf{(0.1.0)}
 \item Panel de inicio con proyectos, operaciones pendientes y actividad reciente. \textbf{(0.1.0)}
-\item Doble factor de autenticación obligatorio para perfiles con acceso a documentos y montos, delegado en un plugin de autenticación reconocido y comprobado por el diagnóstico. \etapa{1}
+\item Doble factor de autenticación exigible a los perfiles con acceso a documentos, montos, exportaciones y bitácora (administradores del plugin incluidos), delegado en un plugin de autenticación reconocido (Two Factor, WP 2FA, Wordfence Login Security; otros mediante los filtros \codigo{gdp_two_factor_provider} y \codigo{gdp_user_has_two_factor}). Con la exigencia activa y un proveedor presente, los permisos sensibles se niegan a quien no tenga configurado el segundo factor, con aviso y enlace a su perfil; el diagnóstico del conector informa el estado (no exigido, exigido sin proveedor, usuarios afectados sin segundo factor). \textbf{(0.2.0)}
 \item Papelera con recuperación: toda eliminación (actividades con sus contenidas, líneas base, calendarios) queda registrada como operación reversible con instantánea previa y se restaura desde la papelera; la eliminación de un proyecto exige teclear su código. \textbf{(0.2.0)}
 \end{itemize}
 
@@ -541,6 +541,7 @@ Cada etapa se desarrolla en su propia rama, se integra a la principal cuando pas
 \item Una eliminación de actividad hecha desde el panel aparece en la papelera y su restauración devuelve las actividades contenidas, dependencias, asignaciones e historial de avance. \textbf{Verificado.}
 \item La carga de trabajo marca sobreasignación cuando una persona supera el cien por ciento en una semana y la alerta aparece en la pantalla de alertas y en el informe. \textbf{Verificado.}
 \item El cronograma exportado en CSV, XLSX y XML de Microsoft Project se reimporta en el mismo proyecto con la misma jerarquía, tipos y dependencias (nueve filas, seis dependencias en la prueba), la vista previa muestra filas y advertencias, y la reversión de la importación deja el proyecto como estaba; por el conector, la acción \codigo{import} resuelve predecesoras que apuntan a actividades existentes. El XLSX se abre con una biblioteca independiente y el XML es bien formado. \textbf{Verificado.}
+\item Con la exigencia de doble factor activa y el plugin Two Factor presente, un administrador sin segundo factor pierde \codigo{audit.view} y \codigo{documents.view} pero conserva \codigo{planning.view}, ve el aviso en el panel y recibe un error del conector en \codigo{recent-audit}; al configurar el segundo factor recupera el acceso y el diagnóstico pasa a correcto. Sin proveedor, el diagnóstico falla y la exigencia no bloquea a nadie. \textbf{Verificado.}
 \item La suscripción iCalendar responde sin sesión con la clave por usuario y contiene los hitos y términos de las actividades; la alerta de aprobación del financiador aparece cuando la desviación supera el umbral configurado. \textbf{Verificado.}
 \end{itemize}
 

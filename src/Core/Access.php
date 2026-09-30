@@ -103,6 +103,11 @@ final class Access {
 			return false;
 		}
 
+		// Doble factor exigido: los permisos sensibles se niegan a quien no lo tenga, incluso administradores.
+		if ( TwoFactor::is_sensitive( $permission ) && TwoFactor::blocks( $user_id ) ) {
+			return false;
+		}
+
 		if ( self::is_manager( $user_id ) ) {
 			return true;
 		}

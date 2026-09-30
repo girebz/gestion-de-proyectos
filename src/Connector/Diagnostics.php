@@ -13,6 +13,7 @@ use GDP\Core\Cron;
 use GDP\Core\Options;
 use GDP\Core\Roles;
 use GDP\Core\Storage;
+use GDP\Core\TwoFactor;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -119,7 +120,10 @@ final class Diagnostics {
 			$cron['wp_cron_disabled'] ? '' : __( 'Para alertas puntuales, añada en wp-config.php la línea define( \'DISABLE_WP_CRON\', true ); y cree en cPanel un cron job cada 15 minutos con: wget -q -O /dev/null "' . site_url( 'wp-cron.php?doing_wp_cron' ) . '"', 'gestion-de-proyectos' )
 		);
 
-		// 9. Usuario actual: permiso y tokens.
+		// 9. Doble factor de autenticación delegado.
+		$checks[] = self::two_factor_check();
+
+		// 10. Usuario actual: permiso y tokens.
 		$user_ok  = current_user_can( Roles::CAP_MANAGE ) || current_user_can( Roles::CAP_CONNECTOR );
 		$tokens   = array_filter( Tokens::for_user( get_current_user_id() ), static fn( $t ) => empty( $t['revoked_at'] ) );
 		$checks[] = self::item(
@@ -135,6 +139,44 @@ final class Diagnostics {
 		}
 
 		return $checks;
+	}
+
+	/**
+	 * Estado del doble factor: exigencia, proveedor y usuarios afectados.
+	 *
+	 * @return array{key:string,label:string,status:string,detail:string,fix:string}
+	 */
+	private static function two_factor_check(): array {
+		$label    = __( 'Doble factor de autenticación', 'gestion-de-proyectos' );
+		$provider = TwoFactor::active_provider();
+		$install  = __( 'Instale y active un plugin de doble factor reconocido: Two Factor (del equipo de WordPress, gratuito), WP 2FA o Wordfence Login Security. Otros proveedores pueden integrarse con los filtros gdp_two_factor_provider y gdp_user_has_two_factor.', 'gestion-de-proyectos' );
+
+		if ( ! TwoFactor::is_required() ) {
+			return self::item(
+				'two_factor',
+				$label,
+				self::WARN,
+				$provider ? sprintf( __( 'No exigido; proveedor disponible: %s', 'gestion-de-proyectos' ), $provider['label'] ) : __( 'No exigido; sin proveedor activo', 'gestion-de-proyectos' ),
+				__( 'Active "Exigir doble factor" en Ajustes → Seguridad para que los perfiles con acceso a documentos y montos deban configurar un segundo factor.', 'gestion-de-proyectos' ) . ( $provider ? '' : ' ' . $install )
+			);
+		}
+		if ( ! $provider ) {
+			return self::item( 'two_factor', $label, self::FAIL, __( 'Exigido, pero sin plugin de doble factor activo: la exigencia no se aplica', 'gestion-de-proyectos' ), $install );
+		}
+		$affected = TwoFactor::affected_users();
+		$missing  = array_filter( $affected, static fn( array $u ): bool => ! $u['has'] );
+		if ( empty( $missing ) ) {
+			return self::item( 'two_factor', $label, self::OK, sprintf( __( 'Exigido con %1$s; %2$d usuarios afectados, todos con segundo factor', 'gestion-de-proyectos' ), $provider['label'], count( $affected ) ), '' );
+		}
+		$names = array_map( static fn( array $u ): string => $u['name'], array_slice( $missing, 0, 8 ) );
+
+		return self::item(
+			'two_factor',
+			$label,
+			self::WARN,
+			sprintf( __( 'Exigido con %1$s; %2$d de %3$d usuarios afectados aún sin segundo factor: %4$s', 'gestion-de-proyectos' ), $provider['label'], count( $missing ), count( $affected ), implode( ', ', $names ) . ( count( $missing ) > 8 ? '…' : '' ) ),
+			__( 'Esos usuarios no pueden abrir documentos, montos, exportaciones ni bitácora hasta configurar el segundo factor en su perfil; avíseles. Si alguno ya no debe tener acceso, cambie su perfil en el proyecto.', 'gestion-de-proyectos' )
+		);
 	}
 
 	/**

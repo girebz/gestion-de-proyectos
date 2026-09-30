@@ -47,6 +47,7 @@ En un directorio privado dentro de wp-content/uploads, protegido contra acceso w
 = 0.2.0 =
 * Planificación y tiempo: estructura de desglose, cronograma por ruta crítica con dependencias y restricciones, calendarios con feriados de Chile, carta Gantt interactiva, tableros por estado, frente o persona, calendario con suscripción iCalendar, carga de trabajo, curva S, líneas base, papelera, alertas e informe semanal exportable (LaTeX, CSV, XLSX, JSON, iCalendar); exportación a XML de Microsoft Project e importación desde CSV, XLSX y Project.
 * Conector: herramientas de cronograma, ruta crítica, alertas, informe semanal, líneas base, calendario y propuestas de cambio sobre actividades, incluida la importación de estructuras completas.
+* Seguridad: exigencia de doble factor delegada en Two Factor, WP 2FA o Wordfence Login Security para los perfiles con acceso a documentos y montos, comprobada por el diagnóstico.
 
 = 0.1.0 =
 * Núcleo: proyectos, miembros con perfiles por proyecto, catálogos, bitácora, operaciones en dos tiempos, almacenamiento privado, identidad del sitio.

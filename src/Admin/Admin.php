@@ -20,6 +20,7 @@ use GDP\Admin\Pages\TrashPage;
 use GDP\Core\Access;
 use GDP\Core\Identity;
 use GDP\Core\Roles;
+use GDP\Core\TwoFactor;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -155,6 +156,12 @@ final class Admin {
 		$screen = get_current_screen();
 		if ( ! $screen || false === strpos( (string) $screen->id, self::SLUG ) ) {
 			return;
+		}
+
+		if ( TwoFactor::blocks( get_current_user_id() ) ) {
+			echo '<div class="notice notice-warning"><p>' . wp_kses_post( TwoFactor::blocked_message() ) . '</p></div>';
+		} elseif ( TwoFactor::is_required() && ! TwoFactor::active_provider() && Access::is_manager() ) {
+			echo '<div class="notice notice-warning"><p>' . esc_html__( 'Los ajustes exigen doble factor de autenticación, pero no hay ningún plugin de doble factor activo: la exigencia no se está aplicando.', 'gestion-de-proyectos' ) . ' <a href="' . esc_url( self::url( 'settings' ) ) . '">' . esc_html__( 'Ajustes', 'gestion-de-proyectos' ) . '</a></p></div>';
 		}
 
 		$message = isset( $_GET['gdp_notice'] ) ? sanitize_key( wp_unslash( (string) $_GET['gdp_notice'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
