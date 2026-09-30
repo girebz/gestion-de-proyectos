@@ -28,6 +28,14 @@ $gdp_tables = array(
 	'gdp_operations',
 	'gdp_connector_tokens',
 	'gdp_catalog_items',
+	'gdp_activities',
+	'gdp_dependencies',
+	'gdp_calendars',
+	'gdp_calendar_exceptions',
+	'gdp_baselines',
+	'gdp_baseline_activities',
+	'gdp_assignments',
+	'gdp_progress',
 );
 
 /**

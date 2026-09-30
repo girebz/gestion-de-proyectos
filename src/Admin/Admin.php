@@ -44,6 +44,11 @@ final class Admin {
 		ConnectorPage::register_handlers();
 		SettingsPage::register_handlers();
 		OperationsPage::register_handlers();
+
+		/**
+		 * Permite a los módulos registrar sus manejadores de formularios y peticiones.
+		 */
+		do_action( 'gdp_admin_register' );
 	}
 
 	/**
@@ -67,6 +72,14 @@ final class Admin {
 
 		add_submenu_page( self::SLUG, __( 'Panel', 'gestion-de-proyectos' ), __( 'Panel', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG, array( DashboardPage::class, 'render' ) );
 		add_submenu_page( self::SLUG, __( 'Proyectos', 'gestion-de-proyectos' ), __( 'Proyectos', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-projects', array( ProjectsPage::class, 'render' ) );
+
+		/**
+		 * Permite a los módulos añadir sus pantallas tras la de proyectos.
+		 *
+		 * @param string $slug Slug del menú principal.
+		 */
+		do_action( 'gdp_admin_menu', self::SLUG );
+
 		add_submenu_page( self::SLUG, __( 'Operaciones', 'gestion-de-proyectos' ), __( 'Operaciones', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-operations', array( OperationsPage::class, 'render' ) );
 		add_submenu_page( self::SLUG, __( 'Bitácora', 'gestion-de-proyectos' ), __( 'Bitácora', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-audit', array( AuditPage::class, 'render' ) );
 		add_submenu_page( self::SLUG, __( 'Conector', 'gestion-de-proyectos' ), __( 'Conector', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-connector', array( ConnectorPage::class, 'render' ) );
@@ -96,6 +109,13 @@ final class Admin {
 				'confirmDel' => __( '¿Confirma la eliminación? Esta acción queda registrada en la bitácora.', 'gestion-de-proyectos' ),
 			)
 		);
+
+		/**
+		 * Permite a los módulos encolar sus propios estilos y scripts.
+		 *
+		 * @param string $hook Pantalla actual.
+		 */
+		do_action( 'gdp_admin_assets', $hook );
 	}
 
 	/**

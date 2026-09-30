@@ -1,0 +1,394 @@
+/* Gestión de Proyectos: planificación y tiempo (lista, Gantt, tablero). Colores desde la identidad del sitio. */
+
+.gdp-planning-bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.gdp-planning-tabs.nav-tab-wrapper {
+	border-bottom: 1px solid var(--gdp-border, #dcdcde);
+	padding-bottom: 0;
+	margin: 0;
+	flex: 1;
+}
+
+.gdp-planning-tabs .nav-tab-active {
+	border-bottom-color: #f0f0f1;
+	border-top: 3px solid var(--gdp-primary, #2271b1);
+}
+
+.gdp-planning-summary {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 24px;
+	margin: 0 0 12px;
+	padding: 10px 14px;
+	background: #fff;
+	border: 1px solid var(--gdp-border, #dcdcde);
+	border-left: 4px solid var(--gdp-primary, #2271b1);
+}
+
+.gdp-planning-summary strong {
+	font-size: 15px;
+}
+
+.gdp-planning-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.gdp-planning-filters {
+	margin-left: auto;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+.gdp-small {
+	font-size: 12px;
+}
+
+.gdp-num {
+	text-align: right;
+	white-space: nowrap;
+}
+
+.gdp-grid--form {
+	grid-template-columns: minmax(420px, 2fr) minmax(320px, 1fr);
+}
+
+/* Estructura de desglose. */
+.gdp-wbs .gdp-wbs__code {
+	width: 64px;
+	white-space: nowrap;
+}
+
+.gdp-wbs__indent {
+	display: inline-block;
+	width: calc(var(--gdp-level, 0) * 18px);
+}
+
+.gdp-wbs__icon {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin: 0 6px 0 0;
+	vertical-align: -1px;
+	background: var(--gdp-primary, #2271b1);
+}
+
+.gdp-wbs__icon--summary {
+	width: 12px;
+	height: 6px;
+	background: var(--gdp-secondary, #1d2327);
+}
+
+.gdp-wbs__icon--milestone {
+	transform: rotate(45deg);
+	background: var(--gdp-accent, #d63638);
+	width: 8px;
+	height: 8px;
+}
+
+.gdp-wbs__row--summary td {
+	font-weight: 600;
+	background: rgba(0, 0, 0, 0.025);
+}
+
+.gdp-wbs__row--critical td:nth-child(2) a {
+	color: var(--gdp-accent, #d63638);
+}
+
+.gdp-wbs__actions {
+	white-space: nowrap;
+	width: 150px;
+}
+
+.gdp-wbs__actions .gdp-inline-form {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.gdp-progress-form input[type="number"] {
+	width: 58px;
+}
+
+.gdp-move-form .button-link {
+	padding: 0 3px;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+.gdp-badge--critical {
+	background: var(--gdp-accent, #d63638);
+	color: #fff;
+	margin-left: 4px;
+}
+
+.gdp-progress {
+	display: inline-block;
+	width: 60px;
+	height: 8px;
+	background: #e0e0e0;
+	vertical-align: middle;
+	margin-right: 4px;
+}
+
+.gdp-progress__bar {
+	display: block;
+	height: 100%;
+	background: var(--gdp-primary, #2271b1);
+}
+
+.gdp-deps {
+	border-collapse: collapse;
+	margin-bottom: 6px;
+}
+
+.gdp-deps th {
+	text-align: left;
+	font-weight: 600;
+	padding: 2px 6px 2px 0;
+}
+
+.gdp-deps td {
+	padding: 2px 6px 2px 0;
+}
+
+.gdp-deps__row--template {
+	display: none;
+}
+
+/* Carta Gantt. */
+.gdp-gantt-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px;
+	margin-bottom: 8px;
+}
+
+.gdp-gantt-zoom .button {
+	margin-right: 2px;
+}
+
+.gdp-gantt-zoom .button.is-active {
+	background: var(--gdp-primary, #2271b1);
+	color: #fff;
+	border-color: var(--gdp-primary, #2271b1);
+}
+
+.gdp-gantt-status {
+	font-size: 12px;
+	color: #646970;
+}
+
+.gdp-gantt {
+	display: flex;
+	background: #fff;
+	border: 1px solid var(--gdp-border, #dcdcde);
+	overflow: hidden;
+	font-size: 12px;
+}
+
+.gdp-gantt__table {
+	flex: 0 0 auto;
+	width: 440px;
+	overflow: hidden;
+	border-right: 1px solid var(--gdp-border, #dcdcde);
+}
+
+.gdp-gantt__table table {
+	border-collapse: collapse;
+	width: 100%;
+	table-layout: fixed;
+}
+
+.gdp-gantt__table th,
+.gdp-gantt__table td {
+	height: 28px;
+	padding: 0 6px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border-bottom: 1px solid #f0f0f1;
+	box-sizing: border-box;
+	line-height: 28px;
+}
+
+.gdp-gantt__table thead th {
+	height: 44px;
+	line-height: 44px;
+	background: #f6f7f7;
+	border-bottom: 1px solid var(--gdp-border, #dcdcde);
+	font-weight: 600;
+	text-align: left;
+}
+
+.gdp-gantt__table .gdp-gantt__col-code {
+	width: 56px;
+}
+
+.gdp-gantt__table .gdp-gantt__col-date {
+	width: 84px;
+	font-size: 11px;
+	font-variant-numeric: tabular-nums;
+}
+
+.gdp-gantt__table .gdp-gantt__col-pct {
+	width: 44px;
+	text-align: right;
+}
+
+.gdp-gantt__row--summary td {
+	font-weight: 600;
+	background: rgba(0, 0, 0, 0.03);
+}
+
+.gdp-gantt__toggle {
+	display: inline-block;
+	width: 14px;
+	cursor: pointer;
+	color: #646970;
+	user-select: none;
+}
+
+.gdp-gantt__name a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.gdp-gantt__name a:hover {
+	text-decoration: underline;
+}
+
+.gdp-gantt__chart {
+	flex: 1 1 auto;
+	overflow: auto;
+	position: relative;
+}
+
+.gdp-gantt__chart svg {
+	display: block;
+}
+
+.gdp-gantt-bar {
+	cursor: grab;
+}
+
+.gdp-gantt-bar--fixed {
+	cursor: not-allowed;
+}
+
+.gdp-gantt-handle {
+	cursor: ew-resize;
+	fill: transparent;
+}
+
+.gdp-gantt-bar:hover .gdp-gantt-handle {
+	fill: rgba(0, 0, 0, 0.15);
+}
+
+.gdp-gantt__chart .is-dragging {
+	opacity: 0.7;
+}
+
+.gdp-gantt-tooltip {
+	position: absolute;
+	z-index: 5;
+	background: #1d2327;
+	color: #fff;
+	padding: 6px 8px;
+	font-size: 12px;
+	pointer-events: none;
+	max-width: 320px;
+	white-space: pre-line;
+}
+
+/* Tablero. */
+.gdp-board {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(200px, 1fr));
+	gap: 12px;
+	align-items: start;
+}
+
+.gdp-board__column {
+	background: #f0f0f1;
+	border: 1px solid var(--gdp-border, #dcdcde);
+	min-height: 200px;
+	padding: 8px;
+}
+
+.gdp-board__column.is-over {
+	outline: 2px dashed var(--gdp-primary, #2271b1);
+}
+
+.gdp-board__title {
+	margin: 0 0 8px;
+	font-size: 13px;
+	font-weight: 600;
+	display: flex;
+	justify-content: space-between;
+}
+
+.gdp-board__card {
+	background: #fff;
+	border: 1px solid var(--gdp-border, #dcdcde);
+	border-left: 4px solid var(--gdp-primary, #2271b1);
+	padding: 8px 10px;
+	margin-bottom: 8px;
+	cursor: grab;
+	font-size: 12px;
+}
+
+.gdp-board__card--critical {
+	border-left-color: var(--gdp-accent, #d63638);
+}
+
+.gdp-board__card--milestone {
+	border-left-style: double;
+}
+
+.gdp-board__card.is-dragging {
+	opacity: 0.5;
+}
+
+.gdp-board__card code {
+	font-size: 11px;
+}
+
+.gdp-board__card strong {
+	display: block;
+	margin-bottom: 4px;
+}
+
+.gdp-board__meta {
+	color: #646970;
+}
+
+.gdp-board__overdue {
+	color: #b32d2e;
+	font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+	.gdp-board {
+		grid-template-columns: repeat(2, minmax(200px, 1fr));
+	}
+
+	.gdp-grid--form {
+		grid-template-columns: 1fr;
+	}
+
+	.gdp-gantt__table {
+		width: 260px;
+	}
+}

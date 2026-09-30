@@ -51,6 +51,184 @@ final class Schema {
 		$tokens   = self::table( 'connector_tokens' );
 		$catalog  = self::table( 'catalog_items' );
 
+		return array_merge( self::core_definitions( $collate, $projects, $members, $audit, $ops, $tokens, $catalog ), self::planning_definitions( $collate ) );
+	}
+
+	/**
+	 * Tablas del módulo de planificación y tiempo.
+	 *
+	 * Las fechas programadas (start_date, end_date, late_*, holguras, ruta
+	 * crítica) son una caché del motor de programación: se recalculan tras cada
+	 * cambio y nunca se editan a mano. Las fechas reales y las restricciones
+	 * son datos de entrada.
+	 *
+	 * @param string $collate Cotejamiento.
+	 * @return array<string,string>
+	 */
+	private static function planning_definitions( string $collate ): array {
+		$activities   = self::table( 'activities' );
+		$dependencies = self::table( 'dependencies' );
+		$calendars    = self::table( 'calendars' );
+		$exceptions   = self::table( 'calendar_exceptions' );
+		$baselines    = self::table( 'baselines' );
+		$baseline_act = self::table( 'baseline_activities' );
+		$assignments  = self::table( 'assignments' );
+		$progress     = self::table( 'progress' );
+
+		return array(
+			'activities'          => "CREATE TABLE {$activities} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	parent_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	code varchar(32) NOT NULL DEFAULT '',
+	name varchar(255) NOT NULL,
+	description longtext NULL,
+	kind varchar(16) NOT NULL DEFAULT 'activity',
+	work_front varchar(64) NOT NULL DEFAULT '',
+	status varchar(20) NOT NULL DEFAULT 'pendiente',
+	priority tinyint(3) unsigned NOT NULL DEFAULT 2,
+	sort_order int(11) NOT NULL DEFAULT 0,
+	duration int(10) unsigned NOT NULL DEFAULT 1,
+	constraint_type varchar(8) NOT NULL DEFAULT 'asap',
+	constraint_date date NULL,
+	actual_start date NULL,
+	actual_finish date NULL,
+	percent tinyint(3) unsigned NOT NULL DEFAULT 0,
+	owner_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	deliverable varchar(255) NOT NULL DEFAULT '',
+	budget_line varchar(64) NOT NULL DEFAULT '',
+	cost_planned decimal(18,2) NULL,
+	notes longtext NULL,
+	start_date date NULL,
+	end_date date NULL,
+	late_start date NULL,
+	late_finish date NULL,
+	total_float int(11) NULL,
+	free_float int(11) NULL,
+	is_critical tinyint(1) NOT NULL DEFAULT 0,
+	schedule_conflicts text NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_id (project_id),
+	KEY parent (project_id,parent_id,sort_order),
+	KEY status (project_id,status),
+	KEY owner_id (owner_id),
+	KEY end_date (end_date)
+) {$collate};",
+
+			'dependencies'        => "CREATE TABLE {$dependencies} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	predecessor_type varchar(32) NOT NULL DEFAULT 'activity',
+	predecessor_id bigint(20) unsigned NOT NULL,
+	successor_id bigint(20) unsigned NOT NULL,
+	type char(2) NOT NULL DEFAULT 'FS',
+	lag_days int(11) NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY pair (project_id,predecessor_type,predecessor_id,successor_id),
+	KEY successor_id (successor_id)
+) {$collate};",
+
+			'calendars'           => "CREATE TABLE {$calendars} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	name varchar(100) NOT NULL,
+	weekdays varchar(20) NOT NULL DEFAULT '1,2,3,4,5',
+	is_default tinyint(1) NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_id (project_id)
+) {$collate};",
+
+			'calendar_exceptions' => "CREATE TABLE {$exceptions} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	calendar_id bigint(20) unsigned NOT NULL,
+	exception_date date NOT NULL,
+	working tinyint(1) NOT NULL DEFAULT 0,
+	label varchar(255) NOT NULL DEFAULT '',
+	PRIMARY KEY  (id),
+	UNIQUE KEY calendar_date (calendar_id,exception_date)
+) {$collate};",
+
+			'baselines'           => "CREATE TABLE {$baselines} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	name varchar(100) NOT NULL,
+	description text NULL,
+	is_current tinyint(1) NOT NULL DEFAULT 0,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_id (project_id)
+) {$collate};",
+
+			'baseline_activities' => "CREATE TABLE {$baseline_act} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	baseline_id bigint(20) unsigned NOT NULL,
+	activity_id bigint(20) unsigned NOT NULL,
+	code varchar(32) NOT NULL DEFAULT '',
+	name varchar(255) NOT NULL DEFAULT '',
+	kind varchar(16) NOT NULL DEFAULT 'activity',
+	start_date date NULL,
+	end_date date NULL,
+	duration int(10) unsigned NOT NULL DEFAULT 0,
+	percent tinyint(3) unsigned NOT NULL DEFAULT 0,
+	cost_planned decimal(18,2) NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY baseline_activity (baseline_id,activity_id)
+) {$collate};",
+
+			'assignments'         => "CREATE TABLE {$assignments} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	activity_id bigint(20) unsigned NOT NULL,
+	user_id bigint(20) unsigned NOT NULL,
+	role varchar(32) NOT NULL DEFAULT 'participante',
+	allocation tinyint(3) unsigned NOT NULL DEFAULT 100,
+	created_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY activity_user (activity_id,user_id),
+	KEY project_user (project_id,user_id)
+) {$collate};",
+
+			'progress'            => "CREATE TABLE {$progress} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	activity_id bigint(20) unsigned NOT NULL,
+	user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	reported_at datetime NOT NULL,
+	percent tinyint(3) unsigned NOT NULL DEFAULT 0,
+	previous_percent tinyint(3) unsigned NOT NULL DEFAULT 0,
+	status varchar(20) NOT NULL DEFAULT '',
+	actual_start date NULL,
+	actual_finish date NULL,
+	note text NULL,
+	source varchar(20) NOT NULL DEFAULT 'admin',
+	PRIMARY KEY  (id),
+	KEY activity_id (activity_id),
+	KEY project_reported (project_id,reported_at)
+) {$collate};",
+		);
+	}
+
+	/**
+	 * Tablas del núcleo.
+	 *
+	 * @param string $collate  Cotejamiento.
+	 * @param string $projects Tabla de proyectos.
+	 * @param string $members  Tabla de miembros.
+	 * @param string $audit    Tabla de bitácora.
+	 * @param string $ops      Tabla de operaciones.
+	 * @param string $tokens   Tabla de tokens.
+	 * @param string $catalog  Tabla de catálogos.
+	 * @return array<string,string>
+	 */
+	private static function core_definitions( string $collate, string $projects, string $members, string $audit, string $ops, string $tokens, string $catalog ): array {
 		return array(
 			'projects'         => "CREATE TABLE {$projects} (
 	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,

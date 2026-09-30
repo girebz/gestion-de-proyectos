@@ -233,6 +233,15 @@ final class ProjectsPage extends Page {
 				<?php endif; ?>
 			</div>
 
+			<?php
+			/**
+			 * Permite a los módulos añadir tarjetas a la ficha del proyecto.
+			 *
+			 * @param array<string,mixed> $p Proyecto.
+			 */
+			do_action( 'gdp_project_view_cards', $p );
+			?>
+
 			<div class="gdp-card">
 				<h2><?php esc_html_e( 'Módulos', 'gestion-de-proyectos' ); ?></h2>
 				<ul class="gdp-list">

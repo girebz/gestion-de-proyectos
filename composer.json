@@ -35,6 +35,7 @@
         "phpcs": "phpcs --standard=phpcs.xml.dist",
         "phpcbf": "phpcbf --standard=phpcs.xml.dist",
         "test": "phpunit",
-        "zip": "bash bin/build-zip.sh"
+        "zip": "bash bin/build-zip.sh",
+        "test:local": "php tests/bin/run.php"
     }
 }

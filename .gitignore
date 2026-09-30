@@ -23,6 +23,7 @@ Thumbs.db
 
 # Herramientas
 .phpunit.result.cache
+.phpunit.cache/
 .phpcs.cache
 phpstan.neon
 /tests/_output/

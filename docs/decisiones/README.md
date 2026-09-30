@@ -14,3 +14,4 @@ Cada decisión estructural se registra en un archivo numerado con el formato: co
 | [0008](0008-autocarga-y-empaquetado.md) | Autocarga PSR-4 propia y paquete instalable sin Composer en el sitio | aceptada |
 | [0009](0009-control-optimista-de-version.md) | Control optimista de versión en todos los registros | aceptada |
 | [0010](0010-flujo-de-desarrollo-y-repositorio.md) | Repositorio, ramas, integración continua y versiones | aceptada |
+| [0011](0011-convenciones-del-motor-de-programacion.md) | Convenciones del motor de programación: días hábiles, hitos, restricciones, fechas reales, feriados | aceptada |
