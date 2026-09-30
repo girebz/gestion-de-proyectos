@@ -50,6 +50,21 @@
 	flex-wrap: wrap;
 }
 
+.gdp-export-links {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	padding-left: 8px;
+	border-left: 1px solid var(--gdp-border, #dcdcde);
+	color: var(--gdp-muted, #646970);
+	font-size: 12px;
+}
+
+.gdp-export-links a {
+	text-decoration: none;
+}
+
 .gdp-small {
 	font-size: 12px;
 }

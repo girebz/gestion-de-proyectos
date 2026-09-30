@@ -41,7 +41,7 @@ final class ActivityHandler implements HandlerInterface {
 	 * {@inheritDoc}
 	 */
 	public function actions(): array {
-		return array( 'create', 'update', 'delete', 'set_progress', 'set_dependencies', 'move', 'set_assignment', 'remove_assignment', 'create_baseline', 'delete_baseline', 'delete_calendar' );
+		return array( 'create', 'update', 'delete', 'set_progress', 'set_dependencies', 'move', 'set_assignment', 'remove_assignment', 'create_baseline', 'delete_baseline', 'delete_calendar', 'import' );
 	}
 
 	/**
@@ -189,6 +189,57 @@ final class ActivityHandler implements HandlerInterface {
 				}
 				return array( 'baseline_id' => $baseline['id'] );
 
+			case 'import':
+				$rows = isset( $payload['rows'] ) && is_array( $payload['rows'] ) ? array_values( array_filter( $payload['rows'], 'is_array' ) ) : array();
+				if ( empty( $rows ) ) {
+					return new WP_Error( 'empty', __( 'No hay filas que importar.', 'gestion-de-proyectos' ) );
+				}
+				if ( count( $rows ) > 2000 ) {
+					return new WP_Error( 'too_many', __( 'La importación admite hasta 2000 filas por vez.', 'gestion-de-proyectos' ) );
+				}
+				$container = (int) ( $payload['container_id'] ?? 0 );
+				if ( $container > 0 ) {
+					$parent = ActivityRepository::find( $container );
+					if ( ! $parent || $parent['project_id'] !== $project_id || 'summary' !== $parent['kind'] ) {
+						return new WP_Error( 'container', __( 'El resumen de destino no existe en este proyecto.', 'gestion-de-proyectos' ) );
+					}
+				}
+				$clean = array();
+				foreach ( $rows as $row ) {
+					$name = sanitize_text_field( (string) ( $row['name'] ?? '' ) );
+					if ( '' === $name ) {
+						continue;
+					}
+					$kind    = in_array( $row['kind'] ?? '', ActivityRepository::KINDS, true ) ? $row['kind'] : 'activity';
+					$clean[] = array(
+						'ref'             => (string) ( $row['ref'] ?? '' ),
+						'parent_ref'      => isset( $row['parent_ref'] ) && null !== $row['parent_ref'] ? (string) $row['parent_ref'] : null,
+						'name'            => $name,
+						'kind'            => $kind,
+						'duration'        => 'milestone' === $kind ? 0 : max( 'summary' === $kind ? 0 : 1, (int) ( $row['duration'] ?? 1 ) ),
+						'percent'         => max( 0, min( 100, (int) ( $row['percent'] ?? 0 ) ) ),
+						'status'          => in_array( $row['status'] ?? '', ActivityRepository::STATUSES, true ) ? $row['status'] : null,
+						'priority'        => in_array( (int) ( $row['priority'] ?? 2 ), ActivityRepository::PRIORITIES, true ) ? (int) $row['priority'] : 2,
+						'constraint_type' => in_array( $row['constraint_type'] ?? 'asap', \GDP\Planning\Scheduler::CONSTRAINTS, true ) ? $row['constraint_type'] : 'asap',
+						'constraint_date' => ActivityRepository::normalize_date( $row['constraint_date'] ?? null ) ?: null,
+						'actual_start'    => ActivityRepository::normalize_date( $row['actual_start'] ?? null ) ?: null,
+						'actual_finish'   => ActivityRepository::normalize_date( $row['actual_finish'] ?? null ) ?: null,
+						'deliverable'     => sanitize_text_field( (string) ( $row['deliverable'] ?? '' ) ),
+						'work_front'      => sanitize_key( (string) ( $row['work_front_slug'] ?? $row['work_front'] ?? '' ) ),
+						'owner_id'        => (int) ( $row['owner_id'] ?? 0 ),
+						'predecessors'    => array_values( array_filter( (array) ( $row['predecessors'] ?? array() ), 'is_array' ) ),
+					);
+				}
+				if ( empty( $clean ) ) {
+					return new WP_Error( 'empty', __( 'No hay filas con nombre que importar.', 'gestion-de-proyectos' ) );
+				}
+				return array(
+					'rows'         => $clean,
+					'container_id' => $container,
+					'warnings'     => array_values( array_map( 'sanitize_text_field', (array) ( $payload['warnings'] ?? array() ) ) ),
+					'source'       => sanitize_text_field( (string) ( $payload['source'] ?? '' ) ),
+				);
+
 			case 'delete_calendar':
 				$calendar = CalendarRepository::find( (int) ( $payload['calendar_id'] ?? 0 ) );
 				if ( ! $calendar || ( $calendar['project_id'] !== $project_id && 0 !== $calendar['project_id'] ) ) {
@@ -316,6 +367,22 @@ final class ActivityHandler implements HandlerInterface {
 				}
 				break;
 
+			case 'import':
+				$kinds = array( 'summary' => 0, 'activity' => 0, 'milestone' => 0 );
+				$links = 0;
+				foreach ( $payload['rows'] as $row ) {
+					++$kinds[ $row['kind'] ];
+					$links += count( $row['predecessors'] );
+				}
+				$preview['summary'] = sprintf( 'Importar %d actividades (%d resúmenes, %d actividades, %d hitos) y %d dependencias%s', count( $payload['rows'] ), $kinds['summary'], $kinds['activity'], $kinds['milestone'], $links, '' !== $payload['source'] ? ' desde ' . $payload['source'] : '' );
+				$preview['changes']['activities'] = array( 'before' => ActivityRepository::count( $project_id ), 'after' => ActivityRepository::count( $project_id ) + count( $payload['rows'] ) );
+				$preview['warnings'] = $payload['warnings'];
+				if ( $payload['container_id'] > 0 ) {
+					$parent                = ActivityRepository::find( $payload['container_id'] );
+					$preview['warnings'][] = sprintf( 'Las filas de primer nivel quedarán dentro de "%s".', $parent['name'] );
+				}
+				break;
+
 			case 'delete_baseline':
 				$baseline           = BaselineRepository::find( $payload['baseline_id'] );
 				$preview['summary'] = sprintf( 'Eliminar la línea base "%s"', $baseline['name'] );
@@ -436,6 +503,72 @@ final class ActivityHandler implements HandlerInterface {
 					),
 				);
 
+			case 'import':
+				$created = array();
+				$ids     = array();
+				// Primer paso: crear todas las filas; los padres se resuelven después por referencia.
+				foreach ( $payload['rows'] as $row ) {
+					$data = array(
+						'parent_id'       => $payload['container_id'],
+						'name'            => $row['name'],
+						'kind'            => $row['kind'],
+						'duration'        => max( 1, (int) $row['duration'] ),
+						'percent'         => $row['percent'],
+						'priority'        => $row['priority'],
+						'constraint_type' => $row['constraint_type'],
+						'constraint_date' => $row['constraint_date'],
+						'actual_start'    => $row['actual_start'],
+						'actual_finish'   => $row['actual_finish'],
+						'deliverable'     => $row['deliverable'],
+						'work_front'      => $row['work_front'],
+						'owner_id'        => $row['owner_id'],
+					);
+					if ( null !== $row['status'] ) {
+						$data['status'] = $row['status'];
+					}
+					$id = ActivityRepository::create( $project_id, $data );
+					if ( is_wp_error( $id ) ) {
+						foreach ( array_reverse( $created ) as $undo ) {
+							ActivityRepository::delete( $undo );
+						}
+						return new WP_Error( 'import_row', sprintf( __( 'Fila "%1$s": %2$s', 'gestion-de-proyectos' ), $row['name'], $id->get_error_message() ) );
+					}
+					$created[]          = $id;
+					$ids[ $row['ref'] ] = $id;
+				}
+				// Segundo paso: jerarquía.
+				foreach ( $payload['rows'] as $row ) {
+					if ( null !== $row['parent_ref'] && isset( $ids[ $row['parent_ref'] ] ) ) {
+						ActivityRepository::update( $ids[ $row['ref'] ], array( 'parent_id' => $ids[ $row['parent_ref'] ] ), null );
+					}
+				}
+				// Tercer paso: dependencias (las que formarían ciclos se omiten y se anotan).
+				$skipped = array();
+				foreach ( $payload['rows'] as $row ) {
+					if ( empty( $row['predecessors'] ) || 'summary' === $row['kind'] ) {
+						continue;
+					}
+					$list = array();
+					foreach ( $row['predecessors'] as $p ) {
+						$pred_id = $ids[ (string) ( $p['ref'] ?? '' ) ] ?? (int) ( $p['existing_id'] ?? 0 );
+						if ( $pred_id > 0 ) {
+							$list[] = array( 'predecessor_id' => $pred_id, 'type' => (string) ( $p['type'] ?? 'FS' ), 'lag' => (int) ( $p['lag'] ?? 0 ) );
+						}
+					}
+					$clean = DependencyRepository::validate_list( $project_id, $ids[ $row['ref'] ], $list );
+					if ( is_wp_error( $clean ) ) {
+						$skipped[] = $row['name'] . ': ' . $clean->get_error_message();
+						continue;
+					}
+					DependencyRepository::replace_predecessors( $project_id, $ids[ $row['ref'] ], $clean );
+				}
+				ActivityRepository::recompute_codes( $project_id );
+				ScheduleService::recalculate( $project_id );
+				return array(
+					'before' => null,
+					'result' => array( 'created' => $created, 'count' => count( $created ), 'skipped_dependencies' => $skipped ),
+				);
+
 			case 'delete_baseline':
 				$snapshot = BaselineRepository::snapshot( $payload['baseline_id'] );
 				BaselineRepository::delete( $payload['baseline_id'] );
@@ -520,6 +653,15 @@ final class ActivityHandler implements HandlerInterface {
 						AssignmentRepository::remove( $activity_id, $created );
 					}
 				}
+				return true;
+
+			case 'import':
+				foreach ( array_reverse( (array) ( $result['created'] ?? array() ) ) as $id ) {
+					if ( ActivityRepository::find( (int) $id ) ) {
+						ActivityRepository::delete( (int) $id );
+					}
+				}
+				ScheduleService::recalculate( $project_id );
 				return true;
 
 			case 'delete_baseline':

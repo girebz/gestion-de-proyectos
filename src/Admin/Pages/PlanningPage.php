@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 final class PlanningPage extends Page {
 
 	public const SLUG  = 'planning';
-	public const VIEWS = array( 'list', 'gantt', 'board', 'edit', 'calendars', 'baselines', 'alerts', 'report', 'workload', 'calendar' );
+	public const VIEWS = array( 'list', 'gantt', 'board', 'edit', 'calendars', 'baselines', 'alerts', 'report', 'workload', 'calendar', 'import' );
 
 	/**
 	 * Submenú.
@@ -63,6 +63,7 @@ final class PlanningPage extends Page {
 		PlanningCalendarViewPage::register_handlers();
 		PlanningBaselinesPage::register_handlers();
 		PlanningReportPage::register_handlers();
+		PlanningImportPage::register_handlers();
 	}
 
 	/**
@@ -220,6 +221,9 @@ final class PlanningPage extends Page {
 			case 'calendar':
 				PlanningCalendarViewPage::render( $project );
 				break;
+			case 'import':
+				PlanningImportPage::render( $project );
+				break;
 			default:
 				self::render_list( $project );
 		}
@@ -354,7 +358,14 @@ final class PlanningPage extends Page {
 				<a class="button button-primary" href="<?php echo esc_url( self::url( $project_id, 'edit', array( 'id' => 0 ) ) ); ?>"><?php esc_html_e( 'Nueva actividad', 'gestion-de-proyectos' ); ?></a>
 				<a class="button" href="<?php echo esc_url( self::url( $project_id, 'edit', array( 'id' => 0, 'kind' => 'summary' ) ) ); ?>"><?php esc_html_e( 'Nueva fase', 'gestion-de-proyectos' ); ?></a>
 				<a class="button" href="<?php echo esc_url( self::url( $project_id, 'edit', array( 'id' => 0, 'kind' => 'milestone' ) ) ); ?>"><?php esc_html_e( 'Nuevo hito', 'gestion-de-proyectos' ); ?></a>
+				<a class="button" href="<?php echo esc_url( self::url( $project_id, 'import' ) ); ?>"><?php esc_html_e( 'Importar', 'gestion-de-proyectos' ); ?></a>
 			<?php endif; ?>
+			<span class="gdp-export-links">
+				<?php esc_html_e( 'Exportar:', 'gestion-de-proyectos' ); ?>
+				<?php foreach ( PlanningReportPage::schedule_formats() as $format => $label ) : ?>
+					<a href="<?php echo esc_url( PlanningReportPage::export_url( $project_id, $format ) ); ?>"><?php echo esc_html( $label ); ?></a>
+				<?php endforeach; ?>
+			</span>
 			<form method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" class="gdp-inline-form gdp-planning-filters">
 				<input type="hidden" name="page" value="<?php echo esc_attr( Admin::SLUG . '-' . self::SLUG ); ?>">
 				<input type="hidden" name="project_id" value="<?php echo (int) $project_id; ?>">

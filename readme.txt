@@ -45,8 +45,8 @@ En un directorio privado dentro de wp-content/uploads, protegido contra acceso w
 == Changelog ==
 
 = 0.2.0 =
-* Planificación y tiempo: estructura de desglose, cronograma por ruta crítica con dependencias y restricciones, calendarios con feriados de Chile, carta Gantt interactiva, tablero, líneas base, alertas e informe semanal exportable (LaTeX, CSV, JSON, iCalendar).
-* Conector: herramientas de cronograma, ruta crítica, alertas, informe semanal, líneas base, calendario y propuestas de cambio sobre actividades.
+* Planificación y tiempo: estructura de desglose, cronograma por ruta crítica con dependencias y restricciones, calendarios con feriados de Chile, carta Gantt interactiva, tableros por estado, frente o persona, calendario con suscripción iCalendar, carga de trabajo, curva S, líneas base, papelera, alertas e informe semanal exportable (LaTeX, CSV, XLSX, JSON, iCalendar); exportación a XML de Microsoft Project e importación desde CSV, XLSX y Project.
+* Conector: herramientas de cronograma, ruta crítica, alertas, informe semanal, líneas base, calendario y propuestas de cambio sobre actividades, incluida la importación de estructuras completas.
 
 = 0.1.0 =
 * Núcleo: proyectos, miembros con perfiles por proyecto, catálogos, bitácora, operaciones en dos tiempos, almacenamiento privado, identidad del sitio.

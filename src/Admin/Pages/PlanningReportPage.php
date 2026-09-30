@@ -11,10 +11,12 @@ namespace GDP\Admin\Pages;
 
 use GDP\Admin\Admin;
 use GDP\Core\Access;
+use GDP\Core\Spreadsheet;
 use GDP\Domain\Projects\ProjectRepository;
 use GDP\Modules\Planning\ActivityRepository;
 use GDP\Modules\Planning\PlanningCron;
 use GDP\Modules\Planning\ProgressCurve;
+use GDP\Modules\Planning\ProjectXml;
 use GDP\Modules\Planning\ScheduleService;
 use GDP\Modules\Planning\WeeklyReport;
 use GDP\Modules\Planning\WorkloadService;
@@ -23,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Alertas de plazo en vivo, informe semanal y sus exportaciones (LaTeX,
- * CSV, JSON, iCalendar).
+ * CSV, Excel, XML de Microsoft Project, JSON, iCalendar).
  */
 final class PlanningReportPage extends Page {
 
@@ -34,6 +36,46 @@ final class PlanningReportPage extends Page {
 	 */
 	public static function register_handlers(): void {
 		add_action( 'admin_post_gdp_export_report', array( self::class, 'handle_export' ) );
+	}
+
+	/**
+	 * Formatos de exportación del cronograma completo (fuera del informe).
+	 *
+	 * @return array<string,string> formato => etiqueta.
+	 */
+	public static function schedule_formats(): array {
+		$formats = array(
+			'csv'   => 'CSV',
+			'mspdi' => __( 'Project (XML)', 'gestion-de-proyectos' ),
+			'tex'   => 'LaTeX',
+			'ics'   => 'iCalendar',
+		);
+		if ( Spreadsheet::available() ) {
+			$formats = array( 'xlsx' => 'Excel' ) + $formats;
+		}
+
+		return $formats;
+	}
+
+	/**
+	 * Enlace firmado de descarga.
+	 *
+	 * @param int         $project_id Proyecto.
+	 * @param string      $format     Formato.
+	 * @param string|null $week       Lunes de la semana del informe (opcional).
+	 * @return string
+	 */
+	public static function export_url( int $project_id, string $format, ?string $week = null ): string {
+		$args = array(
+			'action'     => 'gdp_export_report',
+			'project_id' => $project_id,
+			'format'     => $format,
+		);
+		if ( $week ) {
+			$args['week'] = $week;
+		}
+
+		return wp_nonce_url( add_query_arg( $args, admin_url( 'admin-post.php' ) ), 'gdp_export_report_' . $project_id );
 	}
 
 	/**
@@ -117,8 +159,8 @@ final class PlanningReportPage extends Page {
 				<a class="button" href="<?php echo esc_url( PlanningPage::url( $project_id, 'report', array( 'week' => $monday->modify( '+7 days' )->format( 'Y-m-d' ) ) ) ); ?>">&rarr;</a>
 			</form>
 			<span class="gdp-actions">
-				<?php foreach ( array( 'tex' => 'LaTeX', 'csv' => 'CSV', 'json' => 'JSON', 'ics' => 'iCalendar' ) as $format => $label ) : ?>
-					<a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=gdp_export_report&project_id=' . $project_id . '&week=' . $report['week']['from'] . '&format=' . $format ), 'gdp_export_report_' . $project_id ) ); ?>"><?php echo esc_html( $label ); ?></a>
+				<?php foreach ( array( 'tex' => 'LaTeX', 'json' => 'JSON' ) + self::schedule_formats() as $format => $label ) : ?>
+					<a class="button" href="<?php echo esc_url( self::export_url( $project_id, $format, $report['week']['from'] ) ); ?>"><?php echo esc_html( $label ); ?></a>
 				<?php endforeach; ?>
 			</span>
 		</div>
@@ -368,6 +410,21 @@ final class PlanningReportPage extends Page {
 				$body = WeeklyReport::to_ics( $report );
 				$type = 'text/calendar; charset=UTF-8';
 				$ext  = 'ics';
+				$base = sanitize_file_name( sprintf( 'cronograma-%s', $project['code'] ) );
+				break;
+			case 'xlsx':
+				$body = WeeklyReport::to_xlsx( $report, $project_id );
+				if ( is_wp_error( $body ) ) {
+					wp_die( esc_html( $body->get_error_message() ), 500 );
+				}
+				$type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+				$ext  = 'xlsx';
+				$base = sanitize_file_name( sprintf( 'cronograma-%s-%s', $project['code'], $report['week']['from'] ) );
+				break;
+			case 'mspdi':
+				$body = ProjectXml::export( $project_id );
+				$type = 'application/xml; charset=UTF-8';
+				$ext  = 'xml';
 				$base = sanitize_file_name( sprintf( 'cronograma-%s', $project['code'] ) );
 				break;
 			default:

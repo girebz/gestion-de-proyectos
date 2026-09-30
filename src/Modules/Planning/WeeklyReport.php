@@ -11,6 +11,7 @@ namespace GDP\Modules\Planning;
 
 use DateTimeImmutable;
 use GDP\Core\Catalogs;
+use GDP\Core\Spreadsheet;
 use GDP\Domain\Projects\ProjectRepository;
 
 defined( 'ABSPATH' ) || exit;
@@ -19,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  * Reúne, para una semana, el estado del cronograma por frentes de trabajo,
  * los avances registrados, lo terminado, lo iniciado, lo que viene, los
  * atrasos y la desviación respecto de la línea base. Se exporta en JSON (para
- * el conector), CSV, LaTeX (documento completo) e iCalendar (hitos).
+ * el conector), CSV, Excel, LaTeX (documento completo) e iCalendar (hitos).
  */
 final class WeeklyReport {
 
@@ -283,6 +284,72 @@ final class WeeklyReport {
 		fclose( $handle );
 
 		return $csv;
+	}
+
+	/**
+	 * Libro Excel: hoja "Cronograma" con las mismas columnas que el CSV (para
+	 * poder reimportarla), hoja "Dependencias" y hoja "Frentes".
+	 *
+	 * @param array<string,mixed> $report     Informe.
+	 * @param int                 $project_id Proyecto.
+	 * @return string|\WP_Error Contenido binario.
+	 */
+	public static function to_xlsx( array $report, int $project_id ) {
+		$schedule = array( array( 'codigo', 'nivel', 'nombre', 'tipo', 'frente', 'estado', 'prioridad', 'duracion_dias_habiles', 'avance', 'inicio', 'termino', 'inicio_tardio', 'termino_tardio', 'holgura_total', 'holgura_libre', 'critica', 'restriccion', 'fecha_restriccion', 'inicio_real', 'termino_real', 'responsable', 'predecesoras', 'entregable' ) );
+		$codes    = array();
+		foreach ( $report['activities'] as $a ) {
+			$codes[ (int) $a['id'] ] = array( $a['code'], $a['name'] );
+			$schedule[]              = array(
+				(string) $a['code'],
+				(int) $a['level'],
+				(string) $a['name'],
+				(string) $a['kind'],
+				(string) $a['work_front'],
+				(string) $a['status'],
+				(int) $a['priority'],
+				(int) $a['duration'],
+				(int) $a['percent'],
+				(string) $a['start_date'],
+				(string) $a['end_date'],
+				(string) $a['late_start'],
+				(string) $a['late_finish'],
+				null === $a['total_float'] ? '' : (int) $a['total_float'],
+				null === $a['free_float'] ? '' : (int) $a['free_float'],
+				$a['is_critical'] ? 1 : 0,
+				(string) $a['constraint_type'],
+				(string) $a['constraint_date'],
+				(string) $a['actual_start'],
+				(string) $a['actual_finish'],
+				(string) $a['owner'],
+				(string) ( $a['predecessors'] ?? '' ),
+				(string) $a['deliverable'],
+			);
+		}
+
+		$dependencies = array( array( 'predecesora', 'nombre_predecesora', 'sucesora', 'nombre_sucesora', 'tipo', 'retraso_dias_habiles' ) );
+		foreach ( DependencyRepository::for_project( $project_id ) as $d ) {
+			$dependencies[] = array(
+				$codes[ (int) $d['predecessor_id'] ][0] ?? (string) $d['predecessor_id'],
+				$codes[ (int) $d['predecessor_id'] ][1] ?? '',
+				$codes[ (int) $d['successor_id'] ][0] ?? (string) $d['successor_id'],
+				$codes[ (int) $d['successor_id'] ][1] ?? '',
+				(string) $d['type'],
+				(int) $d['lag'],
+			);
+		}
+
+		$fronts = array( array( 'frente', 'etiqueta', 'actividades', 'terminadas', 'en_curso', 'vencidas', 'criticas', 'avance' ) );
+		foreach ( $report['fronts'] as $f ) {
+			$fronts[] = array( (string) $f['slug'], (string) $f['label'], (int) $f['activities'], (int) $f['done'], (int) $f['in_progress'], (int) $f['overdue'], (int) $f['critical'], (int) $f['percent'] );
+		}
+
+		return Spreadsheet::write(
+			array(
+				'Cronograma'   => $schedule,
+				'Dependencias' => $dependencies,
+				'Frentes'      => $fronts,
+			)
+		);
 	}
 
 	/**

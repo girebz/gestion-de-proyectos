@@ -17,9 +17,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 - Tareas programadas: recálculo diario con alertas guardadas y aviso por correo; resumen semanal por correo a directores e ingenieros cuando las notificaciones están activas.
 - Suite de pruebas unitarias del motor (PHPUnit; ejecutor mínimo `tests/bin/run.php` para entornos sin Composer) y `phpunit.xml.dist`, con lo que la integración continua ejecuta las pruebas.
 - Ganchos para módulos en el panel (`gdp_admin_register`, `gdp_admin_menu`, `gdp_admin_assets`, `gdp_project_view_cards`).
+- Papelera: toda eliminación (actividades con sus contenidas, líneas base, calendarios) pasa por la capa de operaciones con instantánea previa y se restaura desde la papelera; la eliminación de un proyecto exige teclear su código. Editor de catálogos (frentes de trabajo y demás) en el panel.
+- Carta Gantt: creación de dependencias arrastrando desde el conector de una barra, desenlace con un clic sobre la flecha, borrado de la restricción con doble clic, zoom trimestral, filtros por frente, estado, criticidad, responsable y texto, e impresión con hoja de estilos propia.
+- Tablero agrupado por estado, por frente de trabajo o por responsable.
+- Carga de trabajo por persona y semana con alerta de sobreasignación (pantalla, alertas e informe).
+- Curva S de avance planificado frente a real en el informe semanal (pantalla y LaTeX con `pgfplots`).
+- Fotografías semanales del cronograma (`gdp_schedule_snapshots`, esquema 3) y comparación con la semana anterior en el informe: frentes que se abren y se cierran, entradas y salidas de la ruta crítica, término previsto y avance.
+- Calendario integrado (mes, semana, agenda) con hitos e inicios y términos de actividades; suscripción iCalendar con clave por usuario; filtro `gdp_calendar_events` para que otros módulos aporten sus vencimientos.
+- Alerta cuando la desviación del término respecto de la línea base vigente supera el umbral de aprobación del financiador, configurable por proyecto.
+- Exportación del cronograma en XLSX (hojas Cronograma, Dependencias y Frentes, escritor propio) y en XML de Microsoft Project (MSPDI), además de CSV, LaTeX, JSON e iCalendar; enlaces de exportación en la lista de actividades.
+- Importación de cronogramas desde CSV, XLSX y XML de Microsoft Project con vista previa (cabeceras en español e inglés, jerarquía por código o nivel, predecesoras en notación compacta que pueden apuntar a actividades existentes, frentes y responsables resueltos, restricción "no empezar antes de" para filas con fecha y sin predecesoras); operación reversible; acción `import` en `propose-activity-change` para el conector.
 
 ### Cambiado
-- Versión de esquema 2; la desinstalación con borrado de datos elimina también las tablas del módulo.
+- Versión de esquema 3; la desinstalación con borrado de datos elimina también las tablas del módulo.
+- `OperationManager::execute()` propone y confirma en un paso para los formularios del panel y las importaciones, de modo que también esas escrituras quedan registradas y son reversibles.
 
 ## [0.1.0] - 2026-09-30
 

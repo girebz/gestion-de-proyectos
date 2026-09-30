@@ -191,6 +191,7 @@ La estructura de desglose no necesita tabla propia: cada actividad lleva \codigo
 \codigo{gdp_baseline_activities} & Línea base, actividad, código y nombre en ese momento, tipo, inicio, término, duración, avance, costo planificado. \\
 \codigo{gdp_assignments} & Proyecto, actividad, usuario, rol (responsable, participante, revisor), dedicación. \\
 \codigo{gdp_progress} & Proyecto, actividad, usuario, fecha, avance anterior y nuevo, estado, fechas reales, nota, origen (admin, connector, import, cron). Solo anexado; alimenta el informe semanal. \\
+\codigo{gdp_schedule_snapshots} & Proyecto, lunes de la semana, fotografía del cronograma (actividades con estado, criticidad y fechas, frentes abiertos, término previsto, avance). Una por semana, tomada por el recálculo diario y al generar el informe; permite comparar con la semana anterior. \\
 \bottomrule
 \end{longtable}
 
@@ -261,7 +262,7 @@ Entre corchetes va la etapa de implementación: \etapa{1} primera versión funci
 \item Almacenamiento de adjuntos en un directorio privado con acceso web denegado y entrega controlada por permiso. \textbf{(0.1.0)}
 \item Panel de inicio con proyectos, operaciones pendientes y actividad reciente. \textbf{(0.1.0)}
 \item Doble factor de autenticación obligatorio para perfiles con acceso a documentos y montos, delegado en un plugin de autenticación reconocido y comprobado por el diagnóstico. \etapa{1}
-\item Papelera con recuperación para las entidades de los módulos: nada se borra definitivamente sin una segunda confirmación. \etapa{1}
+\item Papelera con recuperación: toda eliminación (actividades con sus contenidas, líneas base, calendarios) queda registrada como operación reversible con instantánea previa y se restaura desde la papelera; la eliminación de un proyecto exige teclear su código. \textbf{(0.2.0)}
 \end{itemize}
 
 \subsection{Gestión del tiempo y planificación}
@@ -290,39 +291,40 @@ Sea una actividad \emph{habilitar laboratorio} con 20 días hábiles de holgura 
 
 \subsubsection{Carta Gantt}
 \begin{itemize}
-\item Carta Gantt interactiva propia (SVG, sin bibliotecas externas): arrastre para fijar el inicio (restricción \emph{no empezar antes de}) y para cambiar la duración, contraer y expandir fases, zoom por día, semana y mes, información al pasar el ratón. \textbf{(0.2.0)} Creación de dependencias con el ratón y zoom trimestral. \etapa{1}
+\item Carta Gantt interactiva propia (SVG, sin bibliotecas externas): arrastre para fijar el inicio (restricción \emph{no empezar antes de}) y para cambiar la duración, contraer y expandir fases, zoom por día, semana y mes, información al pasar el ratón; creación de dependencias arrastrando desde el conector de una barra a otra, desenlace con un clic sobre la flecha, borrado de la restricción con doble clic, zoom trimestral e impresión con hoja de estilos propia. \textbf{(0.2.0)}
 \item Barras de avance sobre la barra planificada, línea de fecha actual, término contractual, días no laborables sombreados, ruta crítica en el color de acento del sitio, flechas de dependencia y superposición de la línea base vigente. \textbf{(0.2.0)}
-\item Filtros por frente, estado, criticidad y texto en la lista de actividades. \textbf{(0.2.0)} Filtros equivalentes en la carta Gantt y por responsable. \etapa{1}
-\item Exportación del cronograma en CSV e iCalendar y carta Gantt resumida en LaTeX (\codigo{pgfgantt}) dentro del informe semanal. \textbf{(0.2.0)} PDF de impresión, XLSX y XML compatible con Microsoft Project; importación desde Excel y desde Microsoft Project. \etapa{1}
+\item Filtros por frente, estado, criticidad, responsable y texto en la lista de actividades y en la carta Gantt. \textbf{(0.2.0)}
+\item Exportación del cronograma en CSV, XLSX (hojas Cronograma, Dependencias y Frentes; escritor propio sin bibliotecas), XML compatible con Microsoft Project y ProjectLibre (MSPDI: jerarquía, duraciones, hitos, predecesoras con tipo y retraso, restricciones, fechas reales, avance y calendario) e iCalendar; carta Gantt resumida en LaTeX (\codigo{pgfgantt}) dentro del informe semanal e impresión de la carta interactiva desde el navegador. \textbf{(0.2.0)}
+\item Importación desde CSV, XLSX y XML de Microsoft Project, con reconocimiento de cabeceras en español e inglés, jerarquía por código (1.2.3) o por nivel de esquema, predecesoras en notación compacta (\codigo{1.2FS+3}) que pueden apuntar a filas del archivo o a actividades ya existentes, frentes y responsables resueltos contra el catálogo y los usuarios, y restricción \emph{no empezar antes de} para las filas sin predecesoras con fecha. La vista previa muestra filas, jerarquía y advertencias; la importación es una operación reversible y también está disponible por el conector (acción \codigo{import}). \textbf{(0.2.0)}
 \end{itemize}
 
 \subsubsection{Línea base y control de cambios}
 \begin{itemize}
 \item Congelamiento de la línea base aprobada (el cronograma comprometido con el financiador). \textbf{(0.2.0)}
 \item Reprogramaciones como nuevas líneas base con motivo y fecha, línea base vigente y comparación actividad por actividad con desviación en días hábiles. \textbf{(0.2.0)} Documento de respaldo enlazado. \etapa{1}
-\item Alerta cuando una desviación exige aprobación formal del financiador. \etapa{1}
+\item Alerta cuando una desviación del término previsto respecto de la línea base vigente supera el umbral de aprobación formal del financiador, configurable por proyecto en días hábiles. \textbf{(0.2.0)}
 \end{itemize}
 
 \subsubsection{Recursos y dedicación}
 \begin{itemize}
-\item Asignación de integrantes a actividades con rol y porcentaje de dedicación. \textbf{(0.2.0)} Carga de trabajo por persona y semana con alerta de sobreasignación. \etapa{1}
+\item Asignación de integrantes a actividades con rol y porcentaje de dedicación; carga de trabajo por persona y semana (dedicación repartida por días hábiles) con alerta de sobreasignación cuando supera el cien por ciento. \textbf{(0.2.0)}
 \item Registro de horas por persona y actividad. \etapa{2}
 \item Recursos no humanos (laboratorio, prensa, cámara climática) con disponibilidad, para evitar programar dos ensayos en el mismo equipo el mismo día. \etapa{2}
 \end{itemize}
 
 \subsubsection{Control del avance}
 \begin{itemize}
-\item Actualización del avance por actividad con historial fechado (quién, cuándo, por qué canal). \textbf{(0.2.0)} Curva S de avance planificado frente a real. \etapa{1}
+\item Actualización del avance por actividad con historial fechado (quién, cuándo, por qué canal); curva S de avance planificado (línea base vigente o cronograma actual) frente a real, ponderada por duración, en el informe semanal (en pantalla y en LaTeX con \codigo{pgfplots}). \textbf{(0.2.0)}
 \item Valor ganado vinculado al presupuesto: valor planificado, valor ganado, costo real, índices de desempeño de plazo y de costo, pronóstico de fecha y costo de término. \etapa{2}
 \item Simulación de escenarios: efecto sobre el término y la ruta crítica de un atraso de $n$ días en una actividad, sin alterar el cronograma vigente. \etapa{2}
 \end{itemize}
 
 \subsubsection{Seguimiento operativo}
 \begin{itemize}
-\item Tablero por estado con arrastre entre columnas, sincronizado con el cronograma. \textbf{(0.2.0)} Tableros por frente y por persona. \etapa{1}
-\item Calendario integrado (mes, semana, agenda) con hitos, vencimientos de documentos, compras, reuniones y ensayos; suscripción ICS. \etapa{1}
+\item Tablero con arrastre entre columnas, sincronizado con el cronograma, agrupado por estado, por frente de trabajo o por responsable. \textbf{(0.2.0)}
+\item Calendario integrado (mes, semana, agenda) con hitos e inicios y términos de actividades, y suscripción iCalendar con clave por usuario; los demás módulos añaden sus vencimientos (documentos, compras, reuniones, ensayos) mediante el filtro \codigo{gdp_calendar_events}. \textbf{(0.2.0)}
 \item Alertas de inicio atrasado, término vencido o próximo, holgura negativa, conflictos de fechas e incumplimiento del término contractual, calculadas en vivo, guardadas por el recálculo diario y avisadas por correo a directores e ingenieros. \textbf{(0.2.0)}
-\item Informe semanal por frente con avance ponderado, avances registrados, terminado, iniciado, en ejecución, próxima semana, hitos próximos, vencidas, desviación respecto de la línea base y alertas; exportable en LaTeX (documento completo), CSV, JSON e iCalendar; resumen semanal por correo. \textbf{(0.2.0)} Frentes que se abren y se cierran y entradas y salidas de la ruta crítica respecto de la semana anterior. \etapa{1}
+\item Informe semanal por frente con avance ponderado, avances registrados, terminado, iniciado, en ejecución, próxima semana, hitos próximos, vencidas, desviación respecto de la línea base y alertas; exportable en LaTeX (documento completo), CSV, XLSX, JSON e iCalendar; resumen semanal por correo; comparación con la semana anterior (frentes que se abren y se cierran, entradas y salidas de la ruta crítica, término previsto y avance) a partir de las fotografías semanales. \textbf{(0.2.0)}
 \end{itemize}
 
 \subsection{Control documental}
@@ -439,7 +441,7 @@ Cada usuario genera sus propios tokens desde el panel, con etiqueta, alcance (so
 \codigo{get-critical-path}, \codigo{get-alerts} & consulta & Ruta crítica en orden de inicio; alertas de plazo con tipo y severidad. \\
 \codigo{list-baselines}, \codigo{get-calendar} & consulta & Líneas base y comparación con la vigente o con una dada; calendario laboral efectivo con excepciones. \\
 \codigo{weekly-report} & consulta & Datos del informe semanal de una semana dada, con el cronograma completo a petición. \\
-\codigo{propose-activity-change} & propuesta & Crear, actualizar, eliminar, registrar avance, fijar predecesoras, mover, asignar o retirar personas y fijar líneas base; vista previa y \codigo{operation_id}. \\
+\codigo{propose-activity-change} & propuesta & Crear, actualizar, eliminar, registrar avance, fijar predecesoras, mover, asignar o retirar personas, crear y eliminar líneas base, eliminar calendarios e importar una estructura completa (acción \codigo{import} con filas); vista previa y \codigo{operation_id}. \\
 \codigo{get-earned-value}, \codigo{simulate-delay} & consulta & Valor ganado y pronóstico; simulación de atrasos. \etapa{2} \\
 \multicolumn{3}{l}{\textit{Documentos y compras \etapa{1}}} \\
 \codigo{list-documents}, \codigo{get-document} & consulta & Búsqueda y detalle, incluidos plazos vencidos. \\
@@ -534,6 +536,12 @@ Cada etapa se desarrolla en su propia rama, se integra a la principal cuando pas
 \item Las siete pantallas del módulo (actividades, carta Gantt, tablero, alertas, informe semanal, líneas base, calendarios) y la ficha del proyecto se renderizan sin avisos de PHP; arrastrar una barra fija la restricción y recalcula las sucesoras; arrastrar una tarjeta cambia el estado con las reglas de coherencia. \textbf{Verificado.}
 \item El informe semanal exportado en LaTeX compila con \codigo{pdflatex} sin errores ni cajas desbordadas, con carta Gantt resumida legible. \textbf{Verificado.}
 \item Las tareas diarias guardan las alertas por proyecto y las semanales generan el resumen por correo cuando las notificaciones están activas. \textbf{Verificado.}
+\item La activación crea la tabla de fotografías semanales (versión de esquema 3); las pantallas de carga de trabajo, calendario, importación, papelera y catálogos se renderizan sin avisos de PHP. \textbf{Verificado.}
+\item En la carta Gantt, arrastrar desde el conector de una barra hasta otra crea una dependencia término a inicio y un clic sobre la flecha la elimina; el zoom trimestral y la vista de impresión muestran el cronograma completo. \textbf{Verificado.}
+\item Una eliminación de actividad hecha desde el panel aparece en la papelera y su restauración devuelve las actividades contenidas, dependencias, asignaciones e historial de avance. \textbf{Verificado.}
+\item La carga de trabajo marca sobreasignación cuando una persona supera el cien por ciento en una semana y la alerta aparece en la pantalla de alertas y en el informe. \textbf{Verificado.}
+\item El cronograma exportado en CSV, XLSX y XML de Microsoft Project se reimporta en el mismo proyecto con la misma jerarquía, tipos y dependencias (nueve filas, seis dependencias en la prueba), la vista previa muestra filas y advertencias, y la reversión de la importación deja el proyecto como estaba; por el conector, la acción \codigo{import} resuelve predecesoras que apuntan a actividades existentes. El XLSX se abre con una biblioteca independiente y el XML es bien formado. \textbf{Verificado.}
+\item La suscripción iCalendar responde sin sesión con la clave por usuario y contiene los hitos y términos de las actividades; la alerta de aprobación del financiador aparece cuando la desviación supera el umbral configurado. \textbf{Verificado.}
 \end{itemize}
 
 \end{document}

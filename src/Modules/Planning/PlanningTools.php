@@ -138,11 +138,11 @@ final class PlanningTools {
 
 		$definitions['propose-activity-change'] = array(
 			'label'               => __( 'Proponer cambio en el cronograma', 'gestion-de-proyectos' ),
-			'description'         => __( 'Propone un cambio en el cronograma de un proyecto. NO aplica nada: devuelve una vista previa (cambios, advertencias, conflictos) y un operation_id que debe confirmarse con confirm-operation. Acciones: create (data: name, kind summary|activity|milestone, parent_id, duration en días hábiles, work_front, status, priority 1..3, constraint_type asap|snet|snlt|fnet|fnlt|mso|mfo, constraint_date, owner_id, deliverable, budget_line, cost_planned, description, notes; opcionalmente predecessors), update (activity_id, data, expected_version), delete (activity_id; elimina también las contenidas), set_progress (activity_id, percent, status, actual_start, actual_finish, note), set_dependencies (activity_id, predecessors: lista de {predecessor_id, type FS|SS|FF|SF, lag}; sustituye la lista completa), move (activity_id, parent_id, sort_order), set_assignment (activity_id, user_id, role responsable|participante|revisor, allocation), remove_assignment (activity_id, user_id), create_baseline (name, description, make_current), delete_baseline (baseline_id), delete_calendar (calendar_id). Tras confirmar, el cronograma se recalcula. Toda eliminación guarda una instantánea y puede revertirse con revert-operation.', 'gestion-de-proyectos' ),
+			'description'         => __( 'Propone un cambio en el cronograma de un proyecto. NO aplica nada: devuelve una vista previa (cambios, advertencias, conflictos) y un operation_id que debe confirmarse con confirm-operation. Acciones: create (data: name, kind summary|activity|milestone, parent_id, duration en días hábiles, work_front, status, priority 1..3, constraint_type asap|snet|snlt|fnet|fnlt|mso|mfo, constraint_date, owner_id, deliverable, budget_line, cost_planned, description, notes; opcionalmente predecessors), update (activity_id, data, expected_version), delete (activity_id; elimina también las contenidas), set_progress (activity_id, percent, status, actual_start, actual_finish, note), set_dependencies (activity_id, predecessors: lista de {predecessor_id, type FS|SS|FF|SF, lag}; sustituye la lista completa), move (activity_id, parent_id, sort_order), set_assignment (activity_id, user_id, role responsable|participante|revisor, allocation), remove_assignment (activity_id, user_id), create_baseline (name, description, make_current), delete_baseline (baseline_id), delete_calendar (calendar_id), import (rows: lista de filas con code jerárquico, name, kind, duration, predecessors, work_front, owner, etc.; container_id opcional; crea en bloque una estructura completa y devuelve advertencias sobre predecesoras, frentes o responsables no resueltos). Tras confirmar, el cronograma se recalcula. Toda eliminación guarda una instantánea y puede revertirse con revert-operation.', 'gestion-de-proyectos' ),
 			'input_schema'        => array(
 				'type'                 => 'object',
 				'properties'           => array(
-					'action'           => array( 'type' => 'string', 'enum' => array( 'create', 'update', 'delete', 'set_progress', 'set_dependencies', 'move', 'set_assignment', 'remove_assignment', 'create_baseline', 'delete_baseline', 'delete_calendar' ) ),
+					'action'           => array( 'type' => 'string', 'enum' => array( 'create', 'update', 'delete', 'set_progress', 'set_dependencies', 'move', 'set_assignment', 'remove_assignment', 'create_baseline', 'delete_baseline', 'delete_calendar', 'import' ) ),
 					'project_id'       => array( 'type' => 'integer' ),
 					'activity_id'      => array( 'type' => 'integer' ),
 					'data'             => array( 'type' => 'object', 'additionalProperties' => true, 'description' => __( 'Campos de la actividad (create, update).', 'gestion-de-proyectos' ) ),
@@ -175,6 +175,12 @@ final class PlanningTools {
 					'make_current'     => array( 'type' => 'boolean' ),
 					'baseline_id'      => array( 'type' => 'integer', 'description' => __( 'Línea base (delete_baseline).', 'gestion-de-proyectos' ) ),
 					'calendar_id'      => array( 'type' => 'integer', 'description' => __( 'Calendario (delete_calendar).', 'gestion-de-proyectos' ) ),
+					'rows'             => array(
+						'type'        => 'array',
+						'description' => __( 'Filas a importar (import): objetos con code (jerárquico, p. ej. 1.2), name, kind (summary|activity|milestone), duration (días hábiles), predecessors (texto "1.1FS+2, 1.3" o lista de {ref, type, lag}), work_front, owner (nombre, usuario o correo), percent, status, start, finish, constraint_type, constraint_date, actual_start, actual_finish, deliverable, priority. Hasta 2000 filas.', 'gestion-de-proyectos' ),
+						'items'       => array( 'type' => 'object', 'additionalProperties' => true ),
+					),
+					'container_id'     => array( 'type' => 'integer', 'description' => __( 'Resumen existente bajo el cual colocar las filas de primer nivel (import); 0 = primer nivel del proyecto.', 'gestion-de-proyectos' ) ),
 				),
 				'required'             => array( 'action', 'project_id' ),
 				'additionalProperties' => false,
@@ -424,6 +430,20 @@ final class PlanningTools {
 			$input,
 			array_flip( array( 'activity_id', 'data', 'expected_version', 'percent', 'status', 'actual_start', 'actual_finish', 'note', 'predecessors', 'parent_id', 'sort_order', 'user_id', 'role', 'allocation', 'name', 'description', 'make_current', 'baseline_id', 'calendar_id' ) )
 		);
+
+		if ( 'import' === $action ) {
+			$rows = ScheduleImporter::from_records( is_array( $input['rows'] ?? null ) ? $input['rows'] : array() );
+			if ( is_wp_error( $rows ) ) {
+				return $rows;
+			}
+			$prepared = ScheduleImporter::prepare( $rows, $project_id );
+			$payload  = array(
+				'rows'         => $prepared['rows'],
+				'container_id' => (int) ( $input['container_id'] ?? 0 ),
+				'warnings'     => $prepared['warnings'],
+				'source'       => __( 'conector', 'gestion-de-proyectos' ),
+			);
+		}
 
 		return OperationManager::propose( 'activity', $action, $payload, $project_id, 'connector' );
 	}
