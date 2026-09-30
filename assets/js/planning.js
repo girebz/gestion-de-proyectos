@@ -209,7 +209,7 @@
 	}
 
 	Gantt.prototype.pxPerDay = function () {
-		return { day: 28, week: 9, month: 3 }[ this.zoom ] || 9;
+		return { day: 28, week: 9, month: 3, quarter: 1.2 }[ this.zoom ] || 9;
 	};
 
 	Gantt.prototype.buildToolbar = function () {
@@ -217,7 +217,7 @@
 		var zoomBox = document.querySelector( '.gdp-gantt-zoom' );
 		if ( zoomBox ) {
 			zoomBox.innerHTML = '';
-			[ [ 'day', strings.zoomDay ], [ 'week', strings.zoomWeek ], [ 'month', strings.zoomMonth ] ].forEach( function ( z ) {
+			[ [ 'day', strings.zoomDay ], [ 'week', strings.zoomWeek ], [ 'month', strings.zoomMonth ], [ 'quarter', strings.zoomQuarter ] ].forEach( function ( z ) {
 				var b = el( 'button', { type: 'button', 'class': 'button button-small' + ( z[0] === self.zoom ? ' is-active' : '' ), text: z[1] } );
 				b.addEventListener( 'click', function () {
 					self.zoom = z[0];
@@ -241,6 +241,54 @@
 				} );
 			}
 		} );
+
+		// Filtros: solo críticas, frente y responsable.
+		this.filters = { critical: false, front: '', owner: '' };
+		var onlyCritical = document.getElementById( 'gdp-gantt-only-critical' );
+		if ( onlyCritical ) {
+			onlyCritical.addEventListener( 'change', function () {
+				self.filters.critical = onlyCritical.checked;
+				self.render();
+			} );
+		}
+		var fillSelect = function ( id, key, values, allLabel ) {
+			var select = document.getElementById( id );
+			if ( ! select ) {
+				return;
+			}
+			select.innerHTML = '';
+			select.appendChild( el( 'option', { value: '', text: allLabel } ) );
+			( values || [] ).forEach( function ( v ) {
+				select.appendChild( el( 'option', { value: v, text: v } ) );
+			} );
+			select.addEventListener( 'change', function () {
+				self.filters[ key ] = select.value;
+				self.render();
+			} );
+		};
+		fillSelect( 'gdp-gantt-front', 'front', this.data.fronts, strings.allFronts );
+		fillSelect( 'gdp-gantt-owner', 'owner', this.data.owners, strings.allOwners );
+
+		var print = document.getElementById( 'gdp-gantt-print' );
+		if ( print ) {
+			print.addEventListener( 'click', function () {
+				var previous = self.zoom;
+				var svg = self.container.querySelector( 'svg' );
+				// Un gráfico más ancho que dos páginas se imprime en escala de mes.
+				if ( svg && +svg.getAttribute( 'width' ) > 2200 && 'day' !== previous ) {
+					self.zoom = 'month';
+					self.render();
+				} else if ( 'day' === previous ) {
+					self.zoom = 'week';
+					self.render();
+				}
+				window.setTimeout( function () {
+					window.print();
+					self.zoom = previous;
+					self.render();
+				}, 150 );
+			} );
+		}
 	};
 
 	Gantt.prototype.setStatus = function ( text ) {
@@ -250,11 +298,47 @@
 		}
 	};
 
+	Gantt.prototype.matchesFilters = function ( a ) {
+		var f = this.filters || {};
+		if ( f.critical && ! a.critical ) {
+			return false;
+		}
+		if ( f.front && a.front !== f.front ) {
+			return false;
+		}
+		if ( f.owner && a.owner !== f.owner ) {
+			return false;
+		}
+		return true;
+	};
+
 	Gantt.prototype.visibleRows = function () {
 		var self = this;
+		var index = {};
+		this.data.activities.forEach( function ( a ) { index[ a.id ] = a; } );
+
+		// Con filtros activos se muestran las hojas que coinciden y sus resúmenes ancestros.
+		var filtering = this.filters && ( this.filters.critical || this.filters.front || this.filters.owner );
+		var keep = {};
+		if ( filtering ) {
+			this.data.activities.forEach( function ( a ) {
+				if ( 'summary' !== a.kind && self.matchesFilters( a ) ) {
+					keep[ a.id ] = true;
+					var p = a.parent;
+					while ( p && index[ p ] ) {
+						keep[ p ] = true;
+						p = index[ p ].parent;
+					}
+				}
+			} );
+		}
+
 		var hidden = {};
 		var rows = [];
 		this.data.activities.forEach( function ( a ) {
+			if ( filtering && ! keep[ a.id ] ) {
+				return;
+			}
 			if ( hidden[ a.parent ] ) {
 				hidden[ a.id ] = true;
 				return;
@@ -318,6 +402,7 @@
 		this.data.activities.forEach( function ( a ) { index[ a.id ] = a; } );
 		var rowIndex = {};
 		rows.forEach( function ( a, i ) { rowIndex[ a.id ] = i; } );
+		this.currentRows = rows;
 
 		this.container.innerHTML = '';
 
@@ -398,20 +483,39 @@
 		header.appendChild( svgEl( 'line', { x1: 0, x2: width, y1: this.headerH - 0.5, y2: this.headerH - 0.5, stroke: '#dcdcde' } ) );
 		var monthNames = [ 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic' ];
 		var cursor = range.from;
+		var isQuarter = 'quarter' === this.zoom;
 		while ( cursor <= range.to ) {
-			var monthEnd = new Date( Date.UTC( cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 0 ) );
-			var last = monthEnd < range.to ? monthEnd : range.to;
+			var periodEnd = isQuarter
+				? new Date( Date.UTC( cursor.getUTCFullYear(), Math.floor( cursor.getUTCMonth() / 3 ) * 3 + 3, 0 ) )
+				: new Date( Date.UTC( cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 0 ) );
+			var last = periodEnd < range.to ? periodEnd : range.to;
 			var x0 = x( cursor );
 			var x1 = x( last ) + ppd;
-			header.appendChild( svgEl( 'line', { x1: x0, x2: x0, y1: 0, y2: this.headerH, stroke: '#dcdcde' } ) );
+			header.appendChild( svgEl( 'line', { x1: x0, x2: x0, y1: 0, y2: isQuarter ? 22 : this.headerH, stroke: '#dcdcde' } ) );
 			if ( x1 - x0 > 30 ) {
 				var t = svgEl( 'text', { x: x0 + 4, y: 15, 'font-size': 11, fill: '#1d2327', 'font-weight': 600 } );
-				t.textContent = monthNames[ cursor.getUTCMonth() ] + ' ' + cursor.getUTCFullYear();
+				t.textContent = isQuarter
+					? 'T' + ( Math.floor( cursor.getUTCMonth() / 3 ) + 1 ) + ' ' + cursor.getUTCFullYear()
+					: monthNames[ cursor.getUTCMonth() ] + ' ' + cursor.getUTCFullYear();
 				header.appendChild( t );
 			}
 			cursor = addDays( last, 1 );
 		}
-		if ( 'day' === this.zoom ) {
+		if ( isQuarter ) {
+			var mc = range.from;
+			while ( mc <= range.to ) {
+				var mEnd = new Date( Date.UTC( mc.getUTCFullYear(), mc.getUTCMonth() + 1, 0 ) );
+				var mLast = mEnd < range.to ? mEnd : range.to;
+				var mx0 = x( mc );
+				header.appendChild( svgEl( 'line', { x1: mx0, x2: mx0, y1: 22, y2: this.headerH, stroke: '#e5e5e5' } ) );
+				if ( x( mLast ) + ppd - mx0 > 18 ) {
+					var mt = svgEl( 'text', { x: mx0 + 2, y: 34, 'font-size': 9, fill: '#50575e' } );
+					mt.textContent = monthNames[ mc.getUTCMonth() ];
+					header.appendChild( mt );
+				}
+				mc = addDays( mLast, 1 );
+			}
+		} else if ( 'day' === this.zoom ) {
 			for ( var k = 0; k < range.days; k++ ) {
 				var dd = addDays( range.from, k );
 				var tx = svgEl( 'text', { x: k * ppd + ppd / 2, y: 34, 'font-size': 10, fill: '#50575e', 'text-anchor': 'middle' } );
@@ -476,6 +580,11 @@
 				}
 				geometry[ a.id ] = { x1: bx, x2: bx + bw, y: y + 14 };
 			}
+			if ( cfg.canEdit && 'summary' !== a.kind ) {
+				// Conector para trazar dependencias fin a inicio hacia otra actividad.
+				var cxp = geometry[ a.id ].x2 + 6;
+				g.appendChild( svgEl( 'circle', { 'class': 'gdp-gantt-connector', cx: cxp, cy: geometry[ a.id ].y, r: 4, 'data-from': a.id } ) );
+			}
 			if ( 'asap' !== a.constraint && 'summary' !== a.kind ) {
 				g.appendChild( svgEl( 'circle', { cx: bx - 5, cy: y + self.rowH / 2, r: 2.5, fill: '#646970' } ) );
 			}
@@ -511,7 +620,26 @@
 					path = 'M ' + sx + ' ' + sy + ' H ' + ( sx + 8 ) + ' V ' + rowGap + ' H ' + mid + ' V ' + ey + ' H ' + ex;
 				}
 				var critical = self.options.critical && index[ dep.from ] && index[ dep.to ] && index[ dep.from ].critical && index[ dep.to ].critical;
-				links.appendChild( svgEl( 'path', { d: path, fill: 'none', stroke: critical ? self.colors.accent : '#646970', 'stroke-width': 1, 'marker-end': 'url(#gdp-arrow)' } ) );
+				var line = svgEl( 'path', { 'class': 'gdp-gantt-link', d: path, fill: 'none', stroke: critical ? self.colors.accent : '#646970', 'stroke-width': 1, 'marker-end': 'url(#gdp-arrow)' } );
+				if ( cfg.canEdit ) {
+					// Zona de pulsación más ancha, invisible, para quitar la dependencia.
+					var hit = svgEl( 'path', { 'class': 'gdp-gantt-link-hit', d: path, fill: 'none', stroke: 'transparent', 'stroke-width': 8 } );
+					hit.addEventListener( 'click', function () {
+						var label = ( index[ dep.from ] ? index[ dep.from ].code : dep.from ) + ' → ' + ( index[ dep.to ] ? index[ dep.to ].code : dep.to ) + ' (' + dep.type + ( dep.lag ? ( dep.lag > 0 ? '+' : '' ) + dep.lag : '' ) + ')';
+						if ( window.confirm( ( strings.unlink || '%s?' ).replace( '%s', label ) ) ) {
+							self.setStatus( strings.saving );
+							ajax( { op: 'unlink', from_id: dep.from, to_id: dep.to }, function ( data ) {
+								self.data = data;
+								self.setStatus( '' );
+								self.render();
+							}, function ( message ) {
+								self.setStatus( message );
+							} );
+						}
+					} );
+					links.appendChild( hit );
+				}
+				links.appendChild( line );
 			} );
 			svg.appendChild( links );
 		}
@@ -588,6 +716,12 @@
 		var mode = null;
 		var dx = 0;
 		g.addEventListener( 'pointerdown', function ( event ) {
+			if ( event.target.classList.contains( 'gdp-gantt-connector' ) ) {
+				self.startLink( a, event, chart );
+				event.preventDefault();
+				event.stopPropagation();
+				return;
+			}
 			if ( a.fixed ) {
 				self.setStatus( strings.fixed );
 				return;
@@ -667,6 +801,63 @@
 				} );
 			}
 		} );
+	};
+
+	/**
+	 * Traza una dependencia arrastrando desde el conector de una barra hasta otra barra.
+	 */
+	Gantt.prototype.startLink = function ( from, event, chart ) {
+		var self = this;
+		var svg = chart.querySelector( 'svg' );
+		var rect = svg.getBoundingClientRect();
+		var origin = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+		var line = svgEl( 'line', { x1: origin.x, y1: origin.y, x2: origin.x, y2: origin.y, stroke: self.colors.primary, 'stroke-width': 1.5, 'stroke-dasharray': '4 3', 'pointer-events': 'none' } );
+		svg.appendChild( line );
+		self.setStatus( from.code + ' → ' + strings.linkTo );
+		var target = null;
+
+		var move = function ( e ) {
+			var px = e.clientX - rect.left;
+			var py = e.clientY - rect.top;
+			line.setAttribute( 'x2', px );
+			line.setAttribute( 'y2', py );
+			// El destino es la fila bajo el puntero (basta soltar sobre la fila, no sobre la barra).
+			var row = Math.floor( ( py - self.headerH ) / self.rowH );
+			var candidate = self.currentRows && row >= 0 ? self.currentRows[ row ] : null;
+			target = candidate && 'summary' !== candidate.kind && candidate.id !== from.id ? candidate.id : null;
+			chart.querySelectorAll( '.gdp-gantt-bar.is-target' ).forEach( function ( b ) { b.classList.remove( 'is-target' ); } );
+			if ( target ) {
+				var bar = chart.querySelector( '.gdp-gantt-bar[data-id="' + target + '"]' );
+				if ( bar ) {
+					bar.classList.add( 'is-target' );
+				}
+				self.setStatus( from.code + ' → ' + candidate.code );
+			} else {
+				self.setStatus( from.code + ' → ' + strings.linkTo );
+			}
+		};
+		var finish = function () {
+			document.removeEventListener( 'pointermove', move );
+			document.removeEventListener( 'pointerup', finish );
+			if ( line.parentNode ) {
+				line.parentNode.removeChild( line );
+			}
+			chart.querySelectorAll( '.gdp-gantt-bar.is-target' ).forEach( function ( b ) { b.classList.remove( 'is-target' ); } );
+			if ( ! target ) {
+				self.setStatus( '' );
+				return;
+			}
+			self.setStatus( strings.saving );
+			ajax( { op: 'link', from_id: from.id, to_id: target, type: 'FS', lag: 0 }, function ( data ) {
+				self.data = data;
+				self.setStatus( '' );
+				self.render();
+			}, function ( message ) {
+				self.setStatus( message );
+			} );
+		};
+		document.addEventListener( 'pointermove', move );
+		document.addEventListener( 'pointerup', finish );
 	};
 
 	/* ------------------------------------------------------------------ */

@@ -392,3 +392,100 @@
 		width: 260px;
 	}
 }
+
+/* Dependencias con el ratón. */
+.gdp-gantt-connector {
+	fill: #fff;
+	stroke: var(--gdp-primary, #2271b1);
+	stroke-width: 1.5;
+	cursor: crosshair;
+	opacity: 0;
+}
+
+.gdp-gantt-bar:hover .gdp-gantt-connector,
+.gdp-gantt-connector:hover {
+	opacity: 1;
+}
+
+.gdp-gantt-bar.is-target rect,
+.gdp-gantt-bar.is-target path {
+	stroke: var(--gdp-primary, #2271b1);
+	stroke-width: 2;
+}
+
+.gdp-gantt-link-hit {
+	cursor: pointer;
+}
+
+.gdp-gantt-link-hit:hover + .gdp-gantt-link {
+	stroke-width: 2.5;
+}
+
+/* Impresión: solo el gráfico, a lo ancho de la hoja apaisada. */
+@media print {
+	@page {
+		size: landscape;
+		margin: 12mm;
+	}
+
+	#adminmenumain,
+	#wpadminbar,
+	#wpfooter,
+	.gdp-planning-bar,
+	.gdp-gantt-toolbar,
+	.gdp-no-print,
+	.notice,
+	.update-nag {
+		display: none !important;
+	}
+
+	#wpcontent,
+	#wpbody-content {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	.gdp-header {
+		border-bottom-width: 1px;
+		margin-bottom: 8px;
+	}
+
+	.gdp-gantt {
+		display: block;
+		border: 0;
+		overflow: visible;
+	}
+
+	.gdp-gantt__table {
+		width: 100%;
+		border-right: 0;
+		margin-bottom: 8px;
+	}
+
+	.gdp-gantt__table th,
+	.gdp-gantt__table td {
+		height: auto;
+		line-height: 1.3;
+		padding: 2px 4px;
+		font-size: 9px;
+	}
+
+	.gdp-gantt__table thead th {
+		height: auto;
+		line-height: 1.3;
+	}
+
+	.gdp-gantt__chart {
+		overflow: visible;
+	}
+
+	.gdp-gantt__chart svg {
+		max-width: 100%;
+		height: auto;
+	}
+
+	.gdp-gantt-connector,
+	.gdp-gantt-tooltip {
+		display: none;
+	}
+}

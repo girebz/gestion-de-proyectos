@@ -96,6 +96,11 @@ final class PlanningPage extends Page {
 				'zoomDay'    => __( 'Día', 'gestion-de-proyectos' ),
 				'zoomWeek'   => __( 'Semana', 'gestion-de-proyectos' ),
 				'zoomMonth'  => __( 'Mes', 'gestion-de-proyectos' ),
+				'zoomQuarter' => __( 'Trimestre', 'gestion-de-proyectos' ),
+				'allFronts'  => __( 'Todos los frentes', 'gestion-de-proyectos' ),
+				'allOwners'  => __( 'Todos los responsables', 'gestion-de-proyectos' ),
+				'linkTo'     => __( 'Suelte sobre la actividad sucesora', 'gestion-de-proyectos' ),
+				'unlink'     => __( '¿Quitar la dependencia %s?', 'gestion-de-proyectos' ),
 				'collapse'   => __( 'Contraer', 'gestion-de-proyectos' ),
 				'expand'     => __( 'Expandir', 'gestion-de-proyectos' ),
 				'noDates'    => __( 'Sin fechas programadas.', 'gestion-de-proyectos' ),
@@ -472,11 +477,15 @@ final class PlanningPage extends Page {
 				<label><input type="checkbox" id="gdp-gantt-baseline" checked> <?php esc_html_e( 'Línea base', 'gestion-de-proyectos' ); ?></label>
 				<label><input type="checkbox" id="gdp-gantt-critical" checked> <?php esc_html_e( 'Ruta crítica', 'gestion-de-proyectos' ); ?></label>
 				<label><input type="checkbox" id="gdp-gantt-links" checked> <?php esc_html_e( 'Dependencias', 'gestion-de-proyectos' ); ?></label>
+				<label><input type="checkbox" id="gdp-gantt-only-critical"> <?php esc_html_e( 'Solo críticas', 'gestion-de-proyectos' ); ?></label>
+				<select id="gdp-gantt-front" aria-label="<?php esc_attr_e( 'Frente', 'gestion-de-proyectos' ); ?>"></select>
+				<select id="gdp-gantt-owner" aria-label="<?php esc_attr_e( 'Responsable', 'gestion-de-proyectos' ); ?>"></select>
+				<button type="button" class="button button-small" id="gdp-gantt-print"><?php esc_html_e( 'Imprimir o guardar en PDF', 'gestion-de-proyectos' ); ?></button>
 				<span class="gdp-gantt-status" aria-live="polite"></span>
-				<?php if ( Access::can( 'planning.edit', $project_id ) ) : ?>
-					<span class="gdp-muted gdp-small"><?php esc_html_e( 'Arrastre una barra para fijar su inicio (restricción "no empezar antes de") o su borde derecho para cambiar la duración.', 'gestion-de-proyectos' ); ?></span>
-				<?php endif; ?>
 			</div>
+			<?php if ( Access::can( 'planning.edit', $project_id ) ) : ?>
+				<p class="gdp-muted gdp-small gdp-no-print"><?php esc_html_e( 'Arrastre una barra para fijar su inicio (restricción "no empezar antes de") o su borde derecho para cambiar la duración. Arrastre desde el círculo del extremo de una barra hasta otra para crear una dependencia fin a inicio; pulse sobre una flecha para quitarla; doble clic sobre una barra quita su restricción.', 'gestion-de-proyectos' ); ?></p>
+			<?php endif; ?>
 			<div id="gdp-gantt" class="gdp-gantt" data-project="<?php echo (int) $project_id; ?>"></div>
 			<?php
 		} else {
@@ -545,6 +554,14 @@ final class PlanningPage extends Page {
 			$exceptions[ $date ] = $working;
 		}
 
+		$owners = array();
+		foreach ( $activities as $a ) {
+			if ( '' !== $a['owner'] ) {
+				$owners[ $a['owner'] ] = $a['owner'];
+			}
+		}
+		ksort( $owners );
+
 		return array(
 			'activities'   => $activities,
 			'dependencies' => $deps,
@@ -553,6 +570,8 @@ final class PlanningPage extends Page {
 			'today'        => current_time( 'Y-m-d' ),
 			'baseline'     => $baseline ? $baseline['name'] : null,
 			'statuses'     => ActivityRepository::status_labels(),
+			'fronts'       => array_values( $fronts ),
+			'owners'       => array_values( $owners ),
 		);
 	}
 
@@ -1175,6 +1194,31 @@ final class PlanningPage extends Page {
 
 		if ( ! Access::can( 'planning.edit', $project_id ) ) {
 			wp_send_json_error( array( 'message' => __( 'Sin permiso de edición.', 'gestion-de-proyectos' ) ), 403 );
+		}
+
+		// Dependencias trazadas o quitadas con el ratón en la carta Gantt.
+		if ( 'link' === $op || 'unlink' === $op ) {
+			$from = isset( $_POST['from_id'] ) ? (int) $_POST['from_id'] : 0;
+			$to   = isset( $_POST['to_id'] ) ? (int) $_POST['to_id'] : 0;
+			$type = isset( $_POST['type'] ) ? strtoupper( sanitize_text_field( wp_unslash( (string) $_POST['type'] ) ) ) : 'FS';
+			$lag  = isset( $_POST['lag'] ) ? (int) $_POST['lag'] : 0;
+			$list = array();
+			foreach ( DependencyRepository::predecessors( $to ) as $d ) {
+				if ( $d['predecessor_id'] === $from ) {
+					continue;
+				}
+				$list[] = array( 'predecessor_id' => $d['predecessor_id'], 'type' => $d['type'], 'lag' => $d['lag'] );
+			}
+			if ( 'link' === $op ) {
+				$list[] = array( 'predecessor_id' => $from, 'type' => $type, 'lag' => $lag );
+			}
+			$clean = DependencyRepository::validate_list( $project_id, $to, $list );
+			if ( is_wp_error( $clean ) ) {
+				wp_send_json_error( array( 'message' => $clean->get_error_message() ) );
+			}
+			DependencyRepository::replace_predecessors( $project_id, $to, $clean );
+			ScheduleService::recalculate( $project_id );
+			wp_send_json_success( self::client_data( $project_id ) );
 		}
 
 		$id       = isset( $_POST['activity_id'] ) ? (int) $_POST['activity_id'] : 0;
