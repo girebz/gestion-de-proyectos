@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 final class PlanningPage extends Page {
 
 	public const SLUG  = 'planning';
-	public const VIEWS = array( 'list', 'gantt', 'board', 'edit', 'calendars', 'baselines', 'alerts', 'report' );
+	public const VIEWS = array( 'list', 'gantt', 'board', 'edit', 'calendars', 'baselines', 'alerts', 'report', 'workload' );
 
 	/**
 	 * Submenú.
@@ -213,6 +213,9 @@ final class PlanningPage extends Page {
 			case 'report':
 				PlanningReportPage::render_report( $project );
 				break;
+			case 'workload':
+				PlanningReportPage::render_workload( $project );
+				break;
 			default:
 				self::render_list( $project );
 		}
@@ -234,6 +237,7 @@ final class PlanningPage extends Page {
 			'gantt'     => __( 'Carta Gantt', 'gestion-de-proyectos' ),
 			'board'     => __( 'Tablero', 'gestion-de-proyectos' ),
 			'alerts'    => __( 'Alertas', 'gestion-de-proyectos' ),
+			'workload'  => __( 'Carga de trabajo', 'gestion-de-proyectos' ),
 			'report'    => __( 'Informe semanal', 'gestion-de-proyectos' ),
 			'baselines' => __( 'Líneas base', 'gestion-de-proyectos' ),
 			'calendars' => __( 'Calendarios', 'gestion-de-proyectos' ),

@@ -16,6 +16,7 @@ use GDP\Modules\Planning\ActivityRepository;
 use GDP\Modules\Planning\PlanningCron;
 use GDP\Modules\Planning\ScheduleService;
 use GDP\Modules\Planning\WeeklyReport;
+use GDP\Modules\Planning\WorkloadService;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -51,6 +52,7 @@ final class PlanningReportPage extends Page {
 			'negative_float' => __( 'Holgura negativa', 'gestion-de-proyectos' ),
 			'conflict'       => __( 'Conflicto de fechas', 'gestion-de-proyectos' ),
 			'deadline'       => __( 'Término contractual', 'gestion-de-proyectos' ),
+			'overallocation' => __( 'Sobreasignación', 'gestion-de-proyectos' ),
 		);
 
 		PlanningPage::header( $project, 'alerts', __( 'Alertas de plazo', 'gestion-de-proyectos' ) );
@@ -218,6 +220,78 @@ final class PlanningReportPage extends Page {
 			<?php endif; ?>
 		</div>
 		<p class="gdp-muted gdp-small"><?php esc_html_e( 'La exportación LaTeX genera un documento completo (babel español, tablas longtable con continuación, carta Gantt resumida con pgfgantt) listo para compilar con pdflatex.', 'gestion-de-proyectos' ); ?></p>
+		<?php
+		self::close();
+	}
+
+	/**
+	 * Carga de trabajo por persona y semana.
+	 *
+	 * @param array<string,mixed> $project Proyecto.
+	 * @return void
+	 */
+	public static function render_workload( array $project ): void {
+		$project_id = (int) $project['id'];
+		$from       = isset( $_GET['from'] ) ? ActivityRepository::normalize_date( sanitize_text_field( wp_unslash( (string) $_GET['from'] ) ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$weeks      = isset( $_GET['weeks'] ) ? max( 4, min( 78, (int) $_GET['weeks'] ) ) : 26; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$data       = WorkloadService::compute( $project_id, $from ? $from : null, $weeks );
+		$monday     = WeeklyReport::monday( $data['weeks'][0]['start'] );
+		$today_week = WeeklyReport::monday( current_time( 'Y-m-d' ) )->format( 'Y-m-d' );
+
+		PlanningPage::header( $project, 'workload', __( 'Carga de trabajo', 'gestion-de-proyectos' ) );
+		?>
+		<div class="gdp-planning-toolbar">
+			<form method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" class="gdp-inline-form">
+				<input type="hidden" name="page" value="<?php echo esc_attr( Admin::SLUG . '-' . PlanningPage::SLUG ); ?>">
+				<input type="hidden" name="project_id" value="<?php echo (int) $project_id; ?>">
+				<input type="hidden" name="view" value="workload">
+				<a class="button" href="<?php echo esc_url( PlanningPage::url( $project_id, 'workload', array( 'from' => $monday->modify( '-' . ( 7 * $weeks ) . ' days' )->format( 'Y-m-d' ), 'weeks' => $weeks ) ) ); ?>">&larr;</a>
+				<input type="date" name="from" value="<?php echo esc_attr( $data['weeks'][0]['start'] ); ?>">
+				<select name="weeks">
+					<?php foreach ( array( 8, 13, 26, 52 ) as $n ) : ?>
+						<option value="<?php echo (int) $n; ?>" <?php selected( $n, $weeks ); ?>><?php echo esc_html( sprintf( __( '%d semanas', 'gestion-de-proyectos' ), $n ) ); ?></option>
+					<?php endforeach; ?>
+				</select>
+				<button type="submit" class="button"><?php esc_html_e( 'Ver', 'gestion-de-proyectos' ); ?></button>
+				<a class="button" href="<?php echo esc_url( PlanningPage::url( $project_id, 'workload', array( 'from' => $monday->modify( '+' . ( 7 * $weeks ) . ' days' )->format( 'Y-m-d' ), 'weeks' => $weeks ) ) ); ?>">&rarr;</a>
+			</form>
+			<span class="gdp-muted gdp-small"><?php esc_html_e( 'Porcentaje de dedicación por semana: responsables al 100 % salvo asignación propia, participantes por su dedicación, prorrateado por los días hábiles de cada actividad en la semana. Más de 100 % es sobreasignación.', 'gestion-de-proyectos' ); ?></span>
+		</div>
+		<?php if ( empty( $data['people'] ) ) : ?>
+			<p class="gdp-muted"><?php esc_html_e( 'No hay actividades abiertas con responsable o asignaciones en este periodo.', 'gestion-de-proyectos' ); ?></p>
+		<?php else : ?>
+		<div class="gdp-workload-wrap">
+			<table class="widefat gdp-table gdp-workload">
+				<thead>
+					<tr>
+						<th class="gdp-workload__person"><?php esc_html_e( 'Persona', 'gestion-de-proyectos' ); ?></th>
+						<?php foreach ( $data['weeks'] as $w ) : ?>
+							<th class="gdp-num <?php echo $w['start'] === $today_week ? 'gdp-workload__today' : ''; ?>" title="<?php echo esc_attr( $w['iso'] ); ?>"><?php echo esc_html( $w['label'] ); ?></th>
+						<?php endforeach; ?>
+						<th class="gdp-num"><?php esc_html_e( 'Máx.', 'gestion-de-proyectos' ); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ( $data['people'] as $p ) : ?>
+					<tr>
+						<td class="gdp-workload__person"><?php echo esc_html( $p['name'] ); ?><?php echo $p['overallocated'] > 0 ? ' <span class="gdp-badge gdp-badge--fail">' . esc_html( sprintf( __( '%d sem. >100 %%', 'gestion-de-proyectos' ), (int) $p['overallocated'] ) ) . '</span>' : ''; ?></td>
+						<?php foreach ( $data['weeks'] as $i => $w ) : ?>
+							<?php
+							$cell  = $p['cells'][ $i ] ?? null;
+							$pct   = $cell ? (int) $cell['percent'] : 0;
+							$level = $pct > 100 ? 'over' : ( $pct >= 80 ? 'high' : ( $pct > 0 ? 'some' : 'none' ) );
+							$title = $cell ? implode( "
+", array_map( static fn( array $x ): string => sprintf( '%s %s (%d %%)', $x['code'], $x['name'], $x['percent'] ), $cell['activities'] ) ) : '';
+							?>
+							<td class="gdp-num gdp-workload__cell gdp-workload__cell--<?php echo esc_attr( $level ); ?>" title="<?php echo esc_attr( $title ); ?>"><?php echo $pct > 0 ? (int) $pct : ''; ?></td>
+						<?php endforeach; ?>
+						<td class="gdp-num"><strong><?php echo (int) $p['max']; ?></strong></td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
+		<?php endif; ?>
 		<?php
 		self::close();
 	}

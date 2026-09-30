@@ -246,6 +246,10 @@ final class ScheduleService {
 			);
 		}
 
+		foreach ( WorkloadService::alerts( $project_id ) as $overallocation ) {
+			$alerts[] = $overallocation;
+		}
+
 		usort(
 			$alerts,
 			static function ( array $a, array $b ): int {

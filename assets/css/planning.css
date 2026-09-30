@@ -490,3 +490,47 @@
 		display: none;
 	}
 }
+
+/* Carga de trabajo. */
+.gdp-workload-wrap {
+	overflow-x: auto;
+	background: #fff;
+	border: 1px solid var(--gdp-border, #dcdcde);
+}
+
+.gdp-workload {
+	border: 0;
+	font-size: 12px;
+}
+
+.gdp-workload th,
+.gdp-workload td {
+	padding: 4px 6px;
+	white-space: nowrap;
+}
+
+.gdp-workload__person {
+	min-width: 180px;
+	position: sticky;
+	left: 0;
+	background: #fff;
+	z-index: 1;
+}
+
+.gdp-workload__today {
+	border-bottom: 3px solid var(--gdp-accent, #d63638);
+}
+
+.gdp-workload__cell--some {
+	background: rgba(34, 113, 177, 0.12);
+}
+
+.gdp-workload__cell--high {
+	background: rgba(34, 113, 177, 0.3);
+}
+
+.gdp-workload__cell--over {
+	background: var(--gdp-accent, #d63638);
+	color: #fff;
+	font-weight: 600;
+}
