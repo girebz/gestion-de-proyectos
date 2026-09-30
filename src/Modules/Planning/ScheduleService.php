@@ -250,6 +250,31 @@ final class ScheduleService {
 			$alerts[] = $overallocation;
 		}
 
+		// Desviación respecto de la línea base que exige aprobación formal del financiador.
+		$baseline = BaselineRepository::current( $project_id );
+		if ( $baseline ) {
+			$threshold = self::approval_threshold( $project_id );
+			$compare   = BaselineRepository::compare( $project_id, $baseline['id'] );
+			foreach ( $compare['rows'] as $row ) {
+				if ( 'summary' === $row['kind'] || null === $row['variance'] || $row['variance'] <= $threshold ) {
+					continue;
+				}
+				$alerts[] = array(
+					'activity_id' => $row['activity_id'],
+					'code'        => $row['code'],
+					'name'        => $row['name'],
+					'kind'        => $row['kind'],
+					'end_date'    => $row['current']['end_date'],
+					'percent'     => $row['current']['percent'],
+					'owner_id'    => 0,
+					'type'        => 'approval_required',
+					'severity'    => 'high',
+					'days'        => $row['variance'],
+					'message'     => sprintf( 'Se atrasa %1$d día(s) hábil(es) respecto de la línea base "%2$s" (umbral %3$d): la reprogramación exige aprobación formal del financiador y una nueva línea base.', (int) $row['variance'], $baseline['name'], $threshold ),
+				);
+			}
+		}
+
 		usort(
 			$alerts,
 			static function ( array $a, array $b ): int {
@@ -259,6 +284,19 @@ final class ScheduleService {
 		);
 
 		return $alerts;
+	}
+
+	/**
+	 * Umbral (días hábiles) de desviación respecto de la línea base que exige aprobación.
+	 *
+	 * @param int $project_id Proyecto.
+	 * @return int
+	 */
+	public static function approval_threshold( int $project_id ): int {
+		$project = ProjectRepository::find( $project_id );
+		$value   = $project['settings']['planning']['approval_threshold_days'] ?? 10;
+
+		return max( 0, (int) $value );
 	}
 
 	/**

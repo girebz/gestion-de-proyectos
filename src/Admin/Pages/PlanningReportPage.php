@@ -54,6 +54,7 @@ final class PlanningReportPage extends Page {
 			'conflict'       => __( 'Conflicto de fechas', 'gestion-de-proyectos' ),
 			'deadline'       => __( 'Término contractual', 'gestion-de-proyectos' ),
 			'overallocation' => __( 'Sobreasignación', 'gestion-de-proyectos' ),
+			'approval_required' => __( 'Exige aprobación', 'gestion-de-proyectos' ),
 		);
 
 		PlanningPage::header( $project, 'alerts', __( 'Alertas de plazo', 'gestion-de-proyectos' ) );

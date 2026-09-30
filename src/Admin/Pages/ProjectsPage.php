@@ -355,6 +355,13 @@ final class ProjectsPage extends Page {
 					<td><textarea id="gdp-description" name="description" rows="5" class="large-text"><?php echo esc_textarea( (string) $p['description'] ); ?></textarea></td>
 				</tr>
 				<tr>
+					<th scope="row"><label for="gdp-threshold"><?php esc_html_e( 'Desviación que exige aprobación', 'gestion-de-proyectos' ); ?></label></th>
+					<td>
+						<input type="number" id="gdp-threshold" name="approval_threshold_days" min="0" max="365" class="small-text" value="<?php echo (int) ( $p['settings']['planning']['approval_threshold_days'] ?? 10 ); ?>"> <?php esc_html_e( 'días hábiles', 'gestion-de-proyectos' ); ?>
+						<p class="description"><?php esc_html_e( 'Cuando una actividad o hito se atrasa respecto de la línea base vigente más allá de este umbral, o el término programado supera el contractual, el módulo de planificación alerta que la reprogramación exige aprobación formal del financiador.', 'gestion-de-proyectos' ); ?></p>
+					</td>
+				</tr>
+				<tr>
 					<th scope="row"><?php esc_html_e( 'Módulos opcionales', 'gestion-de-proyectos' ); ?></th>
 					<td>
 						<?php foreach ( Registry::roadmap() as $slug => $info ) : ?>
@@ -417,6 +424,10 @@ final class ProjectsPage extends Page {
 		$current = $id > 0 ? ProjectRepository::find( $id ) : null;
 		$settings = $current ? $current['settings'] : array();
 		$settings['modules'] = array_values( array_intersect( $modules, array_keys( Registry::roadmap() ) ) );
+		if ( isset( $_POST['approval_threshold_days'] ) ) {
+			$settings['planning']                            = is_array( $settings['planning'] ?? null ) ? $settings['planning'] : array();
+			$settings['planning']['approval_threshold_days'] = max( 0, min( 365, (int) $_POST['approval_threshold_days'] ) );
+		}
 		$data['settings']    = $settings;
 
 		if ( 0 === $id ) {
