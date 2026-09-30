@@ -13,6 +13,7 @@ use GDP\Admin\Admin;
 use GDP\Core\Access;
 use GDP\Modules\Planning\BaselineRepository;
 use GDP\Modules\Planning\ScheduleService;
+use GDP\Operations\OperationManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -189,8 +190,11 @@ final class PlanningBaselinesPage extends Page {
 		if ( ! $baseline || ! Access::can( 'planning.baseline', $baseline['project_id'] ) ) {
 			wp_die( esc_html__( 'Sin permiso.', 'gestion-de-proyectos' ), 403 );
 		}
-		BaselineRepository::delete( $id );
-		Admin::redirect_with_notice( PlanningPage::url( $baseline['project_id'], 'baselines' ), __( 'Línea base eliminada.', 'gestion-de-proyectos' ) );
+		$result = OperationManager::execute( 'activity', 'delete_baseline', array( 'baseline_id' => $id ), $baseline['project_id'] );
+		if ( is_wp_error( $result ) ) {
+			Admin::redirect_with_notice( PlanningPage::url( $baseline['project_id'], 'baselines', array( 'baseline_id' => $id ) ), $result->get_error_message(), 'error' );
+		}
+		Admin::redirect_with_notice( PlanningPage::url( $baseline['project_id'], 'baselines' ), sprintf( __( 'Línea base eliminada. Puede restaurarla desde la <a href="%s">papelera</a>.', 'gestion-de-proyectos' ), esc_url( Admin::url( 'trash', array( 'project_id' => $baseline['project_id'] ) ) ) ) );
 	}
 
 	/**

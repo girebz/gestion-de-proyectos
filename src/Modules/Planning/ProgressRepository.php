@@ -60,6 +60,23 @@ final class ProgressRepository {
 	}
 
 	/**
+	 * Reinserta un registro guardado en una instantánea (mismo identificador).
+	 *
+	 * @param array<string,mixed> $row Registro tal como lo devuelve hydrate().
+	 * @return void
+	 */
+	public static function restore( array $row ): void {
+		global $wpdb;
+
+		if ( empty( $row['id'] ) ) {
+			return;
+		}
+		$data = array_intersect_key( $row, array_flip( array( 'id', 'project_id', 'activity_id', 'user_id', 'reported_at', 'percent', 'previous_percent', 'status', 'actual_start', 'actual_finish', 'note', 'source' ) ) );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->replace( Schema::table( 'progress' ), $data, array( '%d', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s' ) );
+	}
+
+	/**
 	 * Avances de un proyecto en un intervalo (UTC).
 	 *
 	 * @param int    $project_id Proyecto.

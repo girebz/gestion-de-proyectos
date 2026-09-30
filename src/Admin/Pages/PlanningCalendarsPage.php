@@ -13,6 +13,7 @@ use GDP\Admin\Admin;
 use GDP\Core\Access;
 use GDP\Modules\Planning\CalendarRepository;
 use GDP\Modules\Planning\ScheduleService;
+use GDP\Operations\OperationManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -278,9 +279,11 @@ final class PlanningCalendarsPage extends Page {
 		check_admin_referer( 'gdp_delete_calendar_' . $id );
 		self::guard( $id, $project_id );
 
-		CalendarRepository::delete( $id );
-		ScheduleService::recalculate( $project_id );
-		Admin::redirect_with_notice( PlanningPage::url( $project_id, 'calendars' ), __( 'Calendario eliminado.', 'gestion-de-proyectos' ) );
+		$result = OperationManager::execute( 'activity', 'delete_calendar', array( 'calendar_id' => $id ), $project_id );
+		if ( is_wp_error( $result ) ) {
+			Admin::redirect_with_notice( PlanningPage::url( $project_id, 'calendars', array( 'calendar_id' => $id ) ), $result->get_error_message(), 'error' );
+		}
+		Admin::redirect_with_notice( PlanningPage::url( $project_id, 'calendars' ), sprintf( __( 'Calendario eliminado. Puede restaurarlo desde la <a href="%s">papelera</a>.', 'gestion-de-proyectos' ), esc_url( Admin::url( 'trash', array( 'project_id' => $project_id ) ) ) ) );
 	}
 
 	/**

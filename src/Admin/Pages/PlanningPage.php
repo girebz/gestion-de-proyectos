@@ -21,6 +21,7 @@ use GDP\Modules\Planning\CalendarRepository;
 use GDP\Modules\Planning\DependencyRepository;
 use GDP\Modules\Planning\ProgressRepository;
 use GDP\Modules\Planning\ScheduleService;
+use GDP\Operations\OperationManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -1007,12 +1008,20 @@ final class PlanningPage extends Page {
 			wp_die( esc_html__( 'Sin permiso.', 'gestion-de-proyectos' ), 403 );
 		}
 
-		$result = ActivityRepository::delete( $id );
+		// Por la capa de operaciones: queda la instantánea y puede restaurarse desde la papelera.
+		$result = OperationManager::execute( 'activity', 'delete', array( 'activity_id' => $id ), $activity['project_id'] );
 		if ( is_wp_error( $result ) ) {
 			Admin::redirect_with_notice( self::url( $activity['project_id'], 'edit', array( 'id' => $id ) ), $result->get_error_message(), 'error' );
 		}
-		ScheduleService::recalculate( $activity['project_id'] );
-		Admin::redirect_with_notice( self::url( $activity['project_id'], 'list' ), sprintf( __( 'Actividad eliminada (%d registros).', 'gestion-de-proyectos' ), count( $result['activities'] ) ) );
+		Admin::redirect_with_notice(
+			self::url( $activity['project_id'], 'list' ),
+			sprintf(
+				/* translators: 1: registros eliminados, 2: enlace a la papelera */
+				__( 'Actividad eliminada (%1$d registros). Puede restaurarla desde la <a href="%2$s">papelera</a>.', 'gestion-de-proyectos' ),
+				(int) ( $result['result']['deleted'] ?? 1 ),
+				esc_url( Admin::url( 'trash', array( 'project_id' => $activity['project_id'] ) ) )
+			)
+		);
 	}
 
 	/**

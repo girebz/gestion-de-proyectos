@@ -183,6 +183,63 @@ final class BaselineRepository {
 	}
 
 	/**
+	 * Instantánea completa de una línea base (para eliminar de forma reversible).
+	 *
+	 * @param int $id Línea base.
+	 * @return array<string,mixed>|null
+	 */
+	public static function snapshot( int $id ): ?array {
+		$baseline = self::find( $id );
+		if ( ! $baseline ) {
+			return null;
+		}
+
+		return array(
+			'baseline'   => $baseline,
+			'activities' => array_values( self::activities( $id ) ),
+		);
+	}
+
+	/**
+	 * Reinserta una línea base eliminada a partir de su instantánea (mismos identificadores).
+	 *
+	 * @param array<string,mixed> $snapshot Instantánea de snapshot().
+	 * @return bool
+	 */
+	public static function restore( array $snapshot ): bool {
+		global $wpdb;
+
+		$b = $snapshot['baseline'] ?? null;
+		if ( ! is_array( $b ) || empty( $b['id'] ) ) {
+			return false;
+		}
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->replace(
+			Schema::table( 'baselines' ),
+			array(
+				'id'          => (int) $b['id'],
+				'project_id'  => (int) $b['project_id'],
+				'name'        => (string) $b['name'],
+				'description' => (string) ( $b['description'] ?? '' ),
+				'is_current'  => ! empty( $b['is_current'] ) ? 1 : 0,
+				'created_by'  => (int) $b['created_by'],
+				'created_at'  => (string) $b['created_at'],
+			),
+			array( '%d', '%d', '%s', '%s', '%d', '%d', '%s' )
+		);
+		foreach ( $snapshot['activities'] ?? array() as $a ) {
+			$row = array_intersect_key( $a, array_flip( array( 'id', 'baseline_id', 'activity_id', 'code', 'name', 'kind', 'start_date', 'end_date', 'duration', 'percent', 'cost_planned' ) ) );
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->replace( Schema::table( 'baseline_activities' ), $row, array( '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%d', '%d', null === ( $row['cost_planned'] ?? null ) ? '%s' : '%f' ) );
+		}
+		if ( ! empty( $b['is_current'] ) ) {
+			self::set_current( (int) $b['id'] );
+		}
+
+		return true;
+	}
+
+	/**
 	 * Actividades de una línea base, indexadas por actividad.
 	 *
 	 * @param int $baseline_id Línea base.

@@ -173,6 +173,48 @@ final class OperationManager {
 	}
 
 	/**
+	 * Propone y confirma en un solo paso (escrituras del panel que deben ser
+	 * reversibles, como las eliminaciones). La confirmación en la interfaz ya
+	 * se pidió al usuario; aquí solo se conserva la instantánea y la bitácora.
+	 *
+	 * @param string $handler_key Manejador.
+	 * @param string $action      Acción.
+	 * @param array  $payload     Datos.
+	 * @param int    $project_id  Proyecto.
+	 * @param string $channel     Canal (admin por defecto).
+	 * @return array<string,mixed>|WP_Error Resultado de confirm().
+	 */
+	public static function execute( string $handler_key, string $action, array $payload, int $project_id = 0, string $channel = 'admin' ) {
+		$proposed = self::propose( $handler_key, $action, $payload, $project_id, $channel );
+		if ( is_wp_error( $proposed ) ) {
+			return $proposed;
+		}
+		if ( ! $proposed['confirmable'] ) {
+			self::cancel( (int) $proposed['operation_id'] );
+
+			return new WP_Error( 'conflict', implode( ' ', (array) ( $proposed['preview']['conflicts'] ?? array() ) ) );
+		}
+
+		return self::confirm( (int) $proposed['operation_id'] );
+	}
+
+	/**
+	 * Operaciones aplicadas cuya acción elimina algo (la papelera): pueden restaurarse.
+	 *
+	 * @param int|null $project_id Proyecto (null = todos los visibles).
+	 * @param int      $limit      Máximo.
+	 * @return array<int,array<string,mixed>>
+	 */
+	public static function trash( ?int $project_id = null, int $limit = 100 ): array {
+		$deletions = array_filter(
+			self::find_by_status( self::STATUS_APPLIED, $project_id, 500 ),
+			static fn( array $op ): bool => 0 === strpos( (string) $op['action'], 'delete' )
+		);
+
+		return array_slice( array_values( $deletions ), 0, $limit );
+	}
+
+	/**
 	 * Confirma y aplica una operación propuesta.
 	 *
 	 * @param int $id Identificador de la operación.

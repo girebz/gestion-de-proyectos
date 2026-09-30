@@ -41,7 +41,7 @@ final class ActivityHandler implements HandlerInterface {
 	 * {@inheritDoc}
 	 */
 	public function actions(): array {
-		return array( 'create', 'update', 'delete', 'set_progress', 'set_dependencies', 'move', 'set_assignment', 'remove_assignment', 'create_baseline' );
+		return array( 'create', 'update', 'delete', 'set_progress', 'set_dependencies', 'move', 'set_assignment', 'remove_assignment', 'create_baseline', 'delete_baseline', 'delete_calendar' );
 	}
 
 	/**
@@ -51,7 +51,7 @@ final class ActivityHandler implements HandlerInterface {
 		if ( $project_id <= 0 ) {
 			return false;
 		}
-		if ( 'create_baseline' === $action ) {
+		if ( in_array( $action, array( 'create_baseline', 'delete_baseline' ), true ) ) {
 			return Access::can( 'planning.baseline', $project_id, $user_id );
 		}
 
@@ -181,6 +181,23 @@ final class ActivityHandler implements HandlerInterface {
 					'description'  => sanitize_textarea_field( (string) ( $payload['description'] ?? '' ) ),
 					'make_current' => ! isset( $payload['make_current'] ) || (bool) $payload['make_current'],
 				);
+
+			case 'delete_baseline':
+				$baseline = BaselineRepository::find( (int) ( $payload['baseline_id'] ?? 0 ) );
+				if ( ! $baseline || $baseline['project_id'] !== $project_id ) {
+					return new WP_Error( 'not_found', __( 'La línea base no existe en este proyecto.', 'gestion-de-proyectos' ) );
+				}
+				return array( 'baseline_id' => $baseline['id'] );
+
+			case 'delete_calendar':
+				$calendar = CalendarRepository::find( (int) ( $payload['calendar_id'] ?? 0 ) );
+				if ( ! $calendar || ( $calendar['project_id'] !== $project_id && 0 !== $calendar['project_id'] ) ) {
+					return new WP_Error( 'not_found', __( 'El calendario no existe en este proyecto.', 'gestion-de-proyectos' ) );
+				}
+				if ( 0 === $calendar['project_id'] && ! Access::is_manager() ) {
+					return new WP_Error( 'forbidden', __( 'Solo un administrador puede eliminar un calendario global.', 'gestion-de-proyectos' ) );
+				}
+				return array( 'calendar_id' => $calendar['id'] );
 		}
 
 		return new WP_Error( 'unknown_action', __( 'Acción no admitida.', 'gestion-de-proyectos' ) );
@@ -299,6 +316,24 @@ final class ActivityHandler implements HandlerInterface {
 				}
 				break;
 
+			case 'delete_baseline':
+				$baseline           = BaselineRepository::find( $payload['baseline_id'] );
+				$preview['summary'] = sprintf( 'Eliminar la línea base "%s"', $baseline['name'] );
+				$preview['changes']['baseline'] = array( 'before' => $baseline['name'], 'after' => null );
+				if ( $baseline['is_current'] ) {
+					$preview['warnings'][] = 'Es la línea base vigente: la carta Gantt y el informe dejarán de compararse con ella.';
+				}
+				break;
+
+			case 'delete_calendar':
+				$calendar           = CalendarRepository::find( $payload['calendar_id'] );
+				$preview['summary'] = sprintf( 'Eliminar el calendario "%s"', $calendar['name'] );
+				$preview['changes']['calendar'] = array( 'before' => $calendar['name'], 'after' => null );
+				if ( $calendar['is_default'] ) {
+					$preview['warnings'][] = 'Es el calendario por defecto: el cronograma se recalculará con el calendario global o con la semana de lunes a viernes.';
+				}
+				break;
+
 			case 'create_baseline':
 				$count              = ActivityRepository::count( $project_id );
 				$preview['summary'] = sprintf( 'Crear la línea base "%s" con %d actividades', '' !== $payload['name'] ? $payload['name'] : 'sin nombre', $count );
@@ -401,6 +436,17 @@ final class ActivityHandler implements HandlerInterface {
 					),
 				);
 
+			case 'delete_baseline':
+				$snapshot = BaselineRepository::snapshot( $payload['baseline_id'] );
+				BaselineRepository::delete( $payload['baseline_id'] );
+				return array( 'before' => $snapshot, 'result' => array( 'baseline_id' => $payload['baseline_id'] ) );
+
+			case 'delete_calendar':
+				$snapshot = CalendarRepository::snapshot( $payload['calendar_id'] );
+				CalendarRepository::delete( $payload['calendar_id'] );
+				ScheduleService::recalculate( $project_id );
+				return array( 'before' => $snapshot, 'result' => array( 'calendar_id' => $payload['calendar_id'] ) );
+
 			case 'create_baseline':
 				ScheduleService::recalculate( $project_id );
 				$previous = BaselineRepository::current( $project_id );
@@ -474,6 +520,21 @@ final class ActivityHandler implements HandlerInterface {
 						AssignmentRepository::remove( $activity_id, $created );
 					}
 				}
+				return true;
+
+			case 'delete_baseline':
+				if ( ! $before || empty( $before['baseline'] ) ) {
+					return new WP_Error( 'nothing_to_revert', __( 'No se guardó la instantánea de la línea base.', 'gestion-de-proyectos' ) );
+				}
+				BaselineRepository::restore( $before );
+				return true;
+
+			case 'delete_calendar':
+				if ( ! $before || empty( $before['calendar'] ) ) {
+					return new WP_Error( 'nothing_to_revert', __( 'No se guardó la instantánea del calendario.', 'gestion-de-proyectos' ) );
+				}
+				CalendarRepository::restore( $before );
+				ScheduleService::recalculate( $project_id );
 				return true;
 
 			case 'create_baseline':

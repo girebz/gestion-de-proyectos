@@ -640,12 +640,14 @@ final class ActivityRepository {
 			'activities'   => array(),
 			'dependencies' => array(),
 			'assignments'  => array(),
+			'progress'     => array(),
 		);
 
 		foreach ( $ids as $aid ) {
-			$snapshot['activities'][]   = self::find( $aid );
-			$snapshot['dependencies']   = array_merge( $snapshot['dependencies'], DependencyRepository::for_activity( $aid ) );
-			$snapshot['assignments']    = array_merge( $snapshot['assignments'], AssignmentRepository::for_activity( $aid ) );
+			$snapshot['activities'][] = self::find( $aid );
+			$snapshot['dependencies'] = array_merge( $snapshot['dependencies'], DependencyRepository::for_activity( $aid ) );
+			$snapshot['assignments']  = array_merge( $snapshot['assignments'], AssignmentRepository::for_activity( $aid ) );
+			$snapshot['progress']     = array_merge( $snapshot['progress'], ProgressRepository::for_activity( $aid, 1000 ) );
 		}
 
 		$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
@@ -696,6 +698,9 @@ final class ActivityRepository {
 		}
 		foreach ( $snapshot['assignments'] ?? array() as $s ) {
 			AssignmentRepository::set( (int) $s['project_id'], (int) $s['activity_id'], (int) $s['user_id'], (string) $s['role'], (int) $s['allocation'] );
+		}
+		foreach ( $snapshot['progress'] ?? array() as $h ) {
+			ProgressRepository::restore( $h );
 		}
 
 		if ( $project_id > 0 ) {

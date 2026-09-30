@@ -380,8 +380,10 @@ final class ProjectsPage extends Page {
 				<?php wp_nonce_field( 'gdp_delete_project_' . (int) $p['id'] ); ?>
 				<input type="hidden" name="action" value="gdp_delete_project">
 				<input type="hidden" name="id" value="<?php echo (int) $p['id']; ?>">
+				<label for="gdp-confirm-code" class="screen-reader-text"><?php esc_html_e( 'Código del proyecto', 'gestion-de-proyectos' ); ?></label>
+				<input type="text" id="gdp-confirm-code" name="confirm_code" autocomplete="off" placeholder="<?php echo esc_attr( $p['code'] ); ?>" aria-describedby="gdp-confirm-help">
 				<button type="submit" class="button gdp-button-danger"><?php esc_html_e( 'Eliminar proyecto', 'gestion-de-proyectos' ); ?></button>
-				<span class="gdp-muted"><?php esc_html_e( 'Se eliminan el proyecto y sus miembros; los módulos limpian sus datos. La bitácora conserva el registro.', 'gestion-de-proyectos' ); ?></span>
+				<span class="gdp-muted" id="gdp-confirm-help"><?php esc_html_e( 'Eliminación definitiva: escriba el código del proyecto para confirmarla. Se eliminan el proyecto, sus miembros y los datos de todos los módulos; la bitácora conserva el registro. Las eliminaciones de actividades, calendarios y líneas base, en cambio, van a la papelera y pueden restaurarse.', 'gestion-de-proyectos' ); ?></span>
 			</form>
 		<?php endif; ?>
 		<?php
@@ -443,6 +445,13 @@ final class ProjectsPage extends Page {
 		$id = isset( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 		check_admin_referer( 'gdp_delete_project_' . $id );
 		self::require_manager();
+
+		// Segunda confirmación: la eliminación de un proyecto es definitiva (los módulos borran sus datos).
+		$project = ProjectRepository::find( $id );
+		$typed   = isset( $_POST['confirm_code'] ) ? sanitize_title( wp_unslash( (string) $_POST['confirm_code'] ) ) : '';
+		if ( ! $project || $typed !== $project['code'] ) {
+			Admin::redirect_with_notice( Admin::url( 'projects', array( 'action' => 'edit', 'id' => $id ) ), __( 'Para eliminar el proyecto escriba su código exactamente como aparece en la ficha.', 'gestion-de-proyectos' ), 'error' );
+		}
 
 		$result = ProjectRepository::delete( $id );
 		if ( is_wp_error( $result ) ) {

@@ -221,6 +221,72 @@ final class CalendarRepository {
 	}
 
 	/**
+	 * Instantánea completa de un calendario (para eliminar de forma reversible).
+	 *
+	 * @param int $id Calendario.
+	 * @return array<string,mixed>|null
+	 */
+	public static function snapshot( int $id ): ?array {
+		$calendar = self::find( $id );
+		if ( ! $calendar ) {
+			return null;
+		}
+
+		return array(
+			'calendar'   => $calendar,
+			'exceptions' => self::exceptions( $id ),
+		);
+	}
+
+	/**
+	 * Reinserta un calendario eliminado a partir de su instantánea (mismo identificador).
+	 *
+	 * @param array<string,mixed> $snapshot Instantánea de snapshot().
+	 * @return bool
+	 */
+	public static function restore( array $snapshot ): bool {
+		global $wpdb;
+
+		$c = $snapshot['calendar'] ?? null;
+		if ( ! is_array( $c ) || empty( $c['id'] ) ) {
+			return false;
+		}
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->replace(
+			Schema::table( 'calendars' ),
+			array(
+				'id'         => (int) $c['id'],
+				'project_id' => (int) $c['project_id'],
+				'name'       => (string) $c['name'],
+				'weekdays'   => implode( ',', array_map( 'intval', (array) $c['weekdays'] ) ),
+				'is_default' => ! empty( $c['is_default'] ) ? 1 : 0,
+				'created_at' => (string) $c['created_at'],
+				'updated_at' => (string) $c['updated_at'],
+			),
+			array( '%d', '%d', '%s', '%s', '%d', '%s', '%s' )
+		);
+		foreach ( $snapshot['exceptions'] ?? array() as $e ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->replace(
+				Schema::table( 'calendar_exceptions' ),
+				array(
+					'id'             => (int) $e['id'],
+					'calendar_id'    => (int) $c['id'],
+					'exception_date' => (string) $e['exception_date'],
+					'working'        => ! empty( $e['working'] ) ? 1 : 0,
+					'label'          => (string) $e['label'],
+				),
+				array( '%d', '%d', '%s', '%d', '%s' )
+			);
+		}
+		if ( ! empty( $c['is_default'] ) ) {
+			self::set_default( (int) $c['id'] );
+		}
+
+		return true;
+	}
+
+	/**
 	 * Excepciones de un calendario.
 	 *
 	 * @param int $calendar_id Calendario.
