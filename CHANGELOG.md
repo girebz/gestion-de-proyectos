@@ -30,6 +30,9 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 - Plantilla de traducción `languages/gestion-de-proyectos.pot` (944 cadenas) generada con WP-CLI (`composer run make-pot`); todas las cadenas con marcadores llevan comentario para traductores y los marcadores múltiples van numerados.
 - Importación de cronogramas desde CSV, XLSX y XML de Microsoft Project con vista previa (cabeceras en español e inglés, jerarquía por código o nivel, predecesoras en notación compacta que pueden apuntar a actividades existentes, frentes y responsables resueltos, restricción "no empezar antes de" para filas con fecha y sin predecesoras); operación reversible; acción `import` en `propose-activity-change` para el conector.
 
+### Corregido
+- Aviso de clave indefinida al importar filas sin prioridad (XML de Project).
+
 ### Cambiado
 - Versión de esquema 3; la desinstalación con borrado de datos elimina también las tablas del módulo.
 - `OperationManager::execute()` propone y confirma en un paso para los formularios del panel y las importaciones, de modo que también esas escrituras quedan registradas y son reversibles.

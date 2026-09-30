@@ -172,6 +172,8 @@ final class ProjectXml {
 				'kind'            => $kind,
 				'duration'        => 'summary' === $kind ? 0 : max( 'milestone' === $kind ? 0 : 1, $days ),
 				'percent'         => (int) $t->PercentComplete,
+				'status'          => null,
+				'priority'        => 2,
 				'constraint_type' => $cons[ (int) $t->ConstraintType ] ?? 'asap',
 				'constraint_date' => self::date( (string) $t->ConstraintDate ),
 				'actual_start'    => self::date( (string) $t->ActualStart ),
