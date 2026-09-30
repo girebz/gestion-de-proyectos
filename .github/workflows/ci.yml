@@ -39,15 +39,20 @@ jobs:
           php-version: '8.2'
           coverage: none
           tools: composer
+      - name: Validar composer.json
+        run: composer validate --no-check-publish --no-check-lock
       - name: Instalar dependencias de desarrollo
         run: composer install --no-interaction --prefer-dist --no-progress
+        env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
       - name: PHP_CodeSniffer
-        run: composer run-script phpcs -- --report=checkstyle | cs2pr || composer run-script phpcs
+        run: composer run-script phpcs
         continue-on-error: true
 
   tests:
     name: Pruebas
     runs-on: ubuntu-latest
+    if: ${{ hashFiles('phpunit.xml.dist') != '' }}
     steps:
       - uses: actions/checkout@v4
       - name: Preparar PHP
@@ -58,9 +63,10 @@ jobs:
           tools: composer
       - name: Instalar dependencias de desarrollo
         run: composer install --no-interaction --prefer-dist --no-progress
+        env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
       - name: PHPUnit
-        run: |
-          if [ -f phpunit.xml.dist ]; then composer run-script test; else echo "Sin pruebas todavía"; fi
+        run: composer run-script test
 
   package:
     name: Paquete instalable
