@@ -52,20 +52,26 @@ jobs:
   tests:
     name: Pruebas
     runs-on: ubuntu-latest
-    if: ${{ hashFiles('phpunit.xml.dist') != '' }}
     steps:
       - uses: actions/checkout@v4
+      - name: Detectar suite de pruebas
+        id: suite
+        run: |
+          if [ -f phpunit.xml.dist ]; then echo "present=yes" >> "$GITHUB_OUTPUT"; else echo "present=no" >> "$GITHUB_OUTPUT"; echo "Sin suite de pruebas todavía (phpunit.xml.dist ausente)."; fi
       - name: Preparar PHP
+        if: steps.suite.outputs.present == 'yes'
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           coverage: none
           tools: composer
       - name: Instalar dependencias de desarrollo
+        if: steps.suite.outputs.present == 'yes'
         run: composer install --no-interaction --prefer-dist --no-progress
         env:
           COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
       - name: PHPUnit
+        if: steps.suite.outputs.present == 'yes'
         run: composer run-script test
 
   package:
