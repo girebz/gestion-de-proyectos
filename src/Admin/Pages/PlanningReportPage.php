@@ -14,6 +14,7 @@ use GDP\Core\Access;
 use GDP\Domain\Projects\ProjectRepository;
 use GDP\Modules\Planning\ActivityRepository;
 use GDP\Modules\Planning\PlanningCron;
+use GDP\Modules\Planning\ProgressCurve;
 use GDP\Modules\Planning\ScheduleService;
 use GDP\Modules\Planning\WeeklyReport;
 use GDP\Modules\Planning\WorkloadService;
@@ -144,6 +145,22 @@ final class PlanningReportPage extends Page {
 					<?php endforeach; ?>
 					</tbody>
 				</table>
+			</div>
+
+			<div class="gdp-card">
+				<h2><?php esc_html_e( 'Curva S de avance', 'gestion-de-proyectos' ); ?></h2>
+				<?php $curve = $report['curve']; ?>
+				<?php if ( ! empty( $curve['points'] ) ) : ?>
+					<p class="gdp-planning-summary">
+						<span><strong><?php echo esc_html( number_format_i18n( (float) $curve['planned_today'], 1 ) ); ?> %</strong> <?php esc_html_e( 'planificado a la fecha', 'gestion-de-proyectos' ); ?></span>
+						<span><strong><?php echo esc_html( number_format_i18n( (float) $curve['actual_today'], 1 ) ); ?> %</strong> <?php esc_html_e( 'real', 'gestion-de-proyectos' ); ?></span>
+						<span class="<?php echo $curve['variance'] < 0 ? 'gdp-text-danger' : 'gdp-text-ok'; ?>"><strong><?php echo esc_html( ( $curve['variance'] > 0 ? '+' : '' ) . number_format_i18n( (float) $curve['variance'], 1 ) ); ?></strong> <?php esc_html_e( 'puntos de desviación', 'gestion-de-proyectos' ); ?></span>
+					</p>
+					<?php echo ProgressCurve::svg( $curve ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+					<p class="gdp-muted gdp-small"><?php echo $curve['baseline'] ? esc_html( sprintf( __( 'Plan según la línea base "%s"; real según el historial de avances, ponderado por duración.', 'gestion-de-proyectos' ), $curve['baseline'] ) ) : esc_html__( 'Sin línea base vigente: el plan se toma del cronograma actual. Fije una línea base para medir la desviación contra el compromiso.', 'gestion-de-proyectos' ); ?></p>
+				<?php else : ?>
+					<p class="gdp-muted"><?php esc_html_e( 'Sin actividades con fechas y duración.', 'gestion-de-proyectos' ); ?></p>
+				<?php endif; ?>
 			</div>
 
 			<div class="gdp-card">

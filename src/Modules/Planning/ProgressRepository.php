@@ -95,6 +95,22 @@ final class ProgressRepository {
 	}
 
 	/**
+	 * Todos los avances de un proyecto en orden cronológico.
+	 *
+	 * @param int $project_id Proyecto.
+	 * @return array<int,array<string,mixed>>
+	 */
+	public static function all_for_project( int $project_id ): array {
+		global $wpdb;
+
+		$table = Schema::table( 'progress' );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$table} WHERE project_id = %d ORDER BY reported_at ASC, id ASC", $project_id ), ARRAY_A );
+
+		return is_array( $rows ) ? array_map( array( self::class, 'hydrate' ), $rows ) : array();
+	}
+
+	/**
 	 * Historial de una actividad (el más reciente primero).
 	 *
 	 * @param int $activity_id Actividad.

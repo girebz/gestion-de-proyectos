@@ -167,6 +167,7 @@ final class WeeklyReport {
 		}
 
 		$alerts = array_values( array_filter( ScheduleService::alerts( $project_id, $to ), static fn( array $al ): bool => 'high' === $al['severity'] ) );
+		$curve  = ProgressCurve::build( $project_id, min( $to, current_time( 'Y-m-d' ) ) );
 
 		return array(
 			'generated_at' => current_time( 'c' ),
@@ -201,6 +202,7 @@ final class WeeklyReport {
 			'overdue'      => $overdue,
 			'variance'     => $variance,
 			'alerts'       => $alerts,
+			'curve'        => $curve,
 			'activities'   => $schedule['activities'],
 		);
 	}
@@ -333,6 +335,8 @@ final class WeeklyReport {
 		$out[] = '\usepackage{siunitx}';
 		$out[] = '\sisetup{output-decimal-marker={,},group-separator={.},group-minimum-digits=4}';
 		$out[] = '\usepackage{pgfgantt}';
+		$out[] = '\usepackage{pgfplots}';
+		$out[] = '\pgfplotsset{compat=1.17}';
 		$out[] = '\usepackage{xcolor}';
 		$out[] = '\usepackage{hyperref}';
 		$out[] = '\hypersetup{hidelinks}';
@@ -390,6 +394,44 @@ final class WeeklyReport {
 		}
 		$out[] = '\end{longtable}';
 		$out[] = '';
+
+		// Curva S.
+		$curve = $report['curve'] ?? array();
+		if ( ! empty( $curve['points'] ) && count( $curve['points'] ) >= 2 ) {
+			// Eje x por número de semana (pgfplots analiza mal los días 08 y 09 en fechas); rótulos explícitos.
+			$planned = array();
+			$actual  = array();
+			$ticks   = array();
+			$labels  = array();
+			$n       = count( $curve['points'] );
+			$step    = max( 1, (int) ceil( $n / 8 ) );
+			foreach ( $curve['points'] as $i => $pt ) {
+				$planned[] = sprintf( '(%d,%.1f)', $i, (float) $pt['planned'] );
+				if ( null !== $pt['actual'] ) {
+					$actual[] = sprintf( '(%d,%.1f)', $i, (float) $pt['actual'] );
+				}
+				if ( 0 === $i % $step || $i === $n - 1 ) {
+					$ticks[]  = (string) $i;
+					$labels[] = self::human_date( $pt['date'] );
+				}
+			}
+			$out[] = '\section*{Curva S de avance}';
+			$out[] = sprintf( 'Avance planificado a la fecha de corte: \SI{%.1f}{\percent}; avance real: \SI{%.1f}{\percent}; desviación: %s puntos%s.', (float) $curve['planned_today'], (float) $curve['actual_today'], number_format( (float) $curve['variance'], 1, ',', '' ), $curve['baseline'] ? ' (plan según la línea base ' . $e( $curve['baseline'] ) . ')' : ' (plan según el cronograma vigente, sin línea base)' );
+			$out[] = '';
+			$out[] = '\begin{center}';
+			$out[] = '\begin{tikzpicture}';
+			$out[] = '\begin{axis}[width=15cm,height=7cm,xmin=0,xmax=' . ( $n - 1 ) . ',xtick={' . implode( ',', $ticks ) . '},xticklabels={' . implode( ',', $labels ) . '},xticklabel style={rotate=45,anchor=north east,font=\scriptsize},ymin=0,ymax=100,ylabel={Avance (\%)},grid=major,legend pos=north west,legend style={font=\small}]';
+			$out[] = '\addplot[gray,dashed,thick] coordinates {' . implode( ' ', $planned ) . '};';
+			$out[] = '\addlegendentry{Planificado}';
+			if ( count( $actual ) >= 2 ) {
+				$out[] = '\addplot[black,thick] coordinates {' . implode( ' ', $actual ) . '};';
+				$out[] = '\addlegendentry{Real}';
+			}
+			$out[] = '\end{axis}';
+			$out[] = '\end{tikzpicture}';
+			$out[] = '\end{center}';
+			$out[] = '';
+		}
 
 		// Avances de la semana.
 		$out[] = '\section*{Avances registrados en la semana}';
