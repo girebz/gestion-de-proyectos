@@ -358,6 +358,7 @@ final class ScheduleImporter {
 				} elseif ( ctype_digit( $ref ) && isset( $rows[ (int) $ref - 1 ] ) ) {
 					$resolved[] = array( 'ref' => (string) $rows[ (int) $ref - 1 ]['ref'], 'type' => $p['type'], 'lag' => $p['lag'] );
 				} else {
+					/* translators: 1: nombre de la fila, 2: referencia de la predecesora. */
 					$warnings[] = sprintf( __( 'Fila "%1$s": predecesora "%2$s" no encontrada; se omite.', 'gestion-de-proyectos' ), $row['name'], $ref );
 				}
 			}
@@ -376,9 +377,11 @@ final class ScheduleImporter {
 		unset( $row );
 
 		if ( ! empty( $unknown_fronts ) ) {
+			/* translators: lista de frentes. */
 			$warnings[] = sprintf( __( 'Frentes no catalogados (se crearán como claves nuevas; puede añadirlos al catálogo): %s.', 'gestion-de-proyectos' ), implode( ', ', array_values( $unknown_fronts ) ) );
 		}
 		if ( ! empty( $unknown_owners ) ) {
+			/* translators: lista de responsables. */
 			$warnings[] = sprintf( __( 'Responsables sin usuario en el sitio (quedan sin responsable): %s.', 'gestion-de-proyectos' ), implode( ', ', array_keys( $unknown_owners ) ) );
 		}
 

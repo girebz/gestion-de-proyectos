@@ -101,8 +101,8 @@ final class PlanningReportPage extends Page {
 
 		PlanningPage::header( $project, 'alerts', __( 'Alertas de plazo', 'gestion-de-proyectos' ) );
 		?>
-		<p class="gdp-muted"><?php printf( esc_html__( 'Calculadas ahora sobre el cronograma vigente (hoy es %s). El recálculo diario guarda un resumen y, si las notificaciones están activas, avisa por correo a directores e ingenieros cuando hay alertas de severidad alta.', 'gestion-de-proyectos' ), esc_html( current_time( 'Y-m-d' ) ) ); ?>
-			<?php if ( $stored ) : ?><br><?php printf( esc_html__( 'Último recálculo programado: %1$s (%2$d altas, %3$d medias).', 'gestion-de-proyectos' ), esc_html( self::date( $stored['computed_at'] ) ), (int) $stored['high'], (int) $stored['medium'] ); ?><?php endif; ?>
+		<p class="gdp-muted"><?php printf( /* translators: fecha de hoy. */ esc_html__( 'Calculadas ahora sobre el cronograma vigente (hoy es %s). El recálculo diario guarda un resumen y, si las notificaciones están activas, avisa por correo a directores e ingenieros cuando hay alertas de severidad alta.', 'gestion-de-proyectos' ), esc_html( current_time( 'Y-m-d' ) ) ); ?>
+			<?php if ( $stored ) : ?><br><?php printf( /* translators: 1: fecha y hora, 2: alertas altas, 3: alertas medias. */ esc_html__( 'Último recálculo programado: %1$s (%2$d altas, %3$d medias).', 'gestion-de-proyectos' ), esc_html( self::date( $stored['computed_at'] ) ), (int) $stored['high'], (int) $stored['medium'] ); ?><?php endif; ?>
 		</p>
 		<?php if ( empty( $alerts ) ) : ?>
 			<div class="gdp-card"><p class="gdp-text-ok"><?php esc_html_e( 'Sin alertas: el cronograma está al día.', 'gestion-de-proyectos' ); ?></p></div>
@@ -165,7 +165,7 @@ final class PlanningReportPage extends Page {
 			</span>
 		</div>
 
-		<h2><?php printf( esc_html__( 'Semana %1$d de %2$d (%3$s al %4$s)', 'gestion-de-proyectos' ), (int) $report['week']['number'], (int) $report['week']['year'], esc_html( WeeklyReport::human_date( $report['week']['from'] ) ), esc_html( WeeklyReport::human_date( $report['week']['to'] ) ) ); ?></h2>
+		<h2><?php printf( /* translators: 1: número de semana, 2: año, 3: fecha de inicio, 4: fecha de término. */ esc_html__( 'Semana %1$d de %2$d (%3$s al %4$s)', 'gestion-de-proyectos' ), (int) $report['week']['number'], (int) $report['week']['year'], esc_html( WeeklyReport::human_date( $report['week']['from'] ) ), esc_html( WeeklyReport::human_date( $report['week']['to'] ) ) ); ?></h2>
 
 		<div class="gdp-planning-summary">
 			<span><strong><?php echo (int) $report['stats']['percent']; ?> %</strong> <?php esc_html_e( 'avance global', 'gestion-de-proyectos' ); ?></span>
@@ -204,7 +204,7 @@ final class PlanningReportPage extends Page {
 						<tr><th><?php esc_html_e( 'Entran en la ruta crítica', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( empty( $ch['critical_in'] ) ? '—' : implode( ', ', array_map( static fn( array $x ): string => $x['code'] . ' ' . $x['name'], $ch['critical_in'] ) ) ); ?></td></tr>
 						<tr><th><?php esc_html_e( 'Salen de la ruta crítica', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( empty( $ch['critical_out'] ) ? '—' : implode( ', ', array_map( static fn( array $x ): string => $x['code'] . ' ' . $x['name'], $ch['critical_out'] ) ) ); ?></td></tr>
 						<tr><th><?php esc_html_e( 'Término programado', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( $ch['finish_before'] && $ch['finish_now'] && $ch['finish_before'] !== $ch['finish_now'] ? $ch['finish_before'] . ' → ' . $ch['finish_now'] : ( $ch['finish_now'] ?? '—' ) ); ?></td></tr>
-						<tr><th><?php esc_html_e( 'Avance global', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( null !== $ch['percent_before'] ? $ch['percent_before'] . ' % → ' . $ch['percent_now'] . ' %' : (string) $ch['percent_now'] . ' %' ); ?> <span class="gdp-muted">(<?php echo esc_html( sprintf( __( 'semana comparada: %s', 'gestion-de-proyectos' ), (string) $ch['previous_week'] ) ); ?>)</span></td></tr>
+						<tr><th><?php esc_html_e( 'Avance global', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( null !== $ch['percent_before'] ? $ch['percent_before'] . ' % → ' . $ch['percent_now'] . ' %' : (string) $ch['percent_now'] . ' %' ); ?> <span class="gdp-muted">(<?php echo esc_html( sprintf( /* translators: lunes de la semana comparada. */ __( 'semana comparada: %s', 'gestion-de-proyectos' ), (string) $ch['previous_week'] ) ); ?>)</span></td></tr>
 					</table>
 				<?php endif; ?>
 			</div>
@@ -219,7 +219,7 @@ final class PlanningReportPage extends Page {
 						<span class="<?php echo $curve['variance'] < 0 ? 'gdp-text-danger' : 'gdp-text-ok'; ?>"><strong><?php echo esc_html( ( $curve['variance'] > 0 ? '+' : '' ) . number_format_i18n( (float) $curve['variance'], 1 ) ); ?></strong> <?php esc_html_e( 'puntos de desviación', 'gestion-de-proyectos' ); ?></span>
 					</p>
 					<?php echo ProgressCurve::svg( $curve ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-					<p class="gdp-muted gdp-small"><?php echo $curve['baseline'] ? esc_html( sprintf( __( 'Plan según la línea base "%s"; real según el historial de avances, ponderado por duración.', 'gestion-de-proyectos' ), $curve['baseline'] ) ) : esc_html__( 'Sin línea base vigente: el plan se toma del cronograma actual. Fije una línea base para medir la desviación contra el compromiso.', 'gestion-de-proyectos' ); ?></p>
+					<p class="gdp-muted gdp-small"><?php echo $curve['baseline'] ? esc_html( sprintf( /* translators: nombre de la línea base. */ __( 'Plan según la línea base "%s"; real según el historial de avances, ponderado por duración.', 'gestion-de-proyectos' ), $curve['baseline'] ) ) : esc_html__( 'Sin línea base vigente: el plan se toma del cronograma actual. Fije una línea base para medir la desviación contra el compromiso.', 'gestion-de-proyectos' ); ?></p>
 				<?php else : ?>
 					<p class="gdp-muted"><?php esc_html_e( 'Sin actividades con fechas y duración.', 'gestion-de-proyectos' ); ?></p>
 				<?php endif; ?>
@@ -261,7 +261,7 @@ final class PlanningReportPage extends Page {
 							<?php foreach ( $report[ $key ] as $a ) : ?>
 								<li>
 									<code><?php echo esc_html( $a['code'] ); ?></code> <?php echo esc_html( $a['name'] ); ?>
-									<span class="gdp-muted"><?php echo esc_html( 'milestone' === $a['kind'] ? (string) $a['end_date'] : $a['start_date'] . ' → ' . $a['end_date'] ); ?> · <?php echo (int) $a['percent']; ?> %<?php echo isset( $a['days_late'] ) ? ' · ' . esc_html( sprintf( __( '%d días de atraso', 'gestion-de-proyectos' ), (int) $a['days_late'] ) ) : ''; ?><?php echo $a['owner'] ? ' · ' . esc_html( $a['owner'] ) : ''; ?></span>
+									<span class="gdp-muted"><?php echo esc_html( 'milestone' === $a['kind'] ? (string) $a['end_date'] : $a['start_date'] . ' → ' . $a['end_date'] ); ?> · <?php echo (int) $a['percent']; ?> %<?php echo isset( $a['days_late'] ) ? ' · ' . esc_html( sprintf( /* translators: días hábiles de atraso. */ __( '%d días de atraso', 'gestion-de-proyectos' ), (int) $a['days_late'] ) ) : ''; ?><?php echo $a['owner'] ? ' · ' . esc_html( $a['owner'] ) : ''; ?></span>
 									<?php if ( $a['is_critical'] ) : ?><span class="gdp-badge gdp-badge--critical"><?php esc_html_e( 'crítica', 'gestion-de-proyectos' ); ?></span><?php endif; ?>
 								</li>
 							<?php endforeach; ?>
@@ -276,7 +276,7 @@ final class PlanningReportPage extends Page {
 					<p class="gdp-muted"><?php esc_html_e( 'El proyecto no tiene una línea base vigente.', 'gestion-de-proyectos' ); ?> <a href="<?php echo esc_url( PlanningPage::url( $project_id, 'baselines' ) ); ?>"><?php esc_html_e( 'Fijar una', 'gestion-de-proyectos' ); ?></a></p>
 				<?php else : ?>
 					<?php $v = $report['variance']; ?>
-					<p><?php printf( esc_html__( 'Línea base "%1$s" (%2$s): %3$d atrasadas, %4$d adelantadas, %5$d nuevas, %6$d eliminadas.', 'gestion-de-proyectos' ), esc_html( $v['baseline_name'] ), esc_html( $v['baseline_date'] ), (int) $v['summary']['delayed'], (int) $v['summary']['advanced'], (int) $v['summary']['new'], (int) $v['summary']['removed'] ); ?></p>
+					<p><?php printf( /* translators: 1: nombre de la línea base, 2: fecha, 3: atrasadas, 4: adelantadas, 5: nuevas, 6: eliminadas. */ esc_html__( 'Línea base "%1$s" (%2$s): %3$d atrasadas, %4$d adelantadas, %5$d nuevas, %6$d eliminadas.', 'gestion-de-proyectos' ), esc_html( $v['baseline_name'] ), esc_html( $v['baseline_date'] ), (int) $v['summary']['delayed'], (int) $v['summary']['advanced'], (int) $v['summary']['new'], (int) $v['summary']['removed'] ); ?></p>
 					<?php if ( ! empty( $v['top_delayed'] ) ) : ?>
 						<ul class="gdp-list">
 							<?php foreach ( $v['top_delayed'] as $r ) : ?>
@@ -328,7 +328,7 @@ final class PlanningReportPage extends Page {
 				<input type="date" name="from" value="<?php echo esc_attr( $data['weeks'][0]['start'] ); ?>">
 				<select name="weeks">
 					<?php foreach ( array( 8, 13, 26, 52 ) as $n ) : ?>
-						<option value="<?php echo (int) $n; ?>" <?php selected( $n, $weeks ); ?>><?php echo esc_html( sprintf( __( '%d semanas', 'gestion-de-proyectos' ), $n ) ); ?></option>
+						<option value="<?php echo (int) $n; ?>" <?php selected( $n, $weeks ); ?>><?php echo esc_html( sprintf( /* translators: número de semanas. */ __( '%d semanas', 'gestion-de-proyectos' ), $n ) ); ?></option>
 					<?php endforeach; ?>
 				</select>
 				<button type="submit" class="button"><?php esc_html_e( 'Ver', 'gestion-de-proyectos' ); ?></button>
@@ -353,7 +353,7 @@ final class PlanningReportPage extends Page {
 				<tbody>
 				<?php foreach ( $data['people'] as $p ) : ?>
 					<tr>
-						<td class="gdp-workload__person"><?php echo esc_html( $p['name'] ); ?><?php echo $p['overallocated'] > 0 ? ' <span class="gdp-badge gdp-badge--fail">' . esc_html( sprintf( __( '%d sem. >100 %%', 'gestion-de-proyectos' ), (int) $p['overallocated'] ) ) . '</span>' : ''; ?></td>
+						<td class="gdp-workload__person"><?php echo esc_html( $p['name'] ); ?><?php echo $p['overallocated'] > 0 ? ' <span class="gdp-badge gdp-badge--fail">' . esc_html( sprintf( /* translators: número de semanas con sobreasignación. */ __( '%d sem. >100 %%', 'gestion-de-proyectos' ), (int) $p['overallocated'] ) ) . '</span>' : ''; ?></td>
 						<?php foreach ( $data['weeks'] as $i => $w ) : ?>
 							<?php
 							$cell  = $p['cells'][ $i ] ?? null;

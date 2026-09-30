@@ -229,6 +229,7 @@ final class OperationManager {
 		}
 
 		if ( self::STATUS_PROPOSED !== $op['status'] ) {
+			/* translators: estado de la operación. */
 			return new WP_Error( 'invalid_status', sprintf( __( 'La operación está en estado "%s" y no puede confirmarse.', 'gestion-de-proyectos' ), $op['status'] ) );
 		}
 

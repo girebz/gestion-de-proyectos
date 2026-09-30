@@ -130,6 +130,7 @@ final class OperationsPage extends Page {
 		$user        = get_userdata( (int) $op['user_id'] );
 		$preview     = is_array( $op['preview'] ) ? $op['preview'] : array();
 
+		/* translators: número de la operación. */
 		self::open( sprintf( __( 'Operación #%d', 'gestion-de-proyectos' ), $id ), (string) $op['summary'] );
 		?>
 		<p><a class="button" href="<?php echo esc_url( Admin::url( 'operations', array( 'status' => $op['status'] ) ) ); ?>">&larr; <?php esc_html_e( 'Volver', 'gestion-de-proyectos' ); ?></a></p>

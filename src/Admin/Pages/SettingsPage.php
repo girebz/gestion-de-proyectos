@@ -120,7 +120,7 @@ final class SettingsPage extends Page {
 							<label><input type="checkbox" name="require_two_factor" value="1" <?php checked( ! empty( $o['require_two_factor'] ) ); ?>> <?php esc_html_e( 'Exigir un segundo factor a los perfiles con acceso a documentos, montos, exportaciones y bitácora (incluidos los administradores del plugin)', 'gestion-de-proyectos' ); ?></label>
 							<p class="description">
 								<?php if ( $provider ) : ?>
-									<?php printf( esc_html__( 'Proveedor detectado: %s. Quien no tenga configurado el segundo factor verá cerradas esas secciones hasta activarlo en su perfil.', 'gestion-de-proyectos' ), esc_html( $provider['label'] ) ); ?>
+									<?php printf( /* translators: nombre del plugin de doble factor. */ esc_html__( 'Proveedor detectado: %s. Quien no tenga configurado el segundo factor verá cerradas esas secciones hasta activarlo en su perfil.', 'gestion-de-proyectos' ), esc_html( $provider['label'] ) ); ?>
 								<?php else : ?>
 									<?php esc_html_e( 'No se detecta ningún plugin de doble factor. El plugin no implementa uno propio: instale y active Two Factor (del equipo de WordPress), WP 2FA o Wordfence Login Security; mientras tanto la exigencia no puede aplicarse y el diagnóstico del conector lo señalará.', 'gestion-de-proyectos' ); ?>
 								<?php endif; ?>
@@ -150,7 +150,7 @@ final class SettingsPage extends Page {
 		<div class="gdp-card">
 			<h2><?php esc_html_e( 'Salud del sistema', 'gestion-de-proyectos' ); ?></h2>
 			<table class="gdp-facts">
-				<tr><th><?php esc_html_e( 'Versión del plugin', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( GDP_VERSION ); ?> (<?php printf( esc_html__( 'esquema %s', 'gestion-de-proyectos' ), esc_html( GDP_DB_VERSION ) ); ?>)</td></tr>
+				<tr><th><?php esc_html_e( 'Versión del plugin', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( GDP_VERSION ); ?> (<?php printf( /* translators: versión del esquema de base de datos. */ esc_html__( 'esquema %s', 'gestion-de-proyectos' ), esc_html( GDP_DB_VERSION ) ); ?>)</td></tr>
 				<tr><th><?php esc_html_e( 'Instalado el', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( self::date( (string) get_option( 'gdp_installed_at' ) ) ); ?></td></tr>
 				<tr><th><?php esc_html_e( 'Directorio privado', 'gestion-de-proyectos' ); ?></th><td><?php echo esc_html( Storage::private_dir() ); ?> · <?php echo $storage['writable'] ? esc_html__( 'escribible', 'gestion-de-proyectos' ) : esc_html__( 'NO escribible', 'gestion-de-proyectos' ); ?> · <?php echo $storage['htaccess'] ? '.htaccess' : esc_html__( 'sin .htaccess', 'gestion-de-proyectos' ); ?></td></tr>
 				<tr><th><?php esc_html_e( 'Tarea diaria', 'gestion-de-proyectos' ); ?></th><td><?php echo $cron['next_daily'] ? esc_html( wp_date( (string) get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), (int) $cron['next_daily'] ) ) : esc_html__( 'no programada', 'gestion-de-proyectos' ); ?></td></tr>

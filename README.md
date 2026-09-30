@@ -49,6 +49,7 @@ composer run phpcs          # estándares de codificación de WordPress
 composer run test           # pruebas unitarias con PHPUnit
 php tests/bin/run.php       # las mismas pruebas sin Composer (ejecutor mínimo)
 composer run zip            # paquete instalable en build/
+composer run make-pot       # plantilla de traducción languages/gestion-de-proyectos.pot (requiere WP-CLI)
 ```
 
 Estructura:
@@ -63,11 +64,12 @@ src/Connector              habilidades, herramientas, tokens, autenticación, di
 src/Admin                  menú y pantallas del panel (incluidas las del módulo de planificación)
 src/Modules                registro de módulos, hoja de ruta y módulos (Planning: repositorios, servicio, manejador, herramientas, cron, informe)
 assets/                    estilos y scripts del panel (carta Gantt y tablero propios, sin dependencias)
+languages/                 plantilla de traducción (.pot); las traducciones .po/.mo van en esta misma carpeta
 tests/                     pruebas unitarias del motor y ejecutor mínimo
 docs/                      especificación (LaTeX) y decisiones de arquitectura
 ```
 
-Convenciones: espacio de nombres `GDP\`, prefijo `gdp_` en tablas, opciones, ganchos y capacidades; dominio de traducción `gestion-de-proyectos`; estándares de codificación de WordPress; ningún secreto en el repositorio.
+Convenciones: espacio de nombres `GDP\`, prefijo `gdp_` en tablas, opciones, ganchos y capacidades; dominio de traducción `gestion-de-proyectos` (los textos se escriben en español y la plantilla `.pot` permite traducir a otros idiomas; toda cadena con marcadores lleva su comentario `translators:`); estándares de codificación de WordPress; ningún secreto en el repositorio.
 
 ## Licencia
 

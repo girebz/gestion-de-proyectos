@@ -122,12 +122,15 @@ final class DependencyRepository {
 			}
 			$pred = ActivityRepository::find( $pred_id );
 			if ( ! $pred || $pred['project_id'] !== $project_id ) {
+				/* translators: identificador de la actividad. */
 				return new WP_Error( 'not_found', sprintf( __( 'La predecesora %d no existe en este proyecto.', 'gestion-de-proyectos' ), $pred_id ) );
 			}
 			if ( 'summary' === $pred['kind'] ) {
+				/* translators: código de la actividad. */
 				return new WP_Error( 'summary', sprintf( __( 'La predecesora %s es un resumen; vincule una de sus actividades.', 'gestion-de-proyectos' ), $pred['code'] ) );
 			}
 			if ( ! in_array( $type, Scheduler::TYPES, true ) ) {
+				/* translators: tipo recibido. */
 				return new WP_Error( 'type', sprintf( __( 'Tipo de dependencia no válido: %s.', 'gestion-de-proyectos' ), $type ) );
 			}
 			if ( $lag < -365 || $lag > 365 ) {

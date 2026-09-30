@@ -60,6 +60,7 @@ final class EventsService {
 				'date'        => (string) $project['end_date'],
 				'type'        => 'deadline',
 				'label'       => __( 'Término contractual', 'gestion-de-proyectos' ),
+				/* translators: nombre del proyecto. */
 				'title'       => sprintf( __( 'Término contractual de %s', 'gestion-de-proyectos' ), $project['code'] ),
 				'activity_id' => 0,
 				'status'      => '',

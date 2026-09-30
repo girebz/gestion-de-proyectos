@@ -107,7 +107,7 @@ final class PlanningBaselinesPage extends Page {
 					<?php wp_nonce_field( 'gdp_create_baseline_' . $project_id ); ?>
 					<input type="hidden" name="action" value="gdp_create_baseline">
 					<input type="hidden" name="project_id" value="<?php echo (int) $project_id; ?>">
-					<p><input type="text" name="name" class="regular-text" placeholder="<?php echo esc_attr( sprintf( __( 'Línea base %s', 'gestion-de-proyectos' ), current_time( 'Y-m-d' ) ) ); ?>"></p>
+					<p><input type="text" name="name" class="regular-text" placeholder="<?php echo esc_attr( sprintf( /* translators: fecha de hoy. */ __( 'Línea base %s', 'gestion-de-proyectos' ), current_time( 'Y-m-d' ) ) ); ?>"></p>
 					<p><textarea name="description" rows="2" class="large-text" placeholder="<?php esc_attr_e( 'Motivo (aprobación del cronograma, reprogramación autorizada…)', 'gestion-de-proyectos' ); ?>"></textarea></p>
 					<p><label class="gdp-check"><input type="checkbox" name="make_current" value="1" checked> <?php esc_html_e( 'Usarla como línea base vigente', 'gestion-de-proyectos' ); ?></label></p>
 					<p><button type="submit" class="button button-primary"><?php esc_html_e( 'Fijar línea base', 'gestion-de-proyectos' ); ?></button></p>
@@ -121,7 +121,7 @@ final class PlanningBaselinesPage extends Page {
 			$compare = BaselineRepository::compare( $project_id, $baseline['id'] );
 			?>
 			<div class="gdp-card">
-				<h2><?php printf( esc_html__( 'Comparación con "%s"', 'gestion-de-proyectos' ), esc_html( $baseline['name'] ) ); ?></h2>
+				<h2><?php printf( /* translators: nombre de la línea base. */ esc_html__( 'Comparación con "%s"', 'gestion-de-proyectos' ), esc_html( $baseline['name'] ) ); ?></h2>
 				<p class="gdp-planning-summary">
 					<span class="gdp-text-danger"><strong><?php echo (int) $compare['summary']['delayed']; ?></strong> <?php esc_html_e( 'atrasadas', 'gestion-de-proyectos' ); ?></span>
 					<span class="gdp-text-ok"><strong><?php echo (int) $compare['summary']['advanced']; ?></strong> <?php esc_html_e( 'adelantadas', 'gestion-de-proyectos' ); ?></span>
@@ -194,6 +194,7 @@ final class PlanningBaselinesPage extends Page {
 		if ( is_wp_error( $result ) ) {
 			Admin::redirect_with_notice( PlanningPage::url( $baseline['project_id'], 'baselines', array( 'baseline_id' => $id ) ), $result->get_error_message(), 'error' );
 		}
+		/* translators: URL de la papelera. */
 		Admin::redirect_with_notice( PlanningPage::url( $baseline['project_id'], 'baselines' ), sprintf( __( 'Línea base eliminada. Puede restaurarla desde la <a href="%s">papelera</a>.', 'gestion-de-proyectos' ), esc_url( Admin::url( 'trash', array( 'project_id' => $baseline['project_id'] ) ) ) ) );
 	}
 

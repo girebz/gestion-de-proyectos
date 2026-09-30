@@ -1,0 +1,4197 @@
+# Copyright (C) 2026 Giorgio Reveco Barraza
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Gestión de Proyectos 0.2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/girebz/gestion-de-proyectos/issues\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-30T23:40:11+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: gestion-de-proyectos\n"
+
+#. Plugin Name of the plugin
+#: gestion-de-proyectos.php
+#: src/Admin/Admin.php:66
+#: src/Connector/Connector.php:113
+msgid "Gestión de Proyectos"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: gestion-de-proyectos.php
+msgid "https://github.com/girebz/gestion-de-proyectos"
+msgstr ""
+
+#. Description of the plugin
+#: gestion-de-proyectos.php
+msgid "Gestión integral de proyectos de investigación y desarrollo con financiamiento externo: planificación y control del tiempo, control documental, adquisiciones y presupuesto, laboratorio, evidencias, exportación de datos y conector para asistentes de inteligencia artificial."
+msgstr ""
+
+#. Author of the plugin
+#: gestion-de-proyectos.php
+msgid "Giorgio Reveco Barraza"
+msgstr ""
+
+#. Author URI of the plugin
+#: gestion-de-proyectos.php
+msgid "https://giorgioreveco.com"
+msgstr ""
+
+#. translators: 1: versión mínima de PHP, 2: versión mínima de WordPress, 3: versión actual de PHP, 4: versión actual de WordPress
+#: gestion-de-proyectos.php:63
+#, php-format
+msgid "Gestión de Proyectos requiere PHP %1$s o superior y WordPress %2$s o superior. Este sitio tiene PHP %3$s y WordPress %4$s. El plugin permanece inactivo hasta que se cumplan los requisitos."
+msgstr ""
+
+#: src/Admin/Admin.php:66
+#: src/Admin/Admin.php:70
+#: src/Admin/Admin.php:79
+#: src/Admin/Pages/DashboardPage.php:58
+#: src/Admin/Pages/ProjectsPage.php:83
+#: src/Modules/Projects/ProjectsModule.php:34
+msgid "Proyectos"
+msgstr ""
+
+#: src/Admin/Admin.php:78
+#: src/Admin/Admin.php:204
+#: src/Admin/Pages/DashboardPage.php:40
+msgid "Panel"
+msgstr ""
+
+#: src/Admin/Admin.php:88
+#: src/Admin/Pages/OperationsPage.php:71
+msgid "Operaciones"
+msgstr ""
+
+#: src/Admin/Admin.php:89
+#: src/Admin/Pages/CatalogsPage.php:61
+msgid "Catálogos"
+msgstr ""
+
+#: src/Admin/Admin.php:90
+#: src/Admin/Pages/TrashPage.php:52
+msgid "Papelera"
+msgstr ""
+
+#: src/Admin/Admin.php:91
+#: src/Admin/Pages/AuditPage.php:33
+#: src/Admin/Pages/AuditPage.php:61
+msgid "Bitácora"
+msgstr ""
+
+#: src/Admin/Admin.php:92
+#: src/Admin/Admin.php:205
+#: src/Admin/Pages/ConnectorPage.php:341
+#: src/Admin/Pages/DashboardPage.php:123
+#: src/Admin/Pages/SettingsPage.php:92
+msgid "Conector"
+msgstr ""
+
+#: src/Admin/Admin.php:93
+#: src/Admin/Admin.php:164
+#: src/Admin/Pages/SettingsPage.php:51
+msgid "Ajustes"
+msgstr ""
+
+#: src/Admin/Admin.php:114
+msgid "Copiado"
+msgstr ""
+
+#: src/Admin/Admin.php:115
+#: src/Admin/Pages/ConnectorPage.php:146
+#: src/Admin/Pages/ConnectorPage.php:221
+#: src/Admin/Pages/PlanningCalendarViewPage.php:159
+msgid "Copiar"
+msgstr ""
+
+#: src/Admin/Admin.php:116
+msgid "¿Confirma la eliminación? Esta acción queda registrada en la bitácora."
+msgstr ""
+
+#: src/Admin/Admin.php:164
+msgid "Los ajustes exigen doble factor de autenticación, pero no hay ningún plugin de doble factor activo: la exigencia no se está aplicando."
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:33
+#: src/Admin/Pages/AuditPage.php:61
+msgid "Registro de solo anexado: quién cambió qué, cuándo y por qué canal."
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:34
+msgid "La bitácora permanece cerrada hasta que configure el segundo factor de autenticación."
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:51
+msgid "Sin permiso para ver la bitácora de ese proyecto."
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:65
+#: src/Admin/Pages/OperationsPage.php:144
+#: src/Admin/Pages/PlanningPage.php:263
+#: src/Admin/Pages/TrashPage.php:56
+#: src/Admin/Pages/TrashPage.php:72
+#: src/Modules/Planning/ScheduleService.php:237
+msgid "Proyecto"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:68
+msgid "Todos"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:74
+msgid "Filas"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:76
+#: src/Admin/Pages/PlanningPage.php:389
+msgid "Filtrar"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:80
+msgid "Sin entradas."
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:84
+#: src/Admin/Pages/OperationsPage.php:90
+#: src/Admin/Pages/PlanningBaselinesPage.php:69
+#: src/Admin/Pages/PlanningCalendarsPage.php:181
+#: src/Admin/Pages/PlanningPage.php:936
+#: src/Admin/Pages/TrashPage.php:75
+msgid "Fecha"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:85
+#: src/Admin/Pages/ProjectsPage.php:213
+msgid "Usuario"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:86
+#: src/Admin/Pages/OperationsPage.php:88
+#: src/Admin/Pages/OperationsPage.php:145
+#: src/Admin/Pages/TrashPage.php:74
+msgid "Canal"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:87
+msgid "Entidad"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:88
+msgid "Acción"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:89
+#: src/Admin/Pages/OperationsPage.php:86
+msgid "Resumen"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:90
+msgid "Operación"
+msgstr ""
+
+#: src/Admin/Pages/AuditPage.php:96
+msgid "sistema"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:61
+msgid "Vocabulario configurable: los proyectos heredan las entradas globales y pueden añadir o sustituir las suyas."
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:65
+msgid "Catálogo"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:71
+msgid "Ámbito"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:74
+msgid "Global (todos los proyectos)"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:84
+msgid "del proyecto"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:84
+msgid "globales"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:86
+msgid "Sin entradas propias."
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:89
+#: src/Admin/Pages/CatalogsPage.php:140
+msgid "Orden"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:89
+msgid "Clave"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:89
+#: src/Admin/Pages/CatalogsPage.php:138
+#: src/Admin/Pages/DashboardPage.php:66
+#: src/Admin/Pages/PlanningBaselinesPage.php:69
+#: src/Admin/Pages/PlanningImportPage.php:71
+#: src/Admin/Pages/PlanningPage.php:697
+#: src/Admin/Pages/ProjectsPage.php:99
+#: src/Admin/Pages/ProjectsPage.php:311
+#: src/Admin/Pages/SettingsPage.php:67
+msgid "Nombre"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:89
+#: src/Admin/Pages/ConnectorPage.php:288
+#: src/Admin/Pages/PlanningPage.php:842
+#: src/Admin/Pages/ProjectsPage.php:172
+#: src/Admin/Pages/ProjectsPage.php:356
+msgid "Descripción"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:89
+msgid "Activa"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:107
+#: src/Admin/Pages/PlanningCalendarsPage.php:127
+#: src/Admin/Pages/ProjectsPage.php:231
+msgid "Guardar"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:114
+#: src/Admin/Pages/PlanningBaselinesPage.php:94
+msgid "Eliminar"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:132
+msgid "Nueva entrada"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:139
+msgid "Clave (opcional)"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:142
+#: src/Admin/Pages/PlanningCalendarsPage.php:173
+msgid "Añadir"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:144
+msgid "La clave es el identificador estable que usan las exportaciones y el conector; se genera del nombre si se deja vacía y no debe cambiarse después."
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:150
+msgid "Entradas globales heredadas"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:152
+msgid "No hay entradas globales para este catálogo."
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:156
+msgid "inactiva"
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:159
+msgid "Para sustituir una entrada global en este proyecto, cree una con la misma clave."
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:177
+#: src/Admin/Pages/OperationsPage.php:126
+#: src/Admin/Pages/PlanningBaselinesPage.php:165
+#: src/Admin/Pages/PlanningBaselinesPage.php:191
+#: src/Admin/Pages/PlanningBaselinesPage.php:211
+#: src/Admin/Pages/PlanningCalendarsPage.php:222
+#: src/Admin/Pages/PlanningCalendarViewPage.php:230
+#: src/Admin/Pages/PlanningImportPage.php:148
+#: src/Admin/Pages/PlanningImportPage.php:177
+#: src/Admin/Pages/PlanningPage.php:1024
+#: src/Admin/Pages/PlanningPage.php:1077
+#: src/Admin/Pages/PlanningPage.php:1107
+#: src/Admin/Pages/PlanningPage.php:1131
+#: src/Admin/Pages/PlanningPage.php:1194
+#: src/Admin/Pages/PlanningPage.php:1221
+#: src/Admin/Pages/PlanningPage.php:1239
+#: src/Admin/Pages/PlanningReportPage.php:389
+#: src/Admin/Pages/ProjectsPage.php:414
+#: src/Admin/Pages/ProjectsPage.php:487
+#: src/Admin/Pages/ProjectsPage.php:513
+msgid "Sin permiso."
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:205
+msgid "Entrada guardada."
+msgstr ""
+
+#: src/Admin/Pages/CatalogsPage.php:221
+msgid "Entrada eliminada. Los registros que la usaban conservan la clave."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:70
+msgid "Conector para asistentes de inteligencia artificial"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:70
+msgid "Integración paso a paso con Claude y otros clientes compatibles con el protocolo MCP."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:73
+msgid "El conector permite que un asistente consulte los datos del proyecto (planificación, documentos, compras, laboratorio) y proponga cambios. Ninguna escritura se aplica sin que una persona la confirme: el asistente propone, usted revisa la vista previa y confirma."
+msgstr ""
+
+#. translators: número de versión de las instrucciones.
+#: src/Admin/Pages/ConnectorPage.php:75
+#, php-format
+msgid "Instrucciones versión %s."
+msgstr ""
+
+#. translators: número de versión de las instrucciones.
+#: src/Admin/Pages/ConnectorPage.php:76
+msgid "Si la interfaz del asistente cambió, consulte la documentación oficial:"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:77
+msgid "Conectores personalizados en Claude"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:78
+msgid "Servidores MCP remotos"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:102
+msgid "Comprobar los requisitos"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:103
+msgid "El plugin comprueba cada requisito y explica cómo corregir lo que falte. Las comprobaciones que consultan el propio sitio por HTTP pueden fallar en hosting compartido aunque el conector funcione desde fuera."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:105
+msgid "Requisito"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:105
+#: src/Admin/Pages/ConnectorPage.php:175
+#: src/Admin/Pages/DashboardPage.php:67
+#: src/Admin/Pages/OperationsPage.php:142
+#: src/Admin/Pages/PlanningBaselinesPage.php:132
+#: src/Admin/Pages/PlanningPage.php:402
+#: src/Admin/Pages/PlanningPage.php:521
+#: src/Admin/Pages/PlanningPage.php:790
+#: src/Admin/Pages/PlanningPage.php:936
+#: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Admin/Pages/ProjectsPage.php:101
+#: src/Admin/Pages/ProjectsPage.php:331
+#: src/Admin/Pages/SettingsPage.php:163
+msgid "Estado"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:105
+#: src/Admin/Pages/PlanningReportPage.php:111
+msgid "Detalle"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:105
+msgid "Cómo corregirlo"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:118
+msgid "Volver a comprobar (incluye pruebas HTTP)"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:120
+msgid "Todos los requisitos críticos se cumplen."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:122
+msgid "Corrija los requisitos en rojo antes de continuar."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:140
+msgid "Generar su credencial"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:141
+msgid "El asistente se identifica con un token personal. El token hereda exactamente sus permisos en cada proyecto y puede limitarse a solo lectura. Se muestra una única vez: guárdelo en un lugar seguro."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:145
+msgid "Token creado. Cópielo ahora; no volverá a mostrarse."
+msgstr ""
+
+#. translators: fecha de caducidad.
+#: src/Admin/Pages/ConnectorPage.php:148
+#, php-format
+msgid "Caduca el %s."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:157
+#: src/Admin/Pages/ConnectorPage.php:175
+msgid "Etiqueta"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:158
+msgid "Claude (cuenta personal)"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:159
+#: src/Admin/Pages/ConnectorPage.php:175
+msgid "Alcance"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:161
+msgid "Lectura y propuestas de cambio"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:162
+msgid "Solo lectura"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:164
+msgid "Validez (días, 0 = sin caducidad)"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:166
+msgid "Generar token"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:169
+msgid "Su usuario no tiene permiso para usar el conector. Pida a un administrador el rol \"Miembro de proyectos\"."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:173
+msgid "Sus tokens"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:175
+msgid "Prefijo"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:175
+msgid "Último uso"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:175
+#: src/Admin/Pages/OperationsPage.php:91
+#: src/Admin/Pages/OperationsPage.php:148
+msgid "Caduca"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:184
+msgid "revocado"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:184
+#: src/Admin/Pages/ProjectsPage.php:256
+msgid "activo"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:191
+msgid "Revocar"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:202
+msgid "Alternativa: contraseña de aplicación de WordPress"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:203
+msgid "También puede autenticarse con una contraseña de aplicación (Usuarios → Perfil → Contraseñas de aplicación) mediante autenticación básica HTTP. En ese caso la cabecera es \"Authorization: Basic\" con el valor de usuario:contraseña codificado en base64. El token del plugin es preferible porque puede limitarse a solo lectura, caducar y revocarse sin tocar la cuenta."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:218
+msgid "Añadir el conector en Claude"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:220
+msgid "URL del servidor MCP (cópiela tal cual):"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:223
+msgid "Claude (web, escritorio y móvil), cuenta personal"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:225
+msgid "Abra Claude e ingrese a la configuración de conectores: en el menú de personalización o ajustes, sección \"Conectores\"."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:226
+msgid "Pulse \"Añadir conector personalizado\" (o el botón \"+\" y luego \"Personalizado\" → \"Web\")."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:227
+msgid "Nombre: escriba el nombre del sitio o del proyecto. URL del servidor MCP: pegue la URL anterior."
+msgstr ""
+
+#. translators: nombre de la cabecera HTTP.
+#: src/Admin/Pages/ConnectorPage.php:228
+#, php-format
+msgid "En \"Cabeceras de la petición\" (Request headers) añada una cabecera con nombre %1$s y, como valor, el token generado en el paso 2. No configure OAuth: este servidor no lo requiere."
+msgstr ""
+
+#. translators: nombre de la cabecera HTTP.
+#: src/Admin/Pages/ConnectorPage.php:229
+msgid "Guarde. Claude comprobará la conexión desde sus propios servidores; si aparece un error, revise el paso 1 y que el sitio sea alcanzable desde Internet."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:230
+msgid "En una conversación nueva, active el conector en el menú de herramientas y pida: \"Consulta el estado del sistema con la herramienta gestion-de-proyectos-system-status\"."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:233
+msgid "Claude para equipos y empresas"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:234
+msgid "Un administrador de la organización añade el conector en \"Configuración de la organización → Conectores\" con la misma URL y cabecera; luego cada persona lo activa en sus propios conectores con su propio token (cada token conserva los permisos de su dueño)."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:236
+msgid "Claude Code y otros clientes MCP"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:237
+msgid "Desde la terminal:"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:239
+msgid "Cualquier cliente que admita servidores MCP remotos por HTTP con cabeceras fijas puede usar la misma URL y cabecera."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:242
+msgid "Si el sitio usa enlaces permanentes simples"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:243
+msgid "La URL del servidor incluirá el parámetro rest_route; cópiela igualmente tal como aparece arriba. Conviene activar una estructura de enlaces permanentes en Ajustes → Enlaces permanentes."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:270
+msgid "Probar desde fuera del sitio"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:271
+msgid "Estas órdenes, ejecutadas desde cualquier equipo con curl, confirman que el servidor responde y acepta el token. La primera inicia la sesión MCP y devuelve la cabecera Mcp-Session-Id; la segunda lista las herramientas."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:284
+msgid "Respuestas esperadas: HTTP 200 con JSON en ambas. Un 401 indica token inválido; un 404, que el servidor MCP no está registrado (paso 1); un 403 de un cortafuegos, que el hosting bloquea la API REST para clientes externos."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:286
+msgid "Herramientas disponibles"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:288
+msgid "Herramienta"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:288
+#: src/Admin/Pages/PlanningCalendarsPage.php:181
+#: src/Admin/Pages/PlanningImportPage.php:71
+#: src/Admin/Pages/PlanningPage.php:701
+#: src/Admin/Pages/PlanningPage.php:758
+#: src/Admin/Pages/PlanningReportPage.php:111
+msgid "Tipo"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:293
+msgid "consulta"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:293
+msgid "propuesta"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:311
+msgid "Seguridad y mantenimiento"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:313
+msgid "Cada llamada del conector queda en la bitácora con el usuario dueño del token y el canal \"connector\"."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:314
+msgid "Las herramientas de escritura solo proponen; revise y confirme las operaciones en Proyectos → Operaciones o desde el propio asistente con confirm-operation."
+msgstr ""
+
+#. translators: estado actual del modo de solo lectura (activado o desactivado).
+#: src/Admin/Pages/ConnectorPage.php:315
+#, php-format
+msgid "Puede poner todo el conector en modo de solo lectura desde Ajustes (actualmente: %s)."
+msgstr ""
+
+#. translators: estado actual del modo de solo lectura (activado o desactivado).
+#: src/Admin/Pages/ConnectorPage.php:315
+msgid "solo lectura"
+msgstr ""
+
+#. translators: estado actual del modo de solo lectura (activado o desactivado).
+#: src/Admin/Pages/ConnectorPage.php:315
+msgid "lectura y propuestas"
+msgstr ""
+
+#. translators: estado actual del modo de solo lectura (activado o desactivado).
+#: src/Admin/Pages/ConnectorPage.php:316
+msgid "Revoque de inmediato cualquier token que sospeche comprometido y genere otro; los tokens caducan según la validez elegida."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:317
+msgid "Las peticiones de Claude llegan desde la infraestructura de Anthropic, no desde su equipo: si restringe por dirección IP, consulte las direcciones publicadas en la documentación oficial."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:318
+msgid "Datos que salen del sitio: solo lo que las herramientas devuelven en respuesta a una consulta del usuario. Los adjuntos privados no se exponen por el conector."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:334
+msgid "Sin permiso para usar el conector."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:347
+msgid "Token generado; cópielo ahora."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:361
+msgid "Token revocado."
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:373
+msgid "Correcto"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:375
+msgid "Revisar"
+msgstr ""
+
+#: src/Admin/Pages/ConnectorPage.php:377
+msgid "Falta"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:40
+msgid "Estado general de los proyectos y de las operaciones pendientes."
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:45
+msgid "Primeros pasos"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:47
+msgid "Cree el primer proyecto"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:47
+msgid "con su código, financiador, plazo y presupuesto."
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:48
+msgid "Asigne al equipo con su perfil en el proyecto (director, ingeniero, investigador, apoyo, observador)."
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:49
+msgid "Configure el conector"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:49
+msgid "siguiendo el asistente paso a paso."
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:60
+#: src/Admin/Pages/ProjectsPage.php:90
+msgid "No hay proyectos visibles para su usuario."
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:65
+#: src/Admin/Pages/PlanningBaselinesPage.php:132
+#: src/Admin/Pages/PlanningPage.php:399
+#: src/Admin/Pages/PlanningPage.php:871
+#: src/Admin/Pages/ProjectsPage.php:98
+#: src/Admin/Pages/ProjectsPage.php:307
+msgid "Código"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:68
+msgid "Plazo"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:86
+msgid "Operaciones pendientes de confirmación"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:88
+msgid "No hay propuestas pendientes."
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:99
+msgid "Ver todas"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:105
+msgid "Actividad reciente"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:107
+msgid "Sin actividad registrada."
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:118
+msgid "Ver bitácora"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:127
+msgid "Adaptador MCP activo. El punto de entrada del conector es:"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:130
+msgid "El adaptador MCP no está activo; el asistente de integración indica cómo instalarlo."
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:134
+msgid "Abrir el asistente de integración"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:58
+msgid "Propuestas"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:59
+msgid "Aplicadas"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:60
+msgid "Revertidas"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:61
+msgid "Canceladas"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:62
+msgid "Caducadas"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:63
+msgid "Fallidas"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:71
+msgid "Cambios propuestos por el conector o por importaciones, que se aplican solo tras su confirmación."
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:81
+msgid "No hay operaciones en este estado."
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:87
+msgid "Manejador"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:89
+#: src/Admin/Pages/OperationsPage.php:146
+msgid "Propuesta por"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:120
+#: src/Connector/Tools.php:359
+#: src/Operations/OperationManager.php:228
+#: src/Operations/OperationManager.php:310
+#: src/Operations/OperationManager.php:339
+msgid "La operación no existe."
+msgstr ""
+
+#. translators: número de la operación.
+#: src/Admin/Pages/OperationsPage.php:134
+#, php-format
+msgid "Operación #%d"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:136
+msgid "Volver"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:140
+#: src/Admin/Pages/SettingsPage.php:134
+msgid "Datos"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:143
+msgid "Manejador y acción"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:147
+msgid "Creada"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:149
+msgid "Aplicada"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:151
+msgid "Error"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:162
+msgid "Confirmar y aplicar"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:169
+msgid "Cancelar propuesta"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:178
+msgid "Revertir"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:184
+msgid "Vista previa"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:186
+msgid "Conflictos:"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:193
+msgid "Campo"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:193
+msgid "Antes"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:193
+msgid "Después"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:205
+msgid "Sin cambios de campos."
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:209
+msgid "Resultado"
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:234
+msgid "Operación aplicada."
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:238
+msgid "Operación cancelada."
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:242
+msgid "Operación revertida."
+msgstr ""
+
+#: src/Admin/Pages/OperationsPage.php:245
+msgid "Acción no válida."
+msgstr ""
+
+#: src/Admin/Pages/Page.php:29
+msgid "No tiene acceso a Gestión de Proyectos."
+msgstr ""
+
+#: src/Admin/Pages/Page.php:40
+msgid "Esta pantalla está reservada a los administradores del plugin."
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:53
+msgid "Atrasada"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:54
+msgid "Adelantada"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:55
+msgid "En plazo"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:56
+msgid "Nueva"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:57
+msgid "Sin fechas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:60
+#: src/Admin/Pages/PlanningPage.php:253
+msgid "Líneas base"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:64
+msgid "Líneas base guardadas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:66
+msgid "Aún no hay líneas base. Fije una cuando el cronograma esté aprobado: contra ella se medirán los atrasos."
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:69
+msgid "Autor"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:75
+msgid "vigente"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:86
+msgid "Hacer vigente"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:105
+msgid "Fijar una nueva línea base"
+msgstr ""
+
+#. translators: fecha de hoy.
+#: src/Admin/Pages/PlanningBaselinesPage.php:110
+#: src/Modules/Planning/BaselineRepository.php:88
+#, php-format
+msgid "Línea base %s"
+msgstr ""
+
+#. translators: fecha de hoy.
+#: src/Admin/Pages/PlanningBaselinesPage.php:111
+msgid "Motivo (aprobación del cronograma, reprogramación autorizada…)"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:112
+msgid "Usarla como línea base vigente"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:113
+msgid "Fijar línea base"
+msgstr ""
+
+#. translators: nombre de la línea base.
+#: src/Admin/Pages/PlanningBaselinesPage.php:124
+#, php-format
+msgid "Comparación con \"%s\""
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:126
+msgid "atrasadas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:127
+msgid "adelantadas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:128
+msgid "nuevas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:129
+msgid "eliminadas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:132
+#: src/Admin/Pages/PlanningPage.php:113
+#: src/Admin/Pages/PlanningPage.php:400
+#: src/Admin/Pages/PlanningPage.php:758
+#: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Modules/Planning/ActivityRepository.php:98
+msgid "Actividad"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:132
+msgid "Término base"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:132
+msgid "Término actual"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:132
+msgid "Desvío"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:145
+msgid "Eliminada"
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:178
+msgid "Línea base fijada."
+msgstr ""
+
+#. translators: URL de la papelera.
+#: src/Admin/Pages/PlanningBaselinesPage.php:198
+#, php-format
+msgid "Línea base eliminada. Puede restaurarla desde la <a href=\"%s\">papelera</a>."
+msgstr ""
+
+#: src/Admin/Pages/PlanningBaselinesPage.php:214
+msgid "Línea base vigente actualizada."
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:55
+msgid "Lunes"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:55
+msgid "Martes"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:55
+msgid "Miércoles"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:55
+msgid "Jueves"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:55
+msgid "Viernes"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:55
+msgid "Sábado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:55
+msgid "Domingo"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:58
+msgid "Calendarios laborales"
+msgstr ""
+
+#. translators: 1: nombre del calendario, 2: ámbito (del proyecto o global).
+#: src/Admin/Pages/PlanningCalendarsPage.php:64
+#, php-format
+msgid "El proyecto programa con el calendario \"%1$s\" (%2$s)."
+msgstr ""
+
+#. translators: 1: nombre del calendario, 2: ámbito (del proyecto o global).
+#: src/Admin/Pages/PlanningCalendarsPage.php:64
+msgid "propio del proyecto"
+msgstr ""
+
+#. translators: 1: nombre del calendario, 2: ámbito (del proyecto o global).
+#: src/Admin/Pages/PlanningCalendarsPage.php:64
+msgid "global del sitio"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:66
+msgid "El proyecto no tiene calendario propio ni existe uno global: se programa de lunes a viernes sin feriados. Cree un calendario y cargue los feriados de Chile."
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:73
+#: src/Admin/Pages/PlanningPage.php:254
+msgid "Calendarios"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:74
+msgid "Del proyecto"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:74
+msgid "Globales"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:82
+msgid "por defecto"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:89
+msgid "Nuevo calendario"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:95
+msgid "Nombre (por ejemplo, Calendario del proyecto)"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:102
+msgid "Calendario global (disponible para todos los proyectos sin calendario propio)"
+msgstr ""
+
+#. translators: 1: primer año, 2: último año.
+#: src/Admin/Pages/PlanningCalendarsPage.php:104
+#, php-format
+msgid "Cargar los feriados de Chile de %1$d a %2$d"
+msgstr ""
+
+#. translators: 1: primer año, 2: último año.
+#: src/Admin/Pages/PlanningCalendarsPage.php:105
+msgid "Crear calendario"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:137
+msgid "Usar por defecto"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:145
+#: src/Admin/Pages/ProjectsPage.php:183
+msgid "Desde"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:146
+msgid "Hasta"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:147
+msgid "Cargar feriados de Chile"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:154
+msgid "Eliminar calendario"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:159
+msgid "Excepciones"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:169
+msgid "No laborable (feriado)"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:170
+msgid "Laborable por excepción"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:172
+#: src/Admin/Pages/PlanningCalendarsPage.php:181
+msgid "Motivo"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:178
+msgid "Sin excepciones. Cargue los feriados de Chile o añada fechas."
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:186
+msgid "Laborable"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:186
+msgid "No laborable"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:197
+#: src/Admin/Pages/PlanningPage.php:778
+msgid "Quitar"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:229
+msgid "Calendario no encontrado o sin permiso."
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:261
+msgid "Calendario creado."
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:269
+msgid "Calendario guardado."
+msgstr ""
+
+#. translators: URL de la papelera.
+#: src/Admin/Pages/PlanningCalendarsPage.php:288
+#, php-format
+msgid "Calendario eliminado. Puede restaurarlo desde la <a href=\"%s\">papelera</a>."
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:304
+msgid "Calendario por defecto actualizado."
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarsPage.php:331
+msgid "Excepciones actualizadas."
+msgstr ""
+
+#. translators: número de feriados.
+#: src/Admin/Pages/PlanningCalendarsPage.php:350
+#, php-format
+msgid "%d feriados cargados."
+msgstr ""
+
+#. translators: 1: número de semana, 2: fecha de inicio, 3: fecha de término.
+#: src/Admin/Pages/PlanningCalendarViewPage.php:71
+#, php-format
+msgid "Semana %1$d: %2$s al %3$s"
+msgstr ""
+
+#. translators: 1: fecha de inicio, 2: fecha de término.
+#: src/Admin/Pages/PlanningCalendarViewPage.php:78
+#, php-format
+msgid "Agenda: %1$s al %2$s"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:86
+msgid "Lun"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:86
+msgid "Mar"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:86
+msgid "Mié"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:86
+msgid "Jue"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:86
+msgid "Vie"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:86
+msgid "Sáb"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:86
+msgid "Dom"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:88
+#: src/Admin/Pages/PlanningPage.php:249
+msgid "Calendario"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:92
+#: src/Admin/Pages/PlanningPage.php:95
+msgid "Hoy"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:96
+#: src/Admin/Pages/PlanningPage.php:101
+msgid "Mes"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:96
+#: src/Admin/Pages/PlanningPage.php:100
+msgid "Semana"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:96
+msgid "Agenda"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:104
+msgid "Sin eventos en el periodo."
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:108
+msgid "(no laborable)"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:156
+msgid "Suscripción desde su calendario"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:157
+msgid "Añada esta dirección como calendario por URL en Google Calendar, Outlook o Apple Calendar: los hitos, inicios y términos se actualizan solos (cada seis horas). La dirección lleva una clave secreta: no la publique; puede regenerarla para invalidar la anterior."
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:165
+msgid "Regenerar clave"
+msgstr ""
+
+#: src/Admin/Pages/PlanningCalendarViewPage.php:233
+msgid "Clave regenerada: las suscripciones anteriores dejan de funcionar."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:47
+#: src/Admin/Pages/PlanningPage.php:637
+msgid "Sin permiso para editar la planificación."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:53
+msgid "Importar cronograma"
+msgstr ""
+
+#. translators: nombre del archivo.
+#: src/Admin/Pages/PlanningImportPage.php:59
+#, php-format
+msgid "Vista previa de %s"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:61
+msgid "filas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:62
+msgid "resúmenes"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:63
+msgid "actividades"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:64
+#: src/Admin/Pages/PlanningPage.php:296
+msgid "hitos"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:65
+msgid "dependencias"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:71
+msgid "Ref."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:71
+#: src/Admin/Pages/PlanningPage.php:712
+msgid "Dentro de"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:71
+#: src/Admin/Pages/PlanningPage.php:403
+msgid "Dur."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:71
+#: src/Admin/Pages/PlanningPage.php:408
+#: src/Admin/Pages/PlanningPage.php:755
+msgid "Predecesoras"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:71
+msgid "Restricción"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:71
+#: src/Admin/Pages/PlanningPage.php:401
+#: src/Admin/Pages/PlanningPage.php:506
+#: src/Admin/Pages/PlanningReportPage.php:184
+msgid "Frente"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:71
+#: src/Admin/Pages/PlanningPage.php:409
+#: src/Admin/Pages/PlanningPage.php:507
+#: src/Admin/Pages/PlanningPage.php:523
+#: src/Admin/Pages/PlanningPage.php:807
+#: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Modules/Planning/AssignmentRepository.php:33
+msgid "Responsable"
+msgstr ""
+
+#. translators: número total de filas.
+#: src/Admin/Pages/PlanningImportPage.php:89
+#, php-format
+msgid "Se muestran 300 de %d filas."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:95
+msgid "Colocar las filas de primer nivel dentro de"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:97
+msgid "Primer nivel del proyecto"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:102
+#: src/Admin/Pages/PlanningPage.php:363
+msgid "Importar"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:103
+#: src/Admin/Pages/ProjectsPage.php:383
+msgid "Cancelar"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:105
+msgid "La importación añade filas (no reemplaza). Queda registrada como una operación y puede revertirse completa desde la página de operaciones."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:105
+msgid "Ver operaciones"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:114
+msgid "Subir archivo"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:120
+msgid "Analizar"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:123
+msgid "El servidor no tiene la extensión zip de PHP: los XLSX no podrán leerse; use CSV."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:127
+msgid "Formatos admitidos"
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:129
+msgid "una fila por actividad; se reconocen las columnas Código (jerárquico, por ejemplo 1.2.3) o Nivel, Nombre, Tipo (resumen, actividad, hito), Duración (días hábiles; admite \"2 sem\", \"40 h\"), Predecesoras (notación 1.2FS+3 con códigos o números de fila), Frente, Responsable (nombre, usuario o correo), Avance, Estado, Inicio, Término, Restricción, Fecha de restricción, Inicio real, Término real, Entregable y Prioridad. La exportación CSV del propio plugin se reimporta tal cual."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:130
+msgid "archivo guardado como XML desde Project o ProjectLibre; se importan jerarquía, duraciones, hitos, predecesoras con tipo y retraso, restricciones y avance."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:131
+msgid "Las filas sin predecesoras pero con fecha de inicio reciben la restricción \"no empezar antes de\" esa fecha, de modo que el cronograma respete las fechas del archivo."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:152
+msgid "No se recibió ningún archivo."
+msgstr ""
+
+#: src/Admin/Pages/PlanningImportPage.php:181
+msgid "La vista previa caducó; vuelva a subir el archivo."
+msgstr ""
+
+#. translators: número de actividades.
+#: src/Admin/Pages/PlanningImportPage.php:201
+#, php-format
+msgid "Importadas %d actividades."
+msgstr ""
+
+#. translators: lista de dependencias omitidas.
+#: src/Admin/Pages/PlanningImportPage.php:204
+#, php-format
+msgid "Dependencias omitidas: %s"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:45
+#: src/Admin/Pages/PlanningPage.php:186
+#: src/Admin/Pages/PlanningPage.php:294
+#: src/Admin/Pages/PlanningPage.php:341
+msgid "Planificación"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:93
+msgid "Guardando…"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:94
+msgid "No se pudo guardar el cambio."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:96
+#: src/Admin/Pages/PlanningPage.php:502
+msgid "Línea base"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:97
+#: src/Admin/Pages/PlanningPage.php:300
+#: src/Admin/Pages/PlanningPage.php:875
+#: src/Admin/Pages/ProjectsPage.php:362
+msgid "días hábiles"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:98
+msgid "Con fechas reales: no se puede arrastrar."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:99
+msgid "Día"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:102
+msgid "Trimestre"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:103
+#: src/Admin/Pages/PlanningPage.php:382
+msgid "Todos los frentes"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:104
+msgid "Todos los responsables"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:105
+#: src/Admin/Pages/PlanningPage.php:726
+msgid "Sin frente"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:106
+#: src/Admin/Pages/PlanningPage.php:817
+msgid "Sin responsable"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:107
+msgid "Suelte sobre la actividad sucesora"
+msgstr ""
+
+#. translators: notación de la dependencia.
+#: src/Admin/Pages/PlanningPage.php:109
+#, php-format
+msgid "¿Quitar la dependencia %s?"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:110
+msgid "Contraer"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:111
+msgid "Expandir"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:112
+msgid "Sin fechas programadas."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:114
+#: src/Admin/Pages/PlanningPage.php:404
+#: src/Admin/Pages/PlanningPage.php:801
+#: src/Admin/Pages/ProjectsPage.php:102
+#: src/Admin/Pages/ProjectsPage.php:163
+#: src/Admin/Pages/ProjectsPage.php:341
+#: src/Modules/Planning/EventsService.php:51
+msgid "Inicio"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:115
+#: src/Admin/Pages/PlanningPage.php:405
+#: src/Admin/Pages/PlanningPage.php:802
+#: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Admin/Pages/ProjectsPage.php:103
+#: src/Admin/Pages/ProjectsPage.php:164
+#: src/Admin/Pages/ProjectsPage.php:345
+#: src/Modules/Planning/EventsService.php:54
+msgid "Término"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:116
+#: src/Admin/Pages/PlanningPage.php:406
+msgid "Holgura"
+msgstr ""
+
+#. translators: días hábiles de atraso.
+#: src/Admin/Pages/PlanningPage.php:117
+#: src/Admin/Pages/PlanningPage.php:433
+#: src/Admin/Pages/PlanningReportPage.php:265
+msgid "crítica"
+msgstr ""
+
+#. translators: nombre de la actividad.
+#: src/Admin/Pages/PlanningPage.php:119
+#, php-format
+msgid "¿Quitar la restricción de fecha de %s?"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:187
+msgid "No hay proyectos visibles para su usuario. Cree uno en la pantalla de proyectos."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:194
+#: src/Modules/Planning/PlanningTools.php:253
+#: src/Modules/Planning/PlanningTools.php:470
+msgid "Sin permiso para ver la planificación de este proyecto."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:246
+#: src/Admin/Pages/PlanningPage.php:296
+#: src/Admin/Pages/PlanningPage.php:305
+msgid "Actividades"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:247
+#: src/Admin/Pages/PlanningPage.php:306
+#: src/Admin/Pages/PlanningPage.php:490
+msgid "Carta Gantt"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:248
+#: src/Admin/Pages/PlanningPage.php:490
+msgid "Tablero"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:250
+msgid "Alertas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:251
+#: src/Admin/Pages/PlanningReportPage.php:320
+msgid "Carga de trabajo"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:252
+#: src/Admin/Pages/PlanningPage.php:307
+#: src/Admin/Pages/PlanningReportPage.php:149
+#: src/Modules/Planning/PlanningTools.php:100
+msgid "Informe semanal"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:297
+msgid "Avance ponderado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:298
+#: src/Admin/Pages/PlanningPage.php:873
+#: src/Admin/Pages/PlanningReportPage.php:206
+msgid "Término programado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:300
+msgid "Holgura contractual"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:302
+#: src/Admin/Pages/PlanningReportPage.php:184
+#: src/Admin/Pages/PlanningReportPage.php:251
+msgid "Vencidas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:348
+msgid "actividades e hitos"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:349
+msgid "avance ponderado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:350
+msgid "término programado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:352
+#: src/Admin/Pages/PlanningReportPage.php:176
+msgid "días hábiles de holgura contractual"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:354
+#: src/Admin/Pages/PlanningReportPage.php:174
+msgid "vencidas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:355
+msgid "críticas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:360
+#: src/Admin/Pages/PlanningPage.php:681
+msgid "Nueva actividad"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:361
+msgid "Nueva fase"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:362
+msgid "Nuevo hito"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:366
+msgid "Exportar:"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:376
+msgid "Todos los estados"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:387
+#: src/Admin/Pages/PlanningPage.php:505
+msgid "Solo críticas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:388
+msgid "Buscar"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:394
+msgid "El proyecto aún no tiene actividades. Empiece creando las fases (resúmenes) y dentro de ellas las actividades e hitos."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:394
+msgid "Ninguna actividad coincide con el filtro."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:407
+#: src/Admin/Pages/PlanningPage.php:456
+#: src/Admin/Pages/PlanningPage.php:795
+#: src/Admin/Pages/PlanningPage.php:936
+#: src/Admin/Pages/PlanningReportPage.php:184
+#: src/Admin/Pages/PlanningReportPage.php:234
+msgid "Avance"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:434
+msgid "conflicto"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:457
+msgid "Guardar avance"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:464
+msgid "Subir"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:465
+msgid "Bajar"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:466
+msgid "Anidar en la fase anterior"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:467
+msgid "Sacar de la fase"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:475
+msgid "Duraciones y holguras en días hábiles del calendario del proyecto. Un hito se fecha el día en que se alcanza. Las fechas se recalculan automáticamente a partir de las dependencias, restricciones, fechas reales y calendario."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:493
+msgid "El proyecto aún no tiene actividades."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:501
+msgid "Escala"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:503
+#: src/Admin/Pages/PlanningPage.php:876
+msgid "Ruta crítica"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:504
+msgid "Dependencias"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:508
+msgid "Imprimir o guardar en PDF"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:512
+msgid "Arrastre una barra para fijar su inicio (restricción \"no empezar antes de\") o su borde derecho para cambiar la duración. Arrastre desde el círculo del extremo de una barra hasta otra para crear una dependencia fin a inicio; pulse sobre una flecha para quitarla; doble clic sobre una barra quita su restricción."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:519
+msgid "Agrupar por"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:522
+#: src/Admin/Pages/PlanningPage.php:723
+msgid "Frente de trabajo"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:525
+msgid "Ocultar terminadas y canceladas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:526
+msgid "Arrastre las tarjetas entre columnas: cambia el estado, el frente o el responsable según la agrupación. Marcar como terminada fija el avance en 100 % y la fecha real de término en hoy."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:643
+#: src/Admin/Pages/PlanningPage.php:1040
+#: src/Modules/Planning/ActivityHandler.php:709
+msgid "La actividad no existe en este proyecto."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:708
+msgid "Los resúmenes agrupan actividades y toman sus fechas de ellas; los hitos tienen duración cero."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:715
+msgid "Primer nivel"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:731
+msgid "Prioridad"
+msgstr ""
+
+#. translators: etiqueta de la prioridad.
+#: src/Admin/Pages/PlanningPage.php:733
+#, php-format
+msgid "Prioridad %s"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:739
+msgid "Duración (días hábiles)"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:743
+msgid "Restricción de fecha"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:750
+msgid "Fecha de la restricción"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:751
+msgid "Sin restricción, la actividad se programa lo antes posible según sus predecesoras."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:758
+msgid "Retraso"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:764
+msgid "(ninguna)"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:783
+msgid "Añadir predecesora"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:784
+msgid "FS: empieza cuando la otra termina. SS: empiezan juntas. FF: terminan juntas. SF: termina cuando la otra empieza. El retraso se expresa en días hábiles; negativo es adelanto."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:788
+msgid "Estado y avance"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:799
+msgid "Fechas reales"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:803
+msgid "Las fechas reales fijan la programación: una actividad terminada ya no se mueve."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:826
+msgid "Entregable"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:827
+msgid "Informe, muestra, prototipo, acta…"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:830
+msgid "Partida y costo planificado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:833
+msgid "Sin partida"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:838
+msgid "Costo planificado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:846
+msgid "Notas de seguimiento"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:851
+msgid "Nota de este avance"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:852
+msgid "Se anota en el historial si cambian el avance, el estado o las fechas reales."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:858
+msgid "Crear"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:858
+#: src/Admin/Pages/ProjectsPage.php:382
+msgid "Guardar cambios"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:860
+msgid "Crear y añadir otra"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:862
+#: src/Admin/Pages/ProjectsPage.php:149
+msgid "Volver a la lista"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:869
+msgid "Programación"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:872
+msgid "Inicio programado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:874
+msgid "Inicio y término tardíos"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:875
+msgid "Holgura total / libre"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:876
+msgid "Sí"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:876
+msgid "No"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:877
+#: src/Admin/Pages/ProjectsPage.php:105
+msgid "Versión"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:881
+msgid "Sucesoras"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:892
+msgid "Personas asignadas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:894
+msgid "Sin asignaciones."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:909
+#: src/Admin/Pages/ProjectsPage.php:197
+msgid "Retirar"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:927
+msgid "Dedicación"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:928
+msgid "Asignar"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:934
+msgid "Historial de avance"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:936
+#: src/Admin/Pages/PlanningReportPage.php:234
+msgid "Nota"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:936
+#: src/Admin/Pages/PlanningReportPage.php:234
+msgid "Quién"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:956
+msgid "Eliminar actividad"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:957
+msgid "Se eliminan también las actividades contenidas, sus dependencias, asignaciones e historial."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1054
+msgid "Actividad guardada, pero las predecesoras no se aplicaron:"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1061
+msgid "Actividad creada."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1063
+msgid "Actividad guardada."
+msgstr ""
+
+#. translators: 1: registros eliminados, 2: enlace a la papelera
+#: src/Admin/Pages/PlanningPage.php:1089
+#, php-format
+msgid "Actividad eliminada (%1$d registros). Puede restaurarla desde la <a href=\"%2$s\">papelera</a>."
+msgstr ""
+
+#. translators: 1: nombre de la actividad, 2: porcentaje.
+#: src/Admin/Pages/PlanningPage.php:1117
+#, php-format
+msgid "Avance de \"%1$s\" fijado en %2$d %%."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1164
+msgid "No hay una fase anterior en la que anidar la actividad."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1207
+msgid "Asignación guardada."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1224
+msgid "Asignación retirada."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1247
+msgid "Sin permiso de edición."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1278
+#: src/Modules/Planning/ActivityRepository.php:558
+#: src/Modules/Planning/ActivityRepository.php:634
+#: src/Modules/Planning/ActivityRepository.php:726
+#: src/Modules/Planning/PlanningTools.php:250
+msgid "La actividad no existe."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1287
+msgid "La actividad tiene fechas reales y no se puede mover."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1293
+msgid "Fecha no válida."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1300
+msgid "Solo las actividades cambian de duración."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1307
+msgid "El estado de un resumen se deriva de sus actividades."
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:1322
+msgid "Operación desconocida."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:49
+msgid "Project (XML)"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:92
+msgid "Vencida"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:93
+msgid "Vence pronto"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:94
+msgid "No iniciada"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:95
+msgid "Holgura negativa"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:96
+msgid "Conflicto de fechas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:97
+#: src/Modules/Planning/EventsService.php:62
+msgid "Término contractual"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:98
+msgid "Sobreasignación"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:99
+msgid "Exige aprobación"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:102
+#: src/Modules/Planning/PlanningCron.php:133
+msgid "Alertas de plazo"
+msgstr ""
+
+#. translators: fecha de hoy.
+#: src/Admin/Pages/PlanningReportPage.php:104
+#, php-format
+msgid "Calculadas ahora sobre el cronograma vigente (hoy es %s). El recálculo diario guarda un resumen y, si las notificaciones están activas, avisa por correo a directores e ingenieros cuando hay alertas de severidad alta."
+msgstr ""
+
+#. translators: 1: fecha y hora, 2: alertas altas, 3: alertas medias.
+#: src/Admin/Pages/PlanningReportPage.php:105
+#, php-format
+msgid "Último recálculo programado: %1$s (%2$d altas, %3$d medias)."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:108
+msgid "Sin alertas: el cronograma está al día."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:111
+msgid "Severidad"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:115
+#: src/Modules/Planning/ActivityRepository.php:127
+msgid "Alta"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:115
+#: src/Modules/Planning/ActivityRepository.php:128
+msgid "Media"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:158
+msgid "Ver semana"
+msgstr ""
+
+#. translators: 1: número de semana, 2: año, 3: fecha de inicio, 4: fecha de término.
+#: src/Admin/Pages/PlanningReportPage.php:168
+#, php-format
+msgid "Semana %1$d de %2$d (%3$s al %4$s)"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:171
+msgid "avance global"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:172
+msgid "terminadas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:173
+msgid "en curso"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:182
+msgid "Avance por frente de trabajo"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:184
+msgid "Act."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:184
+msgid "Term."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:184
+#: src/Modules/Planning/ActivityRepository.php:83
+msgid "En curso"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:194
+msgid "Cambios respecto de la semana anterior"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:197
+msgid "Semana futura: sin fotografía del cronograma todavía."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:199
+msgid "Primera fotografía del cronograma: la comparación empieza la próxima semana."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:202
+msgid "Frentes que se abren"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:203
+msgid "Frentes que se cierran"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:204
+msgid "Entran en la ruta crítica"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:205
+msgid "Salen de la ruta crítica"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:207
+msgid "Avance global"
+msgstr ""
+
+#. translators: lunes de la semana comparada.
+#: src/Admin/Pages/PlanningReportPage.php:207
+#, php-format
+msgid "semana comparada: %s"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:213
+msgid "Curva S de avance"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:217
+msgid "planificado a la fecha"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:218
+msgid "real"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:219
+msgid "puntos de desviación"
+msgstr ""
+
+#. translators: nombre de la línea base.
+#: src/Admin/Pages/PlanningReportPage.php:222
+#, php-format
+msgid "Plan según la línea base \"%s\"; real según el historial de avances, ponderado por duración."
+msgstr ""
+
+#. translators: nombre de la línea base.
+#: src/Admin/Pages/PlanningReportPage.php:222
+msgid "Sin línea base vigente: el plan se toma del cronograma actual. Fije una línea base para medir la desviación contra el compromiso."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:224
+msgid "Sin actividades con fechas y duración."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:229
+msgid "Avances registrados en la semana"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:231
+msgid "No se registraron avances durante la semana."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:246
+msgid "Terminado en la semana"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:247
+msgid "Iniciado en la semana"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:248
+msgid "En ejecución durante la semana"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:249
+msgid "Comienza la próxima semana"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:250
+msgid "Hitos de las próximas cuatro semanas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:258
+msgid "Sin registros."
+msgstr ""
+
+#. translators: días hábiles de atraso.
+#: src/Admin/Pages/PlanningReportPage.php:264
+#, php-format
+msgid "%d días de atraso"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:274
+msgid "Desviación respecto de la línea base"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:276
+msgid "El proyecto no tiene una línea base vigente."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:276
+msgid "Fijar una"
+msgstr ""
+
+#. translators: 1: nombre de la línea base, 2: fecha, 3: atrasadas, 4: adelantadas, 5: nuevas, 6: eliminadas.
+#: src/Admin/Pages/PlanningReportPage.php:279
+#, php-format
+msgid "Línea base \"%1$s\" (%2$s): %3$d atrasadas, %4$d adelantadas, %5$d nuevas, %6$d eliminadas."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:292
+msgid "Alertas de severidad alta"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:301
+msgid "La exportación LaTeX genera un documento completo (babel español, tablas longtable con continuación, carta Gantt resumida con pgfgantt) listo para compilar con pdflatex."
+msgstr ""
+
+#. translators: número de semanas.
+#: src/Admin/Pages/PlanningReportPage.php:331
+#, php-format
+msgid "%d semanas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:334
+#: src/Admin/Pages/ProjectsPage.php:115
+msgid "Ver"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:337
+msgid "Porcentaje de dedicación por semana: responsables al 100 % salvo asignación propia, participantes por su dedicación, prorrateado por los días hábiles de cada actividad en la semana. Más de 100 % es sobreasignación."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:340
+msgid "No hay actividades abiertas con responsable o asignaciones en este periodo."
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:346
+#: src/Admin/Pages/ProjectsPage.php:183
+msgid "Persona"
+msgstr ""
+
+#: src/Admin/Pages/PlanningReportPage.php:350
+msgid "Máx."
+msgstr ""
+
+#. translators: número de semanas con sobreasignación.
+#: src/Admin/Pages/PlanningReportPage.php:356
+#, php-format
+msgid "%d sem. >100 %%"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:59
+#: src/Admin/Pages/ProjectsPage.php:66
+msgid "Proyecto no encontrado o sin permiso."
+msgstr ""
+
+#. translators: nombre del proyecto.
+#: src/Admin/Pages/ProjectsPage.php:86
+#: src/Admin/Pages/ProjectsPage.php:297
+msgid "Nuevo proyecto"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:100
+#: src/Admin/Pages/ProjectsPage.php:160
+msgid "Financiador"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:104
+msgid "Presupuesto"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:117
+#: src/Admin/Pages/ProjectsPage.php:151
+msgid "Editar"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:157
+msgid "Ficha"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:159
+#: src/Admin/Pages/ProjectsPage.php:315
+msgid "Nombre corto"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:161
+#: src/Admin/Pages/ProjectsPage.php:323
+msgid "Código de financiamiento"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:162
+#: src/Admin/Pages/ProjectsPage.php:327
+msgid "Entidad ejecutora"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:166
+#: src/Admin/Pages/ProjectsPage.php:349
+msgid "Presupuesto total"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:168
+msgid "Versión del registro"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:169
+msgid "Última modificación"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:178
+msgid "Equipo"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:180
+msgid "Sin miembros asignados."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:183
+#: src/Admin/Pages/ProjectsPage.php:225
+msgid "Perfil"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:208
+msgid "Añadir o cambiar perfil"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:246
+#: src/Admin/Pages/SettingsPage.php:161
+msgid "Módulos"
+msgstr ""
+
+#. translators: número de etapa.
+#: src/Admin/Pages/ProjectsPage.php:254
+#, php-format
+msgid "etapa %d, planificado"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:256
+msgid "inactivo"
+msgstr ""
+
+#. translators: nombre del proyecto.
+#: src/Admin/Pages/ProjectsPage.php:297
+#, php-format
+msgid "Editar: %s"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:308
+msgid "Identificador corto y estable, sin espacios ni tildes. Se usa en exportaciones y en el conector."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:319
+msgid "Entidad financiadora"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:352
+msgid "Moneda"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:360
+msgid "Desviación que exige aprobación"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:363
+msgid "Cuando una actividad o hito se atrasa respecto de la línea base vigente más allá de este umbral, o el término programado supera el contractual, el módulo de planificación alerta que la reprogramación exige aprobación formal del financiador."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:367
+msgid "Módulos opcionales"
+msgstr ""
+
+#. translators: número de etapa.
+#: src/Admin/Pages/ProjectsPage.php:373
+#, php-format
+msgid "etapa %d"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:376
+msgid "Los módulos del núcleo (planificación, documentos, adquisiciones, reuniones, datos) están siempre activos."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:382
+msgid "Crear proyecto"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:392
+msgid "Código del proyecto"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:394
+msgid "Eliminar proyecto"
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:395
+msgid "Eliminación definitiva: escriba el código del proyecto para confirmarla. Se eliminan el proyecto, sus miembros y los datos de todos los módulos; la bitácora conserva el registro. Las eliminaciones de actividades, calendarios y líneas base, en cambio, van a la papelera y pueden restaurarse."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:440
+msgid "Proyecto creado."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:449
+msgid "Proyecto actualizado."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:466
+msgid "Para eliminar el proyecto escriba su código exactamente como aparece en la ficha."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:474
+msgid "Proyecto eliminado."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:500
+msgid "Perfil guardado."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:519
+msgid "Miembro retirado."
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:58
+msgid "Identidad visual"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:59
+msgid "El plugin adopta el nombre, logotipo, ícono, paleta y tipografía del sitio. Si el tema no los declara, corríjalos aquí; los campos vacíos conservan el valor del sitio."
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:62
+msgid "Adoptar la identidad del sitio"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:63
+msgid "Aplicar la identidad detectada y las correcciones siguientes"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:68
+msgid "URL del logotipo"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:69
+msgid "Color principal"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:70
+msgid "Color secundario"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:71
+msgid "Color de acento"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:72
+msgid "Color de fondo"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:73
+msgid "Color del texto"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:74
+msgid "Tipografía"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:95
+#: src/Connector/Diagnostics.php:81
+msgid "Habilitado"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:96
+msgid "Registrar las herramientas y el servidor MCP"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:99
+msgid "Modo de solo lectura"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:100
+msgid "Rechazar toda propuesta de cambio proveniente del conector"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:103
+msgid "Validez por defecto de los tokens (días)"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:104
+msgid "0 = sin caducidad"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:107
+msgid "Caducidad de las operaciones propuestas (horas)"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:114
+msgid "Seguridad"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:118
+#: src/Connector/Diagnostics.php:154
+msgid "Doble factor de autenticación"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:120
+msgid "Exigir un segundo factor a los perfiles con acceso a documentos, montos, exportaciones y bitácora (incluidos los administradores del plugin)"
+msgstr ""
+
+#. translators: nombre del plugin de doble factor.
+#: src/Admin/Pages/SettingsPage.php:123
+#, php-format
+msgid "Proveedor detectado: %s. Quien no tenga configurado el segundo factor verá cerradas esas secciones hasta activarlo en su perfil."
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:125
+msgid "No se detecta ningún plugin de doble factor. El plugin no implementa uno propio: instale y active Two Factor (del equipo de WordPress), WP 2FA o Wordfence Login Security; mientras tanto la exigencia no puede aplicarse y el diagnóstico del conector lo señalará."
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:137
+#: src/Connector/Diagnostics.php:110
+msgid "Directorio privado de adjuntos"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:138
+msgid "Subcarpeta dentro de wp-content/uploads, protegida contra acceso web."
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:141
+msgid "Al desinstalar"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:142
+msgid "Eliminar tablas, ajustes y roles del plugin (exporte antes un respaldo)"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:147
+msgid "Guardar ajustes"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:151
+msgid "Salud del sistema"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:153
+msgid "Versión del plugin"
+msgstr ""
+
+#. translators: versión del esquema de base de datos.
+#: src/Admin/Pages/SettingsPage.php:153
+#, php-format
+msgid "esquema %s"
+msgstr ""
+
+#. translators: versión del esquema de base de datos.
+#: src/Admin/Pages/SettingsPage.php:154
+msgid "Instalado el"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:155
+msgid "Directorio privado"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:155
+msgid "escribible"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:155
+msgid "NO escribible"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:155
+msgid "sin .htaccess"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:156
+msgid "Tarea diaria"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:156
+#: src/Admin/Pages/SettingsPage.php:157
+msgid "no programada"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:157
+msgid "Tarea semanal"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:158
+msgid "WP-Cron"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:158
+msgid "desactivado (cron real)"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:158
+msgid "interno"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:163
+msgid "Módulo"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:163
+msgid "Etapa"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:163
+msgid "Núcleo"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:169
+msgid "sí"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:169
+msgid "no"
+msgstr ""
+
+#: src/Admin/Pages/SettingsPage.php:219
+msgid "Ajustes guardados."
+msgstr ""
+
+#: src/Admin/Pages/TrashPage.php:52
+msgid "Eliminaciones con instantánea: se restauran con sus dependencias, asignaciones e historial."
+msgstr ""
+
+#: src/Admin/Pages/TrashPage.php:58
+msgid "Todos los proyectos"
+msgstr ""
+
+#: src/Admin/Pages/TrashPage.php:66
+msgid "La papelera está vacía."
+msgstr ""
+
+#: src/Admin/Pages/TrashPage.php:71
+msgid "Eliminado"
+msgstr ""
+
+#: src/Admin/Pages/TrashPage.php:73
+msgid "Por"
+msgstr ""
+
+#: src/Admin/Pages/TrashPage.php:98
+msgid "Restaurar"
+msgstr ""
+
+#: src/Admin/Pages/TrashPage.php:127
+msgid "Restaurado. La operación queda como revertida en el registro de operaciones."
+msgstr ""
+
+#: src/Connector/Abilities.php:36
+msgid "Estado del sistema"
+msgstr ""
+
+#: src/Connector/Abilities.php:37
+msgid "Devuelve el estado del plugin Gestión de Proyectos: versiones, módulos disponibles y planificados, número de proyectos, usuario autenticado y alcance del token. Úsela primero para orientarse."
+msgstr ""
+
+#: src/Connector/Abilities.php:39
+msgid "Estado del sistema."
+msgstr ""
+
+#: src/Connector/Abilities.php:45
+msgid "Listar proyectos"
+msgstr ""
+
+#: src/Connector/Abilities.php:46
+msgid "Lista los proyectos visibles para el usuario, con código, nombre, estado, fechas, financiador y presupuesto. Acepta filtro por estado (planificacion, ejecucion, suspendido, cierre, cerrado) y búsqueda por texto."
+msgstr ""
+
+#: src/Connector/Abilities.php:50
+msgid "Filtrar por estado."
+msgstr ""
+
+#: src/Connector/Abilities.php:51
+msgid "Texto a buscar en código, nombre y financiador."
+msgstr ""
+
+#: src/Connector/Abilities.php:55
+msgid "Lista de proyectos."
+msgstr ""
+
+#: src/Connector/Abilities.php:61
+msgid "Obtener proyecto"
+msgstr ""
+
+#: src/Connector/Abilities.php:62
+msgid "Devuelve la ficha completa de un proyecto (por identificador numérico o por código), sus miembros con perfil, su configuración y los módulos activos. Incluye el número de versión, necesario para proponer cambios sin conflictos."
+msgstr ""
+
+#: src/Connector/Abilities.php:66
+#: src/Modules/Planning/PlanningTools.php:38
+msgid "Identificador numérico del proyecto."
+msgstr ""
+
+#: src/Connector/Abilities.php:67
+#: src/Modules/Planning/PlanningTools.php:39
+msgid "Código del proyecto (alternativa al identificador)."
+msgstr ""
+
+#: src/Connector/Abilities.php:71
+msgid "Proyecto."
+msgstr ""
+
+#: src/Connector/Abilities.php:77
+msgid "Listar usuarios"
+msgstr ""
+
+#: src/Connector/Abilities.php:78
+msgid "Lista usuarios del sitio (identificador, nombre y usuario) para asignarlos como miembros de un proyecto. Acepta búsqueda por texto. El correo solo se muestra a administradores del plugin."
+msgstr ""
+
+#: src/Connector/Abilities.php:82
+msgid "Texto a buscar en nombre, usuario o correo."
+msgstr ""
+
+#: src/Connector/Abilities.php:87
+msgid "Usuarios."
+msgstr ""
+
+#: src/Connector/Abilities.php:93
+msgid "Consultar catálogo"
+msgstr ""
+
+#: src/Connector/Abilities.php:94
+msgid "Devuelve las entradas de un catálogo configurable (document_type, procurement_stage, project_status, work_front, budget_line, verification_means, accreditation_criterion), combinando las globales con las del proyecto indicado."
+msgstr ""
+
+#: src/Connector/Abilities.php:98
+msgid "Nombre del catálogo."
+msgstr ""
+
+#: src/Connector/Abilities.php:99
+#: src/Connector/Abilities.php:115
+msgid "Proyecto (opcional)."
+msgstr ""
+
+#: src/Connector/Abilities.php:104
+msgid "Entradas del catálogo."
+msgstr ""
+
+#: src/Connector/Abilities.php:110
+msgid "Bitácora reciente"
+msgstr ""
+
+#: src/Connector/Abilities.php:111
+msgid "Devuelve las últimas entradas de la bitácora de auditoría (quién cambió qué, cuándo y por qué canal), opcionalmente filtradas por proyecto. Requiere el permiso audit.view en el proyecto."
+msgstr ""
+
+#: src/Connector/Abilities.php:120
+msgid "Entradas de la bitácora."
+msgstr ""
+
+#: src/Connector/Abilities.php:126
+msgid "Proponer cambio en un proyecto"
+msgstr ""
+
+#: src/Connector/Abilities.php:127
+msgid "Propone crear un proyecto, actualizar sus datos o cambiar sus miembros. NO aplica nada: devuelve una vista previa con los cambios, advertencias y conflictos, más un operation_id. Los cambios se aplican solo al llamar a confirm-operation con ese identificador. Para update, envíe en expected_version la versión leída con get-project. Acciones: create (data con code, name, funder, funding_code, executing_entity, status, start_date, end_date, budget_total, currency, description), update (project_id, data, expected_version), set_member (project_id, user_id, role: director|ingeniero|investigador|apoyo|observador), remove_member (project_id, user_id)."
+msgstr ""
+
+#: src/Connector/Abilities.php:132
+msgid "Proyecto (obligatorio salvo en create)."
+msgstr ""
+
+#: src/Connector/Abilities.php:133
+msgid "Campos del proyecto (create y update)."
+msgstr ""
+
+#: src/Connector/Abilities.php:134
+msgid "Versión del proyecto vista por el asistente (update)."
+msgstr ""
+
+#: src/Connector/Abilities.php:135
+msgid "Usuario (set_member, remove_member)."
+msgstr ""
+
+#: src/Connector/Abilities.php:136
+msgid "Perfil en el proyecto (set_member)."
+msgstr ""
+
+#: src/Connector/Abilities.php:141
+msgid "Vista previa de la operación propuesta."
+msgstr ""
+
+#: src/Connector/Abilities.php:148
+msgid "Listar operaciones"
+msgstr ""
+
+#: src/Connector/Abilities.php:149
+msgid "Lista operaciones por estado (proposed, applied, reverted, cancelled, expired, failed), opcionalmente por proyecto. Úsela para ver propuestas pendientes de confirmación."
+msgstr ""
+
+#: src/Connector/Abilities.php:159
+msgid "Operaciones."
+msgstr ""
+
+#: src/Connector/Abilities.php:165
+msgid "Obtener operación"
+msgstr ""
+
+#: src/Connector/Abilities.php:166
+msgid "Devuelve una operación con su vista previa, estado, resultado y estado anterior."
+msgstr ""
+
+#: src/Connector/Abilities.php:173
+msgid "Operación."
+msgstr ""
+
+#: src/Connector/Abilities.php:179
+msgid "Confirmar operación"
+msgstr ""
+
+#: src/Connector/Abilities.php:180
+msgid "Aplica una operación propuesta. Llámela solo después de que la persona haya revisado la vista previa y aprobado explícitamente los cambios. Requiere confirm=true. Si los datos cambiaron desde la propuesta, devuelve un conflicto y no aplica nada."
+msgstr ""
+
+#: src/Connector/Abilities.php:185
+msgid "Debe ser true para aplicar."
+msgstr ""
+
+#: src/Connector/Abilities.php:190
+msgid "Resultado de la operación."
+msgstr ""
+
+#: src/Connector/Abilities.php:197
+msgid "Cancelar operación"
+msgstr ""
+
+#: src/Connector/Abilities.php:198
+msgid "Cancela una operación propuesta que no se va a aplicar."
+msgstr ""
+
+#: src/Connector/Abilities.php:205
+#: src/Connector/Abilities.php:223
+msgid "Resultado."
+msgstr ""
+
+#: src/Connector/Abilities.php:212
+msgid "Revertir operación"
+msgstr ""
+
+#: src/Connector/Abilities.php:213
+msgid "Deshace una operación ya aplicada, restaurando el estado anterior. Requiere confirm=true y aprobación explícita de la persona."
+msgstr ""
+
+#: src/Connector/Auth.php:161
+msgid "El token del conector no es válido, caducó o fue revocado."
+msgstr ""
+
+#: src/Connector/Connector.php:114
+msgid "Consulta y operación de proyectos de investigación y desarrollo gestionados con el plugin."
+msgstr ""
+
+#: src/Connector/Connector.php:161
+msgid "Autenticación requerida."
+msgstr ""
+
+#: src/Connector/Connector.php:165
+#: src/Connector/Connector.php:251
+msgid "El usuario no tiene acceso a Gestión de Proyectos."
+msgstr ""
+
+#: src/Connector/Connector.php:183
+msgid "El token del conector es de solo lectura."
+msgstr ""
+
+#: src/Connector/Connector.php:223
+msgid "Consulta y operación de los proyectos gestionados en este sitio. Las herramientas de escritura proponen cambios que deben confirmarse."
+msgstr ""
+
+#: src/Connector/Connector.php:247
+msgid "Autenticación requerida: use un token del conector o una contraseña de aplicación."
+msgstr ""
+
+#: src/Connector/Connector.php:255
+msgid "El usuario no tiene permiso para usar el conector."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:46
+msgid "Versión de PHP"
+msgstr ""
+
+#. translators: versión mínima de PHP.
+#: src/Connector/Diagnostics.php:50
+#, php-format
+msgid "Cambie la versión de PHP a %s o superior desde el panel del hosting (en cPanel: \"Select PHP Version\" o \"MultiPHP Manager\")."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:57
+msgid "Versión de WordPress y API de habilidades"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:59
+msgid "disponible"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:59
+msgid "no disponible"
+msgstr ""
+
+#. translators: versión mínima de WordPress.
+#: src/Connector/Diagnostics.php:61
+#, php-format
+msgid "Actualice WordPress a la versión %s o superior (Escritorio → Actualizaciones). La API de habilidades forma parte del núcleo desde 6.9."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:68
+msgid "Plugin MCP Adapter (oficial de WordPress)"
+msgstr ""
+
+#. translators: versión del adaptador.
+#: src/Connector/Diagnostics.php:71
+#, php-format
+msgid "Activo (versión %s)"
+msgstr ""
+
+#. translators: versión del adaptador.
+#: src/Connector/Diagnostics.php:71
+msgid "No instalado o inactivo"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:72
+msgid "Instálelo desde Plugins → Añadir nuevo, buscando \"MCP Adapter\" (autor: WordPress.org Contributors), o suba el ZIP de https://github.com/WordPress/mcp-adapter/releases. Luego actívelo."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:79
+msgid "Conector habilitado en los ajustes"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:81
+msgid "Deshabilitado"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:82
+msgid "Actívelo en Gestión de Proyectos → Ajustes → Conector."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:89
+msgid "Sitio servido por HTTPS"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:92
+msgid "Los conectores de Claude exigen HTTPS. Active el certificado SSL en el hosting (AutoSSL en cPanel) y cambie las direcciones del sitio a https:// en Ajustes → Generales."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:99
+msgid "Enlaces permanentes"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:101
+msgid "Estructura personalizada activa"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:101
+msgid "Estructura simple"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:102
+msgid "Con enlaces simples el punto de entrada usa el parámetro rest_route; funciona, pero conviene activar una estructura de enlaces permanentes en Ajustes → Enlaces permanentes."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:112
+msgid "(sin .htaccess)"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:113
+msgid "En servidores Nginx, deniegue el acceso web a este directorio en la configuración del servidor (location con \"deny all\")."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:113
+msgid "Revise los permisos de escritura de wp-content/uploads."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:120
+msgid "Tareas programadas"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:122
+msgid "WP-Cron desactivado; se asume un cron real del hosting"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:122
+msgid "WP-Cron interno (depende de las visitas al sitio)"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:123
+msgid "Para alertas puntuales, añada en wp-config.php la línea define( 'DISABLE_WP_CRON', true ); y cree en cPanel un cron job cada 15 minutos con: wget -q -O /dev/null \""
+msgstr ""
+
+#: src/Connector/Diagnostics.php:134
+msgid "Su usuario puede usar el conector"
+msgstr ""
+
+#. translators: número de tokens.
+#: src/Connector/Diagnostics.php:137
+#, php-format
+msgid "%d token activo"
+msgid_plural "%d tokens activos"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: número de tokens.
+#: src/Connector/Diagnostics.php:137
+msgid "Sin permiso"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:138
+msgid "Genere un token en esta misma página (paso 2 del asistente)."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:138
+msgid "Pida a un administrador que le asigne el rol \"Miembro de proyectos\" o la capacidad gdp_use_connector."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:156
+msgid "Instale y active un plugin de doble factor reconocido: Two Factor (del equipo de WordPress, gratuito), WP 2FA o Wordfence Login Security. Otros proveedores pueden integrarse con los filtros gdp_two_factor_provider y gdp_user_has_two_factor."
+msgstr ""
+
+#. translators: nombre del plugin de doble factor.
+#: src/Connector/Diagnostics.php:164
+#, php-format
+msgid "No exigido; proveedor disponible: %s"
+msgstr ""
+
+#. translators: nombre del plugin de doble factor.
+#: src/Connector/Diagnostics.php:164
+msgid "No exigido; sin proveedor activo"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:165
+msgid "Active \"Exigir doble factor\" en Ajustes → Seguridad para que los perfiles con acceso a documentos y montos deban configurar un segundo factor."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:169
+msgid "Exigido, pero sin plugin de doble factor activo: la exigencia no se aplica"
+msgstr ""
+
+#. translators: 1: nombre del plugin de doble factor, 2: usuarios afectados.
+#: src/Connector/Diagnostics.php:175
+#, php-format
+msgid "Exigido con %1$s; %2$d usuarios afectados, todos con segundo factor"
+msgstr ""
+
+#. translators: 1: nombre del plugin, 2: usuarios sin segundo factor, 3: usuarios afectados, 4: nombres.
+#: src/Connector/Diagnostics.php:184
+#, php-format
+msgid "Exigido con %1$s; %2$d de %3$d usuarios afectados aún sin segundo factor: %4$s"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:185
+msgid "Esos usuarios no pueden abrir documentos, montos, exportaciones ni bitácora hasta configurar el segundo factor en su perfil; avíseles. Si alguno ya no debe tener acceso, cambie su perfil en el proyecto."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:200
+#: src/Connector/Diagnostics.php:203
+msgid "API REST alcanzable"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:200
+msgid "El servidor no pudo conectarse a sí mismo (frecuente en hosting compartido). Compruebe desde otro equipo que "
+msgstr ""
+
+#: src/Connector/Diagnostics.php:203
+msgid "Un cortafuegos, plugin de seguridad o regla del servidor está bloqueando la API REST. Revise ModSecurity, Wordfence u otros, y permita la ruta /wp-json/."
+msgstr ""
+
+#. translators: código de estado HTTP.
+#: src/Connector/Diagnostics.php:229
+#: src/Connector/Diagnostics.php:234
+#: src/Connector/Diagnostics.php:236
+#: src/Connector/Diagnostics.php:238
+#: src/Connector/Diagnostics.php:240
+msgid "Punto de entrada MCP"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:229
+msgid "No se pudo comprobar desde el propio servidor. Pruébelo desde fuera con la orden curl que se muestra en el paso 4."
+msgstr ""
+
+#. translators: código de estado HTTP.
+#: src/Connector/Diagnostics.php:234
+#, php-format
+msgid "Responde y exige autenticación (HTTP %d)"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:236
+msgid "Responde sin exigir autenticación"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:236
+msgid "Revise que el servidor MCP del plugin esté usando el permiso de transporte esperado."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:238
+msgid "HTTP 404: la ruta no existe"
+msgstr ""
+
+#: src/Connector/Diagnostics.php:238
+msgid "El servidor MCP no se registró. Compruebe que el plugin MCP Adapter esté activo y vuelva a guardar los enlaces permanentes."
+msgstr ""
+
+#: src/Connector/Diagnostics.php:240
+msgid "Respuesta inesperada; revise el registro de errores de PHP."
+msgstr ""
+
+#: src/Connector/Tokens.php:42
+msgid "Usuario no válido."
+msgstr ""
+
+#: src/Connector/Tokens.php:76
+msgid "No se pudo guardar el token."
+msgstr ""
+
+#: src/Connector/Tools.php:83
+msgid "Las herramientas de escritura proponen cambios; nada se aplica sin confirm-operation."
+msgstr ""
+
+#: src/Connector/Tools.php:84
+msgid "Lea el proyecto con get-project antes de proponer una actualización y envíe expected_version."
+msgstr ""
+
+#: src/Connector/Tools.php:134
+#: src/Connector/Tools.php:226
+msgid "No tiene acceso a este proyecto."
+msgstr ""
+
+#: src/Connector/Tools.php:222
+msgid "Indique el nombre del catálogo."
+msgstr ""
+
+#: src/Connector/Tools.php:264
+msgid "Indique un proyecto: la bitácora global solo la ven los administradores del plugin."
+msgstr ""
+
+#: src/Connector/Tools.php:267
+msgid "No tiene permiso para ver la bitácora de este proyecto."
+msgstr ""
+
+#: src/Connector/Tools.php:305
+msgid "Indique project_id."
+msgstr ""
+
+#: src/Connector/Tools.php:325
+#: src/Modules/Planning/ActivityHandler.php:254
+#: src/Modules/Planning/ActivityHandler.php:597
+#: src/Modules/Planning/ActivityHandler.php:695
+#: src/Operations/Handlers/ProjectHandler.php:112
+#: src/Operations/Handlers/ProjectHandler.php:212
+#: src/Operations/Handlers/ProjectHandler.php:247
+msgid "Acción no admitida."
+msgstr ""
+
+#: src/Connector/Tools.php:363
+msgid "No tiene acceso a esta operación."
+msgstr ""
+
+#: src/Connector/Tools.php:377
+msgid "Para aplicar la operación, envíe confirm=true tras la aprobación explícita de la persona."
+msgstr ""
+
+#: src/Connector/Tools.php:403
+msgid "Para revertir la operación, envíe confirm=true tras la aprobación explícita de la persona."
+msgstr ""
+
+#: src/Connector/Tools.php:425
+#: src/Modules/Planning/PlanningTools.php:464
+msgid "Indique project_id o code."
+msgstr ""
+
+#: src/Connector/Tools.php:429
+#: src/Domain/Projects/ProjectRepository.php:306
+#: src/Domain/Projects/ProjectRepository.php:356
+#: src/Modules/Planning/PlanningTools.php:342
+#: src/Modules/Planning/PlanningTools.php:467
+#: src/Operations/Handlers/ProjectHandler.php:78
+msgid "El proyecto no existe."
+msgstr ""
+
+#: src/Core/Catalogs.php:40
+msgid "En planificación"
+msgstr ""
+
+#: src/Core/Catalogs.php:41
+msgid "En ejecución"
+msgstr ""
+
+#: src/Core/Catalogs.php:42
+msgid "Suspendido"
+msgstr ""
+
+#: src/Core/Catalogs.php:43
+msgid "En cierre"
+msgstr ""
+
+#: src/Core/Catalogs.php:44
+msgid "Cerrado"
+msgstr ""
+
+#: src/Core/Catalogs.php:47
+msgid "Carta enviada"
+msgstr ""
+
+#: src/Core/Catalogs.php:48
+msgid "Oficio recibido"
+msgstr ""
+
+#: src/Core/Catalogs.php:49
+msgid "Contrato"
+msgstr ""
+
+#: src/Core/Catalogs.php:50
+#: src/Core/Catalogs.php:63
+msgid "Orden de compra"
+msgstr ""
+
+#: src/Core/Catalogs.php:51
+msgid "Cotización"
+msgstr ""
+
+#: src/Core/Catalogs.php:52
+#: src/Core/Catalogs.php:64
+msgid "Factura"
+msgstr ""
+
+#: src/Core/Catalogs.php:53
+msgid "Acta"
+msgstr ""
+
+#: src/Core/Catalogs.php:54
+#: src/Core/Catalogs.php:73
+msgid "Informe"
+msgstr ""
+
+#: src/Core/Catalogs.php:55
+msgid "Otro"
+msgstr ""
+
+#: src/Core/Catalogs.php:58
+msgid "Solicitud de cotización"
+msgstr ""
+
+#: src/Core/Catalogs.php:59
+msgid "Cotización recibida"
+msgstr ""
+
+#: src/Core/Catalogs.php:60
+msgid "Seguimiento"
+msgstr ""
+
+#: src/Core/Catalogs.php:61
+msgid "Elección"
+msgstr ""
+
+#: src/Core/Catalogs.php:62
+msgid "Solicitud interna"
+msgstr ""
+
+#: src/Core/Catalogs.php:65
+msgid "Pago"
+msgstr ""
+
+#: src/Core/Catalogs.php:68
+msgid "Registro fotográfico"
+msgstr ""
+
+#: src/Core/Catalogs.php:69
+msgid "Certificado de aprobación o participación"
+msgstr ""
+
+#: src/Core/Catalogs.php:70
+msgid "Lista de asistencia"
+msgstr ""
+
+#: src/Core/Catalogs.php:71
+msgid "Programa de actividades"
+msgstr ""
+
+#: src/Core/Catalogs.php:72
+msgid "Material entregado"
+msgstr ""
+
+#: src/Core/Catalogs.php:163
+msgid "Frentes de trabajo"
+msgstr ""
+
+#: src/Core/Catalogs.php:164
+msgid "Partidas presupuestarias"
+msgstr ""
+
+#: src/Core/Catalogs.php:165
+msgid "Tipos de documento"
+msgstr ""
+
+#: src/Core/Catalogs.php:166
+msgid "Etapas de compra"
+msgstr ""
+
+#: src/Core/Catalogs.php:167
+msgid "Medios de verificación"
+msgstr ""
+
+#: src/Core/Catalogs.php:168
+msgid "Criterios de acreditación"
+msgstr ""
+
+#: src/Core/Catalogs.php:169
+msgid "Estados de proyecto"
+msgstr ""
+
+#: src/Core/Catalogs.php:218
+msgid "Catálogo desconocido."
+msgstr ""
+
+#: src/Core/Catalogs.php:222
+msgid "La entrada necesita un nombre."
+msgstr ""
+
+#: src/Core/Catalogs.php:226
+msgid "La clave no es válida."
+msgstr ""
+
+#: src/Core/Catalogs.php:256
+msgid "No se pudo guardar la entrada."
+msgstr ""
+
+#: src/Core/Roles.php:40
+msgid "Director del proyecto"
+msgstr ""
+
+#: src/Core/Roles.php:41
+msgid "Ingeniero de proyectos"
+msgstr ""
+
+#: src/Core/Roles.php:42
+msgid "Investigador"
+msgstr ""
+
+#: src/Core/Roles.php:43
+msgid "Apoyo administrativo"
+msgstr ""
+
+#: src/Core/Roles.php:44
+msgid "Observador externo"
+msgstr ""
+
+#: src/Core/Roles.php:146
+msgid "Miembro de proyectos"
+msgstr ""
+
+#: src/Core/Spreadsheet.php:41
+msgid "El servidor no tiene la extensión zip de PHP, necesaria para generar XLSX."
+msgstr ""
+
+#: src/Core/Spreadsheet.php:46
+msgid "No se pudo crear el archivo XLSX."
+msgstr ""
+
+#: src/Core/Spreadsheet.php:117
+msgid "El servidor no tiene la extensión zip de PHP, necesaria para leer XLSX."
+msgstr ""
+
+#: src/Core/Spreadsheet.php:121
+msgid "El archivo no es un XLSX válido."
+msgstr ""
+
+#: src/Core/Spreadsheet.php:155
+msgid "No se encontró la hoja de cálculo dentro del archivo."
+msgstr ""
+
+#: src/Core/Spreadsheet.php:159
+msgid "No se pudo leer la hoja de cálculo."
+msgstr ""
+
+#: src/Core/Storage.php:125
+msgid "Enlace de descarga no válido."
+msgstr ""
+
+#: src/Core/Storage.php:138
+msgid "No tiene permiso para descargar este archivo."
+msgstr ""
+
+#: src/Core/Storage.php:146
+msgid "El archivo no existe."
+msgstr ""
+
+#: src/Core/TwoFactor.php:194
+msgid "administrador del plugin"
+msgstr ""
+
+#. translators: 1: proveedor, 2: URL de configuración.
+#: src/Core/TwoFactor.php:231
+#, php-format
+msgid "Su perfil tiene acceso a documentos o montos y este sitio exige doble factor de autenticación. Configure el segundo factor con %1$s en <a href=\"%2$s\">su perfil</a>; hasta entonces esas secciones permanecen cerradas."
+msgstr ""
+
+#: src/Core/TwoFactor.php:232
+msgid "el plugin de autenticación del sitio"
+msgstr ""
+
+#: src/Domain/Projects/MemberRepository.php:113
+#: src/Operations/Handlers/ProjectHandler.php:100
+msgid "Perfil de proyecto no válido."
+msgstr ""
+
+#: src/Domain/Projects/MemberRepository.php:117
+msgid "El usuario no existe."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:159
+msgid "El código del proyecto es obligatorio."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:163
+msgid "Ya existe un proyecto con ese código."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:171
+msgid "El nombre del proyecto es obligatorio."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:178
+msgid "Estado de proyecto no válido."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:186
+#: src/Modules/Planning/ActivityRepository.php:338
+#: src/Modules/Planning/CalendarRepository.php:330
+msgid "Fecha no válida; use el formato AAAA-MM-DD."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:194
+msgid "El presupuesto debe ser un número no negativo."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:203
+msgid "La moneda debe ser un código de tres letras (por ejemplo, CLP)."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:215
+msgid "La configuración del proyecto debe ser JSON válido."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:227
+msgid "La fecha de término no puede ser anterior a la de inicio."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:264
+#: src/Operations/Handlers/ProjectHandler.php:72
+msgid "Código y nombre son obligatorios."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:278
+msgid "No se pudo guardar el proyecto."
+msgstr ""
+
+#. translators: 1: versión esperada, 2: versión actual
+#: src/Domain/Projects/ProjectRepository.php:314
+#, php-format
+msgid "Conflicto de versión: se esperaba la versión %1$d pero el proyecto está en la %2$d. Vuelva a leerlo antes de modificarlo."
+msgstr ""
+
+#: src/Domain/Projects/ProjectRepository.php:336
+msgid "No se pudo actualizar el proyecto."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:85
+#: src/Modules/Planning/ActivityRepository.php:280
+#: src/Modules/Planning/ActivityRepository.php:515
+msgid "El nombre de la actividad es obligatorio."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:109
+msgid "El avance de un resumen se calcula a partir de sus actividades."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:112
+msgid "Indique los campos a modificar."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:165
+#: src/Modules/Planning/AssignmentRepository.php:111
+#: src/Operations/Handlers/ProjectHandler.php:97
+msgid "El usuario indicado no existe."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:169
+msgid "Rol de asignación no válido (responsable, participante, revisor)."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:188
+#: src/Modules/Planning/PlanningTools.php:385
+msgid "La línea base no existe en este proyecto."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:195
+#: src/Modules/Planning/ScheduleImporter.php:132
+msgid "No hay filas que importar."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:198
+msgid "La importación admite hasta 2000 filas por vez."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:204
+msgid "El resumen de destino no existe en este proyecto."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:234
+msgid "No hay filas con nombre que importar."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:246
+msgid "El calendario no existe en este proyecto."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:249
+msgid "Solo un administrador puede eliminar un calendario global."
+msgstr ""
+
+#. translators: 1: nombre de la fila, 2: mensaje de error.
+#: src/Modules/Planning/ActivityHandler.php:535
+#, php-format
+msgid "Fila \"%1$s\": %2$s"
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:608
+msgid "No hay actividad que revertir."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:618
+#: src/Operations/Handlers/ProjectHandler.php:226
+#: src/Operations/Handlers/ProjectHandler.php:237
+msgid "No se guardó el estado anterior."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:627
+msgid "No se guardó la instantánea de lo eliminado."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:670
+msgid "No se guardó la instantánea de la línea base."
+msgstr ""
+
+#: src/Modules/Planning/ActivityHandler.php:677
+msgid "No se guardó la instantánea del calendario."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:82
+msgid "Pendiente"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:84
+msgid "Terminada"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:85
+msgid "Suspendida"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:86
+msgid "Cancelada"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:97
+msgid "Resumen (fase o paquete de trabajo)"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:99
+#: src/Modules/Planning/EventsService.php:46
+msgid "Hito"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:110
+msgid "Lo antes posible"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:111
+msgid "No empezar antes de"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:112
+msgid "No empezar después de"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:113
+msgid "No terminar antes de"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:114
+msgid "No terminar después de"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:115
+msgid "Debe empezar el"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:116
+msgid "Debe terminar el"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:129
+msgid "Baja"
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:287
+msgid "Tipo de actividad no válido (summary, activity, milestone)."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:296
+msgid "La actividad padre no existe en este proyecto."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:298
+msgid "Solo un resumen puede contener otras actividades."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:300
+msgid "Una actividad no puede colgar de sí misma ni de sus descendientes."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:308
+msgid "Estado de actividad no válido."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:315
+msgid "La prioridad debe ser 1 (alta), 2 (media) o 3 (baja)."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:322
+msgid "La duración se expresa en días hábiles (0 a 3650)."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:329
+msgid "Restricción no válida (asap, snet, snlt, fnet, fnlt, mso, mfo)."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:345
+msgid "El avance se expresa de 0 a 100."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:352
+msgid "El responsable indicado no existe."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:360
+msgid "El costo planificado debe ser un número no negativo."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:390
+msgid "La restricción elegida necesita una fecha."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:397
+msgid "Una actividad dura al menos un día hábil; para duración cero use un hito."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:402
+msgid "El resumen tiene actividades dentro; muévalas antes de cambiar su tipo."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:412
+msgid "La fecha real de término no puede ser anterior a la de inicio."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:534
+msgid "No se pudo guardar la actividad."
+msgstr ""
+
+#. translators: 1: versión esperada, 2: versión actual
+#: src/Modules/Planning/ActivityRepository.php:566
+#, php-format
+msgid "Conflicto de versión: se esperaba la versión %1$d pero la actividad está en la %2$d. Vuelva a leerla antes de modificarla."
+msgstr ""
+
+#: src/Modules/Planning/ActivityRepository.php:595
+msgid "No se pudo actualizar la actividad."
+msgstr ""
+
+#: src/Modules/Planning/AssignmentRepository.php:34
+msgid "Participante"
+msgstr ""
+
+#: src/Modules/Planning/AssignmentRepository.php:35
+msgid "Revisor"
+msgstr ""
+
+#: src/Modules/Planning/AssignmentRepository.php:108
+msgid "Rol de asignación no válido."
+msgstr ""
+
+#: src/Modules/Planning/AssignmentRepository.php:139
+msgid "No se pudo guardar la asignación."
+msgstr ""
+
+#: src/Modules/Planning/BaselineRepository.php:94
+msgid "No hay actividades que guardar en la línea base."
+msgstr ""
+
+#: src/Modules/Planning/BaselineRepository.php:111
+msgid "No se pudo crear la línea base."
+msgstr ""
+
+#: src/Modules/Planning/CalendarRepository.php:119
+msgid "El calendario necesita un nombre."
+msgstr ""
+
+#: src/Modules/Planning/CalendarRepository.php:122
+msgid "Marque al menos un día laborable."
+msgstr ""
+
+#: src/Modules/Planning/CalendarRepository.php:140
+msgid "No se pudo crear el calendario."
+msgstr ""
+
+#: src/Modules/Planning/CalendarRepository.php:166
+#: src/Modules/Planning/CalendarRepository.php:333
+msgid "El calendario no existe."
+msgstr ""
+
+#: src/Modules/Planning/CalendarRepository.php:171
+msgid "Indique un nombre y al menos un día laborable."
+msgstr ""
+
+#: src/Modules/Planning/DependencyRepository.php:34
+msgid "Fin a inicio"
+msgstr ""
+
+#: src/Modules/Planning/DependencyRepository.php:35
+msgid "Inicio a inicio"
+msgstr ""
+
+#: src/Modules/Planning/DependencyRepository.php:36
+msgid "Fin a fin"
+msgstr ""
+
+#: src/Modules/Planning/DependencyRepository.php:37
+msgid "Inicio a fin"
+msgstr ""
+
+#: src/Modules/Planning/DependencyRepository.php:104
+msgid "La actividad sucesora no existe en este proyecto."
+msgstr ""
+
+#: src/Modules/Planning/DependencyRepository.php:107
+msgid "Los resúmenes no admiten dependencias; vincule sus actividades."
+msgstr ""
+
+#: src/Modules/Planning/DependencyRepository.php:121
+msgid "Una actividad no puede depender de sí misma."
+msgstr ""
+
+#. translators: identificador de la actividad.
+#: src/Modules/Planning/DependencyRepository.php:126
+#, php-format
+msgid "La predecesora %d no existe en este proyecto."
+msgstr ""
+
+#. translators: código de la actividad.
+#: src/Modules/Planning/DependencyRepository.php:130
+#, php-format
+msgid "La predecesora %s es un resumen; vincule una de sus actividades."
+msgstr ""
+
+#. translators: tipo recibido.
+#: src/Modules/Planning/DependencyRepository.php:134
+#, php-format
+msgid "Tipo de dependencia no válido: %s."
+msgstr ""
+
+#: src/Modules/Planning/DependencyRepository.php:137
+msgid "El retraso o adelanto debe estar entre -365 y 365 días hábiles."
+msgstr ""
+
+#: src/Modules/Planning/DependencyRepository.php:164
+msgid "La dependencia crearía un ciclo: una actividad terminaría dependiendo de sí misma."
+msgstr ""
+
+#. translators: nombre del proyecto.
+#: src/Modules/Planning/EventsService.php:64
+#, php-format
+msgid "Término contractual de %s"
+msgstr ""
+
+#. translators: 1: nombre del proyecto, 2: número de alertas.
+#: src/Modules/Planning/PlanningCron.php:127
+#, php-format
+msgid "El proyecto %1$s tiene %2$d alerta(s) de plazo de severidad alta:"
+msgstr ""
+
+#: src/Modules/Planning/PlanningCron.php:130
+msgid "Ver las alertas en el panel"
+msgstr ""
+
+#: src/Modules/Planning/PlanningCron.php:191
+msgid "Abrir el informe completo en el panel"
+msgstr ""
+
+#: src/Modules/Planning/PlanningModule.php:45
+#: src/Modules/Registry.php:40
+msgid "Planificación y tiempo"
+msgstr ""
+
+#: src/Modules/Planning/PlanningModule.php:52
+msgid "Estructura de desglose, cronograma, dependencias, ruta crítica, carta Gantt, línea base, avances, alertas e informe semanal."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:43
+msgid "Obtener cronograma"
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:44
+msgid "Devuelve el cronograma completo de un proyecto: actividades en orden de la estructura de desglose (código, nivel, tipo summary|activity|milestone, frente, estado, duración en días hábiles, avance, fechas tempranas y tardías, holguras, si es crítica, restricciones, fechas reales, responsable, predecesoras en notación compacta como \"1.2FS+3\", asignados, conflictos y versión), más el resumen del proyecto (término programado y holgura respecto del término contractual) y estadísticas. Acepta filtros por estado, tipo, frente, solo críticas y texto. Las fechas se calculan con el calendario laboral del proyecto."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:51
+msgid "Solo actividades de la ruta crítica."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:62
+msgid "Obtener actividad"
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:63
+msgid "Devuelve una actividad con todos sus campos, sus predecesoras y sucesoras (con tipo y retraso), las personas asignadas y el historial de avances. Incluye la versión, necesaria para proponer cambios sin conflictos."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:76
+msgid "Obtener ruta crítica"
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:77
+msgid "Devuelve las actividades de la ruta crítica del proyecto (holgura total cero o negativa) en orden de inicio, con sus fechas, avance y conflictos, y el término programado del proyecto."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:85
+msgid "Obtener alertas de plazo"
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:86
+msgid "Devuelve las alertas de plazo del proyecto: actividades vencidas, que vencen pronto, que debieron empezar, con holgura negativa, con conflictos de fechas y el incumplimiento del término contractual. Cada alerta indica tipo, severidad (high|medium), días y mensaje."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:90
+msgid "Días hábiles de anticipación para \"vence pronto\"."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:101
+msgid "Devuelve los datos del informe semanal de un proyecto para la semana indicada (por defecto, la actual): avance por frente de trabajo, avances registrados, terminado, iniciado, en ejecución, próxima semana, hitos próximos, vencidas, desviación respecto de la línea base vigente, alertas, curva S (planificado frente a real, en \"curve\") y cambios respecto de la semana anterior (frentes que se abren o cierran, entradas y salidas de la ruta crítica, en \"changes\"). Con include_activities=true añade el cronograma completo. El panel exporta el mismo informe en LaTeX, CSV e iCalendar."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:105
+msgid "Cualquier fecha de la semana (AAAA-MM-DD); se normaliza al lunes."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:116
+msgid "Listar líneas base"
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:117
+msgid "Lista las líneas base del proyecto (nombre, fecha, vigente). Con baseline_id devuelve además la comparación del cronograma actual con esa línea base: por actividad, fechas de la línea base y actuales y desviación en días hábiles."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:121
+msgid "Línea base a comparar (opcional; 0 = la vigente)."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:131
+msgid "Obtener calendario laboral"
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:132
+msgid "Devuelve el calendario laboral efectivo del proyecto: días de la semana laborables (1 = lunes ... 7 = domingo) y excepciones (feriados y días laborables por excepción)."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:140
+msgid "Proponer cambio en el cronograma"
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:141
+msgid "Propone un cambio en el cronograma de un proyecto. NO aplica nada: devuelve una vista previa (cambios, advertencias, conflictos) y un operation_id que debe confirmarse con confirm-operation. Acciones: create (data: name, kind summary|activity|milestone, parent_id, duration en días hábiles, work_front, status, priority 1..3, constraint_type asap|snet|snlt|fnet|fnlt|mso|mfo, constraint_date, owner_id, deliverable, budget_line, cost_planned, description, notes; opcionalmente predecessors), update (activity_id, data, expected_version), delete (activity_id; elimina también las contenidas), set_progress (activity_id, percent, status, actual_start, actual_finish, note), set_dependencies (activity_id, predecessors: lista de {predecessor_id, type FS|SS|FF|SF, lag}; sustituye la lista completa), move (activity_id, parent_id, sort_order), set_assignment (activity_id, user_id, role responsable|participante|revisor, allocation), remove_assignment (activity_id, user_id), create_baseline (name, description, make_current), delete_baseline (baseline_id), delete_calendar (calendar_id), import (rows: lista de filas con code jerárquico, name, kind, duration, predecessors, work_front, owner, etc.; container_id opcional; crea en bloque una estructura completa y devuelve advertencias sobre predecesoras, frentes o responsables no resueltos). Tras confirmar, el cronograma se recalcula. Toda eliminación guarda una instantánea y puede revertirse con revert-operation."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:148
+msgid "Campos de la actividad (create, update)."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:154
+msgid "Nota del avance (set_progress, update)."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:173
+msgid "Nombre de la línea base (create_baseline)."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:176
+msgid "Línea base (delete_baseline)."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:177
+msgid "Calendario (delete_calendar)."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:180
+msgid "Filas a importar (import): objetos con code (jerárquico, p. ej. 1.2), name, kind (summary|activity|milestone), duration (días hábiles), predecessors (texto \"1.1FS+2, 1.3\" o lista de {ref, type, lag}), work_front, owner (nombre, usuario o correo), percent, status, start, finish, constraint_type, constraint_date, actual_start, actual_finish, deliverable, priority. Hasta 2000 filas."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:183
+msgid "Resumen existente bajo el cual colocar las filas de primer nivel (import); 0 = primer nivel del proyecto."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:236
+msgid "Duraciones y holguras en días hábiles. Un hito se fecha el día en que se alcanza (mismo día en que termina su predecesora fin a inicio). Las fechas programadas se recalculan a partir de dependencias, restricciones, fechas reales y calendario."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:338
+msgid "Fecha no válida; use AAAA-MM-DD."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:410
+msgid "Implícito (lunes a viernes)"
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:426
+msgid "Indique un project_id válido."
+msgstr ""
+
+#: src/Modules/Planning/PlanningTools.php:444
+msgid "conector"
+msgstr ""
+
+#: src/Modules/Planning/ProgressCurve.php:175
+msgid "Sin datos suficientes para la curva."
+msgstr ""
+
+#: src/Modules/Planning/ProgressCurve.php:199
+msgid "Curva S de avance planificado y real"
+msgstr ""
+
+#: src/Modules/Planning/ProgressCurve.php:217
+msgid "Planificado (línea discontinua) y real (línea continua)"
+msgstr ""
+
+#: src/Modules/Planning/ProjectXml.php:124
+msgid "El archivo no es un XML válido de Microsoft Project."
+msgstr ""
+
+#: src/Modules/Planning/ProjectXml.php:132
+msgid "El XML no contiene tareas."
+msgstr ""
+
+#: src/Modules/Planning/ScheduleImporter.php:70
+msgid "Formato no admitido: use CSV, XLSX o XML de Microsoft Project."
+msgstr ""
+
+#: src/Modules/Planning/ScheduleImporter.php:110
+msgid "El archivo está vacío."
+msgstr ""
+
+#: src/Modules/Planning/ScheduleImporter.php:175
+msgid "El archivo no tiene filas de datos."
+msgstr ""
+
+#: src/Modules/Planning/ScheduleImporter.php:200
+msgid "No se encontró la columna de nombre de la actividad (Nombre, Actividad o Tarea)."
+msgstr ""
+
+#: src/Modules/Planning/ScheduleImporter.php:237
+msgid "El archivo no tiene actividades con nombre."
+msgstr ""
+
+#. translators: 1: nombre de la fila, 2: referencia de la predecesora.
+#: src/Modules/Planning/ScheduleImporter.php:362
+#, php-format
+msgid "Fila \"%1$s\": predecesora \"%2$s\" no encontrada; se omite."
+msgstr ""
+
+#. translators: lista de frentes.
+#: src/Modules/Planning/ScheduleImporter.php:381
+#, php-format
+msgid "Frentes no catalogados (se crearán como claves nuevas; puede añadirlos al catálogo): %s."
+msgstr ""
+
+#. translators: lista de responsables.
+#: src/Modules/Planning/ScheduleImporter.php:385
+#, php-format
+msgid "Responsables sin usuario en el sitio (quedan sin responsable): %s."
+msgstr ""
+
+#: src/Modules/Planning/WeeklyReport.php:88
+#: src/Modules/Planning/WeeklyReport.php:182
+msgid "Sin frente asignado"
+msgstr ""
+
+#: src/Modules/Projects/ProjectsModule.php:41
+msgid "Ficha del proyecto, equipo con perfiles por proyecto, configuración y módulos activos."
+msgstr ""
+
+#: src/Modules/Registry.php:41
+msgid "Estructura de desglose, cronograma, dependencias, ruta crítica, carta Gantt, línea base, valor ganado."
+msgstr ""
+
+#: src/Modules/Registry.php:46
+msgid "Control documental"
+msgstr ""
+
+#: src/Modules/Registry.php:47
+msgid "Cartas, oficios, contratos y órdenes con numeración, versiones, vínculos cruzados y plazos de respuesta."
+msgstr ""
+
+#: src/Modules/Registry.php:52
+msgid "Adquisiciones y presupuesto"
+msgstr ""
+
+#: src/Modules/Registry.php:53
+msgid "Ciclo de compra, proveedores, cotizaciones, partidas, unidades de fomento y rendición."
+msgstr ""
+
+#: src/Modules/Registry.php:58
+msgid "Reuniones y acuerdos"
+msgstr ""
+
+#: src/Modules/Registry.php:59
+msgid "Actas, acuerdos convertidos en tareas y seguimiento de cumplimiento."
+msgstr ""
+
+#: src/Modules/Registry.php:64
+msgid "Exportación, importación y respaldo"
+msgstr ""
+
+#: src/Modules/Registry.php:65
+msgid "Respaldos, exportación en CSV, XLSX y JSON, diccionario de datos e importación con salvaguardas."
+msgstr ""
+
+#: src/Modules/Registry.php:70
+msgid "Muestras, ensayos, mezclas y probetas"
+msgstr ""
+
+#: src/Modules/Registry.php:71
+msgid "Cadena de custodia, resultados como datos, umbrales, dosificaciones y resistencia."
+msgstr ""
+
+#: src/Modules/Registry.php:76
+msgid "Evidencias para acreditación y rendición"
+msgstr ""
+
+#: src/Modules/Registry.php:77
+msgid "Criterios, medios de verificación, carpetas de evidencia e informes por criterio."
+msgstr ""
+
+#: src/Modules/Registry.php:82
+msgid "Publicaciones y difusión"
+msgstr ""
+
+#: src/Modules/Registry.php:83
+msgid "Artículos, ponencias, difusión y borradores automáticos para el blog."
+msgstr ""
+
+#: src/Operations/Handlers/ProjectHandler.php:64
+msgid "Los datos del proyecto deben ser un objeto."
+msgstr ""
+
+#: src/Operations/Handlers/ProjectHandler.php:82
+msgid "Indique los campos a modificar en \"data\"."
+msgstr ""
+
+#: src/Operations/Handlers/ProjectHandler.php:107
+msgid "El usuario no es miembro del proyecto."
+msgstr ""
+
+#: src/Operations/Handlers/ProjectHandler.php:222
+msgid "No hay proyecto que revertir."
+msgstr ""
+
+#: src/Operations/OperationManager.php:119
+msgid "No tiene permiso para proponer esta operación."
+msgstr ""
+
+#: src/Operations/OperationManager.php:123
+msgid "El conector está configurado en modo de solo lectura."
+msgstr ""
+
+#: src/Operations/OperationManager.php:155
+msgid "No se pudo registrar la operación."
+msgstr ""
+
+#: src/Operations/OperationManager.php:171
+msgid "Revise la vista previa. Para aplicar los cambios, confirme la operación indicando su identificador y confirm=true."
+msgstr ""
+
+#. translators: estado de la operación.
+#: src/Operations/OperationManager.php:233
+#, php-format
+msgid "La operación está en estado \"%s\" y no puede confirmarse."
+msgstr ""
+
+#: src/Operations/OperationManager.php:238
+msgid "La operación caducó; vuelva a proponerla."
+msgstr ""
+
+#: src/Operations/OperationManager.php:243
+#: src/Operations/OperationManager.php:348
+msgid "El manejador de la operación ya no está disponible."
+msgstr ""
+
+#: src/Operations/OperationManager.php:254
+msgid "No tiene permiso para confirmar esta operación."
+msgstr ""
+
+#: src/Operations/OperationManager.php:265
+msgid "Los datos cambiaron después de la propuesta. Revise los conflictos y vuelva a proponer la operación."
+msgstr ""
+
+#: src/Operations/OperationManager.php:314
+msgid "Solo pueden cancelarse operaciones propuestas."
+msgstr ""
+
+#: src/Operations/OperationManager.php:319
+msgid "No tiene permiso para cancelar esta operación."
+msgstr ""
+
+#: src/Operations/OperationManager.php:343
+msgid "Solo pueden revertirse operaciones aplicadas."
+msgstr ""
+
+#: src/Operations/OperationManager.php:355
+msgid "No tiene permiso para revertir esta operación."
+msgstr ""

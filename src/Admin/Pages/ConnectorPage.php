@@ -72,7 +72,7 @@ final class ConnectorPage extends Page {
 		<div class="gdp-card gdp-card--intro">
 			<p><?php esc_html_e( 'El conector permite que un asistente consulte los datos del proyecto (planificación, documentos, compras, laboratorio) y proponga cambios. Ninguna escritura se aplica sin que una persona la confirme: el asistente propone, usted revisa la vista previa y confirma.', 'gestion-de-proyectos' ); ?></p>
 			<p class="gdp-muted">
-				<?php printf( esc_html__( 'Instrucciones versión %s.', 'gestion-de-proyectos' ), esc_html( self::INSTRUCTIONS_VERSION ) ); ?>
+				<?php printf( /* translators: número de versión de las instrucciones. */ esc_html__( 'Instrucciones versión %s.', 'gestion-de-proyectos' ), esc_html( self::INSTRUCTIONS_VERSION ) ); ?>
 				<?php esc_html_e( 'Si la interfaz del asistente cambió, consulte la documentación oficial:', 'gestion-de-proyectos' ); ?>
 				<a href="<?php echo esc_url( self::DOC_CLAUDE_CONNECTORS ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Conectores personalizados en Claude', 'gestion-de-proyectos' ); ?></a>,
 				<a href="<?php echo esc_url( self::DOC_CLAUDE_REMOTE_MCP ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Servidores MCP remotos', 'gestion-de-proyectos' ); ?></a>,
@@ -145,7 +145,7 @@ final class ConnectorPage extends Page {
 					<p><strong><?php esc_html_e( 'Token creado. Cópielo ahora; no volverá a mostrarse.', 'gestion-de-proyectos' ); ?></strong></p>
 					<p class="gdp-copy"><code id="gdp-token-value"><?php echo esc_html( $new_token['token'] ); ?></code> <button type="button" class="button gdp-copy-button" data-copy="#gdp-token-value"><?php esc_html_e( 'Copiar', 'gestion-de-proyectos' ); ?></button></p>
 					<?php if ( ! empty( $new_token['expires_at'] ) ) : ?>
-						<p class="gdp-muted"><?php printf( esc_html__( 'Caduca el %s.', 'gestion-de-proyectos' ), esc_html( self::date( (string) $new_token['expires_at'], false ) ) ); ?></p>
+						<p class="gdp-muted"><?php printf( /* translators: fecha de caducidad. */ esc_html__( 'Caduca el %s.', 'gestion-de-proyectos' ), esc_html( self::date( (string) $new_token['expires_at'], false ) ) ); ?></p>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
@@ -225,7 +225,7 @@ final class ConnectorPage extends Page {
 				<li><?php esc_html_e( 'Abra Claude e ingrese a la configuración de conectores: en el menú de personalización o ajustes, sección "Conectores".', 'gestion-de-proyectos' ); ?></li>
 				<li><?php esc_html_e( 'Pulse "Añadir conector personalizado" (o el botón "+" y luego "Personalizado" → "Web").', 'gestion-de-proyectos' ); ?></li>
 				<li><?php esc_html_e( 'Nombre: escriba el nombre del sitio o del proyecto. URL del servidor MCP: pegue la URL anterior.', 'gestion-de-proyectos' ); ?></li>
-				<li><?php printf( esc_html__( 'En "Cabeceras de la petición" (Request headers) añada una cabecera con nombre %1$s y, como valor, el token generado en el paso 2. No configure OAuth: este servidor no lo requiere.', 'gestion-de-proyectos' ), '<code>' . esc_html( Auth::HEADER ) . '</code>' ); ?></li>
+				<li><?php printf( /* translators: nombre de la cabecera HTTP. */ esc_html__( 'En "Cabeceras de la petición" (Request headers) añada una cabecera con nombre %1$s y, como valor, el token generado en el paso 2. No configure OAuth: este servidor no lo requiere.', 'gestion-de-proyectos' ), '<code>' . esc_html( Auth::HEADER ) . '</code>' ); ?></li>
 				<li><?php esc_html_e( 'Guarde. Claude comprobará la conexión desde sus propios servidores; si aparece un error, revise el paso 1 y que el sitio sea alcanzable desde Internet.', 'gestion-de-proyectos' ); ?></li>
 				<li><?php esc_html_e( 'En una conversación nueva, active el conector en el menú de herramientas y pida: "Consulta el estado del sistema con la herramienta gestion-de-proyectos-system-status".', 'gestion-de-proyectos' ); ?></li>
 			</ol>
@@ -312,7 +312,7 @@ curl -s -X POST "<?php echo esc_html( $endpoint ); ?>" \
 			<ul class="gdp-list">
 				<li><?php esc_html_e( 'Cada llamada del conector queda en la bitácora con el usuario dueño del token y el canal "connector".', 'gestion-de-proyectos' ); ?></li>
 				<li><?php esc_html_e( 'Las herramientas de escritura solo proponen; revise y confirme las operaciones en Proyectos → Operaciones o desde el propio asistente con confirm-operation.', 'gestion-de-proyectos' ); ?></li>
-				<li><?php printf( esc_html__( 'Puede poner todo el conector en modo de solo lectura desde Ajustes (actualmente: %s).', 'gestion-de-proyectos' ), Options::get( 'connector_read_only', false ) ? esc_html__( 'solo lectura', 'gestion-de-proyectos' ) : esc_html__( 'lectura y propuestas', 'gestion-de-proyectos' ) ); ?></li>
+				<li><?php printf( /* translators: estado actual del modo de solo lectura (activado o desactivado). */ esc_html__( 'Puede poner todo el conector en modo de solo lectura desde Ajustes (actualmente: %s).', 'gestion-de-proyectos' ), Options::get( 'connector_read_only', false ) ? esc_html__( 'solo lectura', 'gestion-de-proyectos' ) : esc_html__( 'lectura y propuestas', 'gestion-de-proyectos' ) ); ?></li>
 				<li><?php esc_html_e( 'Revoque de inmediato cualquier token que sospeche comprometido y genere otro; los tokens caducan según la validez elegida.', 'gestion-de-proyectos' ); ?></li>
 				<li><?php esc_html_e( 'Las peticiones de Claude llegan desde la infraestructura de Anthropic, no desde su equipo: si restringe por dirección IP, consulte las direcciones publicadas en la documentación oficial.', 'gestion-de-proyectos' ); ?></li>
 				<li><?php esc_html_e( 'Datos que salen del sitio: solo lo que las herramientas devuelven en respuesta a una consulta del usuario. Los adjuntos privados no se exponen por el conector.', 'gestion-de-proyectos' ); ?></li>

@@ -27,6 +27,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 - Alerta cuando la desviación del término respecto de la línea base vigente supera el umbral de aprobación del financiador, configurable por proyecto.
 - Exportación del cronograma en XLSX (hojas Cronograma, Dependencias y Frentes, escritor propio) y en XML de Microsoft Project (MSPDI), además de CSV, LaTeX, JSON e iCalendar; enlaces de exportación en la lista de actividades.
 - Doble factor de autenticación delegado: ajuste "exigir doble factor", detección de Two Factor, WP 2FA y Wordfence Login Security (filtros `gdp_two_factor_provider` y `gdp_user_has_two_factor` para otros), negación de los permisos sensibles (documentos, montos, exportaciones, bitácora) a quien no lo tenga, aviso con enlace al perfil, comprobación en el diagnóstico del conector y estado en `system-status`.
+- Plantilla de traducción `languages/gestion-de-proyectos.pot` (944 cadenas) generada con WP-CLI (`composer run make-pot`); todas las cadenas con marcadores llevan comentario para traductores y los marcadores múltiples van numerados.
 - Importación de cronogramas desde CSV, XLSX y XML de Microsoft Project con vista previa (cabeceras en español e inglés, jerarquía por código o nivel, predecesoras en notación compacta que pueden apuntar a actividades existentes, frentes y responsables resueltos, restricción "no empezar antes de" para filas con fecha y sin predecesoras); operación reversible; acción `import` en `propose-activity-change` para el conector.
 
 ### Cambiado

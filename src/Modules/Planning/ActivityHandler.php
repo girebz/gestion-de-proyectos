@@ -531,6 +531,7 @@ final class ActivityHandler implements HandlerInterface {
 						foreach ( array_reverse( $created ) as $undo ) {
 							ActivityRepository::delete( $undo );
 						}
+						/* translators: 1: nombre de la fila, 2: mensaje de error. */
 						return new WP_Error( 'import_row', sprintf( __( 'Fila "%1$s": %2$s', 'gestion-de-proyectos' ), $row['name'], $id->get_error_message() ) );
 					}
 					$created[]          = $id;

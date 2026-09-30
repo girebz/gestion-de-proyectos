@@ -60,6 +60,7 @@ final class PlanningCalendarsPage extends Page {
 		<p class="gdp-muted">
 			<?php
 			if ( $effective ) {
+				/* translators: 1: nombre del calendario, 2: ámbito (del proyecto o global). */
 				printf( esc_html__( 'El proyecto programa con el calendario "%1$s" (%2$s).', 'gestion-de-proyectos' ), esc_html( $effective['name'] ), $effective['project_id'] > 0 ? esc_html__( 'propio del proyecto', 'gestion-de-proyectos' ) : esc_html__( 'global del sitio', 'gestion-de-proyectos' ) );
 			} else {
 				esc_html_e( 'El proyecto no tiene calendario propio ni existe uno global: se programa de lunes a viernes sin feriados. Cree un calendario y cargue los feriados de Chile.', 'gestion-de-proyectos' );
@@ -100,7 +101,7 @@ final class PlanningCalendarsPage extends Page {
 					<?php if ( Access::is_manager() ) : ?>
 						<p><label class="gdp-check"><input type="checkbox" name="global" value="1"> <?php esc_html_e( 'Calendario global (disponible para todos los proyectos sin calendario propio)', 'gestion-de-proyectos' ); ?></label></p>
 					<?php endif; ?>
-					<p><label class="gdp-check"><input type="checkbox" name="holidays" value="1" checked> <?php printf( esc_html__( 'Cargar los feriados de Chile de %1$d a %2$d', 'gestion-de-proyectos' ), (int) $year, (int) $year + 3 ); ?></label></p>
+					<p><label class="gdp-check"><input type="checkbox" name="holidays" value="1" checked> <?php printf( /* translators: 1: primer año, 2: último año. */ esc_html__( 'Cargar los feriados de Chile de %1$d a %2$d', 'gestion-de-proyectos' ), (int) $year, (int) $year + 3 ); ?></label></p>
 					<p><button type="submit" class="button button-primary"><?php esc_html_e( 'Crear calendario', 'gestion-de-proyectos' ); ?></button></p>
 				</form>
 				<?php endif; ?>
@@ -283,6 +284,7 @@ final class PlanningCalendarsPage extends Page {
 		if ( is_wp_error( $result ) ) {
 			Admin::redirect_with_notice( PlanningPage::url( $project_id, 'calendars', array( 'calendar_id' => $id ) ), $result->get_error_message(), 'error' );
 		}
+		/* translators: URL de la papelera. */
 		Admin::redirect_with_notice( PlanningPage::url( $project_id, 'calendars' ), sprintf( __( 'Calendario eliminado. Puede restaurarlo desde la <a href="%s">papelera</a>.', 'gestion-de-proyectos' ), esc_url( Admin::url( 'trash', array( 'project_id' => $project_id ) ) ) ) );
 	}
 
@@ -344,6 +346,7 @@ final class PlanningCalendarsPage extends Page {
 		$to   = isset( $_POST['to'] ) ? max( $from, min( 2100, (int) $_POST['to'] ) ) : $from;
 		$n    = CalendarRepository::add_chile_holidays( $id, $from, $to );
 		ScheduleService::recalculate( $project_id );
+		/* translators: número de feriados. */
 		Admin::redirect_with_notice( PlanningPage::url( $project_id, 'calendars', array( 'calendar_id' => $id ) ), sprintf( __( '%d feriados cargados.', 'gestion-de-proyectos' ), $n ) );
 	}
 }

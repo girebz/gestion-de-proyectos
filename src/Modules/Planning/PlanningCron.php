@@ -123,7 +123,8 @@ final class PlanningCron {
 		}
 		$body = sprintf(
 			'<p>%s</p><ul>%s</ul><p><a href="%s">%s</a></p>',
-			esc_html( sprintf( __( 'El proyecto %s tiene %d alerta(s) de plazo de severidad alta:', 'gestion-de-proyectos' ), $p['name'], count( $high ) ) ),
+			/* translators: 1: nombre del proyecto, 2: número de alertas. */
+			esc_html( sprintf( __( 'El proyecto %1$s tiene %2$d alerta(s) de plazo de severidad alta:', 'gestion-de-proyectos' ), $p['name'], count( $high ) ) ),
 			implode( '', $lines ),
 			esc_url( Admin::url( 'planning', array( 'project_id' => $p['id'], 'view' => 'alerts' ) ) ),
 			esc_html__( 'Ver las alertas en el panel', 'gestion-de-proyectos' )

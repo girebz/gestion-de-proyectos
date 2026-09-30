@@ -105,6 +105,7 @@ final class PlanningPage extends Page {
 				'noFront'    => __( 'Sin frente', 'gestion-de-proyectos' ),
 				'noOwner'    => __( 'Sin responsable', 'gestion-de-proyectos' ),
 				'linkTo'     => __( 'Suelte sobre la actividad sucesora', 'gestion-de-proyectos' ),
+				/* translators: notación de la dependencia. */
 				'unlink'     => __( '¿Quitar la dependencia %s?', 'gestion-de-proyectos' ),
 				'collapse'   => __( 'Contraer', 'gestion-de-proyectos' ),
 				'expand'     => __( 'Expandir', 'gestion-de-proyectos' ),
@@ -114,6 +115,7 @@ final class PlanningPage extends Page {
 				'end'        => __( 'Término', 'gestion-de-proyectos' ),
 				'float'      => __( 'Holgura', 'gestion-de-proyectos' ),
 				'critical'   => __( 'crítica', 'gestion-de-proyectos' ),
+				/* translators: nombre de la actividad. */
 				'clear'      => __( '¿Quitar la restricción de fecha de %s?', 'gestion-de-proyectos' ),
 				'statuses'   => ActivityRepository::status_labels(),
 			),
@@ -728,7 +730,7 @@ final class PlanningPage extends Page {
 						</select>
 						<select name="priority" aria-label="<?php esc_attr_e( 'Prioridad', 'gestion-de-proyectos' ); ?>">
 							<?php foreach ( ActivityRepository::priority_labels() as $value => $label ) : ?>
-								<option value="<?php echo (int) $value; ?>" <?php selected( (int) $a['priority'], $value ); ?>><?php echo esc_html( sprintf( __( 'Prioridad %s', 'gestion-de-proyectos' ), mb_strtolower( $label ) ) ); ?></option>
+								<option value="<?php echo (int) $value; ?>" <?php selected( (int) $a['priority'], $value ); ?>><?php echo esc_html( sprintf( /* translators: etiqueta de la prioridad. */ __( 'Prioridad %s', 'gestion-de-proyectos' ), mb_strtolower( $label ) ) ); ?></option>
 							<?php endforeach; ?>
 						</select>
 					</td>
@@ -1111,7 +1113,8 @@ final class PlanningPage extends Page {
 		if ( is_wp_error( $result ) ) {
 			Admin::redirect_with_notice( self::url( $activity['project_id'], 'list' ), $result->get_error_message(), 'error' );
 		}
-		Admin::redirect_with_notice( self::url( $activity['project_id'], 'list' ), sprintf( __( 'Avance de "%s" fijado en %d %%.', 'gestion-de-proyectos' ), $activity['name'], $result['percent'] ) );
+		/* translators: 1: nombre de la actividad, 2: porcentaje. */
+		Admin::redirect_with_notice( self::url( $activity['project_id'], 'list' ), sprintf( __( 'Avance de "%1$s" fijado en %2$d %%.', 'gestion-de-proyectos' ), $activity['name'], $result['percent'] ) );
 	}
 
 	/**

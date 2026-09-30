@@ -56,7 +56,7 @@ final class PlanningImportPage extends Page {
 			$prepared = $pending['prepared'];
 			?>
 			<div class="gdp-card">
-				<h2><?php echo esc_html( sprintf( __( 'Vista previa de %s', 'gestion-de-proyectos' ), $pending['filename'] ) ); ?></h2>
+				<h2><?php echo esc_html( sprintf( /* translators: nombre del archivo. */ __( 'Vista previa de %s', 'gestion-de-proyectos' ), $pending['filename'] ) ); ?></h2>
 				<p class="gdp-planning-summary">
 					<span><strong><?php echo count( $prepared['rows'] ); ?></strong> <?php esc_html_e( 'filas', 'gestion-de-proyectos' ); ?></span>
 					<span><strong><?php echo (int) $prepared['summary']['summary']; ?></strong> <?php esc_html_e( 'resúmenes', 'gestion-de-proyectos' ); ?></span>
@@ -86,7 +86,7 @@ final class PlanningImportPage extends Page {
 					<?php endforeach; ?>
 					</tbody>
 				</table>
-				<?php if ( count( $prepared['rows'] ) > 300 ) : ?><p class="gdp-muted"><?php echo esc_html( sprintf( __( 'Se muestran 300 de %d filas.', 'gestion-de-proyectos' ), count( $prepared['rows'] ) ) ); ?></p><?php endif; ?>
+				<?php if ( count( $prepared['rows'] ) > 300 ) : ?><p class="gdp-muted"><?php echo esc_html( sprintf( /* translators: número total de filas. */ __( 'Se muestran 300 de %d filas.', 'gestion-de-proyectos' ), count( $prepared['rows'] ) ) ); ?></p><?php endif; ?>
 				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gdp-form-row">
 					<?php wp_nonce_field( 'gdp_import_confirm_' . $token ); ?>
 					<input type="hidden" name="action" value="gdp_import_confirm">
@@ -197,8 +197,10 @@ final class PlanningImportPage extends Page {
 			Admin::redirect_with_notice( PlanningPage::url( $project_id, 'import' ), $result->get_error_message(), 'error' );
 		}
 		$skipped = $result['result']['skipped_dependencies'] ?? array();
+		/* translators: número de actividades. */
 		$message = sprintf( __( 'Importadas %d actividades.', 'gestion-de-proyectos' ), (int) ( $result['result']['count'] ?? 0 ) );
 		if ( ! empty( $skipped ) ) {
+			/* translators: lista de dependencias omitidas. */
 			$message .= ' ' . sprintf( __( 'Dependencias omitidas: %s', 'gestion-de-proyectos' ), implode( '; ', $skipped ) );
 		}
 		Admin::redirect_with_notice( PlanningPage::url( $project_id, 'list' ), $message, empty( $skipped ) ? 'success' : 'warning' );

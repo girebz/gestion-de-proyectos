@@ -67,12 +67,14 @@ final class PlanningCalendarViewPage extends Page {
 			$to    = $from->modify( '+6 days' );
 			$prev  = $from->modify( '-7 days' )->format( 'Y-m-d' );
 			$next  = $from->modify( '+7 days' )->format( 'Y-m-d' );
+			/* translators: 1: número de semana, 2: fecha de inicio, 3: fecha de término. */
 			$title = sprintf( __( 'Semana %1$d: %2$s al %3$s', 'gestion-de-proyectos' ), (int) $from->format( 'W' ), WeeklyReport::human_date( $from->format( 'Y-m-d' ) ), WeeklyReport::human_date( $to->format( 'Y-m-d' ) ) );
 		} else {
 			$from  = $anchor;
 			$to    = $anchor->modify( '+59 days' );
 			$prev  = $anchor->modify( '-60 days' )->format( 'Y-m-d' );
 			$next  = $anchor->modify( '+60 days' )->format( 'Y-m-d' );
+			/* translators: 1: fecha de inicio, 2: fecha de término. */
 			$title = sprintf( __( 'Agenda: %1$s al %2$s', 'gestion-de-proyectos' ), WeeklyReport::human_date( $from->format( 'Y-m-d' ) ), WeeklyReport::human_date( $to->format( 'Y-m-d' ) ) );
 		}
 

@@ -250,6 +250,7 @@ final class ProjectsPage extends Page {
 							<?php echo esc_html( $row['label'] ); ?>
 							<?php
 							if ( 'planificado' === $row['status'] ) {
+								/* translators: número de etapa. */
 								echo self::badge( 'planned', sprintf( __( 'etapa %d, planificado', 'gestion-de-proyectos' ), (int) $row['stage'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput
 							} else {
 								echo self::badge( $registry->is_enabled( $row['slug'], $id ) ? 'ejecucion' : 'suspendido', $registry->is_enabled( $row['slug'], $id ) ? __( 'activo', 'gestion-de-proyectos' ) : __( 'inactivo', 'gestion-de-proyectos' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
@@ -292,6 +293,7 @@ final class ProjectsPage extends Page {
 
 		$enabled_modules = isset( $p['settings']['modules'] ) && is_array( $p['settings']['modules'] ) ? $p['settings']['modules'] : array();
 
+		/* translators: nombre del proyecto. */
 		self::open( $is_new ? __( 'Nuevo proyecto', 'gestion-de-proyectos' ) : sprintf( __( 'Editar: %s', 'gestion-de-proyectos' ), $p['name'] ) );
 		?>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gdp-card gdp-card--form">
@@ -368,7 +370,7 @@ final class ProjectsPage extends Page {
 							<?php if ( $info['core'] ) { continue; } ?>
 							<label class="gdp-check">
 								<input type="checkbox" name="modules[]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( in_array( $slug, $enabled_modules, true ) ); ?>>
-								<?php echo esc_html( $info['label'] ); ?> <span class="gdp-muted">(<?php printf( esc_html__( 'etapa %d', 'gestion-de-proyectos' ), (int) $info['stage'] ); ?>)</span>
+								<?php echo esc_html( $info['label'] ); ?> <span class="gdp-muted">(<?php printf( /* translators: número de etapa. */ esc_html__( 'etapa %d', 'gestion-de-proyectos' ), (int) $info['stage'] ); ?>)</span>
 							</label><br>
 						<?php endforeach; ?>
 						<p class="description"><?php esc_html_e( 'Los módulos del núcleo (planificación, documentos, adquisiciones, reuniones, datos) están siempre activos.', 'gestion-de-proyectos' ); ?></p>
