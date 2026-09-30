@@ -1,0 +1,42 @@
+# Dependencias
+/vendor/
+/node_modules/
+
+# Construcción y empaquetado
+/build/
+/dist/
+*.zip
+
+# Entornos y secretos: nunca se versionan
+.env
+.env.*
+*.pem
+*.key
+wp-config.php
+
+# Editores y sistemas
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Herramientas
+.phpunit.result.cache
+.phpcs.cache
+phpstan.neon
+/tests/_output/
+
+# LaTeX (compilados de la especificación)
+docs/**/*.aux
+docs/**/*.log
+docs/**/*.out
+docs/**/*.toc
+docs/**/*.fls
+docs/**/*.fdb_latexmk
+docs/**/*.synctex.gz
+docs/**/*.pdf
+docs/**/*.bbl
+docs/**/*.blg
+docs/**/*.lof
+docs/**/*.lot

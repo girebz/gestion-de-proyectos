@@ -1,0 +1,500 @@
+% Especificación funcional del plugin Gestión de Proyectos
+% Compilar con pdflatex (dos pasadas) o latexmk -pdf
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noquoting,es-tabla]{babel}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[margin=2.4cm,headheight=14pt]{geometry}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{siunitx}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+\usepackage{hyperref}
+
+\definecolor{marino}{HTML}{1F3A5F}
+\definecolor{acento}{HTML}{B03A2E}
+\definecolor{grisclaro}{HTML}{F2F4F7}
+\definecolor{grismedio}{HTML}{8A94A6}
+
+\hypersetup{colorlinks=true,linkcolor=marino,urlcolor=marino,citecolor=marino,pdftitle={Gestión de Proyectos: especificación funcional},pdfauthor={Giorgio Reveco Barraza}}
+
+\sisetup{output-decimal-marker={,},group-separator={.},group-minimum-digits=4,detect-all}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{marino}Gestión de Proyectos}
+\fancyhead[R]{\small\color{grismedio}Especificación funcional, versión 0.1}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{marino}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\large\bfseries\color{marino}}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{marino}}{\thesubsubsection}{0.8em}{}
+
+\setlist[itemize]{leftmargin=1.4em,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=1.6em,itemsep=2pt,topsep=3pt}
+
+% Cajas: ángulos rectos, barra superior coloreada, partibles con rótulo de continuación.
+\newtcolorbox{caja}[2][]{enhanced,breakable,sharp corners,colback=white,colframe=marino,colbacktitle=marino,coltitle=white,fonttitle=\bfseries,boxrule=0.6pt,titlerule=0pt,title={#2},toptitle=2pt,bottomtitle=2pt,left=6pt,right=6pt,top=6pt,bottom=6pt,title after break={#2 (continuación)},#1}
+\newtcolorbox{cajaacento}[2][]{enhanced,breakable,sharp corners,colback=white,colframe=acento,colbacktitle=acento,coltitle=white,fonttitle=\bfseries,boxrule=0.6pt,titlerule=0pt,title={#2},toptitle=2pt,bottomtitle=2pt,left=6pt,right=6pt,top=6pt,bottom=6pt,title after break={#2 (continuación)},#1}
+
+% Tablas largas con encabezado repetido y rótulo de continuación.
+\newcommand{\continuacion}[1]{\multicolumn{#1}{l}{\small\itshape (continuación)}\\}
+
+\newcommand{\etapa}[1]{\textcolor{grismedio}{[etapa #1]}}
+\DeclareUrlCommand\codigo{\urlstyle{tt}}
+\makeatletter\def\UrlBreaks{\do\/\do\-\do\_\do\.\do\=\do\,\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z}\makeatother
+\Urlmuskip=0mu plus 1mu\relax
+
+\title{\color{marino}\bfseries Gestión de Proyectos\\[4pt]\large\mdseries Especificación funcional del plugin de WordPress}
+\author{Giorgio Reveco Barraza}
+\date{30 de septiembre de 2026 \quad\textcolor{grismedio}{versión 0.1, en construcción}}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{abstract}
+\noindent Este documento fija el alcance, los principios de diseño, el modelo de datos, los permisos, la capa de operaciones, el catálogo de herramientas del conector y las etapas de construcción del plugin \emph{Gestión de Proyectos}, concebido para administrar proyectos de investigación y desarrollo con financiamiento externo desde el propio sitio de WordPress que los aloja. Sirve como contrato entre las sesiones de desarrollo: todo cambio de alcance se registra aquí antes de implementarse, y la bitácora de decisiones de arquitectura (\codigo{docs/decisiones}) conserva las razones de cada elección estructural.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Propósito y alcance}
+
+El plugin nace del proyecto \emph{Valorización de Relaves Abandonados en Coquimbo} (código de inversión BIP 40075890-0), ejecutado por la Universidad Central de Chile con financiamiento del Gobierno Regional de Coquimbo, cuyas dos primeras semanas de correspondencia bastaron para mostrar que el retraso de un proyecto de este tipo es, ante todo, administrativo: órdenes de compra que demoran, contratos en revisión, cartas sin respuesta, cotizaciones sin seguimiento y resultados de laboratorio que dependen de todo lo anterior. Si el sistema no vuelve visibles esas dependencias y sus plazos, no resuelve el problema real; de ahí que la planificación, el control documental y las adquisiciones formen el núcleo y no un complemento.
+
+Ahora bien, ninguno de esos problemas es exclusivo de ese proyecto. Por tanto, el plugin se plantea como herramienta general: admite varios proyectos en una misma instalación, su vocabulario es configurable por catálogos, sus módulos de nicho se activan por proyecto y su identidad visual es la del sitio que lo aloja, no una marca propia. El proyecto de relaves es su primer caso de uso y su conjunto de datos de prueba.
+
+\begin{caja}{Lo que el plugin es y lo que no es}
+\begin{itemize}
+\item Es un sistema de gestión interno, con acceso restringido a usuarios del sitio, que centraliza planificación, documentos, compras, reuniones, laboratorio, evidencias y publicaciones, y que expone sus datos a asistentes de inteligencia artificial mediante un conector con escritura supervisada.
+\item No sustituye a las plataformas institucionales (sistema de requisiciones, firma electrónica, rendición al financiador), que carecen de interfaz programática: registra sus números y estados con enlace, para que el equipo sepa dónde está cada trámite.
+\item No es un gestor de contenidos público: el sitio conserva su blog y su foro; el plugin solo produce, cuando se le pide, borradores de entradas y un tablero público opcional sin datos sensibles.
+\end{itemize}
+\end{caja}
+
+\section{Principios de diseño}
+
+\begin{enumerate}
+\item \textbf{Todo registro pertenece a un proyecto.} La entidad raíz es el proyecto; los permisos, los catálogos, las exportaciones y las herramientas del conector se resuelven siempre respecto de uno. Los únicos datos globales son los catálogos base, los ajustes del plugin y los tokens del conector, que son por usuario.
+\item \textbf{Ninguna escritura externa sin confirmación humana.} Toda escritura que no provenga de un formulario del panel (conector, importación de archivos) pasa por una capa única de operaciones que valida, previsualiza, detecta conflictos, aplica solo tras confirmación, anota la bitácora y permite revertir.
+\item \textbf{Los datos se guardan como datos.} Resultados de laboratorio, montos, fechas y unidades se almacenan en campos tipados, nunca solo en un PDF; los valores bajo el límite de cuantificación se marcan como tales y no como cero. Así el sistema puede comparar contra umbrales, exportar con diccionario de datos y alimentar análisis externos.
+\item \textbf{Trazabilidad completa.} La bitácora es de solo anexado y registra quién, qué, cuándo, por qué canal y con qué valores anteriores y posteriores. Toda evidencia que el financiador o la acreditación exijan debe poder reconstruirse desde ahí.
+\item \textbf{Control optimista de versión.} Cada registro lleva un número de versión; una escritura basada en una versión antigua se rechaza como conflicto. Esto protege tanto la importación de un JSON exportado días antes como las propuestas del asistente.
+\item \textbf{Configurable antes que codificado.} Tipos de documento, etapas de compra, partidas, frentes de trabajo, medios de verificación y criterios de acreditación son catálogos editables, con valores globales por defecto y entradas propias por proyecto.
+\item \textbf{Identidad del anfitrión.} Nombre, logotipo, ícono, paleta y tipografía se leen del sitio y del tema activo; los ajustes permiten corregirlos cuando el tema no los declara.
+\item \textbf{Sin secretos en el código.} Tokens, claves y credenciales viven en la base de datos (resumidos con SHA-256) o en la configuración del servidor, nunca en el repositorio.
+\end{enumerate}
+
+\section{Actores y permisos}
+
+\subsection{Niveles}
+
+El acceso se decide en dos niveles. En el nivel de sitio existen tres capacidades de WordPress: \codigo{gdp_manage} (administración del plugin, asignada al rol administrador), \codigo{gdp_access} (entrada al panel) y \codigo{gdp_use_connector} (uso del conector); el rol de sitio \emph{Miembro de proyectos} (\codigo{gdp_miembro}) otorga las dos últimas, y la pertenencia activa a un proyecto otorga \codigo{gdp_access} de forma implícita. En el nivel de proyecto, cada miembro tiene un perfil, y el perfil se traduce a permisos finos con el formato \codigo{modulo.accion}.
+
+\subsection{Perfiles por proyecto}
+
+\begin{longtable}{p{3.2cm}p{11.6cm}}
+\toprule
+\textbf{Perfil} & \textbf{Alcance} \\
+\midrule
+\endfirsthead
+\continuacion{2}
+\toprule
+\textbf{Perfil} & \textbf{Alcance} \\
+\midrule
+\endhead
+Director & Todos los permisos del proyecto, incluidas la aprobación de documentos y compras y la gestión de miembros. \\
+Ingeniero de proyectos & Administrador funcional: todo salvo las aprobaciones formales reservadas al director. \\
+Investigador & Ve el proyecto y lo administrativo sin montos; edita planificación, laboratorio, reuniones, evidencias y publicaciones; exporta. \\
+Apoyo administrativo & Ve y edita documentos y compras, con montos; ve planificación y reuniones; edita evidencias; exporta; no accede a resultados de laboratorio. \\
+Observador externo & Solo lectura de proyecto, planificación, documentos, reuniones y publicaciones. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Permisos finos}
+
+\begin{caja}{Catálogo de permisos (formato modulo.accion)}
+\codigo{project.view}, \codigo{project.edit}, \codigo{project.members};
+\codigo{planning.view}, \codigo{planning.edit}, \codigo{planning.baseline};
+\codigo{documents.view}, \codigo{documents.edit}, \codigo{documents.approve};
+\codigo{procurement.view}, \codigo{procurement.view_amounts}, \codigo{procurement.edit}, \codigo{procurement.approve};
+\codigo{lab.view}, \codigo{lab.edit};
+\codigo{meetings.view}, \codigo{meetings.edit};
+\codigo{evidence.view}, \codigo{evidence.edit};
+\codigo{publications.view}, \codigo{publications.edit};
+\codigo{data.export}, \codigo{data.import};
+\codigo{operations.confirm};
+\codigo{audit.view}.
+\end{caja}
+
+El punto único de decisión es la clase \codigo{GDP\Core\Access}: ningún módulo ni herramienta comprueba permisos por su cuenta. El filtro \codigo{gdp_user_can} permite ajustar una decisión concreta sin tocar el mapa.
+
+\section{Modelo de datos}
+
+\subsection{Convenciones}
+
+Las tablas llevan el prefijo del sitio seguido de \codigo{gdp_}. Todo registro de módulo lleva \codigo{project_id}, \codigo{version}, \codigo{created_at}, \codigo{updated_at} y, cuando corresponde, \codigo{created_by}. Las columnas \codigo{*_data} y \codigo{settings} almacenan JSON que nunca se consulta por su contenido. Las fechas se guardan en tiempo universal y se muestran en la zona horaria del sitio. Los identificadores son enteros autoincrementales; los códigos legibles (código de proyecto, número de carta, código de muestra) son únicos dentro de su ámbito y estables, porque las exportaciones y el conector los usan como referencia.
+
+\subsection{Núcleo (implementado en 0.1.0)}
+
+\begin{longtable}{p{4.3cm}p{10.5cm}}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endfirsthead
+\continuacion{2}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endhead
+\codigo{gdp_projects} & Código, nombre, nombre corto, descripción, financiador, código de financiamiento, entidad ejecutora, estado, fechas de inicio y término, presupuesto total, moneda, configuración (módulos activos, catálogos, identidad), versión. \\
+\codigo{gdp_project_members} & Usuario, proyecto, perfil, activo. Un usuario puede tener perfiles distintos en proyectos distintos. \\
+\codigo{gdp_audit_log} & Proyecto, usuario, canal (admin, connector, import, cron, cli), tipo y número de entidad, acción, resumen, estado anterior y posterior, operación asociada, dirección IP, fecha. Solo anexado. \\
+\codigo{gdp_operations} & Manejador, acción, estado (proposed, applied, reverted, cancelled, expired, failed), resumen, datos, vista previa, estado anterior, resultado, error, fechas de creación, caducidad, aplicación y reversión. \\
+\codigo{gdp_connector_tokens} & Usuario, etiqueta, resumen SHA-256 del token, prefijo visible, alcance (read, write), último uso, caducidad, revocación. \\
+\codigo{gdp_catalog_items} & Catálogo, proyecto (0 = global), clave, etiqueta, descripción, orden, metadatos, activo. Una entrada de proyecto con la misma clave sustituye a la global. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Módulos (a implementar)}
+
+Cada módulo define sus tablas siguiendo las convenciones anteriores. El detalle de campos se fija en la subsección de cada módulo (sección \ref{sec:modulos}); aquí se enumeran las entidades para tener a la vista el conjunto.
+
+\begin{itemize}
+\item \textbf{Planificación y tiempo:} estructura de desglose (\codigo{gdp_wbs}), actividades e hitos (\codigo{gdp_activities}), dependencias (\codigo{gdp_dependencies}), calendarios (\codigo{gdp_calendars}, \codigo{gdp_calendar_exceptions}), líneas base (\codigo{gdp_baselines}, \codigo{gdp_baseline_activities}), asignaciones (\codigo{gdp_assignments}), registro de horas (\codigo{gdp_timesheets}), cortes de avance (\codigo{gdp_progress}).
+\item \textbf{Control documental:} documentos (\codigo{gdp_documents}), versiones (\codigo{gdp_document_versions}), vínculos (\codigo{gdp_links}, tabla genérica de relaciones entre entidades), referencias externas (\codigo{gdp_external_refs}: sistema, número, estado, enlace).
+\item \textbf{Adquisiciones y presupuesto:} proveedores (\codigo{gdp_suppliers}), compras (\codigo{gdp_purchases}) con su etapa, cotizaciones (\codigo{gdp_quotes}) e ítems (\codigo{gdp_quote_items}), partidas (\codigo{gdp_budget_lines}), movimientos (\codigo{gdp_budget_movements}: comprometido, ejecutado), valores de la unidad de fomento (\codigo{gdp_uf_rates}).
+\item \textbf{Reuniones y acuerdos:} reuniones (\codigo{gdp_meetings}), asistentes (\codigo{gdp_meeting_attendees}), acuerdos (\codigo{gdp_agreements}) con enlace a la actividad creada.
+\item \textbf{Laboratorio:} muestras (\codigo{gdp_samples}), custodia (\codigo{gdp_custody_events}), ensayos (\codigo{gdp_tests}), resultados (\codigo{gdp_test_results}), umbrales (\codigo{gdp_thresholds}), mezclas (\codigo{gdp_mixes}, \codigo{gdp_mix_components}), probetas (\codigo{gdp_specimens}), equipos e insumos (\codigo{gdp_lab_inventory}).
+\item \textbf{Evidencias:} criterios (catálogo), evidencias (\codigo{gdp_evidence}) que apuntan a cualquier entidad, carpetas (\codigo{gdp_evidence_folders}).
+\item \textbf{Publicaciones y difusión:} publicaciones (\codigo{gdp_publications}), autores (\codigo{gdp_publication_authors}), actividades de difusión (\codigo{gdp_outreach}).
+\item \textbf{Datos:} exportaciones (\codigo{gdp_exports}), importaciones (\codigo{gdp_imports}) con su resumen de diferencias y su operación de reversión.
+\end{itemize}
+
+\section{Capa única de operaciones}
+\label{sec:operaciones}
+
+Si toda escritura externa debe poder validarse, previsualizarse, confirmarse y revertirse, entonces conviene que exista una sola implementación de ese ciclo y que tanto el conector como la importación de archivos pasen por ella. De ahí la capa de operaciones: un gestor (\codigo{OperationManager}) y un manejador por tipo de entidad (\codigo{HandlerInterface}) con cuatro responsabilidades separables.
+
+\begin{center}
+\begin{tikzpicture}[node distance=8mm and 7mm, every node/.style={font=\small}]
+\tikzstyle{paso}=[draw=marino,fill=grisclaro,minimum width=2.2cm,minimum height=0.85cm,align=center]
+\tikzstyle{estado}=[draw=acento,fill=white,minimum width=1.9cm,minimum height=0.8cm,align=center,font=\small\ttfamily]
+\node[paso] (validar) {validar};
+\node[paso,right=of validar] (prever) {previsualizar};
+\node[estado,right=of prever] (prop) {proposed};
+\node[paso,right=of prop] (aplicar) {aplicar};
+\node[estado,right=of aplicar] (apl) {applied};
+\node[estado,below=of prop] (canc) {cancelled\\expired};
+\node[estado,below=of apl] (rev) {reverted};
+\draw[-{Stealth}] (validar) -- (prever);
+\draw[-{Stealth}] (prever) -- (prop);
+\draw[-{Stealth}] (prop) -- node[above,font=\scriptsize]{confirmar} (aplicar);
+\draw[-{Stealth}] (aplicar) -- (apl);
+\draw[-{Stealth}] (prop) -- (canc);
+\draw[-{Stealth}] (apl) -- node[right,font=\scriptsize]{revertir} (rev);
+\end{tikzpicture}
+\end{center}
+
+\begin{caja}{Reglas del ciclo}
+\begin{enumerate}
+\item \textbf{Proponer.} Se comprueba el permiso del usuario para la acción, se valida y normaliza la carga, se calcula la vista previa (resumen, cambios campo a campo, advertencias y conflictos) y se guarda la operación en estado \codigo{proposed} con fecha de caducidad (24 horas por defecto). No se modifica ningún dato.
+\item \textbf{Confirmar.} Solo puede hacerlo un administrador del plugin, un usuario con \codigo{operations.confirm} en el proyecto o el proponente si conserva el permiso de la acción. Antes de aplicar se revalida y se recalcula la vista previa: si aparecen conflictos (por ejemplo, la versión del registro cambió), se rechaza y la operación debe proponerse de nuevo.
+\item \textbf{Aplicar.} El manejador ejecuta la escritura y devuelve el estado anterior y el resultado, que se guardan con la operación. Se anota la bitácora con el identificador de la operación.
+\item \textbf{Revertir.} El manejador restaura el estado anterior; la operación pasa a \codigo{reverted}. Las reversiones también quedan en la bitácora.
+\item \textbf{Caducar.} La tarea diaria marca como \codigo{expired} las propuestas vencidas.
+\item \textbf{Alcance del token.} Un token de solo lectura no puede proponer ni confirmar, aunque su dueño tenga permisos de escritura por el panel. El ajuste \emph{modo de solo lectura} bloquea toda propuesta proveniente del conector.
+\end{enumerate}
+\end{caja}
+
+La importación de archivos usa exactamente este ciclo con un manejador por módulo que recibe lotes: la vista previa es la lista de diferencias (qué se crea, qué se modifica, qué entra en conflicto), la confirmación puede ser parcial y la reversión deshace el lote completo.
+
+\section{Módulos}
+\label{sec:modulos}
+
+Entre corchetes va la etapa de implementación: \etapa{1} primera versión funcional, \etapa{2} módulo técnico, \etapa{3} evidencias y difusión. Lo implementado en 0.1.0 se marca como tal.
+
+\subsection{Núcleo, usuarios y seguridad}
+
+\begin{itemize}
+\item Perfiles por proyecto y capacidades de sitio según la sección de permisos. \textbf{(0.1.0)}
+\item Reutilización de las cuentas de WordPress (y del foro interno) sin registro público. \textbf{(0.1.0)}
+\item Bitácora de auditoría de cada creación, modificación, eliminación, importación y llamada del conector. \textbf{(0.1.0)}
+\item Almacenamiento de adjuntos en un directorio privado con acceso web denegado y entrega controlada por permiso. \textbf{(0.1.0)}
+\item Panel de inicio con proyectos, operaciones pendientes y actividad reciente. \textbf{(0.1.0)}
+\item Doble factor de autenticación obligatorio para perfiles con acceso a documentos y montos, delegado en un plugin de autenticación reconocido y comprobado por el diagnóstico. \etapa{1}
+\item Papelera con recuperación para las entidades de los módulos: nada se borra definitivamente sin una segunda confirmación. \etapa{1}
+\end{itemize}
+
+\subsection{Gestión del tiempo y planificación}
+\label{sec:tiempo}
+
+\subsubsection{Estructura del proyecto}
+\begin{itemize}
+\item Estructura de desglose del trabajo en niveles (fase, frente, paquete de trabajo, actividad) con código jerárquico (por ejemplo, 3.2.1). \etapa{1}
+\item Calendario del proyecto con fecha de inicio y término contractual y plazo restante siempre visible. \etapa{1}
+\item Calendario laboral con días hábiles, feriados chilenos y períodos no laborables de la institución, configurables. \etapa{1}
+\item Distinción entre actividades, hitos (duración cero) y actividades resumen calculadas a partir de sus hijas. \etapa{1}
+\end{itemize}
+
+\subsubsection{Programación}
+\begin{itemize}
+\item Actividades con duración, fechas de inicio y término, responsable y porcentaje de avance. \etapa{1}
+\item Cuatro tipos de dependencia (término a inicio, inicio a inicio, término a término, inicio a término) con adelantos y retrasos en días. \etapa{1}
+\item Restricciones de fecha: no comenzar antes de, debe terminar el, entre otras. \etapa{1}
+\item Cálculo de fechas tempranas y tardías, holgura total y holgura libre; ruta crítica resaltada y recalculada con cada cambio. \etapa{1}
+\item Dependencias con elementos de otros módulos: una actividad puede depender de una orden de compra, de la respuesta a una carta o de la llegada de un resultado de laboratorio. \etapa{1}
+\end{itemize}
+
+\begin{cajaacento}{Instancia verificable}
+Sea una actividad \emph{habilitar laboratorio} con 20 días hábiles de holgura total, dependiente de la orden de compra de un laboratorio externo. Si la orden se atrasa 15 días hábiles, la holgura pasa a $20-15=5$ días y el término del proyecto no se mueve; el sistema informa la pérdida de holgura. Si se atrasa 25 días, la holgura resulta $20-25=-5$: la actividad entra en la ruta crítica y el término se desplaza 5 días hábiles. La regla no aplica a actividades con fecha impuesta por restricción: ahí el atraso no se absorbe en holgura, sino que se marca como conflicto entre la restricción y las dependencias.
+\end{cajaacento}
+
+\subsubsection{Carta Gantt}
+\begin{itemize}
+\item Carta Gantt interactiva: arrastre para mover y redimensionar, creación de dependencias con el ratón, zoom por día, semana, mes y trimestre. \etapa{1}
+\item Barras de avance real sobre la barra planificada, línea de fecha actual y ruta crítica en color distinto; superposición de la línea base. \etapa{1}
+\item Filtros por frente, responsable, estado o criticidad. \etapa{1}
+\item Exportación en LaTeX (\codigo{pgfgantt}) para informes formales, en PDF de impresión, en XLSX y en XML compatible con Microsoft Project; importación desde Excel y desde Microsoft Project. \etapa{1}
+\end{itemize}
+
+\subsubsection{Línea base y control de cambios}
+\begin{itemize}
+\item Congelamiento de la línea base aprobada (el cronograma comprometido con el financiador). \etapa{1}
+\item Reprogramaciones como nuevas líneas base con motivo, fecha, documento de respaldo y comparación entre versiones. \etapa{1}
+\item Alerta cuando una desviación exige aprobación formal del financiador. \etapa{1}
+\end{itemize}
+
+\subsubsection{Recursos y dedicación}
+\begin{itemize}
+\item Asignación de integrantes a actividades con porcentaje de dedicación; carga de trabajo por persona y semana con alerta de sobreasignación. \etapa{1}
+\item Registro de horas por persona y actividad. \etapa{2}
+\item Recursos no humanos (laboratorio, prensa, cámara climática) con disponibilidad, para evitar programar dos ensayos en el mismo equipo el mismo día. \etapa{2}
+\end{itemize}
+
+\subsubsection{Control del avance}
+\begin{itemize}
+\item Actualización del avance por actividad con fecha de corte; curva S de avance planificado frente a real. \etapa{1}
+\item Valor ganado vinculado al presupuesto: valor planificado, valor ganado, costo real, índices de desempeño de plazo y de costo, pronóstico de fecha y costo de término. \etapa{2}
+\item Simulación de escenarios: efecto sobre el término y la ruta crítica de un atraso de $n$ días en una actividad, sin alterar el cronograma vigente. \etapa{2}
+\end{itemize}
+
+\subsubsection{Seguimiento operativo}
+\begin{itemize}
+\item Kanban por frente y por persona sincronizado con el cronograma. \etapa{1}
+\item Calendario integrado (mes, semana, agenda) con hitos, vencimientos de documentos, compras, reuniones y ensayos; suscripción ICS. \etapa{1}
+\item Alertas de inicio atrasado, término atrasado, hito próximo y pérdida de holgura. \etapa{1}
+\item Informe semanal por frente con hitos, fechas, pendientes y porcentaje de avance, señalando los frentes que se abren y se cierran y las actividades que entraron o salieron de la ruta crítica. \etapa{1}
+\end{itemize}
+
+\subsection{Control documental}
+\begin{itemize}
+\item Documentos por tipo (catálogo) con número, fecha, emisor, destinatario, asunto, estado, versión y adjuntos. \etapa{1}
+\item Numeración correlativa automática por tipo numerado (por ejemplo, cartas enviadas). \etapa{1}
+\item Vínculos cruzados entre documentos y con compras, actividades y reuniones. \etapa{1}
+\item Plazo esperado de respuesta con alerta de vencimiento. \etapa{1}
+\item Control de versiones de borradores con historial. \etapa{1}
+\item Referencias externas (número y estado en sistemas institucionales) con enlace. \etapa{1}
+\item Plantillas para generar borradores de cartas en LaTeX y en Word a partir de los datos del sistema. \etapa{1}
+\end{itemize}
+
+\subsection{Adquisiciones y presupuesto}
+\begin{itemize}
+\item Ciclo de cada compra en etapas de catálogo (solicitud de cotización, cotización recibida, seguimiento, elección, solicitud interna, orden de compra, factura, pago), con fecha y responsable por etapa. \etapa{1}
+\item Proveedores con contacto, historial y cotizaciones; comparador de cotizaciones por ítem. \etapa{1}
+\item Recordatorio de cotizaciones sin respuesta de nuestra parte. \etapa{1}
+\item Presupuesto por partida con monto asignado, comprometido, ejecutado y saldo. \etapa{1}
+\item Conversión de unidades de fomento con el valor diario oficial, almacenado localmente; alerta de reajuste cuando una cotización en unidades de fomento supera cierta antigüedad al emitir la orden. \etapa{1}
+\item Exportación en el formato que exija la rendición al financiador. \etapa{1}
+\end{itemize}
+
+\begin{cajaacento}{Instancia verificable}
+Una cotización de laboratorio cuyo subconjunto contratado suma \num{73.99} unidades de fomento, emitida en junio, se ordena en septiembre por \num{3026212} pesos netos. El sistema calcula $3\,026\,212 / 73{,}99 \approx 40\,900$ pesos por unidad y lo contrasta con el valor oficial del día: si coinciden dentro de la tolerancia configurada, la diferencia respecto del borrador de contrato se explica por reajuste y no por un ítem omitido, y así lo anota en la vista previa de la orden. Si no coinciden, marca la discrepancia para revisión antes de emitir.
+\end{cajaacento}
+
+\subsection{Reuniones y acuerdos}
+\begin{itemize}
+\item Actas con fecha, asistentes, temas y acuerdos. \etapa{1}
+\item Conversión de acuerdos en actividades asignadas con responsable y plazo. \etapa{1}
+\item Carga de un resumen o transcripción y propuesta automática de acuerdos para revisión (vía capa de operaciones). \etapa{1}
+\item Seguimiento del cumplimiento de acuerdos de reunión en reunión. \etapa{1}
+\end{itemize}
+
+\subsection{Muestras, ensayos, mezclas y probetas}
+\begin{itemize}
+\item Muestras con código, origen, coordenadas, fecha de extracción, masa, fotografías y responsable; cadena de custodia con cada traspaso, envío y recepción. \etapa{2}
+\item Ensayos por muestra en tres estados (cotizado, contratado, con resultado) vinculados a la compra correspondiente. \etapa{2}
+\item Resultados como datos: parámetro, valor, unidad, método, límite de cuantificación y marca explícita de valores bajo el límite. \etapa{2}
+\item Importación desde planillas y lectura asistida de informes PDF con validación humana antes de guardar. \etapa{2}
+\item Umbrales de referencia configurables y marcado automático de excedencias. \etapa{2}
+\item Mezclas con dosificación y trazabilidad hasta la muestra; probetas con fecha de fabricación, edad de ensayo, carga, resistencia y fotografía de la falla; importación de datos de prensa en CSV. \etapa{2}
+\item Gráficos comparativos de resistencia por mezcla y edad, y de parámetros químicos por muestra. \etapa{2}
+\item Inventario de equipos e insumos del laboratorio con su compra de origen. \etapa{2}
+\end{itemize}
+
+\subsection{Evidencias para acreditación y rendición}
+\begin{itemize}
+\item Catálogos configurables de criterios de acreditación y de medios de verificación exigidos por el financiador. \etapa{3}
+\item Etiquetado de cualquier registro como evidencia de uno o más criterios; carpetas de evidencia por actividad con control de completitud. \etapa{3}
+\item Informes por criterio y por período, orientados a presentaciones institucionales. \etapa{3}
+\end{itemize}
+
+\subsection{Publicaciones y difusión}
+\begin{itemize}
+\item Artículos, ponencias y presentaciones con autores, medio, estado y fechas. \etapa{3}
+\item Creación de un borrador de entrada del blog al cambiar de estado un artículo, para revisión y publicación manual. \etapa{3}
+\item Actividades de difusión (charlas, congresos, prensa, visitas) y tablero público opcional sin datos sensibles. \etapa{3}
+\end{itemize}
+
+\subsection{Comunicación y alertas}
+\begin{itemize}
+\item Notificaciones por correo de asignaciones, vencimientos y cambios de estado; resumen diario o semanal por persona. \etapa{1}
+\item Enlace de cada tarea, documento o compra a un hilo del foro interno para su discusión. \etapa{1}
+\item Tareas programadas mediante cron real del hosting; el diagnóstico lo comprueba. \textbf{(0.1.0, comprobación)}
+\end{itemize}
+
+\subsection{Exportación, importación y respaldo}
+\begin{itemize}
+\item Respaldo completo en SQL más adjuntos en ZIP, con restauración; respaldos programados hacia un destino externo. \etapa{1}
+\item Exportación por módulo o completa en CSV, XLSX y JSON con relaciones resueltas; diccionario de datos generado automáticamente (campos, tipos, unidades, significado). \etapa{1}
+\item Exportación anonimizada sin nombres, correos, identificadores personales ni montos individuales. \etapa{1}
+\item Importación de JSON y planillas mediante la capa de operaciones: validación contra el esquema, detección de conflictos por versión, vista previa de diferencias, aplicación parcial y reversión completa. \etapa{1}
+\item Migración inicial desde lo existente (cartas, órdenes de compra, libro de adquisiciones, Kanban y Gantt en planillas). \etapa{1}
+\end{itemize}
+
+\section{Conector para asistentes de inteligencia artificial}
+
+\subsection{Arquitectura}
+
+Las funciones se registran como habilidades de WordPress (Abilities API, en el núcleo desde la versión 6.9) bajo la categoría \codigo{gestion-de-proyectos}. El adaptador MCP oficial las publica como herramientas del protocolo MCP en un servidor propio del plugin, en la ruta \codigo{/wp-json/gestion-de-proyectos/mcp}. Esa separación tiene una consecuencia práctica: el plugin funciona sin el adaptador (el conector queda inactivo y el diagnóstico lo indica), y cualquier cliente MCP, no solo Claude, puede conectarse.
+
+\subsection{Autenticación}
+
+Cada usuario genera sus propios tokens desde el panel, con etiqueta, alcance (solo lectura, o lectura y propuestas) y caducidad. Se muestran una sola vez; la base de datos guarda solo su resumen SHA-256. El cliente envía el token en la cabecera \codigo{X-GDP-Token} (también se acepta \codigo{Authorization: Bearer}). El token hereda exactamente los permisos de su dueño en cada proyecto: no otorga nada adicional. Como alternativa se admiten las contraseñas de aplicación de WordPress con autenticación básica. No se usa OAuth: Claude permite configurar cabeceras fijas en los conectores personalizados, lo que evita implementar un servidor de autorización en el sitio.
+
+\subsection{Catálogo de herramientas}
+
+\begin{longtable}{p{5cm}p{1.9cm}p{7.9cm}}
+\toprule
+\textbf{Herramienta} & \textbf{Tipo} & \textbf{Función} \\
+\midrule
+\endfirsthead
+\continuacion{3}
+\toprule
+\textbf{Herramienta} & \textbf{Tipo} & \textbf{Función} \\
+\midrule
+\endhead
+\multicolumn{3}{l}{\textit{Núcleo (0.1.0)}} \\
+\codigo{system-status} & consulta & Versiones, módulos, número de proyectos, usuario y alcance del token. \\
+\codigo{list-projects} & consulta & Proyectos visibles, con filtro por estado y búsqueda. \\
+\codigo{get-project} & consulta & Ficha completa, miembros, módulos activos y versión del registro. \\
+\codigo{list-users} & consulta & Usuarios del sitio para asignación de miembros (correo solo para administradores). \\
+\codigo{list-catalog} & consulta & Entradas de un catálogo, globales y del proyecto. \\
+\codigo{recent-audit} & consulta & Últimas entradas de la bitácora (requiere \codigo{audit.view}). \\
+\codigo{propose-project-change} & propuesta & Crear o actualizar un proyecto, asignar o retirar miembros; devuelve vista previa y \codigo{operation_id}. \\
+\codigo{list-operations}, \codigo{get-operation} & consulta & Operaciones por estado y detalle de una operación. \\
+\codigo{confirm-operation} & propuesta & Aplica una operación propuesta; exige \codigo{confirm=true} y revalida antes de aplicar. \\
+\codigo{cancel-operation}, \codigo{revert-operation} & propuesta & Cancela una propuesta; revierte una operación aplicada (exige \codigo{confirm=true}). \\
+\multicolumn{3}{l}{\textit{Planificación \etapa{1}}} \\
+\codigo{get-schedule}, \codigo{get-critical-path} & consulta & Cronograma, ruta crítica, holguras y atrasos por frente. \\
+\codigo{propose-schedule-change} & propuesta & Reprogramaciones y actualizaciones de avance. \\
+\codigo{get-earned-value}, \codigo{simulate-delay} & consulta & Valor ganado y pronóstico; simulación de atrasos. \etapa{2} \\
+\multicolumn{3}{l}{\textit{Documentos y compras \etapa{1}}} \\
+\codigo{list-documents}, \codigo{get-document} & consulta & Búsqueda y detalle, incluidos plazos vencidos. \\
+\codigo{propose-document}, \codigo{propose-purchase-change} & propuesta & Registro de documentos y avance de etapas de compra. \\
+\codigo{get-budget} & consulta & Ejecución por partida (requiere \codigo{procurement.view_amounts}). \\
+\multicolumn{3}{l}{\textit{Laboratorio \etapa{2}}} \\
+\codigo{list-samples}, \codigo{get-test-results} & consulta & Muestras, ensayos y resultados con excedencias. \\
+\codigo{propose-test-results} & propuesta & Carga de resultados a partir de planillas o informes leídos por el asistente. \\
+\multicolumn{3}{l}{\textit{Informes \etapa{1}}} \\
+\codigo{weekly-report} & consulta & Informe semanal por frente con el formato establecido. \\
+\bottomrule
+\end{longtable}
+
+Las herramientas de propuesta llevan la anotación \codigo{readOnlyHint=false}; \codigo{confirm-operation} y \codigo{revert-operation} llevan además \codigo{destructiveHint=true}, para que el cliente pida aprobación explícita antes de invocarlas. Las descripciones se redactan con cuidado porque el asistente elige la herramienta leyéndolas.
+
+\subsection{Asistente de integración}
+
+La pantalla \emph{Conector} del panel guía la integración en cinco pasos, con enlaces a la documentación oficial de Anthropic y de WordPress para que un cambio de interfaz no la deje obsoleta sin aviso. Las instrucciones llevan número de versión propio, en la constante \codigo{INSTRUCTIONS_VERSION}:
+
+\begin{enumerate}
+\item \textbf{Diagnóstico:} versión de PHP y de WordPress, adaptador activo, conector habilitado, HTTPS, enlaces permanentes, directorio privado, cron real, permiso del usuario, alcance de la API REST y respuesta del punto de entrada MCP (que sin credenciales debe devolver 401), cada uno con su corrección.
+\item \textbf{Credencial:} generación y revocación de tokens; alternativa de contraseña de aplicación.
+\item \textbf{Configuración en Claude:} URL lista para copiar, nombre de la cabecera, pasos para cuentas personales y de organización, orden equivalente para Claude Code y otros clientes.
+\item \textbf{Prueba desde fuera:} órdenes \codigo{curl} de inicialización y listado de herramientas con la interpretación de cada respuesta; tabla de herramientas disponibles.
+\item \textbf{Seguridad y mantenimiento:} bitácora, modo de solo lectura, revocación, origen de las peticiones, datos que salen del sitio.
+\end{enumerate}
+
+\section{Identidad visual}
+
+El plugin lee el nombre y la descripción del sitio, el logotipo personalizado, el ícono del sitio y, desde \codigo{theme.json}, la paleta (buscando las claves habituales \codigo{primary}, \codigo{secondary}, \codigo{accent}, \codigo{contrast}, \codigo{base}) y la primera familia tipográfica. Con ello genera variables CSS (\codigo{--gdp-primary}, etc.) que gobiernan las pantallas del panel, los informes exportados y el tablero público. Los ajustes permiten corregir cada valor cuando el tema no lo declara; los campos vacíos conservan el valor detectado.
+
+\section{Requisitos no funcionales}
+
+\begin{longtable}{p{3.4cm}p{11.4cm}}
+\toprule
+\textbf{Aspecto} & \textbf{Requisito} \\
+\midrule
+\endfirsthead
+\continuacion{2}
+\toprule
+\textbf{Aspecto} & \textbf{Requisito} \\
+\midrule
+\endhead
+Plataforma & WordPress 6.9 o superior; PHP 8.1 o superior; MySQL o MariaDB (probado también sobre la integración SQLite oficial para desarrollo). \\
+Seguridad & Comprobación de nonce y permiso en todo formulario; consultas preparadas; salida escapada; adjuntos fuera de la carpeta pública; tokens resumidos; sin secretos en el repositorio; bitácora de solo anexado. \\
+Rendimiento & Consultas indexadas por proyecto, estado y fecha; cálculo de ruta crítica en memoria para cronogramas de hasta algunos miles de actividades; vistas paginadas. \\
+Compatibilidad & Sin dependencia de Composer en el sitio (autocarga propia); estándares de codificación de WordPress; preparado para traducción (dominio \codigo{gestion-de-proyectos}). \\
+Mantenibilidad & Repositorio en GitHub con integración continua (sintaxis en PHP 8.1 a 8.4, estándares, pruebas, paquete instalable por etiqueta); especificación y bitácora de decisiones versionadas junto al código; migraciones de esquema por versión. \\
+Reversibilidad & Toda operación externa reversible; desinstalación que conserva los datos salvo indicación expresa; exportación completa en formatos abiertos. \\
+Gobierno de datos & Los documentos sensibles pueden enlazarse desde el repositorio institucional en lugar de alojarse en el sitio; exportación anonimizada; las herramientas del conector devuelven solo lo que el permiso del usuario admite. \\
+\bottomrule
+\end{longtable}
+
+\section{Etapas de construcción}
+
+\begin{longtable}{p{1.2cm}p{4.2cm}p{9.4cm}}
+\toprule
+\textbf{Etapa} & \textbf{Entrega} & \textbf{Contenido} \\
+\midrule
+\endfirsthead
+\continuacion{3}
+\toprule
+\textbf{Etapa} & \textbf{Entrega} & \textbf{Contenido} \\
+\midrule
+\endhead
+0 & Base (versión 0.1.0, hecha) & Núcleo, proyectos y equipo, catálogos, bitácora, capa de operaciones, almacenamiento privado, identidad, conector con herramientas del núcleo, asistente de integración, integración continua, documentación. \\
+1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}), control documental, adquisiciones con unidades de fomento, reuniones, exportación e importación, informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
+2 & Módulo técnico & Muestras, ensayos, mezclas y probetas; recursos no humanos y registro de horas; valor ganado y simulación; lectura asistida de informes. Debe estar listo antes de habilitar el laboratorio. \\
+3 & Evidencias y difusión & Criterios y medios de verificación, carpetas de evidencia e informes; publicaciones, difusión y tablero público. \\
+\bottomrule
+\end{longtable}
+
+Cada etapa se desarrolla en su propia rama, se integra a la principal cuando pasa la integración continua y se publica con una etiqueta de versión que genera el paquete instalable. El proyecto de relaves se carga al final de la etapa 1 mediante la importación de JSON, con procedencia por registro y un informe de datos faltantes.
+
+\section{Criterios de aceptación de la etapa base}
+
+\begin{itemize}
+\item El plugin se activa sin errores en WordPress 6.9 con PHP 8.1 y crea las seis tablas del núcleo, el rol \emph{Miembro de proyectos} y las capacidades del administrador. \textbf{Verificado.}
+\item Un administrador crea un proyecto, asigna miembros con perfiles y ve la bitácora de esas acciones. \textbf{Verificado.}
+\item El punto de entrada MCP responde 401 sin credenciales; con un token válido completa la inicialización, lista doce herramientas y ejecuta \codigo{system-status}. \textbf{Verificado.}
+\item Una propuesta de creación de proyecto queda en estado \codigo{proposed} con vista previa; \codigo{confirm-operation} sin \codigo{confirm=true} se rechaza; con \codigo{confirm=true} crea el proyecto y anota la bitácora con canal \codigo{connector}. \textbf{Verificado.}
+\item Una propuesta de actualización basada en una versión antigua se marca con conflicto y no es confirmable; una basada en la versión vigente se aplica, incrementa la versión y puede revertirse restaurando el estado anterior. \textbf{Verificado.}
+\item Un miembro con perfil investigador no ve montos, no puede proponer cambios de proyecto y, con token de solo lectura, no puede proponer nada; un token revocado recibe 401. \textbf{Verificado.}
+\item Todas las pantallas del panel se renderizan sin avisos de PHP; el diagnóstico del conector detecta el adaptador, la API REST y el punto de entrada. \textbf{Verificado.}
+\end{itemize}
+
+\end{document}

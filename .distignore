@@ -1,0 +1,20 @@
+# Excluidos del paquete instalable
+.github
+.git
+.gitattributes
+.gitignore
+.editorconfig
+.distignore
+bin
+docs
+tests
+vendor
+node_modules
+composer.json
+composer.lock
+phpcs.xml.dist
+phpunit.xml.dist
+phpstan.neon.dist
+CHANGELOG.md
+README.md
+*.zip
