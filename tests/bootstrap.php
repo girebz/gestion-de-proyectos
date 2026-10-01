@@ -27,4 +27,29 @@ if ( is_file( $gdp_root . '/vendor/autoload.php' ) ) {
 	\GDP\Autoloader::register();
 }
 
+if ( ! function_exists( 'apply_filters' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress: devuelve el valor sin filtrar.
+	 *
+	 * @param string $hook  Gancho.
+	 * @param mixed  $value Valor.
+	 * @return mixed
+	 */
+	function apply_filters( string $hook, $value ) {
+		return $value;
+	}
+}
+if ( ! function_exists( 'wp_json_encode' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress.
+	 *
+	 * @param mixed $data  Datos.
+	 * @param int   $flags Opciones.
+	 * @return string|false
+	 */
+	function wp_json_encode( $data, int $flags = 0 ) {
+		return json_encode( $data, $flags ); // phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
+	}
+}
+
 unset( $gdp_root );

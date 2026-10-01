@@ -4,7 +4,7 @@ Tags: gestión de proyectos, investigación, mcp, planificación, control docume
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.5.0
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ Consultar. Toda escritura queda como propuesta hasta que una persona con permiso
 En un directorio privado dentro de wp-content/uploads, protegido contra acceso web directo y servido solo a usuarios autorizados.
 
 == Changelog ==
+
+= 0.6.0 =
+* Exportación, importación y respaldo: exportación por módulos en JSON, ZIP con adjuntos, XLSX y CSV con referencias resueltas y diccionario de datos (variante anonimizada); importación con vista previa por tabla, conflictos por versión, aplicación parcial y reversión; respaldos manuales y semanales con restauración reversible; archivo de ejemplo importable; herramientas del conector.
 
 = 0.5.0 =
 * Reuniones y acuerdos: actas con asistentes, temas, resumen y transcripción; acuerdos con responsable, plazo y estado, convertibles en actividades del cronograma; propuesta automática de acuerdos desde un resumen o transcripción con revisión antes de confirmar; seguimiento de reunión en reunión; actas en LaTeX y Word; aviso de acuerdos vencidos; herramientas del conector.
