@@ -4,6 +4,16 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.7.1] - 2026-10-01
+
+### Añadido
+- Interfaz para temas (`src/template-functions.php`): `gdp_dashboard_data()` (datos del tablero público o del equipo), `gdp_dashboard()` (HTML igual al del código corto), `gdp_dashboard_html()`, `gdp_dashboard_blocks()`, `gdp_dashboard_project()` y `gdp_parse_dashboard_shortcode()` para interpretar un código corto pegado en el Personalizador de un tema.
+- Cada etapa del tablero público incluye ahora sus hitos destacados (`highlights`, con código, texto público, fecha, estado y porcentaje), el total y los completados, de modo que un tema puede presentar el avance por etapa con su propio diseño.
+- Filtro `gdp_site_identity`, aplicado antes de las correcciones manuales de los ajustes, para que un tema cuya paleta no usa los nombres habituales de theme.json declare sus colores y tipografía al plugin.
+
+### Cambiado
+- La clave de la caché de los tableros incluye la versión del plugin, para que una actualización no sirva datos con la forma anterior; la pantalla Tableros indica que el código corto puede pegarse en el Personalizador de un tema que integre el tablero (como Relave Circular 1.3.0).
+
 ## [0.7.0] - 2026-10-01
 
 ### Añadido

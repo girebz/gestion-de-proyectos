@@ -47,6 +47,25 @@ final class DashboardData {
 		$progress   = null === $curve ? self::progress( $activities ) : (int) round( $curve['actual'] );
 		$time       = self::time_elapsed( $project, $today );
 
+		// Hitos y actividades destacados (solo los marcados como públicos), por código.
+		$highlights = array();
+		foreach ( $activities as $a ) {
+			$h = $conf['highlights'][ (string) $a['code'] ] ?? null;
+			if ( null === $h || 'cancelada' === $a['status'] ) {
+				continue;
+			}
+			$done = 'terminada' === $a['status'];
+			$highlights[ (int) $a['id'] ] = array(
+				'code'    => (string) $a['code'],
+				'label'   => '' !== (string) ( $h['label'] ?? '' ) ? (string) $h['label'] : (string) $a['name'],
+				'date'    => $done && $a['actual_finish'] ? $a['actual_finish'] : $a['end_date'],
+				'state'   => $done ? 'done' : ( (int) $a['percent'] > 0 || ( $a['start_date'] && $a['start_date'] <= $today ) ? 'active' : 'upcoming' ),
+				'percent' => $done ? 100 : (int) $a['percent'],
+			);
+		}
+		$by_date = static fn( array $x, array $y ): int => strcmp( (string) $x['date'], (string) $y['date'] );
+
+		// Etapas: actividades resumen de primer nivel, con sus destacados.
 		$stages = array();
 		foreach ( $activities as $a ) {
 			if ( 0 !== (int) $a['parent_id'] || 'summary' !== $a['kind'] ) {
@@ -56,33 +75,26 @@ final class DashboardData {
 			if ( is_array( $c ) && empty( $c['visible'] ) ) {
 				continue;
 			}
-			$percent  = self::progress( self::descendants( $activities, (int) $a['id'] ) );
+			$children = self::descendants( $activities, (int) $a['id'] );
+			$percent  = self::progress( $children );
+			$own      = array_values( array_intersect_key( $highlights, array_flip( array_map( static fn( array $d ): int => (int) $d['id'], $children ) ) ) );
+			usort( $own, $by_date );
 			$stages[] = array(
-				'label'   => is_array( $c ) && '' !== (string) $c['label'] ? (string) $c['label'] : (string) $a['name'],
-				'text'    => is_array( $c ) ? (string) $c['text'] : '',
-				'percent' => $percent,
-				'state'   => $percent >= 100 ? 'done' : ( $percent > 0 || ( $a['start_date'] && $a['start_date'] <= $today ) ? 'active' : 'upcoming' ),
+				'code'       => (string) $a['code'],
+				'label'      => is_array( $c ) && '' !== (string) $c['label'] ? (string) $c['label'] : (string) $a['name'],
+				'text'       => is_array( $c ) ? (string) $c['text'] : '',
+				'percent'    => $percent,
+				'state'      => $percent >= 100 ? 'done' : ( $percent > 0 || ( $a['start_date'] && $a['start_date'] <= $today ) ? 'active' : 'upcoming' ),
+				'highlights' => $own,
+				'total'      => count( $own ),
+				'done'       => count( array_filter( $own, static fn( array $x ): bool => 'done' === $x['state'] ) ),
 			);
 		}
 
-		$achieved = array();
-		$upcoming = array();
-		foreach ( $activities as $a ) {
-			$h = $conf['highlights'][ (string) $a['code'] ] ?? null;
-			if ( null === $h || 'cancelada' === $a['status'] ) {
-				continue;
-			}
-			$item = array( 'label' => '' !== (string) ( $h['label'] ?? '' ) ? (string) $h['label'] : (string) $a['name'] );
-			if ( 'terminada' === $a['status'] ) {
-				$item['date'] = $a['actual_finish'] ? $a['actual_finish'] : $a['end_date'];
-				$achieved[]   = $item;
-			} else {
-				$item['date'] = $a['end_date'];
-				$upcoming[]   = $item;
-			}
-		}
+		$achieved = array_values( array_filter( $highlights, static fn( array $x ): bool => 'done' === $x['state'] ) );
+		$upcoming = array_values( array_filter( $highlights, static fn( array $x ): bool => 'done' !== $x['state'] ) );
 		usort( $achieved, static fn( array $x, array $y ): int => strcmp( (string) $y['date'], (string) $x['date'] ) );
-		usort( $upcoming, static fn( array $x, array $y ): int => strcmp( (string) $x['date'], (string) $y['date'] ) );
+		usort( $upcoming, $by_date );
 
 		$indicators = array();
 		foreach ( $conf['indicators'] as $ind ) {

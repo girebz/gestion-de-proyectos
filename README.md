@@ -41,6 +41,17 @@ La especificación funcional completa está en [`docs/especificacion/`](docs/esp
 
 Los datos se actualizan solos con cada cambio registrado en el proyecto; el tablero público no muestra nunca montos, nombres de personas, compras ni documentos.
 
+### Integración en un tema
+
+Un tema puede presentar el tablero con su propio diseño en lugar de insertar el código corto. El plugin expone funciones globales (comprobables con `function_exists`):
+
+- `gdp_dashboard_data( $proyecto, 'public' )`: datos del tablero público (título, resumen, avance, plazo, indicadores, etapas con sus hitos destacados, logros, próximos hitos, instituciones, contacto) y la clave `enabled`, que el tema debe respetar; con `'team'`, el resumen de gestión para el usuario actual si tiene acceso.
+- `gdp_dashboard( $proyecto, $bloques )`: el HTML del tablero público, igual al del código corto; `gdp_dashboard_html( $datos, $bloques )` para datos ya obtenidos.
+- `gdp_parse_dashboard_shortcode( $texto )`: interpreta un código corto pegado por el usuario (por ejemplo, en el Personalizador) y devuelve el proyecto y los bloques.
+- Filtro `gdp_site_identity` para declarar colores y tipografía cuando la paleta del tema no usa los nombres habituales de theme.json (primary, secondary, accent, base, contrast); las variables CSS `--gdp-dash-*` permiten además ajustar el tablero desde la hoja de estilos del tema.
+
+El tema Relave Circular (1.3.0) usa esta interfaz: en Apariencia → Personalizar → Relave Circular → 10. Avance desde Gestión de Proyectos se pega el código corto y la sección "Avance" de la portada muestra las etapas del tablero como frentes de trabajo con el diseño del tema, o el tablero completo.
+
 ## Conector con Claude, en breve
 
 1. **Proyectos → Conector → paso 2**: genere un token (alcance de solo lectura o de lectura y propuestas).

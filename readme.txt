@@ -4,7 +4,7 @@ Tags: gestión de proyectos, investigación, mcp, planificación, control docume
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.7.0
+Stable tag: 0.7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,9 @@ Usuarios con sesión iniciada en el sitio (si el registro está cerrado, solo lo
 En un directorio privado dentro de wp-content/uploads, protegido contra acceso web directo y servido solo a usuarios autorizados.
 
 == Changelog ==
+
+= 0.7.1 =
+* Interfaz para temas: funciones gdp_dashboard_data(), gdp_dashboard() y gdp_parse_dashboard_shortcode(), hitos destacados por etapa en el tablero público y filtro gdp_site_identity para declarar la paleta del tema.
 
 = 0.7.0 =
 * Tableros: tablero público de difusión con el código corto [gdp_avance] (mensaje, avance, plazo, indicadores, etapas, logros, próximos hitos, instituciones y contacto con correo ofuscado) que solo muestra lo declarado publicable; tablero del equipo con [gdp_tablero_equipo] (avance real y planificado, atrasos, vencimientos, ruta crítica, acuerdos, respuestas pendientes, compras, próxima reunión) para usuarios con sesión iniciada; pantalla Tableros con vista previa; herramienta del conector get-dashboard.
