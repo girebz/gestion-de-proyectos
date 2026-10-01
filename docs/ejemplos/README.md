@@ -4,7 +4,7 @@
 
 Datos del proyecto "Valorización de Relaves Abandonados en Coquimbo" (Universidad Central de Chile, Fondo Regional para la Productividad y el Desarrollo del Gobierno Regional de Coquimbo, código BIP 40075890-0) en el formato de exportación del plugin (`gestion-de-proyectos/export`, versión 1), con la información conocida al 30 de septiembre de 2026:
 
-- ficha del proyecto, equipo con perfiles, catálogos del proyecto (frentes de trabajo y partidas del fondo) y partidas presupuestarias con los montos del convenio;
+- ficha del proyecto con fechas de ejecución inferidas (1 de febrero de 2026 a 31 de enero de 2028; ver más abajo), equipo con perfiles, catálogos del proyecto (frentes de trabajo y partidas del fondo) y partidas presupuestarias con los montos del convenio;
 - calendario laboral con los feriados de Chile de 2026 a 2028;
 - estructura de desglose de 33 actividades en cinco frentes (gestión, caracterización, mezclas y prototipado, pilotaje e infraestructura, difusión y capacitación), con dependencias, restricciones de fecha, avances registrados y asignaciones, construida a partir de la carta Gantt de la propuesta (meses contados desde junio de 2026) y del estado de avance;
 - proveedores, seis compras con sus cotizaciones, ítems, etapas y órdenes (laboratorios geoquímico, mineralógico y físico, insumos del muestreo, capacitación y equipamiento de planta piloto), y el valor de referencia de la unidad de fomento;
@@ -19,6 +19,10 @@ Datos del proyecto "Valorización de Relaves Abandonados en Coquimbo" (Universid
 3. Revise la vista previa (qué se crea por tabla) y confirme. La importación queda registrada como operación y se puede revertir completa desde Proyectos → Operaciones.
 
 Por el conector, la misma carga se hace con `propose-data-change` (`action: import`, `mode: new`, `document: <contenido del archivo>`) y `confirm-operation`.
+
+### Fechas de ejecución
+
+Según las bases (punto 8), el plazo de 24 meses corre desde la primera transferencia de recursos (cuota 1). Esa fecha no consta en los documentos disponibles. Se infiere de la reunión de preguntas y respuestas con el Gobierno Regional del 10 de marzo de 2026, de la recepción de los centros de costo el 24 de marzo y de la entrega del primer informe técnico el 28 de mayo (los informes vencen 20 días hábiles después de cada trimestre), que sitúan la transferencia hacia fines de enero o comienzos de febrero de 2026. El archivo usa el 1 de febrero de 2026 como inicio y el 31 de enero de 2028 como término. Cuando se tenga el comprobante de ingreso a caja de la cuota 1, o el oficio que fije los plazos, basta con corregir las fechas en la ficha del proyecto; el cronograma no depende de ellas.
 
 ### Qué no incluye
 
