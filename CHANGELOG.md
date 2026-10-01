@@ -4,6 +4,21 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.4.0] - 2026-10-01
+
+### Añadido
+- Módulo de adquisiciones y presupuesto (etapa 1): compras con código correlativo, partida, proveedor, responsable, actividad, moneda (pesos, unidades de fomento, dólares), neto, impuesto y total, convertidas a pesos con el valor de la unidad de fomento de la fecha de referencia; ciclo por etapas del catálogo (solicitud de cotización, cotización recibida, seguimiento, elección, solicitud interna, orden de compra, factura, pago) con historial de fecha, responsable, nota y documento; estados abierta, cerrada y anulada; aprobación formal reservada a `procurement.approve`.
+- Proveedores globales o del proyecto con contacto y categoría; cotizaciones por compra (solicitada, recibida, elegida, descartada) con ítems, subconjunto a contratar y comparador por ítem; elegir una cotización copia proveedor, moneda y monto a la compra.
+- Comprobaciones al emitir la orden: aprobación, partida y saldo, antigüedad de la cotización en unidades de fomento (reajuste) y valor implícito de la orden frente al oficial con tolerancia configurable; una discrepancia es un conflicto que impide confirmar.
+- Presupuesto por partida: asignado (`gdp_budget_lines`), comprometido (orden emitida), ejecutado (pagada), pendiente y saldo, con aviso cuando la suma de partidas supera el presupuesto del proyecto.
+- Valores diarios de la unidad de fomento (`gdp_uf_rates`) cargados a mano u obtenidos de mindicador.cl, con tarea diaria; herramienta `get-uf-rate`.
+- Avisos diarios de compras con cotizaciones recibidas sin decidir y de cotizaciones solicitadas sin respuesta del proveedor; eventos del calendario integrado (entrega esperada, vencimiento de cotización).
+- Exportación para la rendición en CSV y XLSX (hojas Rendición y Presupuesto).
+- Operaciones en dos tiempos `purchase` (create, update, delete, set_stage, approve, add_quote, update_quote, delete_quote, choose_quote, set_quote_items, create_supplier, update_supplier, delete_supplier, set_budget) y herramientas del conector `list-purchases`, `get-purchase`, `list-suppliers`, `get-budget`, `get-uf-rate`, `propose-purchase-change`; los montos se ocultan a quien no tenga `procurement.view_amounts`.
+- Pantallas Compras (lista, formulario, ficha con cotizaciones, etapas y comprobaciones), Proveedores y Presupuesto (partidas, unidad de fomento, reglas del módulo); tarjeta en la ficha del proyecto; las compras son entidades enlazables.
+- Partidas presupuestarias por defecto en el catálogo (recursos humanos, gastos de operación, equipamiento, infraestructura, difusión y transferencia, gastos de administración).
+- Tablas `gdp_suppliers`, `gdp_purchases`, `gdp_purchase_stages`, `gdp_quotes`, `gdp_quote_items`, `gdp_budget_lines`, `gdp_uf_rates` (esquema 5); pruebas unitarias de la aritmética de la unidad de fomento; `OperationManager::execute()` devuelve también la vista previa.
+
 ## [0.3.0] - 2026-10-01
 
 ### Añadido

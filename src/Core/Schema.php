@@ -51,7 +51,167 @@ final class Schema {
 		$tokens   = self::table( 'connector_tokens' );
 		$catalog  = self::table( 'catalog_items' );
 
-		return array_merge( self::core_definitions( $collate, $projects, $members, $audit, $ops, $tokens, $catalog ), self::planning_definitions( $collate ), self::documents_definitions( $collate ) );
+		return array_merge( self::core_definitions( $collate, $projects, $members, $audit, $ops, $tokens, $catalog ), self::planning_definitions( $collate ), self::documents_definitions( $collate ), self::procurement_definitions( $collate ) );
+	}
+
+	/**
+	 * Tablas del módulo de adquisiciones y presupuesto.
+	 *
+	 * Los montos se guardan en la moneda de origen (CLP, UF, USD) y, además,
+	 * convertidos a pesos (amount_clp) con el valor de la unidad de fomento del
+	 * día que se usó, para que las sumas por partida sean estables. Comprometido
+	 * y ejecutado se derivan de la etapa de cada compra, no de una tabla de
+	 * movimientos.
+	 *
+	 * @param string $collate Cotejamiento.
+	 * @return array<string,string>
+	 */
+	private static function procurement_definitions( string $collate ): array {
+		$suppliers = self::table( 'suppliers' );
+		$purchases = self::table( 'purchases' );
+		$stages    = self::table( 'purchase_stages' );
+		$quotes    = self::table( 'quotes' );
+		$items     = self::table( 'quote_items' );
+		$budget    = self::table( 'budget_lines' );
+		$uf        = self::table( 'uf_rates' );
+
+		return array(
+			'suppliers'       => "CREATE TABLE {$suppliers} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	name varchar(255) NOT NULL,
+	tax_id varchar(32) NOT NULL DEFAULT '',
+	contact_name varchar(255) NOT NULL DEFAULT '',
+	email varchar(255) NOT NULL DEFAULT '',
+	phone varchar(64) NOT NULL DEFAULT '',
+	address varchar(255) NOT NULL DEFAULT '',
+	category varchar(100) NOT NULL DEFAULT '',
+	notes longtext NULL,
+	active tinyint(1) NOT NULL DEFAULT 1,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_id (project_id),
+	KEY name (name(100))
+) {$collate};",
+
+			'purchases'       => "CREATE TABLE {$purchases} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	seq_no int(10) unsigned NOT NULL DEFAULT 0,
+	code varchar(32) NOT NULL DEFAULT '',
+	title varchar(255) NOT NULL,
+	description longtext NULL,
+	budget_line varchar(64) NOT NULL DEFAULT '',
+	supplier_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	stage varchar(40) NOT NULL DEFAULT 'solicitud_cotizacion',
+	status varchar(20) NOT NULL DEFAULT 'abierta',
+	owner_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	activity_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	chosen_quote_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	currency char(3) NOT NULL DEFAULT 'CLP',
+	amount_net decimal(18,4) NULL,
+	tax_rate decimal(5,2) NOT NULL DEFAULT 19.00,
+	amount_total decimal(18,4) NULL,
+	amount_clp decimal(18,2) NULL,
+	uf_rate decimal(12,2) NULL,
+	uf_date date NULL,
+	approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	approved_at datetime NULL,
+	order_number varchar(64) NOT NULL DEFAULT '',
+	order_date date NULL,
+	invoice_number varchar(64) NOT NULL DEFAULT '',
+	invoice_date date NULL,
+	paid_at date NULL,
+	expected_at date NULL,
+	received_at date NULL,
+	notes longtext NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_id (project_id),
+	KEY stage (project_id,stage),
+	KEY budget_line (project_id,budget_line),
+	KEY supplier_id (supplier_id),
+	KEY activity_id (activity_id)
+) {$collate};",
+
+			'purchase_stages' => "CREATE TABLE {$stages} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	purchase_id bigint(20) unsigned NOT NULL,
+	stage varchar(40) NOT NULL,
+	stage_date date NOT NULL,
+	user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	note varchar(255) NOT NULL DEFAULT '',
+	created_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY purchase_id (purchase_id,id)
+) {$collate};",
+
+			'quotes'          => "CREATE TABLE {$quotes} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	purchase_id bigint(20) unsigned NOT NULL,
+	supplier_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	quote_number varchar(64) NOT NULL DEFAULT '',
+	status varchar(20) NOT NULL DEFAULT 'solicitada',
+	requested_at date NULL,
+	quote_date date NULL,
+	valid_until date NULL,
+	currency char(3) NOT NULL DEFAULT 'CLP',
+	amount_net decimal(18,4) NULL,
+	tax_rate decimal(5,2) NOT NULL DEFAULT 19.00,
+	amount_total decimal(18,4) NULL,
+	document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	notes longtext NULL,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY purchase_id (purchase_id),
+	KEY supplier_id (supplier_id),
+	KEY project_id (project_id)
+) {$collate};",
+
+			'quote_items'     => "CREATE TABLE {$items} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	quote_id bigint(20) unsigned NOT NULL,
+	sort_order int(11) NOT NULL DEFAULT 0,
+	description varchar(255) NOT NULL,
+	quantity decimal(12,3) NOT NULL DEFAULT 1,
+	unit varchar(32) NOT NULL DEFAULT '',
+	unit_price decimal(18,4) NOT NULL DEFAULT 0,
+	line_total decimal(18,4) NOT NULL DEFAULT 0,
+	selected tinyint(1) NOT NULL DEFAULT 1,
+	PRIMARY KEY  (id),
+	KEY quote_id (quote_id,sort_order)
+) {$collate};",
+
+			'budget_lines'    => "CREATE TABLE {$budget} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	line_code varchar(64) NOT NULL,
+	label varchar(255) NOT NULL DEFAULT '',
+	assigned_clp decimal(18,2) NOT NULL DEFAULT 0,
+	sort_order int(11) NOT NULL DEFAULT 0,
+	notes varchar(255) NOT NULL DEFAULT '',
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY project_line (project_id,line_code)
+) {$collate};",
+
+			'uf_rates'        => "CREATE TABLE {$uf} (
+	rate_date date NOT NULL,
+	value_clp decimal(12,2) NOT NULL,
+	source varchar(32) NOT NULL DEFAULT 'manual',
+	fetched_at datetime NOT NULL,
+	PRIMARY KEY  (rate_date)
+) {$collate};",
+		);
 	}
 
 	/**

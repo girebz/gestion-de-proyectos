@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gestión de Proyectos 0.3.0\n"
+"Project-Id-Version: Gestión de Proyectos 0.4.0\n"
 "Report-Msgid-Bugs-To: https://github.com/girebz/gestion-de-proyectos/issues\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-01T00:08:42+00:00\n"
+"POT-Creation-Date: 2026-10-01T00:34:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gestion-de-proyectos\n"
@@ -133,6 +133,7 @@ msgstr ""
 #: src/Admin/Pages/DocumentsPage.php:174
 #: src/Admin/Pages/OperationsPage.php:144
 #: src/Admin/Pages/PlanningPage.php:263
+#: src/Admin/Pages/ProcurementPage.php:186
 #: src/Admin/Pages/TrashPage.php:56
 #: src/Admin/Pages/TrashPage.php:72
 #: src/Modules/Documents/LetterTemplate.php:51
@@ -151,6 +152,7 @@ msgstr ""
 #: src/Admin/Pages/AuditPage.php:76
 #: src/Admin/Pages/DocumentsPage.php:255
 #: src/Admin/Pages/PlanningPage.php:389
+#: src/Admin/Pages/ProcurementPage.php:291
 msgid "Filtrar"
 msgstr ""
 
@@ -167,6 +169,9 @@ msgstr ""
 #: src/Admin/Pages/PlanningBaselinesPage.php:69
 #: src/Admin/Pages/PlanningCalendarsPage.php:181
 #: src/Admin/Pages/PlanningPage.php:936
+#: src/Admin/Pages/ProcurementPage.php:544
+#: src/Admin/Pages/ProcurementPage.php:605
+#: src/Admin/Pages/ProcurementPage.php:906
 #: src/Admin/Pages/TrashPage.php:75
 msgid "Fecha"
 msgstr ""
@@ -213,14 +218,18 @@ msgid "Catálogo"
 msgstr ""
 
 #: src/Admin/Pages/CatalogsPage.php:71
+#: src/Admin/Pages/ProcurementPage.php:774
 msgid "Ámbito"
 msgstr ""
 
 #: src/Admin/Pages/CatalogsPage.php:74
+#: src/Admin/Pages/ProcurementPage.php:808
 msgid "Global (todos los proyectos)"
 msgstr ""
 
 #: src/Admin/Pages/CatalogsPage.php:84
+#: src/Admin/Pages/ProcurementPage.php:782
+#: src/Admin/Pages/ProcurementPage.php:849
 msgid "del proyecto"
 msgstr ""
 
@@ -234,6 +243,7 @@ msgstr ""
 
 #: src/Admin/Pages/CatalogsPage.php:89
 #: src/Admin/Pages/CatalogsPage.php:140
+#: src/Admin/Pages/ProcurementPage.php:480
 msgid "Orden"
 msgstr ""
 
@@ -247,6 +257,8 @@ msgstr ""
 #: src/Admin/Pages/PlanningBaselinesPage.php:69
 #: src/Admin/Pages/PlanningImportPage.php:71
 #: src/Admin/Pages/PlanningPage.php:697
+#: src/Admin/Pages/ProcurementPage.php:774
+#: src/Admin/Pages/ProcurementPage.php:799
 #: src/Admin/Pages/ProjectsPage.php:99
 #: src/Admin/Pages/ProjectsPage.php:311
 #: src/Admin/Pages/SettingsPage.php:67
@@ -256,6 +268,7 @@ msgstr ""
 #: src/Admin/Pages/CatalogsPage.php:89
 #: src/Admin/Pages/ConnectorPage.php:288
 #: src/Admin/Pages/PlanningPage.php:842
+#: src/Admin/Pages/ProcurementPage.php:365
 #: src/Admin/Pages/ProjectsPage.php:172
 #: src/Admin/Pages/ProjectsPage.php:356
 msgid "Descripción"
@@ -268,6 +281,8 @@ msgstr ""
 #: src/Admin/Pages/CatalogsPage.php:107
 #: src/Admin/Pages/DocumentsPage.php:304
 #: src/Admin/Pages/PlanningCalendarsPage.php:127
+#: src/Admin/Pages/ProcurementPage.php:809
+#: src/Admin/Pages/ProcurementPage.php:878
 #: src/Admin/Pages/ProjectsPage.php:231
 msgid "Guardar"
 msgstr ""
@@ -275,6 +290,8 @@ msgstr ""
 #: src/Admin/Pages/CatalogsPage.php:114
 #: src/Admin/Pages/DocumentsPage.php:516
 #: src/Admin/Pages/PlanningBaselinesPage.php:94
+#: src/Admin/Pages/ProcurementPage.php:462
+#: src/Admin/Pages/ProcurementPage.php:818
 msgid "Eliminar"
 msgstr ""
 
@@ -338,6 +355,21 @@ msgstr ""
 #: src/Admin/Pages/PlanningPage.php:1221
 #: src/Admin/Pages/PlanningPage.php:1239
 #: src/Admin/Pages/PlanningReportPage.php:389
+#: src/Admin/Pages/ProcurementPage.php:943
+#: src/Admin/Pages/ProcurementPage.php:993
+#: src/Admin/Pages/ProcurementPage.php:1013
+#: src/Admin/Pages/ProcurementPage.php:1048
+#: src/Admin/Pages/ProcurementPage.php:1068
+#: src/Admin/Pages/ProcurementPage.php:1121
+#: src/Admin/Pages/ProcurementPage.php:1141
+#: src/Admin/Pages/ProcurementPage.php:1171
+#: src/Admin/Pages/ProcurementPage.php:1203
+#: src/Admin/Pages/ProcurementPage.php:1222
+#: src/Admin/Pages/ProcurementPage.php:1251
+#: src/Admin/Pages/ProcurementPage.php:1272
+#: src/Admin/Pages/ProcurementPage.php:1298
+#: src/Admin/Pages/ProcurementPage.php:1321
+#: src/Admin/Pages/ProcurementPage.php:1340
 #: src/Admin/Pages/ProjectsPage.php:414
 #: src/Admin/Pages/ProjectsPage.php:487
 #: src/Admin/Pages/ProjectsPage.php:513
@@ -410,6 +442,9 @@ msgstr ""
 #: src/Admin/Pages/PlanningPage.php:790
 #: src/Admin/Pages/PlanningPage.php:936
 #: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Admin/Pages/ProcurementPage.php:523
+#: src/Admin/Pages/ProcurementPage.php:544
+#: src/Admin/Pages/ProcurementPage.php:601
 #: src/Admin/Pages/ProjectsPage.php:101
 #: src/Admin/Pages/ProjectsPage.php:331
 #: src/Admin/Pages/SettingsPage.php:163
@@ -737,6 +772,8 @@ msgstr ""
 #: src/Admin/Pages/PlanningBaselinesPage.php:132
 #: src/Admin/Pages/PlanningPage.php:399
 #: src/Admin/Pages/PlanningPage.php:871
+#: src/Admin/Pages/ProcurementPage.php:299
+#: src/Admin/Pages/ProcurementPage.php:471
 #: src/Admin/Pages/ProjectsPage.php:98
 #: src/Admin/Pages/ProjectsPage.php:307
 msgid "Código"
@@ -861,6 +898,7 @@ msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:242
 #: src/Admin/Pages/PlanningPage.php:376
+#: src/Admin/Pages/ProcurementPage.php:279
 msgid "Todos los estados"
 msgstr ""
 
@@ -870,6 +908,9 @@ msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:254
 #: src/Admin/Pages/PlanningPage.php:388
+#: src/Admin/Pages/ProcurementPage.php:290
+#: src/Admin/Pages/ProcurementPage.php:767
+#: src/Admin/Pages/ProcurementPage.php:768
 msgid "Buscar"
 msgstr ""
 
@@ -903,6 +944,7 @@ msgstr ""
 msgid "Respuesta"
 msgstr ""
 
+#. translators: fecha de recepción.
 #: src/Admin/Pages/DocumentsPage.php:272
 #: src/Admin/Pages/DocumentsPage.php:420
 #: src/Admin/Pages/DocumentsPage.php:532
@@ -912,6 +954,9 @@ msgstr ""
 #: src/Admin/Pages/PlanningPage.php:523
 #: src/Admin/Pages/PlanningPage.php:807
 #: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Admin/Pages/ProcurementPage.php:305
+#: src/Admin/Pages/ProcurementPage.php:389
+#: src/Admin/Pages/ProcurementPage.php:484
 #: src/Modules/Planning/AssignmentRepository.php:33
 msgid "Responsable"
 msgstr ""
@@ -952,6 +997,7 @@ msgstr ""
 #: src/Admin/Pages/DocumentsPage.php:329
 #: src/Admin/Pages/DocumentsPage.php:472
 #: src/Modules/Documents/DocumentHandler.php:450
+#: src/Modules/Procurement/PurchaseHandler.php:115
 msgid "El documento no existe en este proyecto."
 msgstr ""
 
@@ -1013,14 +1059,17 @@ msgstr ""
 #: src/Admin/Pages/DocumentsPage.php:423
 #: src/Admin/Pages/PlanningPage.php:106
 #: src/Admin/Pages/PlanningPage.php:817
+#: src/Admin/Pages/ProcurementPage.php:391
 msgid "Sin responsable"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:431
+#: src/Admin/Pages/ProcurementPage.php:395
 msgid "Actividad relacionada"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:434
+#: src/Admin/Pages/ProcurementPage.php:397
 msgid "Ninguna"
 msgstr ""
 
@@ -1040,6 +1089,7 @@ msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:453
 #: src/Admin/Pages/PlanningPage.php:858
+#: src/Admin/Pages/ProcurementPage.php:404
 #: src/Admin/Pages/ProjectsPage.php:382
 msgid "Guardar cambios"
 msgstr ""
@@ -1050,11 +1100,15 @@ msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:454
 #: src/Admin/Pages/PlanningImportPage.php:103
+#: src/Admin/Pages/ProcurementPage.php:405
+#: src/Admin/Pages/ProcurementPage.php:640
+#: src/Admin/Pages/ProcurementPage.php:810
 #: src/Admin/Pages/ProjectsPage.php:383
 msgid "Cancelar"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:490
+#: src/Admin/Pages/ProcurementPage.php:449
 #: src/Admin/Pages/ProjectsPage.php:117
 #: src/Admin/Pages/ProjectsPage.php:151
 msgid "Editar"
@@ -1065,6 +1119,7 @@ msgid "Nuevo estado"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:503
+#: src/Admin/Pages/ProcurementPage.php:533
 msgid "Cambiar estado"
 msgstr ""
 
@@ -1074,6 +1129,7 @@ msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:523
 #: src/Admin/Pages/OperationsPage.php:140
+#: src/Admin/Pages/ProcurementPage.php:469
 #: src/Admin/Pages/SettingsPage.php:134
 msgid "Datos"
 msgstr ""
@@ -1112,6 +1168,8 @@ msgstr ""
 #: src/Admin/Pages/DocumentsPage.php:635
 #: src/Admin/Pages/PlanningPage.php:936
 #: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Admin/Pages/ProcurementPage.php:517
+#: src/Admin/Pages/ProcurementPage.php:877
 msgid "Nota"
 msgstr ""
 
@@ -1132,6 +1190,7 @@ msgid "Subir nueva versión"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:581
+#: src/Admin/Pages/ProcurementPage.php:646
 msgid "Vínculos"
 msgstr ""
 
@@ -1141,14 +1200,18 @@ msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:602
 #: src/Admin/Pages/DocumentsPage.php:662
+#: src/Admin/Pages/ProcurementPage.php:574
+#: src/Admin/Pages/ProcurementPage.php:659
 msgid "quitar"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:620
+#: src/Admin/Pages/ProcurementPage.php:675
 msgid "Elija el destino"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:636
+#: src/Admin/Pages/ProcurementPage.php:685
 msgid "Vincular"
 msgstr ""
 
@@ -1264,10 +1327,12 @@ msgid "Versión %d guardada."
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:876
+#: src/Admin/Pages/ProcurementPage.php:1307
 msgid "Vínculo creado."
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:897
+#: src/Admin/Pages/ProcurementPage.php:1327
 msgid "Vínculo eliminado."
 msgstr ""
 
@@ -1326,9 +1391,9 @@ msgstr ""
 
 #: src/Admin/Pages/OperationsPage.php:120
 #: src/Connector/Tools.php:359
-#: src/Operations/OperationManager.php:228
-#: src/Operations/OperationManager.php:310
-#: src/Operations/OperationManager.php:339
+#: src/Operations/OperationManager.php:233
+#: src/Operations/OperationManager.php:315
+#: src/Operations/OperationManager.php:344
 msgid "La operación no existe."
 msgstr ""
 
@@ -2264,6 +2329,7 @@ msgstr ""
 #: src/Admin/Pages/PlanningPage.php:1040
 #: src/Modules/Documents/DocumentRepository.php:309
 #: src/Modules/Planning/ActivityHandler.php:709
+#: src/Modules/Procurement/PurchaseRepository.php:312
 msgid "La actividad no existe en este proyecto."
 msgstr ""
 
@@ -2342,6 +2408,8 @@ msgid "Partida y costo planificado"
 msgstr ""
 
 #: src/Admin/Pages/PlanningPage.php:833
+#: src/Admin/Pages/ProcurementPage.php:368
+#: src/Modules/Procurement/BudgetService.php:45
 msgid "Sin partida"
 msgstr ""
 
@@ -2493,6 +2561,8 @@ msgid "La actividad tiene fechas reales y no se puede mover."
 msgstr ""
 
 #: src/Admin/Pages/PlanningPage.php:1293
+#: src/Modules/Procurement/PurchaseHandler.php:109
+#: src/Modules/Procurement/UfService.php:108
 msgid "Fecha no válida."
 msgstr ""
 
@@ -2786,6 +2856,616 @@ msgstr ""
 msgid "%d sem. >100 %%"
 msgstr ""
 
+#: src/Admin/Pages/ProcurementPage.php:48
+#: src/Admin/Pages/ProcurementPage.php:98
+#: src/Admin/Pages/ProcurementPage.php:105
+#: src/Admin/Pages/ProcurementPage.php:158
+#: src/Admin/Pages/ProcurementPage.php:176
+#: src/Admin/Pages/ProcurementPage.php:248
+#: src/Admin/Pages/ProcurementPage.php:774
+#: src/Admin/Pages/ProcurementPage.php:858
+msgid "Compras"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:99
+msgid "No hay proyectos visibles."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:106
+#: src/Modules/Procurement/ProcurementTools.php:194
+#: src/Modules/Procurement/ProcurementTools.php:379
+msgid "Sin permiso para ver las compras de este proyecto."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:147
+msgid "Compras y presupuesto"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:149
+msgid "Compras abiertas"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:149
+msgid "de"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:150
+msgid "Esperan decisión"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:152
+#: src/Admin/Pages/ProcurementPage.php:858
+msgid "Comprometido"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:153
+#: src/Admin/Pages/ProcurementPage.php:858
+msgid "Ejecutado"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:154
+msgid "Saldo asignado"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:159
+#: src/Admin/Pages/ProcurementPage.php:178
+#: src/Admin/Pages/ProcurementPage.php:846
+#: src/Admin/Pages/ProjectsPage.php:104
+msgid "Presupuesto"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:176
+#: src/Admin/Pages/ProcurementPage.php:759
+msgid "Proveedores"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:251
+msgid "compras abiertas"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:252
+msgid "esperan nuestra decisión"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:253
+msgid "cotizaciones sin respuesta del proveedor"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:260
+#: src/Admin/Pages/ProcurementPage.php:355
+msgid "Nueva compra"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:264
+msgid "Rendición:"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:273
+msgid "Todas las etapas"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:285
+msgid "Todas las partidas"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:295
+msgid "El proyecto aún no tiene compras."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:295
+msgid "Ninguna compra coincide con el filtro."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:300
+msgid "Compra"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:301
+#: src/Admin/Pages/ProcurementPage.php:366
+#: src/Admin/Pages/ProcurementPage.php:473
+#: src/Admin/Pages/ProcurementPage.php:858
+msgid "Partida"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:302
+#: src/Admin/Pages/ProcurementPage.php:372
+#: src/Admin/Pages/ProcurementPage.php:474
+#: src/Admin/Pages/ProcurementPage.php:544
+#: src/Admin/Pages/ProcurementPage.php:596
+#: src/Admin/Pages/ProcurementPage.php:597
+msgid "Proveedor"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:303
+#: src/Admin/Pages/ProcurementPage.php:472
+#: src/Admin/Pages/ProcurementPage.php:508
+#: src/Admin/Pages/SettingsPage.php:163
+msgid "Etapa"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:304
+#: src/Admin/Pages/ProcurementPage.php:544
+msgid "Total"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:304
+msgid "Pesos"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:306
+msgid "Avisos"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:322
+msgid "espera decisión"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:322
+msgid "sin aprobación"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:341
+msgid "Sin permiso para editar compras."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:346
+#: src/Admin/Pages/ProcurementPage.php:423
+#: src/Modules/Procurement/PurchaseHandler.php:729
+msgid "La compra no existe en este proyecto."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:355
+msgid "Editar compra"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:364
+msgid "Título"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:374
+msgid "Por definir (según cotizaciones)"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:377
+msgid "Gestionar proveedores"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:380
+msgid "Monto neto"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:381
+msgid "Vacío si se tomará de la cotización elegida"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:382
+#: src/Admin/Pages/ProcurementPage.php:610
+#: src/Admin/Pages/ProjectsPage.php:352
+msgid "Moneda"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:385
+#: src/Admin/Pages/ProcurementPage.php:614
+msgid "Impuesto %"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:388
+#: src/Admin/Pages/ProcurementPage.php:483
+#: src/Modules/Procurement/ProcurementCron.php:84
+msgid "Entrega esperada"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:401
+#: src/Admin/Pages/ProcurementPage.php:638
+#: src/Admin/Pages/ProcurementPage.php:806
+msgid "Notas"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:404
+msgid "Crear compra"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:455
+msgid "Renovar aprobación"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:455
+msgid "Aprobar compra"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:476
+#: src/Admin/Pages/ProcurementPage.php:544
+#: src/Admin/Pages/ProcurementPage.php:613
+msgid "Neto"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:477
+msgid "Total con impuesto"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:479
+msgid "Aprobación"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:479
+msgid "pendiente"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:481
+#: src/Core/Catalogs.php:52
+#: src/Core/Catalogs.php:64
+msgid "Factura"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:482
+#: src/Core/Catalogs.php:65
+msgid "Pago"
+msgstr ""
+
+#. translators: fecha de recepción.
+#: src/Admin/Pages/ProcurementPage.php:483
+#, php-format
+msgid "recibida el %s"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:488
+msgid "Antes de emitir la orden"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:497
+msgid "Etapas"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:500
+#: src/Modules/Documents/DocumentsModule.php:102
+msgid "documento"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:512
+msgid "N.º de orden o factura"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:513
+#: src/Admin/Pages/ProcurementPage.php:615
+#: src/Modules/Documents/DocumentsCron.php:97
+msgid "Documento"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:514
+msgid "Sin documento"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:518
+msgid "Registrar etapa"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:520
+msgid "Al pasar a orden de compra se comprueban la antigüedad de la cotización en unidades de fomento y el valor implícito frente al oficial; una discrepancia detiene el cambio hasta revisarla."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:539
+msgid "Cotizaciones"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:541
+msgid "Sin cotizaciones registradas."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:544
+msgid "N.º"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:544
+#: src/Admin/Pages/ProcurementPage.php:604
+#: src/Modules/Procurement/QuoteRepository.php:35
+msgid "Solicitada"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:544
+#: src/Admin/Pages/ProcurementPage.php:606
+msgid "Válida hasta"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:544
+msgid "Ítems"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:558
+msgid "seleccionados"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:561
+#: src/Admin/Pages/ProcurementPage.php:784
+msgid "editar"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:567
+msgid "elegir"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:589
+msgid "Editar cotización"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:589
+#: src/Admin/Pages/ProcurementPage.php:639
+msgid "Registrar cotización"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:600
+msgid "N.º de cotización"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:613
+msgid "o calculado de los ítems"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:616
+msgid "Documento de la cotización"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:621
+#: src/Admin/Pages/ProcurementPage.php:716
+msgid "Ítem"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:621
+msgid "Cantidad"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:621
+msgid "Unidad"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:621
+msgid "Precio unitario"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:621
+msgid "Contratar"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:636
+msgid "Si indica ítems, el neto se calcula sumando los marcados para contratar; así una cotización amplia puede contratarse en parte."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:639
+msgid "Guardar cotización"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:648
+msgid "Sin vínculos con documentos o actividades."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:714
+msgid "Comparación por ítem"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:736
+msgid "Neto (ítems a contratar)"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:771
+msgid "Sin proveedores."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:774
+#: src/Admin/Pages/ProcurementPage.php:800
+msgid "Identificación tributaria"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:774
+#: src/Admin/Pages/ProcurementPage.php:801
+msgid "Contacto"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:774
+#: src/Admin/Pages/ProcurementPage.php:805
+msgid "Categoría"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:778
+#: src/Admin/Pages/ProjectsPage.php:256
+msgid "inactivo"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:782
+msgid "global"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:793
+msgid "Editar proveedor"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:793
+msgid "Nuevo proveedor"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:802
+msgid "Correo"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:803
+msgid "Teléfono"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:804
+msgid "Dirección"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:805
+msgid "laboratorio, insumos, servicios…"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:807
+msgid "Activo"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:837
+msgid "Sin permiso para ver montos."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:849
+msgid "asignado"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:850
+msgid "comprometido"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:851
+msgid "ejecutado"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:852
+msgid "saldo"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:856
+msgid "Partidas"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:858
+#: src/Admin/Pages/ProcurementPage.php:876
+msgid "Asignado"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:858
+#: src/Modules/Planning/ActivityRepository.php:82
+msgid "Pendiente"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:858
+msgid "Saldo"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:886
+msgid "Las partidas se definen en Catálogos (partidas presupuestarias). Comprometido: compras con orden emitida, facturadas o pagadas. Ejecutado: pagadas. Pendiente: abiertas sin orden. Montos en pesos, convertidos con el valor de la unidad de fomento de la fecha de referencia."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:890
+msgid "Unidad de fomento"
+msgstr ""
+
+#. translators: fecha del valor.
+#: src/Admin/Pages/ProcurementPage.php:891
+#, php-format
+msgid "pesos el %s"
+msgstr ""
+
+#. translators: fecha del valor.
+#: src/Admin/Pages/ProcurementPage.php:891
+msgid "Sin valores registrados."
+msgstr ""
+
+#. translators: 1: fecha y hora, 2: mensaje.
+#: src/Admin/Pages/ProcurementPage.php:892
+#, php-format
+msgid "Última consulta automática (%1$s): %2$s"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:899
+msgid "Valor en pesos (vacío = consultar la fuente)"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:900
+msgid "Guardar u obtener"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:902
+msgid "Sin valor, se consulta mindicador.cl (valores del Banco Central). La tarea diaria obtiene el valor de cada día automáticamente."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:906
+msgid "Valor"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:906
+msgid "Origen"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:914
+msgid "Reglas del módulo"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:919
+msgid "Patrón del código de compra"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:920
+msgid "Días con cotizaciones recibidas sin decidir antes de avisar"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:921
+msgid "Días sin respuesta del proveedor a una solicitud antes de avisar"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:922
+msgid "Antigüedad máxima de una cotización en unidades de fomento al emitir la orden (días)"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:923
+msgid "Tolerancia del valor implícito frente al oficial (%)"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:924
+msgid "Guardar reglas"
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:973
+msgid "Compra creada."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:980
+msgid "Compra actualizada."
+msgstr ""
+
+#. translators: URL de la papelera.
+#: src/Admin/Pages/ProcurementPage.php:1000
+#, php-format
+msgid "Compra eliminada. Puede restaurarla desde la <a href=\"%s\">papelera</a>."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:1035
+msgid "Etapa registrada."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:1055
+msgid "Compra aprobada."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:1108
+msgid "Cotización guardada."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:1128
+msgid "Cotización eliminada."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:1149
+msgid "Cotización elegida."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:1190
+msgid "Proveedor guardado."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:1210
+msgid "Proveedor eliminado."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:1239
+msgid "Partida guardada."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:1260
+msgid "Valor de la unidad de fomento guardado."
+msgstr ""
+
+#: src/Admin/Pages/ProcurementPage.php:1285
+msgid "Reglas guardadas."
+msgstr ""
+
 #: src/Admin/Pages/ProjectsPage.php:59
 #: src/Admin/Pages/ProjectsPage.php:66
 msgid "Proyecto no encontrado o sin permiso."
@@ -2800,10 +3480,6 @@ msgstr ""
 #: src/Admin/Pages/ProjectsPage.php:100
 #: src/Admin/Pages/ProjectsPage.php:160
 msgid "Financiador"
-msgstr ""
-
-#: src/Admin/Pages/ProjectsPage.php:104
-msgid "Presupuesto"
 msgstr ""
 
 #: src/Admin/Pages/ProjectsPage.php:157
@@ -2862,10 +3538,6 @@ msgstr ""
 msgid "etapa %d, planificado"
 msgstr ""
 
-#: src/Admin/Pages/ProjectsPage.php:256
-msgid "inactivo"
-msgstr ""
-
 #. translators: nombre del proyecto.
 #: src/Admin/Pages/ProjectsPage.php:297
 #, php-format
@@ -2878,10 +3550,6 @@ msgstr ""
 
 #: src/Admin/Pages/ProjectsPage.php:319
 msgid "Entidad financiadora"
-msgstr ""
-
-#: src/Admin/Pages/ProjectsPage.php:352
-msgid "Moneda"
 msgstr ""
 
 #: src/Admin/Pages/ProjectsPage.php:360
@@ -3124,10 +3792,6 @@ msgid "Módulo"
 msgstr ""
 
 #: src/Admin/Pages/SettingsPage.php:163
-msgid "Etapa"
-msgstr ""
-
-#: src/Admin/Pages/SettingsPage.php:163
 msgid "Núcleo"
 msgstr ""
 
@@ -3214,12 +3878,14 @@ msgstr ""
 #: src/Connector/Abilities.php:66
 #: src/Modules/Documents/DocumentsTools.php:39
 #: src/Modules/Planning/PlanningTools.php:38
+#: src/Modules/Procurement/ProcurementTools.php:43
 msgid "Identificador numérico del proyecto."
 msgstr ""
 
 #: src/Connector/Abilities.php:67
 #: src/Modules/Documents/DocumentsTools.php:40
 #: src/Modules/Planning/PlanningTools.php:39
+#: src/Modules/Procurement/ProcurementTools.php:44
 msgid "Código del proyecto (alternativa al identificador)."
 msgstr ""
 
@@ -3673,6 +4339,9 @@ msgstr ""
 #: src/Modules/Planning/ActivityHandler.php:254
 #: src/Modules/Planning/ActivityHandler.php:597
 #: src/Modules/Planning/ActivityHandler.php:695
+#: src/Modules/Procurement/PurchaseHandler.php:221
+#: src/Modules/Procurement/PurchaseHandler.php:561
+#: src/Modules/Procurement/PurchaseHandler.php:665
 #: src/Operations/Handlers/ProjectHandler.php:112
 #: src/Operations/Handlers/ProjectHandler.php:212
 #: src/Operations/Handlers/ProjectHandler.php:247
@@ -3694,6 +4363,7 @@ msgstr ""
 #: src/Connector/Tools.php:425
 #: src/Modules/Documents/DocumentsTools.php:240
 #: src/Modules/Planning/PlanningTools.php:464
+#: src/Modules/Procurement/ProcurementTools.php:373
 msgid "Indique project_id o code."
 msgstr ""
 
@@ -3703,6 +4373,8 @@ msgstr ""
 #: src/Modules/Documents/DocumentsTools.php:243
 #: src/Modules/Planning/PlanningTools.php:342
 #: src/Modules/Planning/PlanningTools.php:467
+#: src/Modules/Procurement/ProcurementSettings.php:74
+#: src/Modules/Procurement/ProcurementTools.php:376
 #: src/Operations/Handlers/ProjectHandler.php:78
 msgid "El proyecto no existe."
 msgstr ""
@@ -3749,11 +4421,6 @@ msgstr ""
 msgid "Cotización"
 msgstr ""
 
-#: src/Core/Catalogs.php:52
-#: src/Core/Catalogs.php:64
-msgid "Factura"
-msgstr ""
-
 #: src/Core/Catalogs.php:53
 msgid "Acta"
 msgstr ""
@@ -3785,10 +4452,6 @@ msgstr ""
 
 #: src/Core/Catalogs.php:62
 msgid "Solicitud interna"
-msgstr ""
-
-#: src/Core/Catalogs.php:65
-msgid "Pago"
 msgstr ""
 
 #: src/Core/Catalogs.php:68
@@ -4003,11 +4666,15 @@ msgstr ""
 
 #: src/Modules/Documents/DocumentHandler.php:79
 #: src/Modules/Planning/ActivityHandler.php:112
+#: src/Modules/Procurement/PurchaseHandler.php:81
+#: src/Modules/Procurement/PurchaseHandler.php:149
+#: src/Modules/Procurement/PurchaseHandler.php:205
 msgid "Indique los campos a modificar."
 msgstr ""
 
 #: src/Modules/Documents/DocumentHandler.php:105
 #: src/Modules/Documents/DocumentRepository.php:281
+#: src/Modules/Procurement/PurchaseRepository.php:284
 msgid "El estado no es válido."
 msgstr ""
 
@@ -4065,6 +4732,11 @@ msgid "No hay documento que revertir."
 msgstr ""
 
 #: src/Modules/Documents/DocumentHandler.php:400
+#: src/Modules/Procurement/PurchaseHandler.php:577
+#: src/Modules/Procurement/PurchaseHandler.php:588
+#: src/Modules/Procurement/PurchaseHandler.php:609
+#: src/Modules/Procurement/PurchaseHandler.php:632
+#: src/Modules/Procurement/PurchaseHandler.php:647
 msgid "No hay estado anterior guardado."
 msgstr ""
 
@@ -4118,10 +4790,14 @@ msgid "Ya existe un documento con ese número en el proyecto."
 msgstr ""
 
 #: src/Modules/Documents/DocumentRepository.php:290
+#: src/Modules/Procurement/ProcurementTools.php:260
+#: src/Modules/Procurement/PurchaseRepository.php:343
+#: src/Modules/Procurement/QuoteRepository.php:127
 msgid "Fecha no válida (use AAAA-MM-DD)."
 msgstr ""
 
 #: src/Modules/Documents/DocumentRepository.php:299
+#: src/Modules/Procurement/PurchaseRepository.php:302
 msgid "El responsable no existe."
 msgstr ""
 
@@ -4173,21 +4849,13 @@ msgstr ""
 msgid "Respuesta documental"
 msgstr ""
 
-#: src/Modules/Documents/DocumentsCron.php:97
-msgid "Documento"
-msgstr ""
-
 #: src/Modules/Documents/DocumentsModule.php:48
-#: src/Modules/Registry.php:47
+#: src/Modules/Registry.php:48
 msgid "Control documental"
 msgstr ""
 
 #: src/Modules/Documents/DocumentsModule.php:55
 msgid "Cartas, oficios, contratos y órdenes con numeración correlativa, versiones, vínculos cruzados, plazos de respuesta y referencias externas."
-msgstr ""
-
-#: src/Modules/Documents/DocumentsModule.php:102
-msgid "documento"
 msgstr ""
 
 #: src/Modules/Documents/DocumentsModule.php:124
@@ -4224,6 +4892,7 @@ msgstr ""
 
 #: src/Modules/Documents/DocumentsTools.php:180
 #: src/Modules/Planning/PlanningTools.php:426
+#: src/Modules/Procurement/ProcurementTools.php:292
 msgid "Indique un project_id válido."
 msgstr ""
 
@@ -4413,10 +5082,6 @@ msgstr ""
 
 #: src/Modules/Planning/ActivityHandler.php:677
 msgid "No se guardó la instantánea del calendario."
-msgstr ""
-
-#: src/Modules/Planning/ActivityRepository.php:82
-msgid "Pendiente"
 msgstr ""
 
 #: src/Modules/Planning/ActivityRepository.php:84
@@ -4666,7 +5331,7 @@ msgid "Abrir el informe completo en el panel"
 msgstr ""
 
 #: src/Modules/Planning/PlanningModule.php:45
-#: src/Modules/Registry.php:41
+#: src/Modules/Registry.php:42
 msgid "Planificación y tiempo"
 msgstr ""
 
@@ -4857,63 +5522,427 @@ msgstr ""
 msgid "Sin frente asignado"
 msgstr ""
 
+#: src/Modules/Procurement/BudgetService.php:109
+msgid "Indique una partida y un monto no negativo."
+msgstr ""
+
+#: src/Modules/Procurement/BudgetService.php:123
+msgid "No se pudo guardar la partida."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementChecks.php:37
+msgid "La compra no tiene aprobación formal registrada (acción aprobar, reservada al director)."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementChecks.php:40
+msgid "La compra no tiene partida presupuestaria."
+msgstr ""
+
+#. translators: 1: partida, 2: saldo.
+#: src/Modules/Procurement/ProcurementChecks.php:47
+#, php-format
+msgid "La orden supera el saldo de la partida %1$s (saldo %2$s)."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementChecks.php:53
+msgid "La compra no tiene monto; indique el neto o elija una cotización."
+msgstr ""
+
+#. translators: 1: días, 2: días máximos.
+#: src/Modules/Procurement/ProcurementChecks.php:64
+#, php-format
+msgid "La cotización elegida está en unidades de fomento y tiene %1$d días (más de %2$d): compruebe el reajuste antes de emitir la orden."
+msgstr ""
+
+#. translators: fecha de validez.
+#: src/Modules/Procurement/ProcurementChecks.php:69
+#, php-format
+msgid "La cotización elegida venció el %s."
+msgstr ""
+
+#. translators: 1: valor implícito, 2: valor oficial, 3: fecha, 4: desviación.
+#: src/Modules/Procurement/ProcurementChecks.php:81
+#, php-format
+msgid "Valor implícito de la unidad de fomento %1$s frente al oficial %2$s del %3$s (desviación %4$s %%): la diferencia con la cotización se explica por reajuste, no por ítems omitidos."
+msgstr ""
+
+#. translators: 1: valor implícito, 2: valor oficial, 3: desviación, 4: tolerancia.
+#: src/Modules/Procurement/ProcurementChecks.php:84
+#, php-format
+msgid "Discrepancia: el valor implícito de la unidad de fomento (%1$s) se aleja del oficial (%2$s) en %3$s %%, más que la tolerancia de %4$s %%. Revise los ítems de la orden antes de emitirla."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementChecks.php:87
+msgid "No hay valor oficial de la unidad de fomento para contrastar; cárguelo en Presupuesto."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementChecks.php:93
+msgid "La compra está en unidades de fomento y no hay valor oficial registrado para convertirla."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementCron.php:49
+msgid "Compras con cotizaciones recibidas que esperan nuestra decisión:"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementCron.php:56
+msgid "Cotizaciones solicitadas sin respuesta del proveedor:"
+msgstr ""
+
+#. translators: 1: proveedor, 2: fecha de solicitud.
+#: src/Modules/Procurement/ProcurementCron.php:59
+#, php-format
+msgid "%1$s (solicitada el %2$s)"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementCron.php:63
+msgid "Ver compras"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementCron.php:64
+msgid "Compras pendientes de decisión"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementCron.php:98
+msgid "Vence cotización"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementModule.php:48
+#: src/Modules/Registry.php:54
+msgid "Adquisiciones y presupuesto"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementModule.php:55
+#: src/Modules/Registry.php:55
+msgid "Ciclo de compra, proveedores, cotizaciones, partidas, unidades de fomento y rendición."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementModule.php:101
+msgid "compra"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:48
+msgid "Listar compras"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:49
+msgid "Devuelve las compras de un proyecto con código, título, partida, proveedor, etapa del ciclo (solicitud_cotizacion, cotizacion_recibida, seguimiento, eleccion, solicitud_interna, orden_compra, factura, pago), estado (abierta, cerrada, anulada), montos (si el usuario puede verlos), fechas de orden, factura y pago, responsable y alertas (cotizaciones recibidas sin decidir, cotizaciones solicitadas sin respuesta). Filtros: stage, status, budget_line, supplier_id, activity_id, open, search."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:70
+msgid "Obtener compra"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:71
+msgid "Devuelve una compra con sus cotizaciones (proveedor, estado, montos, ítems con selección), el historial de etapas con fechas, notas y documentos, la cotización elegida, la aprobación, los vínculos y, si procede, las comprobaciones para emitir la orden (antigüedad de la cotización en unidades de fomento, valor implícito frente al oficial, saldo de la partida). Incluye la versión del registro."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:84
+msgid "Listar proveedores"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:85
+msgid "Devuelve los proveedores visibles en un proyecto (globales y propios) con contacto, categoría y si están activos; admite búsqueda por texto."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:93
+msgid "Obtener presupuesto"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:94
+msgid "Devuelve el presupuesto del proyecto por partida: asignado, comprometido (compras con orden emitida), ejecutado (pagadas), pendiente (abiertas sin orden) y saldo, en pesos, más los totales y el presupuesto total del proyecto. Requiere el permiso procurement.view_amounts."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:102
+msgid "Obtener valor de la unidad de fomento"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:103
+msgid "Devuelve el valor oficial de la unidad de fomento aplicable a una fecha (el del día o el último anterior registrado) y, si se indica un monto en unidades de fomento, su equivalente en pesos. Si no hay valor registrado, lo intenta obtener de la fuente pública."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:104
+msgid "Fecha AAAA-MM-DD; por defecto, hoy."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:111
+msgid "Proponer cambio en compras"
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:112
+msgid "Propone un cambio en las compras de un proyecto. NO aplica nada: devuelve una vista previa (cambios, advertencias, conflictos) y un operation_id que debe confirmarse con confirm-operation. Acciones: create (data: title, description, budget_line, supplier_id, currency CLP|UF|USD, amount_net, tax_rate, owner_id, activity_id, expected_at, notes), update (purchase_id, data, expected_version), delete (purchase_id; reversible), set_stage (purchase_id, stage, date, note, document_id, order_number, invoice_number; al pasar a orden_compra se comprueban la antigüedad de la cotización en unidades de fomento y el valor implícito frente al oficial: una discrepancia impide confirmar), approve (purchase_id; reservada a quien aprueba compras), add_quote (purchase_id, data: supplier_id, quote_number, status solicitada|recibida, requested_at, quote_date, valid_until, currency, amount_net, tax_rate, document_id, notes; items opcionales), update_quote (quote_id, data, items), delete_quote (quote_id), choose_quote (quote_id: copia proveedor, moneda y monto a la compra y la pasa a elección), set_quote_items (quote_id, items: lista de {description, quantity, unit, unit_price, selected}; el neto se recalcula con los seleccionados), create_supplier (data: name, tax_id, contact_name, email, phone, address, category, notes; global solo administradores), update_supplier (supplier_id, data), delete_supplier (supplier_id), set_budget (budget_line, assigned en pesos, notes)."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:130
+msgid "Proveedor global, visible en todos los proyectos (create_supplier)."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:190
+#: src/Modules/Procurement/PurchaseRepository.php:409
+#: src/Modules/Procurement/PurchaseRepository.php:453
+#: src/Modules/Procurement/PurchaseRepository.php:492
+#: src/Modules/Procurement/PurchaseRepository.php:513
+msgid "La compra no existe."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:240
+msgid "Sin permiso para ver montos en este proyecto."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:246
+msgid "Montos en pesos; las compras en unidades de fomento o dólares se convierten con el valor vigente en la fecha de la orden (o de referencia). Comprometido: compras con orden emitida, facturadas o pagadas. Ejecutado: compras pagadas. Pendiente: compras abiertas sin orden."
+msgstr ""
+
+#: src/Modules/Procurement/ProcurementTools.php:271
+msgid "No hay valor de la unidad de fomento registrado ni se pudo obtener; cárguelo en Presupuesto."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:70
+#: src/Modules/Procurement/PurchaseRepository.php:252
+#: src/Modules/Procurement/PurchaseRepository.php:370
+msgid "El título de la compra es obligatorio."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:105
+#: src/Modules/Procurement/PurchaseRepository.php:276
+#: src/Modules/Procurement/PurchaseRepository.php:456
+msgid "La etapa no está en el catálogo."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:168
+msgid "Indique al menos un ítem con descripción."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:179
+#: src/Modules/Procurement/SupplierRepository.php:80
+#: src/Modules/Procurement/SupplierRepository.php:123
+msgid "El nombre del proveedor es obligatorio."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:190
+#: src/Modules/Procurement/PurchaseRepository.php:294
+#: src/Modules/Procurement/QuoteRepository.php:107
+msgid "El proveedor no existe o pertenece a otro proyecto."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:193
+msgid "Los proveedores globales solo los editan los administradores del plugin."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:212
+#: src/Modules/Procurement/PurchaseRepository.php:268
+msgid "La partida no está en el catálogo del proyecto."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:216
+msgid "Monto asignado no válido."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:471
+msgid "Primera cotización recibida"
+msgstr ""
+
+#. translators: proveedor.
+#: src/Modules/Procurement/PurchaseHandler.php:525
+#, php-format
+msgid "Elegida la cotización de %s"
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:601
+msgid "No hay instantánea de la compra."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:621
+msgid "No hay instantánea de la cotización."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:653
+msgid "No hay instantánea del proveedor."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseHandler.php:745
+msgid "La cotización no existe en este proyecto."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseRepository.php:43
+msgid "Abierta"
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseRepository.php:44
+msgid "Cerrada"
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseRepository.php:45
+msgid "Anulada"
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseRepository.php:320
+#: src/Modules/Procurement/QuoteRepository.php:136
+msgid "Moneda no admitida (CLP, UF o USD)."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseRepository.php:333
+#: src/Modules/Procurement/QuoteRepository.php:149
+msgid "Monto no válido."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseRepository.php:387
+msgid "No se pudo guardar la compra."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseRepository.php:430
+msgid "No se pudo actualizar la compra."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseRepository.php:564
+msgid "La instantánea de la compra está incompleta."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseRepository.php:567
+msgid "La compra ya existe; no se puede restaurar sobre ella."
+msgstr ""
+
+#: src/Modules/Procurement/PurchaseRepository.php:572
+msgid "No se pudo restaurar la compra."
+msgstr ""
+
+#: src/Modules/Procurement/QuoteRepository.php:36
+msgid "Recibida"
+msgstr ""
+
+#: src/Modules/Procurement/QuoteRepository.php:37
+msgid "Elegida"
+msgstr ""
+
+#: src/Modules/Procurement/QuoteRepository.php:38
+msgid "Descartada"
+msgstr ""
+
+#: src/Modules/Procurement/QuoteRepository.php:118
+msgid "Estado de cotización no válido."
+msgstr ""
+
+#: src/Modules/Procurement/QuoteRepository.php:190
+msgid "No se pudo guardar la cotización."
+msgstr ""
+
+#: src/Modules/Procurement/QuoteRepository.php:213
+#: src/Modules/Procurement/QuoteRepository.php:249
+#: src/Modules/Procurement/QuoteRepository.php:332
+msgid "La cotización no existe."
+msgstr ""
+
+#: src/Modules/Procurement/QuoteRepository.php:229
+msgid "No se pudo actualizar la cotización."
+msgstr ""
+
+#: src/Modules/Procurement/SupplierRepository.php:91
+msgid "El correo del proveedor no es válido."
+msgstr ""
+
+#: src/Modules/Procurement/SupplierRepository.php:131
+msgid "No se pudo guardar el proveedor."
+msgstr ""
+
+#: src/Modules/Procurement/SupplierRepository.php:151
+#: src/Modules/Procurement/SupplierRepository.php:182
+msgid "El proveedor no existe."
+msgstr ""
+
+#: src/Modules/Procurement/SupplierRepository.php:163
+msgid "No se pudo actualizar el proveedor."
+msgstr ""
+
+#: src/Modules/Procurement/SupplierRepository.php:189
+msgid "El proveedor tiene compras o cotizaciones; desactívelo en lugar de eliminarlo."
+msgstr ""
+
+#: src/Modules/Procurement/UfService.php:90
+msgid "Indique una fecha válida y un valor positivo."
+msgstr ""
+
+#: src/Modules/Procurement/UfService.php:96
+msgid "No se pudo guardar el valor."
+msgstr ""
+
+#. translators: mensaje de error.
+#: src/Modules/Procurement/UfService.php:113
+#, php-format
+msgid "No se pudo consultar la fuente del valor de la unidad de fomento: %s"
+msgstr ""
+
+#. translators: código HTTP.
+#: src/Modules/Procurement/UfService.php:119
+#, php-format
+msgid "La fuente respondió con el código %d."
+msgstr ""
+
+#: src/Modules/Procurement/UfService.php:123
+msgid "La fuente no tiene valor para esa fecha (fin de semana o fecha futura)."
+msgstr ""
+
+#: src/Modules/Procurement/UfService.php:165
+msgid "No hay valor de la unidad de fomento registrado; cargue uno en Presupuesto."
+msgstr ""
+
+#. translators: fecha del valor usado.
+#: src/Modules/Procurement/UfService.php:173
+#, php-format
+msgid "Se usó el valor de la unidad de fomento del %s (no hay valor para la fecha indicada)."
+msgstr ""
+
+#: src/Modules/Procurement/UfService.php:178
+msgid "Fije el tipo de cambio del dólar en Ajustes para convertir montos en dólares."
+msgstr ""
+
 #: src/Modules/Projects/ProjectsModule.php:41
 msgid "Ficha del proyecto, equipo con perfiles por proyecto, configuración y módulos activos."
 msgstr ""
 
-#: src/Modules/Registry.php:42
+#: src/Modules/Registry.php:43
 msgid "Estructura de desglose, cronograma, dependencias, ruta crítica, carta Gantt, línea base, valor ganado."
 msgstr ""
 
-#: src/Modules/Registry.php:48
+#: src/Modules/Registry.php:49
 msgid "Cartas, oficios, contratos y órdenes con numeración, versiones, vínculos cruzados y plazos de respuesta."
 msgstr ""
 
-#: src/Modules/Registry.php:53
-msgid "Adquisiciones y presupuesto"
-msgstr ""
-
-#: src/Modules/Registry.php:54
-msgid "Ciclo de compra, proveedores, cotizaciones, partidas, unidades de fomento y rendición."
-msgstr ""
-
-#: src/Modules/Registry.php:59
+#: src/Modules/Registry.php:60
 msgid "Reuniones y acuerdos"
 msgstr ""
 
-#: src/Modules/Registry.php:60
+#: src/Modules/Registry.php:61
 msgid "Actas, acuerdos convertidos en tareas y seguimiento de cumplimiento."
 msgstr ""
 
-#: src/Modules/Registry.php:65
+#: src/Modules/Registry.php:66
 msgid "Exportación, importación y respaldo"
 msgstr ""
 
-#: src/Modules/Registry.php:66
+#: src/Modules/Registry.php:67
 msgid "Respaldos, exportación en CSV, XLSX y JSON, diccionario de datos e importación con salvaguardas."
 msgstr ""
 
-#: src/Modules/Registry.php:71
+#: src/Modules/Registry.php:72
 msgid "Muestras, ensayos, mezclas y probetas"
 msgstr ""
 
-#: src/Modules/Registry.php:72
+#: src/Modules/Registry.php:73
 msgid "Cadena de custodia, resultados como datos, umbrales, dosificaciones y resistencia."
 msgstr ""
 
-#: src/Modules/Registry.php:77
+#: src/Modules/Registry.php:78
 msgid "Evidencias para acreditación y rendición"
 msgstr ""
 
-#: src/Modules/Registry.php:78
+#: src/Modules/Registry.php:79
 msgid "Criterios, medios de verificación, carpetas de evidencia e informes por criterio."
 msgstr ""
 
-#: src/Modules/Registry.php:83
+#: src/Modules/Registry.php:84
 msgid "Publicaciones y difusión"
 msgstr ""
 
-#: src/Modules/Registry.php:84
+#: src/Modules/Registry.php:85
 msgid "Artículos, ponencias, difusión y borradores automáticos para el blog."
 msgstr ""
 
@@ -4950,40 +5979,40 @@ msgid "Revise la vista previa. Para aplicar los cambios, confirme la operación 
 msgstr ""
 
 #. translators: estado de la operación.
-#: src/Operations/OperationManager.php:233
+#: src/Operations/OperationManager.php:238
 #, php-format
 msgid "La operación está en estado \"%s\" y no puede confirmarse."
 msgstr ""
 
-#: src/Operations/OperationManager.php:238
+#: src/Operations/OperationManager.php:243
 msgid "La operación caducó; vuelva a proponerla."
 msgstr ""
 
-#: src/Operations/OperationManager.php:243
-#: src/Operations/OperationManager.php:348
+#: src/Operations/OperationManager.php:248
+#: src/Operations/OperationManager.php:353
 msgid "El manejador de la operación ya no está disponible."
 msgstr ""
 
-#: src/Operations/OperationManager.php:254
+#: src/Operations/OperationManager.php:259
 msgid "No tiene permiso para confirmar esta operación."
 msgstr ""
 
-#: src/Operations/OperationManager.php:265
+#: src/Operations/OperationManager.php:270
 msgid "Los datos cambiaron después de la propuesta. Revise los conflictos y vuelva a proponer la operación."
 msgstr ""
 
-#: src/Operations/OperationManager.php:314
+#: src/Operations/OperationManager.php:319
 msgid "Solo pueden cancelarse operaciones propuestas."
 msgstr ""
 
-#: src/Operations/OperationManager.php:319
+#: src/Operations/OperationManager.php:324
 msgid "No tiene permiso para cancelar esta operación."
 msgstr ""
 
-#: src/Operations/OperationManager.php:343
+#: src/Operations/OperationManager.php:348
 msgid "Solo pueden revertirse operaciones aplicadas."
 msgstr ""
 
-#: src/Operations/OperationManager.php:355
+#: src/Operations/OperationManager.php:360
 msgid "No tiene permiso para revertir esta operación."
 msgstr ""

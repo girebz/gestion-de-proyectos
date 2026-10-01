@@ -12,6 +12,7 @@ namespace GDP\Modules;
 use GDP\Domain\Projects\ProjectRepository;
 use GDP\Modules\Documents\DocumentsModule;
 use GDP\Modules\Planning\PlanningModule;
+use GDP\Modules\Procurement\ProcurementModule;
 use GDP\Modules\Projects\ProjectsModule;
 
 defined( 'ABSPATH' ) || exit;
@@ -97,6 +98,7 @@ final class Registry {
 		$this->add( new ProjectsModule() );
 		$this->add( new PlanningModule() );
 		$this->add( new DocumentsModule() );
+		$this->add( new ProcurementModule() );
 
 		/**
 		 * Permite registrar módulos adicionales (propios o de extensiones).

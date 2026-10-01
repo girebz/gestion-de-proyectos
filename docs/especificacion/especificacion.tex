@@ -216,13 +216,36 @@ Los vínculos y las referencias externas no pertenecen al módulo documental sin
 \bottomrule
 \end{longtable}
 
+\subsection{Adquisiciones y presupuesto (implementado en 0.4.0)}
+
+Los montos se guardan en la moneda de origen y, además, convertidos a pesos con el valor de la unidad de fomento de la fecha de referencia (orden o, en su defecto, la indicada), de modo que las sumas por partida no cambien con el valor del día. Comprometido y ejecutado se derivan de la etapa de cada compra (orden emitida; pagada) y no de una tabla de movimientos.
+
+\begin{longtable}{p{4.3cm}p{10.5cm}}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endfirsthead
+\continuacion{2}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endhead
+\codigo{gdp_suppliers} & Proyecto (0 = global), nombre, identificación tributaria, contacto, correo, teléfono, dirección, categoría, notas, activo. \\
+\codigo{gdp_purchases} & Proyecto, correlativo y código, título, descripción, partida, proveedor, etapa, estado (abierta, cerrada, anulada), responsable, actividad, cotización elegida, moneda, neto, impuesto, total, total en pesos, valor y fecha de la unidad de fomento usados, aprobación (quién, cuándo), número y fecha de orden, factura y pago, entrega esperada y recibida, notas; versión. \\
+\codigo{gdp_purchase_stages} & Compra, etapa, fecha, usuario, documento asociado, nota: el historial del ciclo. \\
+\codigo{gdp_quotes} & Proyecto, compra, proveedor, número, estado (solicitada, recibida, elegida, descartada), fechas de solicitud, emisión y validez, moneda, neto, impuesto, total, documento, notas. \\
+\codigo{gdp_quote_items} & Cotización, orden, descripción, cantidad, unidad, precio unitario, total de línea, si se contrata. \\
+\codigo{gdp_budget_lines} & Proyecto, código de partida (del catálogo), etiqueta, monto asignado en pesos, nota. \\
+\codigo{gdp_uf_rates} & Fecha, valor en pesos, origen (manual o fuente pública), obtenido el. \\
+\bottomrule
+\end{longtable}
+
 \subsection{Módulos (a implementar)}
 
 Cada módulo define sus tablas siguiendo las convenciones anteriores. El detalle de campos se fija en la subsección de cada módulo (sección \ref{sec:modulos}); aquí se enumeran las entidades para tener a la vista el conjunto.
 
 \begin{itemize}
 \item \textbf{Planificación y tiempo (pendientes):} registro de horas (\codigo{gdp_timesheets}) y recursos no humanos (\codigo{gdp_resources}), etapa 2.
-\item \textbf{Adquisiciones y presupuesto:} proveedores (\codigo{gdp_suppliers}), compras (\codigo{gdp_purchases}) con su etapa, cotizaciones (\codigo{gdp_quotes}) e ítems (\codigo{gdp_quote_items}), partidas (\codigo{gdp_budget_lines}), movimientos (\codigo{gdp_budget_movements}: comprometido, ejecutado), valores de la unidad de fomento (\codigo{gdp_uf_rates}).
 \item \textbf{Reuniones y acuerdos:} reuniones (\codigo{gdp_meetings}), asistentes (\codigo{gdp_meeting_attendees}), acuerdos (\codigo{gdp_agreements}) con enlace a la actividad creada.
 \item \textbf{Laboratorio:} muestras (\codigo{gdp_samples}), custodia (\codigo{gdp_custody_events}), ensayos (\codigo{gdp_tests}), resultados (\codigo{gdp_test_results}), umbrales (\codigo{gdp_thresholds}), mezclas (\codigo{gdp_mixes}, \codigo{gdp_mix_components}), probetas (\codigo{gdp_specimens}), equipos e insumos (\codigo{gdp_lab_inventory}).
 \item \textbf{Evidencias:} criterios (catálogo), evidencias (\codigo{gdp_evidence}) que apuntan a cualquier entidad, carpetas (\codigo{gdp_evidence_folders}).
@@ -361,13 +384,15 @@ Sea una actividad \emph{habilitar laboratorio} con 20 días hábiles de holgura 
 \end{itemize}
 
 \subsection{Adquisiciones y presupuesto}
+\label{sec:compras}
 \begin{itemize}
-\item Ciclo de cada compra en etapas de catálogo (solicitud de cotización, cotización recibida, seguimiento, elección, solicitud interna, orden de compra, factura, pago), con fecha y responsable por etapa. \etapa{1}
-\item Proveedores con contacto, historial y cotizaciones; comparador de cotizaciones por ítem. \etapa{1}
-\item Recordatorio de cotizaciones sin respuesta de nuestra parte. \etapa{1}
-\item Presupuesto por partida con monto asignado, comprometido, ejecutado y saldo. \etapa{1}
-\item Conversión de unidades de fomento con el valor diario oficial, almacenado localmente; alerta de reajuste cuando una cotización en unidades de fomento supera cierta antigüedad al emitir la orden. \etapa{1}
-\item Exportación en el formato que exija la rendición al financiador. \etapa{1}
+\item Ciclo de cada compra en etapas de catálogo (solicitud de cotización, cotización recibida, seguimiento, elección, solicitud interna, orden de compra, factura, pago), con fecha, responsable, nota y documento por etapa; estados abierta, cerrada y anulada; código correlativo con patrón configurable; aprobación formal reservada al director (\codigo{procurement.approve}). \textbf{(0.4.0)}
+\item Proveedores globales o del proyecto con contacto, categoría e historial de compras; cotizaciones por compra (solicitada, recibida, elegida, descartada) con ítems y subconjunto a contratar; comparador por ítem que resalta el menor precio unitario; elegir una cotización copia proveedor, moneda y monto a la compra y la pasa a elección. \textbf{(0.4.0)}
+\item Recordatorio de compras con cotizaciones recibidas sin decidir por más días de los configurados y de cotizaciones solicitadas sin respuesta del proveedor: en la lista, en la ficha del proyecto y por correo diario. \textbf{(0.4.0)}
+\item Presupuesto por partida (catálogo de partidas) con monto asignado, comprometido (orden emitida), ejecutado (pagada), pendiente (abiertas sin orden) y saldo, en pesos; aviso cuando la suma de partidas supera el presupuesto del proyecto; los montos se ocultan a quien no tenga \codigo{procurement.view_amounts}. \textbf{(0.4.0)}
+\item Conversión de unidades de fomento (y dólares con tipo de cambio fijado) con el valor diario oficial almacenado localmente, obtenido de una fuente pública o cargado a mano; al emitir la orden se avisa si la cotización elegida en unidades de fomento supera la antigüedad configurada y se contrasta el valor implícito de la orden con el oficial: dentro de la tolerancia, la diferencia se anota como reajuste; fuera de ella, la discrepancia impide confirmar hasta revisar los ítems. \textbf{(0.4.0)}
+\item Exportación para la rendición en CSV y Excel (una fila por compra con partida, proveedor, documentos, fechas y montos; hoja de presupuesto por partida). \textbf{(0.4.0)} Formatos específicos de cada financiador. \etapa{2}
+\item Las compras son entidades enlazables (vínculos con documentos y actividades) y aportan al calendario integrado las entregas esperadas y los vencimientos de cotización. \textbf{(0.4.0)}
 \end{itemize}
 
 \begin{cajaacento}{Instancia verificable}
@@ -469,9 +494,11 @@ Cada usuario genera sus propios tokens desde el panel, con etiqueta, alcance (so
 \codigo{list-documents} & consulta & Documentos de un proyecto con filtros por tipo, estado, sentido, abiertos, respuesta vencida, responsable, actividad y texto; resumen de vencimientos. \\
 \codigo{get-document} & consulta & Un documento con versiones de archivo, vínculos, referencias externas y versión del registro. \\
 \codigo{propose-document-change} & propuesta & Crear, actualizar, eliminar, cambiar de estado (con enlace al documento de respuesta), vincular y desvincular, fijar y quitar referencias externas; vista previa y \codigo{operation_id}. \\
-\multicolumn{3}{l}{\textit{Compras \etapa{1}}} \\
-\codigo{propose-purchase-change} & propuesta & Avance de etapas de compra. \\
-\codigo{get-budget} & consulta & Ejecución por partida (requiere \codigo{procurement.view_amounts}). \\
+\multicolumn{3}{l}{\textit{Adquisiciones y presupuesto (0.4.0)}} \\
+\codigo{list-purchases}, \codigo{get-purchase} & consulta & Compras con filtros y alertas; una compra con cotizaciones, ítems, historial de etapas, vínculos y comprobaciones de la orden. \\
+\codigo{list-suppliers}, \codigo{get-uf-rate} & consulta & Proveedores visibles; valor de la unidad de fomento de una fecha y conversión de un monto. \\
+\codigo{get-budget} & consulta & Presupuesto por partida: asignado, comprometido, ejecutado, pendiente, saldo (requiere \codigo{procurement.view_amounts}). \\
+\codigo{propose-purchase-change} & propuesta & Crear, actualizar, eliminar, cambiar de etapa, aprobar, cotizaciones (registrar, actualizar, eliminar, elegir, ítems), proveedores y montos asignados; vista previa y \codigo{operation_id}. \\
 \multicolumn{3}{l}{\textit{Laboratorio \etapa{2}}} \\
 \codigo{list-samples}, \codigo{get-test-results} & consulta & Muestras, ensayos y resultados con excedencias. \\
 \codigo{propose-test-results} & propuesta & Carga de resultados a partir de planillas o informes leídos por el asistente. \\
@@ -531,7 +558,7 @@ Gobierno de datos & Los documentos sensibles pueden enlazarse desde el repositor
 \midrule
 \endhead
 0 & Base (versión 0.1.0, hecha) & Núcleo, proyectos y equipo, catálogos, bitácora, capa de operaciones, almacenamiento privado, identidad, conector con herramientas del núcleo, asistente de integración, integración continua, documentación. \\
-1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento, reuniones, exportación e importación, informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
+1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento (sección \ref{sec:compras}; versión 0.4.0, hecha), reuniones, exportación e importación, informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
 2 & Módulo técnico & Muestras, ensayos, mezclas y probetas; recursos no humanos y registro de horas; valor ganado y simulación; lectura asistida de informes. Debe estar listo antes de habilitar el laboratorio. \\
 3 & Evidencias y difusión & Criterios y medios de verificación, carpetas de evidencia e informes; publicaciones, difusión y tablero público. \\
 \bottomrule
@@ -579,6 +606,18 @@ Cada etapa se desarrolla en su propia rama, se integra a la principal cuando pas
 \item Un documento enviado con plazo vencido cuenta como vencido en la lista y en la ficha del proyecto, aparece como evento crítico en el calendario y en la agenda, y la revisión diaria lo registra. \textbf{Verificado.}
 \item Desde el panel: registro con archivo inicial, subida de una segunda versión con nota, descarga controlada, vínculo con una actividad, referencia externa, cambio de estado, borradores LaTeX y Word descargables (el LaTeX compila con \codigo{pdflatex}), eliminación a la papelera y restauración con versiones, vínculos y referencias. \textbf{Verificado.}
 \item Por el conector: \codigo{list-documents} con filtro de vencidos, \codigo{get-document} con versiones, vínculos y referencias, y \codigo{propose-document-change} con vista previa del correlativo que se asignará y confirmación; una propuesta con versión antigua no es confirmable; un investigador no puede crear documentos ni aprobarlos. \textbf{Verificado.}
+\end{itemize}
+
+\section{Criterios de aceptación del módulo de adquisiciones (0.4.0)}
+
+\begin{itemize}
+\item La activación crea las siete tablas del módulo (esquema 5) en MariaDB y en la integración SQLite sin errores; la aritmética de la unidad de fomento se prueba en aislamiento, incluida la instancia verificable (73,99 unidades a 40\,900 pesos). \textbf{Verificado.}
+\item Una compra con dos cotizaciones (una en unidades de fomento con siete ítems, cuatro a contratar; otra en pesos) y una solicitud sin respuesta: elegir la cotización en unidades de fomento copia proveedor, moneda y neto (suma de los ítems a contratar) y pasa la compra a elección; la solicitud sin respuesta cuenta en el aviso. \textbf{Verificado.}
+\item Al proponer la orden en pesos sobre una cotización de junio en unidades de fomento: aviso de antigüedad (102 días) y, con el valor implícito igual al oficial, nota de reajuste; con un monto que implica un valor 5 % mayor, conflicto que impide confirmar tanto por el conector como desde el panel. Tras aprobar y emitir la orden, la partida muestra el monto comprometido; tras el pago, el ejecutado. \textbf{Verificado.}
+\item Una compra con cotizaciones recibidas hace veinte días cuenta como pendiente de decisión en la lista, la ficha y la revisión diaria; las entregas esperadas y los vencimientos de cotización aparecen en la agenda. \textbf{Verificado.}
+\item Eliminar una compra con orden emitida y tres cotizaciones avisa de ambas cosas; la restauración devuelve cotizaciones, ítems e historial de etapas. \textbf{Verificado.}
+\item Un investigador obtiene las compras sin montos, no puede leer el presupuesto ni aprobar. \textbf{Verificado.}
+\item Desde el panel: crear compra, registrar cotización con ítems y subconjunto a contratar, elegirla, aprobar, pasar a orden de compra con el aviso de saldo de partida, asignar montos por partida, crear proveedor, descargar la rendición en Excel y CSV. \textbf{Verificado.}
 \end{itemize}
 
 \end{document}

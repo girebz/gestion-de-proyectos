@@ -45,3 +45,15 @@
 	align-items: center;
 	margin-top: 10px;
 }
+
+.gdp-quote--chosen td {
+	background: #edfaef;
+}
+
+.gdp-card--wide {
+	grid-column: 1 / -1;
+}
+
+.gdp-quote-items input.large-text {
+	width: 100%;
+}
