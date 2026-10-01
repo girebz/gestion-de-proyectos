@@ -195,13 +195,33 @@ La estructura de desglose no necesita tabla propia: cada actividad lleva \codigo
 \bottomrule
 \end{longtable}
 
+\subsection{Control documental (implementado en 0.3.0)}
+
+Los vínculos y las referencias externas no pertenecen al módulo documental sino a todos: \codigo{gdp_links} relaciona cualquier par de entidades (documento, actividad y, en adelante, compra y reunión) con una relación con nombre, y \codigo{gdp_external_refs} guarda el número, el estado y el enlace que una entidad tiene en un sistema institucional. Cada módulo declara sus entidades enlazables con el filtro \codigo{gdp_link_entities} (etiqueta, resolución de identificador a título y enlace, búsqueda), de modo que un vínculo se muestra con nombre en cualquier pantalla.
+
+\begin{longtable}{p{4.3cm}p{10.5cm}}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endfirsthead
+\continuacion{2}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endhead
+\codigo{gdp_documents} & Proyecto, tipo (catálogo), sentido (enviado, recibido, interno), correlativo y número, fecha, emisor, destinatario, asunto, cuerpo, estado (borrador, enviado, recibido, respondido, aprobado, cerrado, anulado), plazo de respuesta y fecha de respuesta, responsable, actividad relacionada, notas, versión de archivo vigente; versión del registro. \\
+\codigo{gdp_document_versions} & Documento, número de versión, nombre y ruta del archivo en el directorio privado, tipo, tamaño, huella SHA-256, nota, quién y cuándo. \\
+\codigo{gdp_links} & Proyecto, entidad origen y destino (tipo e identificador), relación (responde a, se refiere a, respalda, se relaciona con), nota. \\
+\codigo{gdp_external_refs} & Proyecto, entidad, sistema, número, estado, enlace, última actualización. \\
+\bottomrule
+\end{longtable}
+
 \subsection{Módulos (a implementar)}
 
 Cada módulo define sus tablas siguiendo las convenciones anteriores. El detalle de campos se fija en la subsección de cada módulo (sección \ref{sec:modulos}); aquí se enumeran las entidades para tener a la vista el conjunto.
 
 \begin{itemize}
 \item \textbf{Planificación y tiempo (pendientes):} registro de horas (\codigo{gdp_timesheets}) y recursos no humanos (\codigo{gdp_resources}), etapa 2.
-\item \textbf{Control documental:} documentos (\codigo{gdp_documents}), versiones (\codigo{gdp_document_versions}), vínculos (\codigo{gdp_links}, tabla genérica de relaciones entre entidades), referencias externas (\codigo{gdp_external_refs}: sistema, número, estado, enlace).
 \item \textbf{Adquisiciones y presupuesto:} proveedores (\codigo{gdp_suppliers}), compras (\codigo{gdp_purchases}) con su etapa, cotizaciones (\codigo{gdp_quotes}) e ítems (\codigo{gdp_quote_items}), partidas (\codigo{gdp_budget_lines}), movimientos (\codigo{gdp_budget_movements}: comprometido, ejecutado), valores de la unidad de fomento (\codigo{gdp_uf_rates}).
 \item \textbf{Reuniones y acuerdos:} reuniones (\codigo{gdp_meetings}), asistentes (\codigo{gdp_meeting_attendees}), acuerdos (\codigo{gdp_agreements}) con enlace a la actividad creada.
 \item \textbf{Laboratorio:} muestras (\codigo{gdp_samples}), custodia (\codigo{gdp_custody_events}), ensayos (\codigo{gdp_tests}), resultados (\codigo{gdp_test_results}), umbrales (\codigo{gdp_thresholds}), mezclas (\codigo{gdp_mixes}, \codigo{gdp_mix_components}), probetas (\codigo{gdp_specimens}), equipos e insumos (\codigo{gdp_lab_inventory}).
@@ -328,14 +348,16 @@ Sea una actividad \emph{habilitar laboratorio} con 20 días hábiles de holgura 
 \end{itemize}
 
 \subsection{Control documental}
+\label{sec:documentos}
 \begin{itemize}
-\item Documentos por tipo (catálogo) con número, fecha, emisor, destinatario, asunto, estado, versión y adjuntos. \etapa{1}
-\item Numeración correlativa automática por tipo numerado (por ejemplo, cartas enviadas). \etapa{1}
-\item Vínculos cruzados entre documentos y con compras, actividades y reuniones. \etapa{1}
-\item Plazo esperado de respuesta con alerta de vencimiento. \etapa{1}
-\item Control de versiones de borradores con historial. \etapa{1}
-\item Referencias externas (número y estado en sistemas institucionales) con enlace. \etapa{1}
-\item Plantillas para generar borradores de cartas en LaTeX y en Word a partir de los datos del sistema. \etapa{1}
+\item Documentos por tipo del catálogo (carta enviada, oficio recibido, contrato, orden de compra, cotización, factura, acta, informe, otro; ampliable por proyecto) con sentido, número, fecha, emisor, destinatario, asunto, cuerpo o resumen, estado (borrador, enviado, recibido, respondido, aprobado, cerrado, anulado), responsable, actividad relacionada, notas y adjuntos versionados; la aprobación está reservada a quien tenga \codigo{documents.approve}. \textbf{(0.3.0)}
+\item Numeración correlativa automática en los tipos numerados, con patrón configurable por proyecto (por defecto \codigo{\{PREFIJO\}-\{NNN\}/\{AAAA\}}; el correlativo se reinicia cada año cuando el patrón lleva el año) y prefijo tomado del catálogo o derivado del tipo; los números de los documentos recibidos se escriben tal como vienen y no pueden repetirse dentro del proyecto. \textbf{(0.3.0)}
+\item Vínculos cruzados entre documentos y con actividades (responde a, se refiere a, respalda, se relaciona con), mostrados en ambas direcciones. \textbf{(0.3.0)} Vínculos con compras y reuniones cuando existan esos módulos. \etapa{1}
+\item Plazo esperado de respuesta: estado vencido o por vencer en la lista, la ficha del proyecto y el calendario integrado; revisión diaria con aviso por correo a directores e ingenieros. \textbf{(0.3.0)}
+\item Control de versiones de archivo: cada subida es una versión numerada con huella SHA-256, nota y autor, guardada en el directorio privado y entregada solo con permiso; el historial del documento se toma de la bitácora. \textbf{(0.3.0)}
+\item Referencias externas (sistema, número, estado y enlace), una por sistema, para documentos y para cualquier otra entidad. \textbf{(0.3.0)}
+\item Borradores de carta en LaTeX (clase \codigo{letter}, babel español) y en Word a partir de los datos del documento, del proyecto y de la identidad del sitio. \textbf{(0.3.0)}
+\item Toda escritura (panel y conector) pasa por el manejador \codigo{document} de la capa de operaciones; las eliminaciones van a la papelera con sus versiones, vínculos y referencias. \textbf{(0.3.0)}
 \end{itemize}
 
 \subsection{Adquisiciones y presupuesto}
@@ -443,9 +465,12 @@ Cada usuario genera sus propios tokens desde el panel, con etiqueta, alcance (so
 \codigo{weekly-report} & consulta & Datos del informe semanal de una semana dada, con el cronograma completo a petición. \\
 \codigo{propose-activity-change} & propuesta & Crear, actualizar, eliminar, registrar avance, fijar predecesoras, mover, asignar o retirar personas, crear y eliminar líneas base, eliminar calendarios e importar una estructura completa (acción \codigo{import} con filas); vista previa y \codigo{operation_id}. \\
 \codigo{get-earned-value}, \codigo{simulate-delay} & consulta & Valor ganado y pronóstico; simulación de atrasos. \etapa{2} \\
-\multicolumn{3}{l}{\textit{Documentos y compras \etapa{1}}} \\
-\codigo{list-documents}, \codigo{get-document} & consulta & Búsqueda y detalle, incluidos plazos vencidos. \\
-\codigo{propose-document}, \codigo{propose-purchase-change} & propuesta & Registro de documentos y avance de etapas de compra. \\
+\multicolumn{3}{l}{\textit{Control documental (0.3.0)}} \\
+\codigo{list-documents} & consulta & Documentos de un proyecto con filtros por tipo, estado, sentido, abiertos, respuesta vencida, responsable, actividad y texto; resumen de vencimientos. \\
+\codigo{get-document} & consulta & Un documento con versiones de archivo, vínculos, referencias externas y versión del registro. \\
+\codigo{propose-document-change} & propuesta & Crear, actualizar, eliminar, cambiar de estado (con enlace al documento de respuesta), vincular y desvincular, fijar y quitar referencias externas; vista previa y \codigo{operation_id}. \\
+\multicolumn{3}{l}{\textit{Compras \etapa{1}}} \\
+\codigo{propose-purchase-change} & propuesta & Avance de etapas de compra. \\
 \codigo{get-budget} & consulta & Ejecución por partida (requiere \codigo{procurement.view_amounts}). \\
 \multicolumn{3}{l}{\textit{Laboratorio \etapa{2}}} \\
 \codigo{list-samples}, \codigo{get-test-results} & consulta & Muestras, ensayos y resultados con excedencias. \\
@@ -506,7 +531,7 @@ Gobierno de datos & Los documentos sensibles pueden enlazarse desde el repositor
 \midrule
 \endhead
 0 & Base (versión 0.1.0, hecha) & Núcleo, proyectos y equipo, catálogos, bitácora, capa de operaciones, almacenamiento privado, identidad, conector con herramientas del núcleo, asistente de integración, integración continua, documentación. \\
-1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental, adquisiciones con unidades de fomento, reuniones, exportación e importación, informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
+1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento, reuniones, exportación e importación, informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
 2 & Módulo técnico & Muestras, ensayos, mezclas y probetas; recursos no humanos y registro de horas; valor ganado y simulación; lectura asistida de informes. Debe estar listo antes de habilitar el laboratorio. \\
 3 & Evidencias y difusión & Criterios y medios de verificación, carpetas de evidencia e informes; publicaciones, difusión y tablero público. \\
 \bottomrule
@@ -543,6 +568,17 @@ Cada etapa se desarrolla en su propia rama, se integra a la principal cuando pas
 \item El cronograma exportado en CSV, XLSX y XML de Microsoft Project se reimporta en el mismo proyecto con la misma jerarquía, tipos y dependencias (nueve filas, seis dependencias en la prueba), la vista previa muestra filas y advertencias, y la reversión de la importación deja el proyecto como estaba; por el conector, la acción \codigo{import} resuelve predecesoras que apuntan a actividades existentes. El XLSX se abre con una biblioteca independiente y el XML es bien formado. \textbf{Verificado.}
 \item Con la exigencia de doble factor activa y el plugin Two Factor presente, un administrador sin segundo factor pierde \codigo{audit.view} y \codigo{documents.view} pero conserva \codigo{planning.view}, ve el aviso en el panel y recibe un error del conector en \codigo{recent-audit}; al configurar el segundo factor recupera el acceso y el diagnóstico pasa a correcto. Sin proveedor, el diagnóstico falla y la exigencia no bloquea a nadie. \textbf{Verificado.}
 \item La suscripción iCalendar responde sin sesión con la clave por usuario y contiene los hitos y términos de las actividades; la alerta de aprobación del financiador aparece cuando la desviación supera el umbral configurado. \textbf{Verificado.}
+\end{itemize}
+
+\section{Criterios de aceptación del módulo documental (0.3.0)}
+
+\begin{itemize}
+\item La activación crea las tablas \codigo{gdp_documents}, \codigo{gdp_document_versions}, \codigo{gdp_links} y \codigo{gdp_external_refs} (esquema 4) sin errores de análisis; la numeración y el escapado LaTeX se prueban en aislamiento. \textbf{Verificado.}
+\item Dos cartas creadas en el mismo año reciben los correlativos 001 y 002 con el patrón por defecto; un oficio recibido conserva el número del emisor y un segundo documento con el mismo número se rechaza. \textbf{Verificado.}
+\item Al pasar una carta a "respondido" indicando el oficio de respuesta, queda el vínculo "es respondido por" visible desde ambos documentos; un documento no puede vincularse consigo mismo; una referencia externa repetida para el mismo sistema actualiza la existente. \textbf{Verificado.}
+\item Un documento enviado con plazo vencido cuenta como vencido en la lista y en la ficha del proyecto, aparece como evento crítico en el calendario y en la agenda, y la revisión diaria lo registra. \textbf{Verificado.}
+\item Desde el panel: registro con archivo inicial, subida de una segunda versión con nota, descarga controlada, vínculo con una actividad, referencia externa, cambio de estado, borradores LaTeX y Word descargables (el LaTeX compila con \codigo{pdflatex}), eliminación a la papelera y restauración con versiones, vínculos y referencias. \textbf{Verificado.}
+\item Por el conector: \codigo{list-documents} con filtro de vencidos, \codigo{get-document} con versiones, vínculos y referencias, y \codigo{propose-document-change} con vista previa del correlativo que se asignará y confirmación; una propuesta con versión antigua no es confirmable; un investigador no puede crear documentos ni aprobarlos. \textbf{Verificado.}
 \end{itemize}
 
 \end{document}

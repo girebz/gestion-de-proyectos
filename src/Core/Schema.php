@@ -51,7 +51,106 @@ final class Schema {
 		$tokens   = self::table( 'connector_tokens' );
 		$catalog  = self::table( 'catalog_items' );
 
-		return array_merge( self::core_definitions( $collate, $projects, $members, $audit, $ops, $tokens, $catalog ), self::planning_definitions( $collate ) );
+		return array_merge( self::core_definitions( $collate, $projects, $members, $audit, $ops, $tokens, $catalog ), self::planning_definitions( $collate ), self::documents_definitions( $collate ) );
+	}
+
+	/**
+	 * Tablas del módulo de control documental y las relaciones genéricas.
+	 *
+	 * gdp_links y gdp_external_refs son tablas genéricas: relacionan cualquier
+	 * par de entidades (documento, actividad, compra, reunión) y guardan las
+	 * referencias en sistemas externos de cualquier entidad.
+	 *
+	 * @param string $collate Cotejamiento.
+	 * @return array<string,string>
+	 */
+	private static function documents_definitions( string $collate ): array {
+		$documents = self::table( 'documents' );
+		$versions  = self::table( 'document_versions' );
+		$links     = self::table( 'links' );
+		$refs      = self::table( 'external_refs' );
+
+		return array(
+			'documents'         => "CREATE TABLE {$documents} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	type varchar(64) NOT NULL DEFAULT 'otro',
+	direction varchar(8) NOT NULL DEFAULT 'out',
+	seq_no int(10) unsigned NOT NULL DEFAULT 0,
+	doc_number varchar(64) NOT NULL DEFAULT '',
+	doc_date date NULL,
+	sender varchar(255) NOT NULL DEFAULT '',
+	recipient varchar(255) NOT NULL DEFAULT '',
+	subject varchar(255) NOT NULL,
+	body longtext NULL,
+	status varchar(20) NOT NULL DEFAULT 'borrador',
+	response_due date NULL,
+	responded_at date NULL,
+	owner_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	activity_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	notes longtext NULL,
+	current_version int(10) unsigned NOT NULL DEFAULT 0,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_id (project_id),
+	KEY type_seq (project_id,type,seq_no),
+	KEY status (project_id,status),
+	KEY response_due (response_due),
+	KEY activity_id (activity_id)
+) {$collate};",
+
+			'document_versions' => "CREATE TABLE {$versions} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	document_id bigint(20) unsigned NOT NULL,
+	version_no int(10) unsigned NOT NULL DEFAULT 1,
+	filename varchar(255) NOT NULL,
+	path varchar(255) NOT NULL,
+	mime varchar(100) NOT NULL DEFAULT '',
+	byte_size bigint(20) unsigned NOT NULL DEFAULT 0,
+	sha256 char(64) NOT NULL DEFAULT '',
+	note varchar(255) NOT NULL DEFAULT '',
+	uploaded_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY document_id (document_id,version_no)
+) {$collate};",
+
+			'links'             => "CREATE TABLE {$links} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	from_type varchar(32) NOT NULL,
+	from_id bigint(20) unsigned NOT NULL,
+	to_type varchar(32) NOT NULL,
+	to_id bigint(20) unsigned NOT NULL,
+	relation_type varchar(32) NOT NULL DEFAULT 'refers_to',
+	note varchar(255) NOT NULL DEFAULT '',
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY from_entity (from_type,from_id),
+	KEY to_entity (to_type,to_id),
+	KEY project_id (project_id)
+) {$collate};",
+
+			'external_refs'     => "CREATE TABLE {$refs} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	entity_type varchar(32) NOT NULL,
+	entity_id bigint(20) unsigned NOT NULL,
+	system_name varchar(100) NOT NULL,
+	ref_number varchar(100) NOT NULL DEFAULT '',
+	ref_status varchar(100) NOT NULL DEFAULT '',
+	url varchar(500) NOT NULL DEFAULT '',
+	updated_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY entity (entity_type,entity_id),
+	KEY project_id (project_id)
+) {$collate};",
+		);
 	}
 
 	/**

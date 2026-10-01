@@ -10,7 +10,7 @@ Plugin de WordPress para la gestión integral de proyectos de investigación y d
 | Operaciones en dos tiempos | disponible (0.1.0) | Toda escritura externa (conector, importación) se propone con vista previa y se aplica solo al confirmarla; reversible |
 | Conector para asistentes | disponible (0.1.0) | Herramientas MCP sobre la API de habilidades de WordPress, tokens por usuario, diagnóstico y asistente de integración |
 | Planificación y tiempo | disponible (0.2.0) | Estructura de desglose, cronograma con dependencias y restricciones, ruta crítica, carta Gantt interactiva (dependencias con el ratón, zoom hasta trimestre, impresión), tableros por estado, frente o persona, calendario integrado con suscripción iCalendar, carga de trabajo con sobreasignación, curva S, calendarios con feriados de Chile, líneas base con alerta de aprobación del financiador, papelera, informe semanal con comparación semanal (LaTeX, CSV, XLSX, JSON, iCalendar), exportación a XML de Microsoft Project e importación desde CSV, XLSX y Project; valor ganado en etapa 2 |
-| Control documental | etapa 1 | Cartas, oficios, contratos y órdenes con numeración, versiones, vínculos cruzados y plazos |
+| Control documental | disponible (0.3.0) | Documentos por tipo con numeración correlativa configurable, versiones de archivo privadas, vínculos con actividades y otros documentos, plazos de respuesta con alerta y aviso por correo, referencias en sistemas externos, borradores de carta en LaTeX y Word, papelera y herramientas del conector |
 | Adquisiciones y presupuesto | etapa 1 | Ciclo de compra, proveedores, cotizaciones, partidas, unidades de fomento, rendición |
 | Reuniones y acuerdos | etapa 1 | Actas, acuerdos convertidos en tareas, seguimiento |
 | Exportación, importación y respaldo | etapa 1 | Respaldos, CSV/XLSX/JSON con diccionario de datos, importación con salvaguardas |
@@ -62,7 +62,7 @@ src/Planning               motor de programación puro: calendario laboral, feri
 src/Operations             capa única de operaciones: proponer, previsualizar, confirmar, revertir
 src/Connector              habilidades, herramientas, tokens, autenticación, diagnóstico, servidor MCP
 src/Admin                  menú y pantallas del panel (incluidas las del módulo de planificación)
-src/Modules                registro de módulos, hoja de ruta y módulos (Planning: repositorios, servicio, manejador, herramientas, cron, informe)
+src/Modules                registro de módulos, hoja de ruta y módulos (Planning y Documents: repositorios, servicios, manejadores, herramientas, cron)
 assets/                    estilos y scripts del panel (carta Gantt y tablero propios, sin dependencias)
 languages/                 plantilla de traducción (.pot); las traducciones .po/.mo van en esta misma carpeta
 tests/                     pruebas unitarias del motor y ejecutor mínimo
