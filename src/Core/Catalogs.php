@@ -64,6 +64,14 @@ final class Catalogs {
 				array( 'slug' => 'factura', 'label' => __( 'Factura', 'gestion-de-proyectos' ) ),
 				array( 'slug' => 'pago', 'label' => __( 'Pago', 'gestion-de-proyectos' ) ),
 			),
+			self::BUDGET_LINE       => array(
+				array( 'slug' => 'recursos_humanos', 'label' => __( 'Recursos humanos', 'gestion-de-proyectos' ) ),
+				array( 'slug' => 'gastos_de_operacion', 'label' => __( 'Gastos de operación', 'gestion-de-proyectos' ) ),
+				array( 'slug' => 'equipamiento', 'label' => __( 'Equipamiento', 'gestion-de-proyectos' ) ),
+				array( 'slug' => 'infraestructura', 'label' => __( 'Infraestructura', 'gestion-de-proyectos' ) ),
+				array( 'slug' => 'difusion', 'label' => __( 'Difusión y transferencia', 'gestion-de-proyectos' ) ),
+				array( 'slug' => 'gastos_de_administracion', 'label' => __( 'Gastos de administración', 'gestion-de-proyectos' ) ),
+			),
 			self::VERIFICATION_MEANS => array(
 				array( 'slug' => 'fotografias', 'label' => __( 'Registro fotográfico', 'gestion-de-proyectos' ) ),
 				array( 'slug' => 'certificado', 'label' => __( 'Certificado de aprobación o participación', 'gestion-de-proyectos' ) ),

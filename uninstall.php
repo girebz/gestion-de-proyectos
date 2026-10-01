@@ -41,6 +41,13 @@ $gdp_tables = array(
 	'gdp_document_versions',
 	'gdp_links',
 	'gdp_external_refs',
+	'gdp_suppliers',
+	'gdp_purchases',
+	'gdp_purchase_stages',
+	'gdp_quotes',
+	'gdp_quote_items',
+	'gdp_budget_lines',
+	'gdp_uf_rates',
 );
 
 /**

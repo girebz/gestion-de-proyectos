@@ -32,6 +32,7 @@ final class Options {
 			'connector_read_only'     => false,
 			'connector_token_days'    => 365,
 			'require_two_factor'      => false,
+			'usd_rate'                => 0,
 			'identity_use_site'       => true,
 			'identity_overrides'      => array(),
 			'weekly_report_day'       => 'friday',

@@ -182,7 +182,7 @@ final class OperationManager {
 	 * @param array  $payload     Datos.
 	 * @param int    $project_id  Proyecto.
 	 * @param string $channel     Canal (admin por defecto).
-	 * @return array<string,mixed>|WP_Error Resultado de confirm().
+	 * @return array<string,mixed>|WP_Error Resultado de confirm() más la vista previa (preview).
 	 */
 	public static function execute( string $handler_key, string $action, array $payload, int $project_id = 0, string $channel = 'admin' ) {
 		$proposed = self::propose( $handler_key, $action, $payload, $project_id, $channel );
@@ -195,7 +195,12 @@ final class OperationManager {
 			return new WP_Error( 'conflict', implode( ' ', (array) ( $proposed['preview']['conflicts'] ?? array() ) ) );
 		}
 
-		return self::confirm( (int) $proposed['operation_id'] );
+		$confirmed = self::confirm( (int) $proposed['operation_id'] );
+		if ( is_array( $confirmed ) ) {
+			$confirmed['preview'] = $proposed['preview'];
+		}
+
+		return $confirmed;
 	}
 
 	/**
