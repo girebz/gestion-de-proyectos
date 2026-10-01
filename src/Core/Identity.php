@@ -60,7 +60,7 @@ final class Identity {
 
 		$palette = self::palette();
 
-		return array(
+		$identity = array(
 			'name'       => (string) get_bloginfo( 'name' ),
 			'tagline'    => (string) get_bloginfo( 'description' ),
 			'logo_url'   => $logo_url,
@@ -72,6 +72,16 @@ final class Identity {
 			'text'       => $palette['text'],
 			'font'       => self::font_family(),
 		);
+
+		/**
+		 * Permite al tema declarar su identidad (colores y tipografía) cuando
+		 * su paleta no usa los nombres habituales de theme.json. A diferencia
+		 * de gdp_identity, se aplica antes de las correcciones manuales de los
+		 * ajustes del plugin, que siguen teniendo la última palabra.
+		 *
+		 * @param array<string,string> $identity Identidad detectada.
+		 */
+		return (array) apply_filters( 'gdp_site_identity', $identity );
 	}
 
 	/**

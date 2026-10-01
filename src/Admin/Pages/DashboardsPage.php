@@ -202,7 +202,7 @@ final class DashboardsPage extends Page {
 			<p><strong><?php esc_html_e( 'Código corto para la portada del sitio:', 'gestion-de-proyectos' ); ?></strong></p>
 			<?php self::snippet( '[gdp_avance proyecto="' . $project['code'] . '"]' ); ?>
 			<p class="gdp-muted gdp-small">
-				<?php esc_html_e( 'Para mostrar solo algunos bloques, en el orden que quiera, agregue por ejemplo bloques="portada,indicadores,contacto". Bloques disponibles: portada, indicadores, etapas, hitos, aliados, contacto. Los datos se actualizan solos cada vez que cambia el proyecto.', 'gestion-de-proyectos' ); ?>
+				<?php esc_html_e( 'Para mostrar solo algunos bloques, en el orden que quiera, agregue por ejemplo bloques="portada,indicadores,contacto". Bloques disponibles: portada, indicadores, etapas, hitos, aliados, contacto. Los datos se actualizan solos cada vez que cambia el proyecto. Si el tema del sitio integra el tablero (Relave Circular lo hace desde Apariencia → Personalizar → Relave Circular → Avance), pegue allí este mismo código.', 'gestion-de-proyectos' ); ?>
 			</p>
 			<?php if ( ! $pub['enabled'] ) : ?>
 				<p class="gdp-text-danger"><?php esc_html_e( 'La publicación está desactivada: el código corto no muestra nada a los visitantes hasta que la active.', 'gestion-de-proyectos' ); ?></p>

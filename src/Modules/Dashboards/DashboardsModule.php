@@ -231,7 +231,8 @@ final class DashboardsModule implements ModuleInterface {
 	private static function key( int $project_id, string $kind ): string {
 		$gen = (int) get_option( 'gdp_dash_gen_' . $project_id, 0 );
 
-		return 'gdp_dash_' . $project_id . '_' . $gen . '_' . $kind . '_' . current_time( 'Ymd' );
+		// La versión del plugin forma parte de la clave para que una actualización no sirva datos con la forma anterior.
+		return 'gdp_dash_' . $project_id . '_' . $gen . '_' . $kind . '_' . current_time( 'Ymd' ) . '_' . str_replace( '.', '', GDP_VERSION );
 	}
 
 	/**
