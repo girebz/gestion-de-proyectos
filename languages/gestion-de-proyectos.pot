@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gestión de Proyectos 0.5.0\n"
+"Project-Id-Version: Gestión de Proyectos 0.6.0\n"
 "Report-Msgid-Bugs-To: https://github.com/girebz/gestion-de-proyectos/issues\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-01T01:08:10+00:00\n"
+"POT-Creation-Date: 2026-10-01T01:48:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gestion-de-proyectos\n"
@@ -51,7 +51,9 @@ msgstr ""
 #: src/Admin/Admin.php:70
 #: src/Admin/Admin.php:79
 #: src/Admin/Pages/DashboardPage.php:58
+#: src/Admin/Pages/DataPage.php:432
 #: src/Admin/Pages/ProjectsPage.php:83
+#: src/Modules/Data/DataDictionary.php:183
 #: src/Modules/Projects/ProjectsModule.php:34
 msgid "Proyectos"
 msgstr ""
@@ -69,6 +71,7 @@ msgstr ""
 
 #: src/Admin/Admin.php:89
 #: src/Admin/Pages/CatalogsPage.php:61
+#: src/Modules/Data/DataDictionary.php:185
 msgid "Catálogos"
 msgstr ""
 
@@ -80,6 +83,7 @@ msgstr ""
 #: src/Admin/Admin.php:91
 #: src/Admin/Pages/AuditPage.php:33
 #: src/Admin/Pages/AuditPage.php:61
+#: src/Modules/Data/DataDictionary.php:209
 msgid "Bitácora"
 msgstr ""
 
@@ -130,6 +134,7 @@ msgid "Sin permiso para ver la bitácora de ese proyecto."
 msgstr ""
 
 #: src/Admin/Pages/AuditPage.php:65
+#: src/Admin/Pages/DataPage.php:168
 #: src/Admin/Pages/DocumentsPage.php:174
 #: src/Admin/Pages/MeetingsPage.php:175
 #: src/Admin/Pages/OperationsPage.php:144
@@ -147,6 +152,7 @@ msgid "Todos"
 msgstr ""
 
 #: src/Admin/Pages/AuditPage.php:74
+#: src/Admin/Pages/DataPage.php:432
 msgid "Filas"
 msgstr ""
 
@@ -164,6 +170,7 @@ msgid "Sin entradas."
 msgstr ""
 
 #: src/Admin/Pages/AuditPage.php:84
+#: src/Admin/Pages/DataPage.php:432
 #: src/Admin/Pages/DocumentsPage.php:266
 #: src/Admin/Pages/DocumentsPage.php:383
 #: src/Admin/Pages/DocumentsPage.php:527
@@ -289,6 +296,7 @@ msgid "Activa"
 msgstr ""
 
 #: src/Admin/Pages/CatalogsPage.php:107
+#: src/Admin/Pages/DataPage.php:474
 #: src/Admin/Pages/DocumentsPage.php:304
 #: src/Admin/Pages/MeetingsPage.php:526
 #: src/Admin/Pages/PlanningCalendarsPage.php:127
@@ -680,6 +688,7 @@ msgid "Herramienta"
 msgstr ""
 
 #: src/Admin/Pages/ConnectorPage.php:288
+#: src/Admin/Pages/DataPage.php:514
 #: src/Admin/Pages/DocumentsPage.php:267
 #: src/Admin/Pages/DocumentsPage.php:363
 #: src/Admin/Pages/DocumentsPage.php:526
@@ -690,6 +699,7 @@ msgstr ""
 #: src/Admin/Pages/PlanningPage.php:701
 #: src/Admin/Pages/PlanningPage.php:758
 #: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Modules/Data/DataDictionary.php:92
 #: src/Modules/Meetings/MinutesTemplate.php:62
 msgid "Tipo"
 msgstr ""
@@ -859,12 +869,475 @@ msgstr ""
 msgid "Abrir el asistente de integración"
 msgstr ""
 
+#: src/Admin/Pages/DataPage.php:46
+#: src/Admin/Pages/DataPage.php:97
+#: src/Admin/Pages/DocumentsPage.php:523
+#: src/Admin/Pages/MeetingsPage.php:386
+#: src/Admin/Pages/OperationsPage.php:140
+#: src/Admin/Pages/ProcurementPage.php:469
+#: src/Admin/Pages/SettingsPage.php:134
+msgid "Datos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:98
+msgid "Exportación completa del proyecto en formatos abiertos, con diccionario de datos; importación con vista previa y reversión."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:100
+#: src/Admin/Pages/DataPage.php:155
+msgid "Exportar"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:102
+#: src/Admin/Pages/DataPage.php:156
+#: src/Admin/Pages/PlanningImportPage.php:102
+#: src/Admin/Pages/PlanningPage.php:363
+msgid "Importar"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:157
+msgid "Diccionario"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:160
+#: src/Admin/Pages/DataPage.php:413
+#: src/Admin/Pages/DataPage.php:480
+msgid "Respaldos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:191
+msgid "Exportar datos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:193
+#: src/Admin/Pages/MeetingsPage.php:95
+#: src/Admin/Pages/ProcurementPage.php:99
+msgid "No hay proyectos visibles."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:199
+#: src/Admin/Pages/DataPage.php:552
+#: src/Modules/Data/DataTools.php:225
+msgid "Sin permiso para exportar este proyecto."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:210
+msgid "Exportación del proyecto"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:211
+msgid "Todas las tablas del proyecto con sus referencias traducidas a códigos y nombres, más el diccionario de datos. Los identificadores internos se reasignan al importar; los registros se reconocen por su código."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:213
+msgid "Formato"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:214
+msgid "(importable; un solo archivo)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:215
+msgid "(JSON, diccionario y adjuntos; importable con archivos)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:216
+msgid "(una hoja por tabla y hoja de diccionario)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:217
+msgid "(ZIP con un archivo por tabla y el diccionario)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:219
+#: src/Admin/Pages/ProjectsPage.php:246
+#: src/Admin/Pages/SettingsPage.php:161
+msgid "Módulos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:225
+msgid "Opciones"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:226
+msgid "Incluir el diccionario de datos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:227
+msgid "Anonimizada: sin usuarios, nombres de contacto, correos, bitácora ni montos individuales"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:230
+msgid "Descargar exportación"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:233
+msgid "Qué contiene"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:235
+#: src/Admin/Pages/SettingsPage.php:163
+msgid "Módulo"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:235
+msgid "Tablas"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:242
+msgid "Los tokens del conector y las operaciones pendientes nunca se exportan; la clave de la suscripción iCalendar se omite de los ajustes del proyecto."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:256
+msgid "Importar datos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:260
+msgid "Sin permiso para importar datos."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:270
+msgid "Archivo exportado por el plugin"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:271
+msgid "JSON o ZIP en el formato gestion-de-proyectos/export. Nada se escribe hasta que confirme la vista previa; la importación completa se puede revertir desde Operaciones."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:273
+#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/DocumentsPage.php:447
+#: src/Admin/Pages/DocumentsPage.php:554
+msgid "Archivo"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:274
+msgid "Destino"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:276
+msgid "Crear un proyecto nuevo"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:277
+msgid "código (opcional, si el del archivo ya existe)"
+msgstr ""
+
+#. translators: código del proyecto.
+#: src/Admin/Pages/DataPage.php:283
+#, php-format
+msgid "Actualizar el proyecto %s (los registros se reconocen por su código; lo modificado en el sitio después de la exportación se marca como conflicto)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:290
+#: src/Admin/Pages/MeetingsPage.php:535
+msgid "Analizar y proponer"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:293
+msgid "Propuestas pendientes"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:295
+msgid "No hay importaciones pendientes de confirmar."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:303
+msgid "Cómo se reconoce cada registro"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:304
+msgid "Proyecto por código; actividades, compras, reuniones y acuerdos por código; documentos por tipo y número; proveedores, calendarios y líneas base por nombre; cotizaciones por número; vínculos por sus extremos. Los usuarios se buscan por nombre de usuario y luego por correo; los que no existan quedan sin asignar."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:319
+msgid "Vista previa de la importación"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:321
+#: src/Admin/Pages/DataPage.php:642
+#: src/Admin/Pages/MeetingsPage.php:570
+msgid "La propuesta no existe."
+msgstr ""
+
+#. translators: 1: número de operación, 2: estado, 3: usuario.
+#: src/Admin/Pages/DataPage.php:335
+#, php-format
+msgid "Operación #%1$d · %2$s · %3$s"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:350
+#: src/Modules/Data/DataDictionary.php:92
+msgid "Tabla"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:350
+msgid "Nuevos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:350
+msgid "Actualizados"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:350
+msgid "Sin cambios"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:350
+msgid "Omitidos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:350
+msgid "Conflictos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:350
+msgid "Ejemplos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:370
+msgid "Desmarque las tablas que no quiera cargar: la propuesta se vuelve a calcular solo con las marcadas (aplicación parcial). La importación completa se revierte desde Operaciones."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:373
+msgid "Confirmar importación"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:374
+msgid "Recalcular con las tablas marcadas"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:375
+#: src/Admin/Pages/DataPage.php:394
+msgid "Descartar"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:377
+#: src/Admin/Pages/DataPage.php:396
+msgid "Ver en Operaciones"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:387
+msgid "Respaldo"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:388
+msgid "Filas ahora / en el respaldo"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:389
+msgid "Proyectos del respaldo"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:393
+msgid "Restaurar (reemplaza todos los datos)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:420
+msgid "Respaldos del sitio"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:421
+msgid "Cada respaldo es un ZIP en el directorio privado con todas las tablas (datos.json y datos.sql), el diccionario y los adjuntos. Restaurar reemplaza todos los datos del plugin tras crear un respaldo de seguridad; la restauración se revierte desde Operaciones."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:425
+msgid "Nota (opcional)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:426
+msgid "Crear respaldo ahora"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:429
+msgid "Todavía no hay respaldos."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/ProcurementPage.php:906
+msgid "Origen"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:432
+msgid "Adjuntos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:432
+msgid "Tamaño"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/DocumentsPage.php:554
+#: src/Admin/Pages/DocumentsPage.php:635
+#: src/Admin/Pages/MeetingsPage.php:478
+#: src/Admin/Pages/PlanningPage.php:936
+#: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Admin/Pages/ProcurementPage.php:517
+#: src/Admin/Pages/ProcurementPage.php:877
+#: src/Modules/Meetings/MinutesTemplate.php:95
+#: src/Modules/Meetings/MinutesTemplate.php:176
+msgid "Nota"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:445
+msgid "descargar"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:450
+msgid "restaurar"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:456
+msgid "eliminar"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:468
+msgid "Respaldos automáticos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:470
+msgid "Semanal"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:470
+msgid "Crear un respaldo cada semana con la tarea programada del plugin"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:471
+msgid "Conservar"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:471
+msgid "respaldos automáticos (los manuales no se borran solos)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:472
+msgid "Copia externa"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:472
+msgid "Carpeta del servidor (idealmente fuera del directorio web o en un disco montado) a la que se copia cada respaldo. Para otros destinos use la acción gdp_backup_created."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:477
+#: src/Admin/Pages/SettingsPage.php:155
+msgid "Directorio privado"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:479
+msgid "Ruta"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:479
+msgid "(sin permiso de escritura)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:481
+msgid "Próxima tarea semanal"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:481
+msgid "sin programar"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:495
+msgid "Diccionario de datos"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:500
+msgid "Descargar CSV"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:501
+msgid "Descargar JSON"
+msgstr ""
+
+#. translators: 1: versión del esquema, 2: número de tablas.
+#: src/Admin/Pages/DataPage.php:505
+#, php-format
+msgid "Esquema %1$s · %2$d tablas"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:514
+#: src/Admin/Pages/OperationsPage.php:193
+#: src/Modules/Data/DataDictionary.php:92
+msgid "Campo"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:514
+#: src/Admin/Pages/ProcurementPage.php:621
+#: src/Modules/Data/DataDictionary.php:92
+msgid "Unidad"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:514
+#: src/Modules/Data/DataDictionary.php:92
+msgid "Significado"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:514
+#: src/Modules/Data/DataDictionary.php:92
+msgid "Referencia"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:535
+msgid "Manual"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:536
+msgid "Programado"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:537
+msgid "Seguridad (antes de restaurar)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:616
+msgid "Suba un archivo JSON o ZIP."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:646
+#: src/Admin/Pages/MeetingsPage.php:912
+msgid "Propuesta descartada."
+msgstr ""
+
+#. translators: número de filas.
+#: src/Admin/Pages/DataPage.php:666
+#, php-format
+msgid "Respaldo restaurado: %d filas cargadas. La restauración se puede revertir desde Operaciones."
+msgstr ""
+
+#. translators: 1: registros creados, 2: registros actualizados.
+#: src/Admin/Pages/DataPage.php:670
+#, php-format
+msgid "Importación aplicada: %1$d registros creados y %2$d actualizados. Se puede revertir desde Operaciones."
+msgstr ""
+
+#. translators: 1: nombre del archivo, 2: filas, 3: adjuntos.
+#: src/Admin/Pages/DataPage.php:686
+#, php-format
+msgid "Respaldo creado: %1$s (%2$d filas, %3$d adjuntos)."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:699
+msgid "Respaldo eliminado."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:735
+msgid "Configuración guardada."
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:737
+msgid "La carpeta de copia externa no existe o no admite escritura; se guardó igualmente."
+msgstr ""
+
 #: src/Admin/Pages/DocumentsPage.php:45
 #: src/Admin/Pages/DocumentsPage.php:101
 #: src/Admin/Pages/DocumentsPage.php:108
 #: src/Admin/Pages/DocumentsPage.php:142
 #: src/Admin/Pages/DocumentsPage.php:182
 #: src/Admin/Pages/DocumentsPage.php:214
+#: src/Modules/Data/DataDictionary.php:198
 msgid "Documentos"
 msgstr ""
 
@@ -1135,11 +1608,6 @@ msgstr ""
 msgid "Notas internas"
 msgstr ""
 
-#: src/Admin/Pages/DocumentsPage.php:447
-#: src/Admin/Pages/DocumentsPage.php:554
-msgid "Archivo"
-msgstr ""
-
 #: src/Admin/Pages/DocumentsPage.php:448
 msgid "Opcional; queda como versión 1. Podrá subir nuevas versiones desde la ficha."
 msgstr ""
@@ -1189,14 +1657,6 @@ msgstr ""
 msgid "Borrador de carta:"
 msgstr ""
 
-#: src/Admin/Pages/DocumentsPage.php:523
-#: src/Admin/Pages/MeetingsPage.php:386
-#: src/Admin/Pages/OperationsPage.php:140
-#: src/Admin/Pages/ProcurementPage.php:469
-#: src/Admin/Pages/SettingsPage.php:134
-msgid "Datos"
-msgstr ""
-
 #: src/Admin/Pages/DocumentsPage.php:534
 #: src/Admin/Pages/PlanningBaselinesPage.php:132
 #: src/Admin/Pages/PlanningPage.php:113
@@ -1214,6 +1674,7 @@ msgid "Versión del registro"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:549
+#: src/Modules/Data/DataDictionary.php:199
 msgid "Versiones de archivo"
 msgstr ""
 
@@ -1225,18 +1686,6 @@ msgstr ""
 #: src/Admin/Pages/PlanningPage.php:877
 #: src/Admin/Pages/ProjectsPage.php:105
 msgid "Versión"
-msgstr ""
-
-#: src/Admin/Pages/DocumentsPage.php:554
-#: src/Admin/Pages/DocumentsPage.php:635
-#: src/Admin/Pages/MeetingsPage.php:478
-#: src/Admin/Pages/PlanningPage.php:936
-#: src/Admin/Pages/PlanningReportPage.php:234
-#: src/Admin/Pages/ProcurementPage.php:517
-#: src/Admin/Pages/ProcurementPage.php:877
-#: src/Modules/Meetings/MinutesTemplate.php:95
-#: src/Modules/Meetings/MinutesTemplate.php:176
-msgid "Nota"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:554
@@ -1257,6 +1706,7 @@ msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:581
 #: src/Admin/Pages/ProcurementPage.php:646
+#: src/Modules/Data/DataDictionary.php:207
 msgid "Vínculos"
 msgstr ""
 
@@ -1283,6 +1733,7 @@ msgid "Vincular"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:642
+#: src/Modules/Data/DataDictionary.php:208
 msgid "Referencias externas"
 msgstr ""
 
@@ -1422,12 +1873,8 @@ msgstr ""
 #: src/Admin/Pages/MeetingsPage.php:151
 #: src/Admin/Pages/MeetingsPage.php:182
 #: src/Admin/Pages/MeetingsPage.php:209
+#: src/Modules/Data/DataDictionary.php:204
 msgid "Reuniones"
-msgstr ""
-
-#: src/Admin/Pages/MeetingsPage.php:95
-#: src/Admin/Pages/ProcurementPage.php:99
-msgid "No hay proyectos visibles."
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:102
@@ -1437,8 +1884,9 @@ msgid "Sin permiso para ver las reuniones de este proyecto."
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:143
+#: src/Modules/Data/DataSchema.php:55
 #: src/Modules/Meetings/MeetingsModule.php:40
-#: src/Modules/Registry.php:61
+#: src/Modules/Registry.php:62
 msgid "Reuniones y acuerdos"
 msgstr ""
 
@@ -1468,6 +1916,7 @@ msgstr ""
 #: src/Admin/Pages/MeetingsPage.php:183
 #: src/Admin/Pages/MeetingsPage.php:234
 #: src/Admin/Pages/MeetingsPage.php:639
+#: src/Modules/Data/DataDictionary.php:206
 #: src/Modules/Meetings/MinutesTemplate.php:76
 #: src/Modules/Meetings/MinutesTemplate.php:164
 msgid "Acuerdos"
@@ -1506,6 +1955,7 @@ msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:234
 #: src/Admin/Pages/MeetingsPage.php:392
+#: src/Modules/Data/DataDictionary.php:205
 #: src/Modules/Meetings/MinutesTemplate.php:63
 #: src/Modules/Meetings/MinutesTemplate.php:153
 msgid "Asistentes"
@@ -1690,10 +2140,6 @@ msgstr ""
 msgid "Guardar el texto como transcripción de la reunión"
 msgstr ""
 
-#: src/Admin/Pages/MeetingsPage.php:535
-msgid "Analizar y proponer"
-msgstr ""
-
 #: src/Admin/Pages/MeetingsPage.php:548
 #: src/Admin/Pages/PlanningReportPage.php:115
 #: src/Modules/Planning/ActivityRepository.php:127
@@ -1709,10 +2155,6 @@ msgstr ""
 #: src/Admin/Pages/MeetingsPage.php:550
 #: src/Modules/Planning/ActivityRepository.php:129
 msgid "Baja"
-msgstr ""
-
-#: src/Admin/Pages/MeetingsPage.php:570
-msgid "La propuesta no existe."
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:576
@@ -1794,10 +2236,6 @@ msgstr ""
 #: src/Admin/Pages/MeetingsPage.php:871
 #, php-format
 msgid "Actividad %s creada en el cronograma."
-msgstr ""
-
-#: src/Admin/Pages/MeetingsPage.php:912
-msgid "Propuesta descartada."
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:930
@@ -1908,10 +2346,6 @@ msgid "Conflictos:"
 msgstr ""
 
 #: src/Admin/Pages/OperationsPage.php:193
-msgid "Campo"
-msgstr ""
-
-#: src/Admin/Pages/OperationsPage.php:193
 msgid "Antes"
 msgstr ""
 
@@ -1973,6 +2407,7 @@ msgstr ""
 
 #: src/Admin/Pages/PlanningBaselinesPage.php:60
 #: src/Admin/Pages/PlanningPage.php:253
+#: src/Modules/Data/DataDictionary.php:192
 msgid "Líneas base"
 msgstr ""
 
@@ -2101,6 +2536,7 @@ msgid "Domingo"
 msgstr ""
 
 #: src/Admin/Pages/PlanningCalendarsPage.php:58
+#: src/Modules/Data/DataDictionary.php:186
 msgid "Calendarios laborales"
 msgstr ""
 
@@ -2415,11 +2851,6 @@ msgstr ""
 msgid "Primer nivel del proyecto"
 msgstr ""
 
-#: src/Admin/Pages/PlanningImportPage.php:102
-#: src/Admin/Pages/PlanningPage.php:363
-msgid "Importar"
-msgstr ""
-
 #: src/Admin/Pages/PlanningImportPage.php:105
 msgid "La importación añade filas (no reemplaza). Queda registrada como una operación y puede revertirse completa desde la página de operaciones."
 msgstr ""
@@ -2501,6 +2932,11 @@ msgstr ""
 #: src/Admin/Pages/PlanningPage.php:300
 #: src/Admin/Pages/PlanningPage.php:875
 #: src/Admin/Pages/ProjectsPage.php:362
+#: src/Modules/Data/DataDictionary.php:167
+#: src/Modules/Data/DataDictionary.php:254
+#: src/Modules/Data/DataDictionary.php:265
+#: src/Modules/Data/DataDictionary.php:266
+#: src/Modules/Data/DataDictionary.php:275
 msgid "días hábiles"
 msgstr ""
 
@@ -2600,6 +3036,7 @@ msgstr ""
 #: src/Admin/Pages/PlanningPage.php:246
 #: src/Admin/Pages/PlanningPage.php:296
 #: src/Admin/Pages/PlanningPage.php:305
+#: src/Modules/Data/DataDictionary.php:188
 msgid "Actividades"
 msgstr ""
 
@@ -2757,6 +3194,7 @@ msgid "Ruta crítica"
 msgstr ""
 
 #: src/Admin/Pages/PlanningPage.php:504
+#: src/Modules/Data/DataDictionary.php:189
 msgid "Dependencias"
 msgstr ""
 
@@ -3316,6 +3754,7 @@ msgstr ""
 #: src/Admin/Pages/ProcurementPage.php:248
 #: src/Admin/Pages/ProcurementPage.php:774
 #: src/Admin/Pages/ProcurementPage.php:858
+#: src/Modules/Data/DataDictionary.php:200
 msgid "Compras"
 msgstr ""
 
@@ -3360,6 +3799,7 @@ msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:176
 #: src/Admin/Pages/ProcurementPage.php:759
+#: src/Modules/Data/DataDictionary.php:195
 msgid "Proveedores"
 msgstr ""
 
@@ -3584,6 +4024,7 @@ msgid "Al pasar a orden de compra se comprueban la antigüedad de la cotización
 msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:539
+#: src/Modules/Data/DataDictionary.php:201
 msgid "Cotizaciones"
 msgstr ""
 
@@ -3646,10 +4087,6 @@ msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:621
 msgid "Cantidad"
-msgstr ""
-
-#: src/Admin/Pages/ProcurementPage.php:621
-msgid "Unidad"
 msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:621
@@ -3780,6 +4217,7 @@ msgid "Las partidas se definen en Catálogos (partidas presupuestarias). Comprom
 msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:890
+#: src/Modules/Data/DataDictionary.php:197
 msgid "Unidad de fomento"
 msgstr ""
 
@@ -3814,10 +4252,6 @@ msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:906
 msgid "Valor"
-msgstr ""
-
-#: src/Admin/Pages/ProcurementPage.php:906
-msgid "Origen"
 msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:914
@@ -3879,6 +4313,7 @@ msgid "Cotización eliminada."
 msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:1149
+#: src/Modules/Data/DataDictionary.php:339
 msgid "Cotización elegida."
 msgstr ""
 
@@ -3947,6 +4382,7 @@ msgid "Última modificación"
 msgstr ""
 
 #: src/Admin/Pages/ProjectsPage.php:178
+#: src/Modules/Data/DataDictionary.php:184
 msgid "Equipo"
 msgstr ""
 
@@ -3961,11 +4397,6 @@ msgstr ""
 
 #: src/Admin/Pages/ProjectsPage.php:208
 msgid "Añadir o cambiar perfil"
-msgstr ""
-
-#: src/Admin/Pages/ProjectsPage.php:246
-#: src/Admin/Pages/SettingsPage.php:161
-msgid "Módulos"
 msgstr ""
 
 #. translators: número de etapa.
@@ -4187,10 +4618,6 @@ msgid "Instalado el"
 msgstr ""
 
 #: src/Admin/Pages/SettingsPage.php:155
-msgid "Directorio privado"
-msgstr ""
-
-#: src/Admin/Pages/SettingsPage.php:155
 msgid "escribible"
 msgstr ""
 
@@ -4221,10 +4648,6 @@ msgstr ""
 
 #: src/Admin/Pages/SettingsPage.php:158
 msgid "desactivado (cron real)"
-msgstr ""
-
-#: src/Admin/Pages/SettingsPage.php:163
-msgid "Módulo"
 msgstr ""
 
 #: src/Admin/Pages/SettingsPage.php:163
@@ -4771,6 +5194,7 @@ msgid "Indique project_id."
 msgstr ""
 
 #: src/Connector/Tools.php:325
+#: src/Modules/Data/DataHandler.php:115
 #: src/Modules/Documents/DocumentHandler.php:193
 #: src/Modules/Documents/DocumentHandler.php:385
 #: src/Modules/Documents/DocumentHandler.php:437
@@ -4802,6 +5226,7 @@ msgid "Para revertir la operación, envíe confirm=true tras la aprobación expl
 msgstr ""
 
 #: src/Connector/Tools.php:425
+#: src/Modules/Data/DataTools.php:219
 #: src/Modules/Documents/DocumentsTools.php:240
 #: src/Modules/Meetings/MeetingsTools.php:287
 #: src/Modules/Planning/PlanningTools.php:464
@@ -4812,6 +5237,8 @@ msgstr ""
 #: src/Connector/Tools.php:429
 #: src/Domain/Projects/ProjectRepository.php:306
 #: src/Domain/Projects/ProjectRepository.php:356
+#: src/Modules/Data/DataTools.php:222
+#: src/Modules/Data/Exporter.php:43
 #: src/Modules/Documents/DocumentsTools.php:243
 #: src/Modules/Meetings/MeetingsTools.php:290
 #: src/Modules/Planning/PlanningTools.php:342
@@ -4946,6 +5373,7 @@ msgid "Frentes de trabajo"
 msgstr ""
 
 #: src/Core/Catalogs.php:172
+#: src/Modules/Data/DataDictionary.php:196
 msgid "Partidas presupuestarias"
 msgstr ""
 
@@ -4954,6 +5382,7 @@ msgid "Tipos de documento"
 msgstr ""
 
 #: src/Core/Catalogs.php:174
+#: src/Modules/Data/DataDictionary.php:203
 msgid "Etapas de compra"
 msgstr ""
 
@@ -5125,6 +5554,1167 @@ msgstr ""
 msgid "No se pudo actualizar el proyecto."
 msgstr ""
 
+#: src/Modules/Data/BackupService.php:52
+msgid "El servidor no tiene la extensión zip de PHP, necesaria para los respaldos."
+msgstr ""
+
+#: src/Modules/Data/BackupService.php:57
+msgid "No se pudo crear la carpeta de respaldos."
+msgstr ""
+
+#: src/Modules/Data/BackupService.php:78
+msgid "No se pudo crear el archivo del respaldo."
+msgstr ""
+
+#: src/Modules/Data/BackupService.php:181
+#: src/Modules/Data/BackupService.php:198
+#: src/Modules/Data/DataHandler.php:106
+msgid "El respaldo no existe."
+msgstr ""
+
+#: src/Modules/Data/BackupService.php:227
+msgid "Respaldo semanal automático"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:54
+msgid "entidad indicada por"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:92
+msgid "Tipo SQL"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:139
+msgid "Identificador interno, autoincremental; no es estable entre sitios."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:140
+msgid "Proyecto al que pertenece el registro (0 = global del sitio)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:141
+msgid "Número de versión del registro para el control optimista; sube con cada modificación."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:142
+msgid "Usuario del sitio que creó el registro."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:143
+msgid "Fecha y hora de creación."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:144
+msgid "Fecha y hora de la última modificación."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:145
+msgid "Usuario del sitio."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:146
+msgid "Usuario responsable."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:147
+msgid "Actividad del cronograma relacionada (0 = ninguna)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:148
+msgid "Documento del control documental relacionado (0 = ninguno)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:149
+msgid "Proveedor."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:150
+msgid "Compra."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:151
+msgid "Reunión."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:152
+msgid "Cotización."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:153
+msgid "Notas internas de texto libre."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:154
+msgid "Descripción de texto libre."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:155
+msgid "Posición de ordenamiento."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:156
+msgid "Estado del registro (valores del módulo)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:157
+msgid "Código legible, único dentro de su ámbito y estable; es la referencia en exportaciones e importaciones."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:158
+msgid "Nombre."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:159
+msgid "Correlativo con el que se formó el código."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:160
+msgid "Moneda: CLP (pesos), UF (unidades de fomento) o USD (dólares)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:161
+msgid "Monto neto en la moneda indicada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:161
+#: src/Modules/Data/DataDictionary.php:163
+msgid "moneda del registro"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:162
+msgid "Tasa de impuesto aplicada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:163
+msgid "Monto total con impuesto en la moneda indicada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:164
+msgid "Registro vigente (1) o retirado (0)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:165
+msgid "Etiqueta legible."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:166
+msgid "Avance."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:167
+msgid "Duración."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:168
+msgid "Costo planificado."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:169
+msgid "Fecha de inicio."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:170
+msgid "Fecha de término."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:171
+msgid "Tipo o clase del registro (valores del módulo)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:172
+msgid "Nota breve."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:183
+msgid "Ficha de cada proyecto: código, nombre, financiador, fechas, presupuesto y ajustes."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:184
+msgid "Usuarios del sitio que integran cada proyecto y su perfil."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:185
+msgid "Valores configurables (frentes de trabajo, tipos de documento, etapas de compra, partidas), globales o por proyecto."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:186
+msgid "Días laborables de la semana por calendario."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:187
+msgid "Excepciones de calendario"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:187
+msgid "Feriados y días laborables excepcionales."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:188
+msgid "Estructura de desglose y cronograma: resúmenes, actividades e hitos con fechas calculadas por ruta crítica."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:189
+msgid "Relaciones de precedencia entre actividades con tipo y desfase."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:190
+msgid "Asignaciones"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:190
+msgid "Personas asignadas a cada actividad con su dedicación."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:191
+msgid "Avances"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:191
+msgid "Historial de avances registrados por actividad (solo se anexa)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:192
+msgid "Instantáneas del cronograma aprobadas con motivo y fecha."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:193
+msgid "Actividades de línea base"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:193
+msgid "Fechas, duración y avance de cada actividad en una línea base."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:194
+msgid "Instantáneas semanales"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:194
+msgid "Estado del cronograma al cierre de cada semana para el informe semanal."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:195
+msgid "Proveedores globales o del proyecto con contacto y categoría."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:196
+msgid "Monto asignado a cada partida del proyecto."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:197
+msgid "Valor diario de la unidad de fomento en pesos."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:198
+msgid "Cartas, oficios, contratos, órdenes, cotizaciones, facturas, actas e informes con su numeración, estado y plazo de respuesta."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:199
+msgid "Archivos adjuntos de cada documento, numerados, con huella y nota."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:200
+msgid "Adquisiciones con partida, proveedor, etapa, montos y fechas de orden, factura y pago."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:201
+msgid "Cotizaciones solicitadas y recibidas por compra."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:202
+msgid "Ítems de cotización"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:202
+msgid "Líneas de cada cotización con cantidad, precio y si se contrata."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:203
+msgid "Historial del ciclo de cada compra."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:204
+msgid "Actas de reunión con fecha, tipo, temas, resumen y transcripción."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:205
+msgid "Asistentes a cada reunión, usuarios del sitio o externos."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:206
+msgid "Acuerdos tomados en reuniones con responsable, plazo, estado y seguimiento."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:207
+msgid "Relaciones entre entidades de cualquier módulo."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:208
+msgid "Número y estado de una entidad en sistemas institucionales."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:209
+msgid "Registro de auditoría de creaciones, modificaciones, eliminaciones y llamadas del conector."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:221
+msgid "Nombre corto para menús y encabezados."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:222
+msgid "Entidad financiadora."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:223
+msgid "Código del proyecto en el financiador."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:224
+msgid "Entidad ejecutora."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:225
+msgid "planificacion, ejecucion, suspendido, cierre, cerrado."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:226
+msgid "Presupuesto total aprobado."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:226
+msgid "moneda del proyecto"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:227
+msgid "Ajustes del proyecto (patrones de numeración, reglas de compras); las claves secretas no se exportan."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:230
+msgid "Perfil en el proyecto: director, ingeniero, investigador, apoyo, observador."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:233
+msgid "Catálogo al que pertenece el valor (work_front, document_type, purchase_stage, budget_line, ...)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:234
+msgid "Clave estable del valor."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:235
+msgid "Atributos adicionales del valor (sentido y numeración de un tipo de documento, por ejemplo)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:238
+msgid "Días laborables como números ISO separados por coma (1 = lunes ... 7 = domingo)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:239
+msgid "Calendario que usa el cronograma del proyecto."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:242
+msgid "Calendario."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:243
+msgid "Fecha de la excepción."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:244
+msgid "1 si el día se trabaja pese a la regla semanal; 0 si es feriado."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:245
+msgid "Nombre del feriado o motivo."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:248
+msgid "Resumen que contiene la actividad (0 = primer nivel)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:249
+msgid "Código jerárquico (1.2.3) estable dentro del proyecto."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:250
+msgid "summary (resumen), activity (actividad) o milestone (hito)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:251
+msgid "Frente de trabajo (valor del catálogo)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:252
+msgid "pendiente, en_curso, terminada, suspendida, cancelada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:253
+msgid "1 alta, 2 normal, 3 baja."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:254
+msgid "Duración planificada (0 en hitos)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:255
+msgid "Restricción: asap, snet (no antes de), snlt (no después de), fnet, fnlt, mso (debe empezar el), mfo (debe terminar el)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:256
+msgid "Fecha de la restricción."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:257
+msgid "Inicio real."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:258
+msgid "Término real."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:259
+msgid "Entregable comprometido."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:260
+msgid "Partida presupuestaria (valor del catálogo)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:261
+msgid "Inicio temprano calculado por el motor de programación."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:262
+msgid "Término temprano calculado."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:263
+msgid "Inicio tardío calculado."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:264
+msgid "Término tardío calculado."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:265
+msgid "Holgura total calculada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:266
+msgid "Holgura libre calculada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:267
+msgid "Pertenece a la ruta crítica (calculado)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:268
+msgid "Avisos del motor de programación (calculado)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:271
+msgid "Tipo de la predecesora (activity)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:272
+msgid "Predecesora."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:273
+msgid "Sucesora."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:274
+msgid "FS fin a inicio, SS inicio a inicio, FF fin a fin, SF inicio a fin."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:275
+msgid "Desfase (negativo = adelanto)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:278
+msgid "Papel en la actividad."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:279
+msgid "Dedicación."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:282
+msgid "Fecha y hora del registro."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:283
+msgid "Avance anterior."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:284
+msgid "Origen del registro: admin, connector, import, cron."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:287
+msgid "Línea base vigente."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:290
+msgid "Línea base."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:293
+msgid "Lunes de la semana."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:294
+msgid "Momento de la instantánea."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:295
+msgid "Resumen estadístico."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:296
+msgid "Actividades con sus fechas y avances en esa semana."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:299
+msgid "Identificación tributaria."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:300
+msgid "Rubro."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:303
+msgid "Código de la partida (valor del catálogo budget_line)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:304
+msgid "Monto asignado."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:307
+msgid "Fecha del valor."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:308
+msgid "Valor de una unidad de fomento."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:309
+msgid "manual o mindicador."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:310
+msgid "Cuándo se obtuvo."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:313
+msgid "Tipo de documento (valor del catálogo document_type)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:314
+msgid "out (emitido), in (recibido) o internal."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:315
+msgid "Número del documento, correlativo cuando el tipo se numera."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:316
+msgid "Fecha del documento."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:317
+msgid "Emisor."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:318
+msgid "Destinatario."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:319
+msgid "Asunto."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:320
+msgid "Cuerpo o resumen."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:321
+msgid "borrador, enviado, recibido, respondido, aprobado, cerrado, anulado."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:322
+msgid "Plazo de respuesta."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:323
+msgid "Fecha de respuesta."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:324
+msgid "Número de la versión de archivo vigente."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:327
+msgid "Número de versión del archivo."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:328
+msgid "Nombre original del archivo."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:329
+msgid "Ruta relativa dentro del directorio privado."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:330
+msgid "Tipo de contenido."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:331
+msgid "Tamaño."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:332
+msgid "Huella SHA-256 y nota de la versión."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:335
+msgid "Título de la compra."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:336
+msgid "Partida presupuestaria."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:337
+msgid "Etapa del ciclo (valor del catálogo purchase_stage)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:338
+msgid "abierta, cerrada, anulada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:340
+msgid "Total convertido a pesos con el valor de la unidad de fomento de la fecha de referencia."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:341
+msgid "Valor de la unidad de fomento usado en la conversión."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:342
+msgid "Fecha de referencia de la conversión."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:343
+msgid "Usuario que aprobó."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:344
+msgid "Fecha y hora de aprobación."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:345
+msgid "Número de orden de compra."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:346
+msgid "Fecha de la orden."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:347
+msgid "Número de factura."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:348
+msgid "Fecha de factura."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:349
+msgid "Fecha de pago."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:350
+msgid "Entrega esperada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:351
+msgid "Entrega recibida."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:354
+msgid "Número de la cotización del proveedor."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:355
+msgid "solicitada, recibida, elegida, descartada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:356
+msgid "Fecha de solicitud."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:357
+msgid "Fecha de emisión."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:358
+msgid "Fecha de validez."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:361
+msgid "Cantidad."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:362
+msgid "Unidad de medida."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:363
+msgid "Precio unitario."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:363
+#: src/Modules/Data/DataDictionary.php:364
+msgid "moneda de la cotización"
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:364
+msgid "Total de la línea."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:365
+msgid "Se contrata (1) o no (0)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:368
+msgid "Etapa alcanzada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:369
+msgid "Fecha de la etapa."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:372
+msgid "Título de la reunión."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:373
+msgid "equipo, financiador, proveedor, comite, terreno, otra."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:374
+msgid "programada, realizada, cancelada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:375
+msgid "Fecha de la reunión."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:376
+msgid "Hora de inicio."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:377
+msgid "Hora de término."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:378
+msgid "Lugar o enlace."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:379
+msgid "Temas tratados."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:380
+msgid "Resumen."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:381
+msgid "Transcripción."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:382
+msgid "Usuario que organiza."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:383
+msgid "Documento del acta."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:386
+msgid "Nombre (asistentes externos)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:387
+msgid "Organización."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:388
+msgid "Asistió (1) o se excusó (0)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:391
+msgid "Responsable cuando no es usuario del sitio."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:392
+msgid "Plazo comprometido."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:393
+msgid "pendiente, en_curso, cumplido, cancelado (si hay actividad, su estado manda)."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:394
+msgid "Fecha de cumplimiento."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:395
+msgid "manual, propuesto (desde texto) o conector."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:396
+msgid "Registro de revisiones: reunión, fecha, estado anterior y nuevo, nota, usuario."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:397
+msgid "Última reunión en que se revisó."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:400
+msgid "Tipo de la entidad origen."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:401
+msgid "Entidad origen."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:402
+msgid "Tipo de la entidad destino."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:403
+msgid "Entidad destino."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:404
+msgid "responds_to, refers_to, supports, related."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:407
+msgid "Tipo de la entidad."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:408
+msgid "Entidad."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:409
+msgid "Sistema externo."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:410
+msgid "Número o identificador en ese sistema."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:411
+msgid "Estado en ese sistema."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:412
+msgid "Enlace."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:413
+msgid "Usuario que actualizó."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:416
+msgid "admin, connector, import, cron, cli."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:417
+msgid "Tipo de la entidad afectada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:418
+msgid "Entidad afectada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:419
+msgid "Acción registrada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:420
+msgid "Resumen legible."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:421
+msgid "Estado anterior."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:422
+msgid "Estado posterior."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:423
+msgid "Operación asociada."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:424
+msgid "Dirección de origen."
+msgstr ""
+
+#: src/Modules/Data/DataHandler.php:76
+msgid "El archivo a importar no está disponible; vuelva a subirlo."
+msgstr ""
+
+#: src/Modules/Data/DataHandler.php:96
+msgid "El archivo corresponde a otro proyecto."
+msgstr ""
+
+#: src/Modules/Data/DataHandler.php:109
+msgid "El respaldo proviene de un esquema más nuevo que el de este sitio."
+msgstr ""
+
+#: src/Modules/Data/DataHandler.php:202
+msgid "No hay respaldo de seguridad asociado."
+msgstr ""
+
+#: src/Modules/Data/DataHandler.php:209
+#: src/Modules/Documents/DocumentHandler.php:400
+#: src/Modules/Meetings/MeetingHandler.php:447
+#: src/Modules/Meetings/MeetingHandler.php:470
+#: src/Modules/Procurement/PurchaseHandler.php:577
+#: src/Modules/Procurement/PurchaseHandler.php:588
+#: src/Modules/Procurement/PurchaseHandler.php:609
+#: src/Modules/Procurement/PurchaseHandler.php:632
+#: src/Modules/Procurement/PurchaseHandler.php:647
+msgid "No hay estado anterior guardado."
+msgstr ""
+
+#: src/Modules/Data/DataHandler.php:226
+msgid "No se pudo crear la carpeta de importaciones."
+msgstr ""
+
+#: src/Modules/Data/DataHandler.php:236
+msgid "Suba un archivo JSON o ZIP exportado por el plugin."
+msgstr ""
+
+#: src/Modules/Data/DataHandler.php:240
+msgid "No se pudo guardar el archivo subido."
+msgstr ""
+
+#: src/Modules/Data/DataModule.php:37
+#: src/Modules/Registry.php:68
+msgid "Exportación, importación y respaldo"
+msgstr ""
+
+#: src/Modules/Data/DataModule.php:44
+msgid "Datos en formatos abiertos con diccionario, importación con vista previa y reversión, respaldos completos."
+msgstr ""
+
+#: src/Modules/Data/DataSchema.php:50
+msgid "Proyecto, equipo y catálogos"
+msgstr ""
+
+#: src/Modules/Data/DataSchema.php:51
+#: src/Modules/Planning/PlanningModule.php:45
+#: src/Modules/Registry.php:44
+msgid "Planificación y tiempo"
+msgstr ""
+
+#: src/Modules/Data/DataSchema.php:52
+msgid "Proveedores, partidas y unidad de fomento"
+msgstr ""
+
+#: src/Modules/Data/DataSchema.php:53
+#: src/Modules/Documents/DocumentsModule.php:48
+#: src/Modules/Registry.php:50
+msgid "Control documental"
+msgstr ""
+
+#: src/Modules/Data/DataSchema.php:54
+msgid "Compras y cotizaciones"
+msgstr ""
+
+#: src/Modules/Data/DataSchema.php:56
+msgid "Vínculos y referencias externas"
+msgstr ""
+
+#: src/Modules/Data/DataSchema.php:57
+msgid "Bitácora de auditoría (solo exportación)"
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:39
+msgid "Exportar proyecto"
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:40
+msgid "Devuelve la exportación completa de un proyecto en el formato gestion-de-proyectos/export: metadatos, usuarios referidos y las filas de cada tabla con sus referencias resueltas (_refs con códigos y nombres). Opciones: modules (lista de core, planning, procurement, documents, purchases, meetings, links, audit), anonymize (sin usuarios, contactos ni montos), dictionary (incluye el diccionario de datos). Puede ser extenso; use modules para acotar."
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:58
+msgid "Obtener diccionario de datos"
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:59
+msgid "Devuelve el diccionario de datos del plugin: por tabla, etiqueta, módulo y campos con tipo, unidad, significado y tabla referida. Opcional: tables (lista de tablas)."
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:67
+msgid "Proponer importación o restauración"
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:68
+msgid "Propone una importación de datos o la restauración de un respaldo. NO aplica nada: devuelve la vista previa (plan por tabla: nuevos, actualizados, sin cambios, conflictos) y un operation_id que debe confirmarse con confirm-operation. Acciones: import (document: objeto en el formato gestion-de-proyectos/export, o file: nombre devuelto por una subida previa; mode new|update; project_code para crear con otro código; tables para aplicar solo algunas tablas), restore_backup (backup: nombre del respaldo; solo administradores; reemplaza todos los datos tras crear un respaldo de seguridad)."
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:91
+msgid "Listar respaldos"
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:92
+msgid "Devuelve los respaldos del sitio (nombre, fecha, origen manual|programado|seguridad, filas, adjuntos, proyectos, tamaño) y la configuración de respaldos automáticos. Solo administradores del plugin."
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:100
+msgid "Crear respaldo"
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:101
+msgid "Crea ahora un respaldo completo del sitio (datos, SQL, diccionario y adjuntos) en el directorio privado y devuelve sus metadatos. No modifica datos. Solo administradores del plugin. Opcional: note."
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:139
+msgid "Sin acceso al plugin."
+msgstr ""
+
+#: src/Modules/Data/DataTools.php:172
+#: src/Modules/Data/DataTools.php:195
+msgid "Solo los administradores del plugin gestionan respaldos."
+msgstr ""
+
+#: src/Modules/Data/Exporter.php:294
+#: src/Modules/Data/Importer.php:137
+msgid "El servidor no tiene la extensión zip de PHP."
+msgstr ""
+
+#: src/Modules/Data/Exporter.php:299
+msgid "No se pudo crear el archivo ZIP."
+msgstr ""
+
+#: src/Modules/Data/Importer.php:49
+msgid "El archivo no es una exportación de Gestión de Proyectos (falta el campo format)."
+msgstr ""
+
+#: src/Modules/Data/Importer.php:52
+msgid "El archivo usa una versión del formato más nueva que la de este sitio; actualice el plugin."
+msgstr ""
+
+#. translators: 1: versión del esquema del archivo, 2: versión del esquema del sitio.
+#: src/Modules/Data/Importer.php:56
+#, php-format
+msgid "El archivo proviene de un esquema más nuevo (%1$s) que el de este sitio (%2$s); actualice el plugin antes de importar."
+msgstr ""
+
+#: src/Modules/Data/Importer.php:59
+msgid "El archivo no contiene tablas."
+msgstr ""
+
+#. translators: nombre de la tabla.
+#: src/Modules/Data/Importer.php:69
+#, php-format
+msgid "Tabla desconocida omitida: %s."
+msgstr ""
+
+#. translators: nombre de la tabla.
+#: src/Modules/Data/Importer.php:74
+#, php-format
+msgid "La tabla %s no se importa (historial o datos derivados del sitio de origen)."
+msgstr ""
+
+#. translators: 1: nombre de la tabla, 2: posición de la fila.
+#: src/Modules/Data/Importer.php:95
+#, php-format
+msgid "La fila %2$d de la tabla %1$s no tiene identificador (id)."
+msgstr ""
+
+#. translators: 1: nombre de la tabla, 2: lista de columnas.
+#: src/Modules/Data/Importer.php:101
+#, php-format
+msgid "Columnas desconocidas omitidas en %1$s: %2$s."
+msgstr ""
+
+#: src/Modules/Data/Importer.php:106
+msgid "El archivo no contiene la tabla projects con el proyecto a importar."
+msgstr ""
+
+#: src/Modules/Data/Importer.php:109
+msgid "El archivo contiene más de un proyecto; importe los proyectos de uno en uno (o restaure un respaldo del sitio)."
+msgstr ""
+
+#: src/Modules/Data/Importer.php:127
+msgid "El archivo a importar no existe."
+msgstr ""
+
+#: src/Modules/Data/Importer.php:141
+msgid "No se pudo abrir el archivo ZIP."
+msgstr ""
+
+#: src/Modules/Data/Importer.php:146
+msgid "El ZIP no contiene datos.json."
+msgstr ""
+
+#: src/Modules/Data/Importer.php:167
+msgid "El archivo no contiene JSON válido."
+msgstr ""
+
+#: src/Modules/Data/Importer.php:293
+msgid "Indique el código del proyecto a crear."
+msgstr ""
+
+#. translators: código del proyecto.
+#: src/Modules/Data/Importer.php:298
+#, php-format
+msgid "Ya existe un proyecto con el código %s; elija \"actualizar el proyecto existente\" o indique otro código."
+msgstr ""
+
+#. translators: código del proyecto.
+#: src/Modules/Data/Importer.php:302
+#, php-format
+msgid "No existe un proyecto con el código %s para actualizar; elija \"crear proyecto nuevo\"."
+msgstr ""
+
+#. translators: lista de usuarios.
+#: src/Modules/Data/Importer.php:324
+#, php-format
+msgid "Usuarios del sitio de origen que no existen aquí (sus referencias quedan sin usuario; las pertenencias al equipo y asignaciones se omiten): %s."
+msgstr ""
+
+#. translators: 1: tabla, 2: registro, 3: versión en el sitio, 4: versión en el archivo.
+#: src/Modules/Data/Importer.php:413
+#, php-format
+msgid "%1$s %2$s: modificado en el sitio después de la exportación (versión %3$d frente a %4$d)."
+msgstr ""
+
+#. translators: 1: tabla, 2: tabla referida, 3: identificador.
+#: src/Modules/Data/Importer.php:596
+#, php-format
+msgid "Referencia sin destino omitida: %1$s → %2$s %3$d."
+msgstr ""
+
+#. translators: nombre del archivo.
+#: src/Modules/Data/Importer.php:904
+#, php-format
+msgid "Adjunto no incluido en el paquete: %s."
+msgstr ""
+
 #: src/Modules/Documents/DocumentHandler.php:68
 #: src/Modules/Documents/DocumentRepository.php:259
 #: src/Modules/Documents/DocumentRepository.php:334
@@ -5198,17 +6788,6 @@ msgstr ""
 
 #: src/Modules/Documents/DocumentHandler.php:395
 msgid "No hay documento que revertir."
-msgstr ""
-
-#: src/Modules/Documents/DocumentHandler.php:400
-#: src/Modules/Meetings/MeetingHandler.php:447
-#: src/Modules/Meetings/MeetingHandler.php:470
-#: src/Modules/Procurement/PurchaseHandler.php:577
-#: src/Modules/Procurement/PurchaseHandler.php:588
-#: src/Modules/Procurement/PurchaseHandler.php:609
-#: src/Modules/Procurement/PurchaseHandler.php:632
-#: src/Modules/Procurement/PurchaseHandler.php:647
-msgid "No hay estado anterior guardado."
 msgstr ""
 
 #: src/Modules/Documents/DocumentHandler.php:410
@@ -5319,11 +6898,6 @@ msgstr ""
 
 #: src/Modules/Documents/DocumentsCron.php:84
 msgid "Respuesta documental"
-msgstr ""
-
-#: src/Modules/Documents/DocumentsModule.php:48
-#: src/Modules/Registry.php:49
-msgid "Control documental"
 msgstr ""
 
 #: src/Modules/Documents/DocumentsModule.php:55
@@ -5655,7 +7229,7 @@ msgid "No se pudo restaurar la reunión."
 msgstr ""
 
 #: src/Modules/Meetings/MeetingsModule.php:47
-#: src/Modules/Registry.php:62
+#: src/Modules/Registry.php:63
 msgid "Actas, acuerdos convertidos en tareas y seguimiento de cumplimiento."
 msgstr ""
 
@@ -6036,11 +7610,6 @@ msgstr ""
 msgid "Abrir el informe completo en el panel"
 msgstr ""
 
-#: src/Modules/Planning/PlanningModule.php:45
-#: src/Modules/Registry.php:43
-msgid "Planificación y tiempo"
-msgstr ""
-
 #: src/Modules/Planning/PlanningModule.php:52
 msgid "Estructura de desglose, cronograma, dependencias, ruta crítica, carta Gantt, línea base, avances, alertas e informe semanal."
 msgstr ""
@@ -6313,12 +7882,12 @@ msgid "Vence cotización"
 msgstr ""
 
 #: src/Modules/Procurement/ProcurementModule.php:48
-#: src/Modules/Registry.php:55
+#: src/Modules/Registry.php:56
 msgid "Adquisiciones y presupuesto"
 msgstr ""
 
 #: src/Modules/Procurement/ProcurementModule.php:55
-#: src/Modules/Registry.php:56
+#: src/Modules/Registry.php:57
 msgid "Ciclo de compra, proveedores, cotizaciones, partidas, unidades de fomento y rendición."
 msgstr ""
 
@@ -6604,43 +8173,39 @@ msgstr ""
 msgid "Ficha del proyecto, equipo con perfiles por proyecto, configuración y módulos activos."
 msgstr ""
 
-#: src/Modules/Registry.php:44
+#: src/Modules/Registry.php:45
 msgid "Estructura de desglose, cronograma, dependencias, ruta crítica, carta Gantt, línea base, valor ganado."
 msgstr ""
 
-#: src/Modules/Registry.php:50
+#: src/Modules/Registry.php:51
 msgid "Cartas, oficios, contratos y órdenes con numeración, versiones, vínculos cruzados y plazos de respuesta."
 msgstr ""
 
-#: src/Modules/Registry.php:67
-msgid "Exportación, importación y respaldo"
-msgstr ""
-
-#: src/Modules/Registry.php:68
+#: src/Modules/Registry.php:69
 msgid "Respaldos, exportación en CSV, XLSX y JSON, diccionario de datos e importación con salvaguardas."
 msgstr ""
 
-#: src/Modules/Registry.php:73
+#: src/Modules/Registry.php:74
 msgid "Muestras, ensayos, mezclas y probetas"
 msgstr ""
 
-#: src/Modules/Registry.php:74
+#: src/Modules/Registry.php:75
 msgid "Cadena de custodia, resultados como datos, umbrales, dosificaciones y resistencia."
 msgstr ""
 
-#: src/Modules/Registry.php:79
+#: src/Modules/Registry.php:80
 msgid "Evidencias para acreditación y rendición"
 msgstr ""
 
-#: src/Modules/Registry.php:80
+#: src/Modules/Registry.php:81
 msgid "Criterios, medios de verificación, carpetas de evidencia e informes por criterio."
 msgstr ""
 
-#: src/Modules/Registry.php:85
+#: src/Modules/Registry.php:86
 msgid "Publicaciones y difusión"
 msgstr ""
 
-#: src/Modules/Registry.php:86
+#: src/Modules/Registry.php:87
 msgid "Artículos, ponencias, difusión y borradores automáticos para el blog."
 msgstr ""
 

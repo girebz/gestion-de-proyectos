@@ -4,6 +4,16 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.6.0] - 2026-10-01
+
+### Añadido
+- Módulo de exportación, importación y respaldo (etapa 1): exportación de un proyecto por módulos o completa en JSON (formato `gestion-de-proyectos/export`, versión 1), ZIP con adjuntos, XLSX (una hoja por tabla) y CSV (un archivo por tabla), con las referencias traducidas a códigos y nombres (`_refs`), usuarios referidos y diccionario de datos; variante anonimizada (usuarios con seudónimo, sin contactos, correos, bitácora ni montos individuales). Los tokens del conector, las operaciones y la clave de la suscripción iCalendar nunca se exportan.
+- Diccionario de datos generado de las definiciones del esquema (tabla, campo, tipo lógico y SQL, unidad, significado, tabla referida), consultable en el panel y descargable en CSV y JSON.
+- Importación de JSON o ZIP mediante la capa de operaciones (`data`/`import`): validación de formato y esquema, reconocimiento de cada registro por su clave natural, reasignación de identificadores en orden de carga con segundo paso para autorreferencias, usuarios resueltos por nombre de usuario o correo, conflictos por versión, vista previa por tabla con ejemplos, aplicación parcial por tablas, reversión completa (elimina lo creado y restaura lo actualizado, archivos incluidos); modos de proyecto nuevo (con otro código) y actualización del proyecto existente; recálculo del cronograma al terminar.
+- Respaldos del sitio (`respaldos/` en el directorio privado): ZIP con `datos.json`, `datos.sql` (sentencias INSERT para MariaDB o MySQL), `diccionario.json`, `meta.json` y `adjuntos/`; creación manual, semanal con retención (`backups_enabled`, `backups_keep`), copia a una carpeta externa (`backups_copy_dir`) y acción `gdp_backup_created`; restauración por la capa de operaciones (`data`/`restore_backup`) que crea antes un respaldo de seguridad y es revertible.
+- Pantalla Datos (Exportar, Importar con vista previa de la propuesta, Diccionario, Respaldos), tarjeta en la ficha del proyecto, herramientas del conector `export-project`, `get-data-dictionary`, `propose-data-change`, `list-backups` y `create-backup`; limpieza diaria de archivos de importación; filtros `gdp_data_modules`, `gdp_data_refs`, `gdp_data_keys`, `gdp_data_dictionary` y `gdp_data_attachments` para módulos futuros.
+- Archivo de ejemplo `docs/ejemplos/relaves-coquimbo.json` con los datos conocidos del proyecto de relaves (equipo, estructura de desglose con 33 actividades, compras y cotizaciones, documentos, reuniones y acuerdos), importable como proyecto nuevo; decisión de arquitectura 0013; pruebas unitarias del conocimiento del esquema.
+
 ## [0.5.0] - 2026-10-01
 
 ### Añadido

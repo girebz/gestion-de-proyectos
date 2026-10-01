@@ -260,6 +260,27 @@ Un acuerdo pertenece a la reunión en que se tomó y conserva su código (\codig
 \bottomrule
 \end{longtable}
 
+\subsection{Exportación, importación y respaldo (implementado en 0.6.0)}
+
+El módulo de datos no añade tablas: las exportaciones quedan en la bitácora, las importaciones y restauraciones son operaciones (con su vista previa, su instantánea y su reversión) y los respaldos son archivos del directorio privado (\codigo{respaldos/}). Lo que sí declara es el conocimiento del esquema que exportar e importar requieren: tablas por módulo en orden de carga, referencias entre tablas (incluidas las polimórficas), claves naturales, columnas de usuario, columnas JSON, columnas calculadas y columnas personales o de montos (decisión 0013).
+
+\begin{longtable}{p{4.3cm}p{10.5cm}}
+\toprule
+\textbf{Elemento} & \textbf{Contenido} \\
+\midrule
+\endfirsthead
+\continuacion{2}
+\toprule
+\textbf{Elemento} & \textbf{Contenido} \\
+\midrule
+\endhead
+Documento de exportación & Formato \codigo{gestion-de-proyectos/export} (versión 1): metadatos (plugin, esquema, sitio, alcance, módulos, anonimizado), usuarios referidos (nombre de usuario, nombre, correo), diccionario opcional, y por tabla sus filas con tipos convertidos y un objeto \codigo{\_refs} con los identificadores traducidos a códigos y nombres. \\
+Diccionario de datos & Por tabla: etiqueta, descripción, módulo y campos con tipo lógico, tipo SQL, unidad, significado y tabla referida; generado de las definiciones del esquema y de las descripciones declaradas. \\
+Respaldo & ZIP con \codigo{datos.json} (todas las tablas, identificadores incluidos), \codigo{datos.sql} (sentencias INSERT), \codigo{diccionario.json}, \codigo{meta.json} (fecha, origen manual, programado o seguridad, nota, filas, adjuntos, proyectos) y \codigo{adjuntos/}. No incluye tokens del conector ni operaciones. \\
+Archivos de importación & Subidos al directorio privado (\codigo{importaciones/}) y referidos por la operación; se eliminan a los siete días. \\
+\bottomrule
+\end{longtable}
+
 \subsection{Módulos (a implementar)}
 
 Cada módulo define sus tablas siguiendo las convenciones anteriores. El detalle de campos se fija en la subsección de cada módulo (sección \ref{sec:modulos}); aquí se enumeran las entidades para tener a la vista el conjunto.
@@ -269,7 +290,6 @@ Cada módulo define sus tablas siguiendo las convenciones anteriores. El detalle
 \item \textbf{Laboratorio:} muestras (\codigo{gdp_samples}), custodia (\codigo{gdp_custody_events}), ensayos (\codigo{gdp_tests}), resultados (\codigo{gdp_test_results}), umbrales (\codigo{gdp_thresholds}), mezclas (\codigo{gdp_mixes}, \codigo{gdp_mix_components}), probetas (\codigo{gdp_specimens}), equipos e insumos (\codigo{gdp_lab_inventory}).
 \item \textbf{Evidencias:} criterios (catálogo), evidencias (\codigo{gdp_evidence}) que apuntan a cualquier entidad, carpetas (\codigo{gdp_evidence_folders}).
 \item \textbf{Publicaciones y difusión:} publicaciones (\codigo{gdp_publications}), autores (\codigo{gdp_publication_authors}), actividades de difusión (\codigo{gdp_outreach}).
-\item \textbf{Datos:} exportaciones (\codigo{gdp_exports}), importaciones (\codigo{gdp_imports}) con su resumen de diferencias y su operación de reversión.
 \end{itemize}
 
 \section{Capa única de operaciones}
@@ -463,12 +483,13 @@ Una cotización de laboratorio cuyo subconjunto contratado suma \num{73.99} unid
 \end{itemize}
 
 \subsection{Exportación, importación y respaldo}
+\label{sec:datos}
 \begin{itemize}
-\item Respaldo completo en SQL más adjuntos en ZIP, con restauración; respaldos programados hacia un destino externo. \etapa{1}
-\item Exportación por módulo o completa en CSV, XLSX y JSON con relaciones resueltas; diccionario de datos generado automáticamente (campos, tipos, unidades, significado). \etapa{1}
-\item Exportación anonimizada sin nombres, correos, identificadores personales ni montos individuales. \etapa{1}
-\item Importación de JSON y planillas mediante la capa de operaciones: validación contra el esquema, detección de conflictos por versión, vista previa de diferencias, aplicación parcial y reversión completa. \etapa{1}
-\item Migración inicial desde lo existente (cartas, órdenes de compra, libro de adquisiciones, Kanban y Gantt en planillas). \etapa{1}
+\item Exportación de un proyecto por módulo o completa en JSON (importable), ZIP (JSON, diccionario y adjuntos), XLSX (una hoja por tabla más el diccionario) y CSV (un archivo por tabla en un ZIP), con las referencias traducidas a códigos y nombres y el diccionario de datos generado automáticamente (campos, tipos, unidades, significado, tabla referida). Los tokens del conector, las operaciones y la clave de la suscripción iCalendar nunca salen del sitio. \textbf{(0.6.0)}
+\item Exportación anonimizada: usuarios con seudónimo, sin nombres de contacto, correos, direcciones de origen ni bitácora, y con los montos individuales en blanco. \textbf{(0.6.0)}
+\item Importación de JSON o ZIP mediante la capa de operaciones: validación contra el esquema (formato, versión del esquema, tablas y columnas conocidas), reconocimiento de cada registro por su clave natural, reasignación de identificadores, usuarios resueltos por nombre de usuario o correo, conflictos por versión cuando el sitio cambió después de la exportación, vista previa por tabla (nuevos, actualizados, sin cambios, omitidos, conflictos, ejemplos), aplicación parcial por tablas y reversión completa; modos "crear proyecto nuevo" (con otro código si el del archivo existe) y "actualizar el proyecto existente". \textbf{(0.6.0)} Importación de planillas de otros formatos. \etapa{2}
+\item Respaldo completo del sitio en ZIP (JSON de todas las tablas, SQL equivalente, diccionario, metadatos y adjuntos) creado a mano o cada semana con retención configurable; copia a una carpeta externa del servidor y acción \codigo{gdp\_backup\_created} para otros destinos; restauración mediante la capa de operaciones que vacía y recarga las tablas tras crear un respaldo de seguridad, revertible. \textbf{(0.6.0)}
+\item Migración inicial desde lo existente: archivo de ejemplo con los datos conocidos del proyecto de relaves (equipo, estructura de desglose, compras, documentos, reuniones y acuerdos) importable como proyecto nuevo. \textbf{(0.6.0)} Lectura directa de planillas de órdenes de compra y Kanban. \etapa{2}
 \end{itemize}
 
 \section{Conector para asistentes de inteligencia artificial}
@@ -525,6 +546,10 @@ Cada usuario genera sus propios tokens desde el panel, con etiqueta, alcance (so
 \codigo{list-meetings}, \codigo{get-meeting} & consulta & Reuniones con filtros y resumen de acuerdos; una reunión con asistentes, acuerdos, acuerdos anteriores abiertos y vínculos. \\
 \codigo{list-agreements} & consulta & Acuerdos con filtros por estado efectivo, abiertos, vencidos, responsable, reunión y texto. \\
 \codigo{propose-meeting-change} & propuesta & Crear, actualizar, eliminar, cambiar de estado, fijar asistentes, registrar acuerdos, proponerlos desde un texto, actualizar, eliminar y revisar acuerdos, convertir uno en actividad; vista previa y \codigo{operation_id}. \\
+\multicolumn{3}{l}{\textit{Exportación, importación y respaldo (0.6.0)}} \\
+\codigo{export-project}, \codigo{get-data-dictionary} & consulta & Exportación completa o por módulos de un proyecto (con variante anonimizada); diccionario de datos. \\
+\codigo{list-backups}, \codigo{create-backup} & administración & Respaldos existentes y configuración; creación de un respaldo (solo administradores del plugin). \\
+\codigo{propose-data-change} & propuesta & Importación de un documento (en línea o subido) como proyecto nuevo o actualización, con aplicación parcial por tablas; restauración de un respaldo; vista previa con el plan por tabla y \codigo{operation_id}. \\
 \multicolumn{3}{l}{\textit{Laboratorio \etapa{2}}} \\
 \codigo{list-samples}, \codigo{get-test-results} & consulta & Muestras, ensayos y resultados con excedencias. \\
 \codigo{propose-test-results} & propuesta & Carga de resultados a partir de planillas o informes leídos por el asistente. \\
@@ -584,7 +609,7 @@ Gobierno de datos & Los documentos sensibles pueden enlazarse desde el repositor
 \midrule
 \endhead
 0 & Base (versión 0.1.0, hecha) & Núcleo, proyectos y equipo, catálogos, bitácora, capa de operaciones, almacenamiento privado, identidad, conector con herramientas del núcleo, asistente de integración, integración continua, documentación. \\
-1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento (sección \ref{sec:compras}; versión 0.4.0, hecha), reuniones y acuerdos (sección \ref{sec:reuniones}; versión 0.5.0, hecha), exportación e importación, informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
+1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento (sección \ref{sec:compras}; versión 0.4.0, hecha), reuniones y acuerdos (sección \ref{sec:reuniones}; versión 0.5.0, hecha), exportación, importación y respaldo (sección \ref{sec:datos}; versión 0.6.0, hecha), informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
 2 & Módulo técnico & Muestras, ensayos, mezclas y probetas; recursos no humanos y registro de horas; valor ganado y simulación; lectura asistida de informes. Debe estar listo antes de habilitar el laboratorio. \\
 3 & Evidencias y difusión & Criterios y medios de verificación, carpetas de evidencia e informes; publicaciones, difusión y tablero público. \\
 \bottomrule
@@ -658,6 +683,20 @@ Cada etapa se desarrolla en su propia rama, se integra a la principal cuando pas
 \item Un observador no puede crear reuniones aunque las ve; un investigador puede registrar acuerdos. \textbf{Verificado.}
 \item Desde el panel: crear reunión con asistentes y externos, añadir acuerdo, analizar el resumen y confirmar la propuesta tras corregir un plazo, crear actividad, revisar un acuerdo anterior, cambiar el estado, descargar el acta en LaTeX (compila con \codigo{pdflatex}) y Word, editar asistentes, filtrar acuerdos del proyecto, verlos en el calendario y en la ficha del proyecto, eliminar y restaurar desde la papelera. \textbf{Verificado.}
 \item Por el conector: \codigo{list-meetings}, \codigo{propose-meeting-change} con creación (asistentes y acuerdos incluidos), propuesta desde texto, eliminación y reversión, \codigo{get-meeting} y \codigo{list-agreements}. \textbf{Verificado.}
+\end{itemize}
+
+\section{Criterios de aceptación del módulo de datos (0.6.0)}
+
+\begin{itemize}
+\item El conocimiento del esquema se prueba en aislamiento: las columnas y tipos se obtienen de las definiciones, y cada referencia, clave natural, columna polimórfica y columna JSON declarada apunta a tablas y columnas existentes; el orden de carga pone cada tabla referida antes que la que la refiere, salvo las referencias hacia adelante declaradas. \textbf{Verificado.}
+\item La exportación completa de un proyecto (26 tablas, 337 filas en el sitio de prueba) se valida, se importa como proyecto nuevo con otro código y, exportada de nuevo, coincide en conteos, actividades (código, nombre, resumen padre, fechas), dependencias, compras (proveedor, cotización elegida, monto), acuerdos (reunión, actividad, última revisión, seguimiento reasignado), vínculos, asistentes, miembros y adjuntos copiados a su nueva ruta; importar el mismo archivo con el código existente se rechaza. \textbf{Verificado.}
+\item En modo de actualización, reimportar el archivo sin cambios no modifica nada; con una actividad renombrada y una nota de compra añadida se proponen exactamente esas dos actualizaciones; si la actividad fue modificada en el sitio después de la exportación, la propuesta no es confirmable; la aplicación parcial por tablas omite el resto; la reversión devuelve los valores anteriores y, en la importación completa, elimina el proyecto, sus filas y los archivos copiados. \textbf{Verificado.}
+\item La exportación por módulos incluye siempre el núcleo (proyecto, equipo, catálogos); la anonimizada no lleva usuarios, bitácora, contactos de proveedor ni montos de compra. En CSV cada tabla es un archivo con columnas \codigo{\_ref}; en XLSX cada tabla es una hoja y el diccionario otra. \textbf{Verificado.}
+\item Un respaldo del sitio contiene todas las filas y los adjuntos; tras crear un proyecto nuevo, restaurarlo por la capa de operaciones devuelve el sitio al estado del respaldo (el proyecto nuevo desaparece, las operaciones se conservan, se crea el respaldo de seguridad) y revertir la restauración lo trae de vuelta; el SQL del respaldo contiene una sentencia por lote de filas. \textbf{Verificado.}
+\item Un investigador exporta su proyecto pero no puede importar como proyecto nuevo ni gestionar respaldos. \textbf{Verificado.}
+\item Desde el panel: descarga en los cuatro formatos, subida de un ZIP e importación como proyecto nuevo con vista previa por tabla, recálculo con tablas desmarcadas (aplicación parcial), confirmación, reversión desde Operaciones; diccionario con descarga en CSV; creación, descarga, restauración (con vista previa y confirmación), configuración y eliminación de respaldos. \textbf{Verificado.}
+\item Por el conector: \codigo{export-project} (módulos y anonimizada), \codigo{get-data-dictionary}, \codigo{propose-data-change} con documento en línea en modo de actualización, confirmación y reversión, \codigo{create-backup} y \codigo{list-backups}. \textbf{Verificado.}
+\item El archivo de ejemplo del proyecto de relaves (21 tablas, 248 filas) se importa como proyecto nuevo sin errores: 33 actividades programadas por el motor con sus dependencias y restricciones, 6 compras con etapas y cotizaciones, 11 documentos vinculados, 3 reuniones y 7 acuerdos. \textbf{Verificado.}
 \end{itemize}
 
 \end{document}

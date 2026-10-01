@@ -16,3 +16,4 @@ Cada decisión estructural se registra en un archivo numerado con el formato: co
 | [0010](0010-flujo-de-desarrollo-y-repositorio.md) | Repositorio, ramas, integración continua y versiones | aceptada |
 | [0011](0011-convenciones-del-motor-de-programacion.md) | Convenciones del motor de programación: días hábiles, hitos, restricciones, fechas reales, feriados | aceptada |
 | [0012](0012-vinculos-y-referencias-externas-genericos.md) | Vínculos y referencias externas genéricos entre entidades de cualquier módulo | aceptada |
+| [0013](0013-exportacion-e-importacion-por-tablas.md) | Exportación e importación por tablas con claves naturales; respaldos como exportaciones del sitio | aceptada |

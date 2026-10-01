@@ -1,0 +1,23 @@
+# 0013. Exportación e importación por tablas con claves naturales
+
+Fecha: 2026-10-01. Estado: aceptada.
+
+## Contexto
+
+La exportación debía ser completa (todas las tablas de un proyecto o del sitio) y legible fuera del sitio; la importación debía pasar por la capa de operaciones con validación, vista previa de diferencias, aplicación parcial y reversión; y los respaldos debían restaurarse. Escribir un exportador y un importador a mano para cada módulo habría duplicado lo que ya dicen las definiciones del esquema y habría obligado a tocar el módulo de datos con cada módulo nuevo.
+
+## Decisión
+
+- **Un solo formato, derivado del esquema.** El documento de exportación (`gestion-de-proyectos/export`, versión 1) contiene las filas de cada tabla tal como están en la base de datos, con los tipos convertidos (enteros, decimales, booleanos, columnas JSON decodificadas), más metadatos, los usuarios referidos (nombre de usuario, nombre y correo) y, a cada fila, un objeto `_refs` que traduce los identificadores a códigos y nombres. Las columnas y tipos salen de las definiciones `CREATE TABLE` del esquema; el diccionario de datos añade unidad y significado declarados en un solo lugar.
+- **Conocimiento del esquema declarado en `DataSchema`.** Tablas por módulo en orden de carga, tabla padre de cada tabla sin `project_id`, referencias entre tablas (incluidas las polimórficas por tipo de entidad), columnas de usuario, columnas JSON, claves naturales, columnas volátiles (calculadas o de auditoría) y columnas personales o de montos para la variante anonimizada. Un módulo nuevo se incorpora añadiendo sus entradas o mediante los filtros `gdp_data_modules`, `gdp_data_refs`, `gdp_data_keys`, `gdp_data_dictionary` y `gdp_data_attachments`.
+- **Identificadores locales al documento.** Al importar, cada fila se reconoce por su clave natural (código del proyecto, de la actividad, de la compra, de la reunión o del acuerdo; tipo y número de un documento; nombre de un proveedor o calendario; extremos de un vínculo) y las referencias se reasignan a los identificadores del sitio en orden de carga; las autorreferencias y las referencias hacia adelante (resumen padre, cotización elegida) se resuelven en un segundo paso. Las filas sin clave natural se reconocen por identificador solo cuando el documento proviene del mismo sitio y la fila cuelga del mismo padre. Los usuarios se buscan por nombre de usuario y luego por correo; los que no existen quedan sin asignar y sus pertenencias y asignaciones se omiten con aviso.
+- **Un recorrido para la vista previa y para la aplicación.** El mismo código decide, fila a fila, si crea, actualiza, deja sin cambios u omite; en seco produce el plan por tabla (conteos, ejemplos, avisos y conflictos) y en firme escribe. Un registro modificado en el sitio después de la exportación (versión mayor que la del archivo) es un conflicto que impide confirmar. La aplicación parcial se expresa como lista de tablas; la reversión elimina lo creado en orden inverso y restaura las filas actualizadas desde la instantánea.
+- **Respaldos como exportaciones del sitio.** Un respaldo es un ZIP con `datos.json` (todas las tablas con sus identificadores), `datos.sql` (las mismas filas como sentencias INSERT para MariaDB o MySQL, por si hay que cargarlas sin WordPress), `diccionario.json`, `meta.json` y los adjuntos del directorio privado. Restaurar vacía las tablas y reinserta las filas tal cual; antes se crea un respaldo de seguridad, que es el que se restaura al revertir. Los tokens del conector y las operaciones no se exportan ni se restauran.
+- **Lo que no se importa.** La bitácora y las instantáneas semanales se exportan como historial pero no se cargan en una importación de proyecto (sus identificadores internos no tendrían sentido en otro sitio); sí se restauran desde un respaldo del sitio.
+
+## Consecuencias
+
+- Exportar e importar cualquier módulo cuesta declarar sus tablas, no programar sus formatos; el diccionario de datos y las hojas de cálculo se generan de la misma fuente.
+- El reconocimiento por clave natural hace que reimportar un archivo sea idempotente (sin cambios) y que una exportación editada fuera del sitio pueda volver como actualización; a cambio, dos registros con la misma clave natural (dos calendarios con el mismo nombre) se tratan como uno, y las filas sin clave pueden duplicarse al importar en un sitio distinto.
+- La integridad la cuida el importador, no la base de datos: una referencia cuyo destino no viene en el archivo ni existe en el proyecto se descarta con aviso en lugar de fallar.
+- La restauración completa reemplaza también la bitácora; la trazabilidad de la propia restauración queda en la operación y en el respaldo de seguridad.
