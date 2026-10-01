@@ -1,0 +1,47 @@
+/* Control documental. */
+.gdp-documents__overdue td:first-child {
+	box-shadow: inset 3px 0 0 #d63638;
+}
+
+.gdp-documents__body {
+	max-width: 70ch;
+	line-height: 1.6;
+}
+
+.gdp-documents__body p {
+	margin: 0 0 0.8em;
+}
+
+.gdp-card--compact {
+	margin-top: 16px;
+}
+
+.gdp-card--compact h3 {
+	margin-top: 0;
+}
+
+.gdp-button-link-danger {
+	color: #b32d2e;
+}
+
+.gdp-list .gdp-inline-form {
+	display: inline;
+	margin-left: 6px;
+}
+
+.gdp-card .gdp-table {
+	width: 100%;
+	table-layout: auto;
+}
+
+.gdp-card .gdp-table code {
+	word-break: break-all;
+}
+
+.gdp-card .gdp-form-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+	margin-top: 10px;
+}

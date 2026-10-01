@@ -37,6 +37,10 @@ $gdp_tables = array(
 	'gdp_assignments',
 	'gdp_progress',
 	'gdp_schedule_snapshots',
+	'gdp_documents',
+	'gdp_document_versions',
+	'gdp_links',
+	'gdp_external_refs',
 );
 
 /**

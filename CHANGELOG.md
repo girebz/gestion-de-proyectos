@@ -4,6 +4,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.3.0] - 2026-10-01
+
+### Añadido
+- Módulo de control documental (etapa 1): documentos por tipo del catálogo (carta, oficio, contrato, orden de compra, cotización, factura, acta, informe, otro) con sentido, número, fecha, emisor, destinatario, asunto, cuerpo, estado (borrador, enviado, recibido, respondido, aprobado, cerrado, anulado), plazo de respuesta, responsable, actividad relacionada y notas; control optimista de versión.
+- Numeración correlativa automática por tipo numerado, con patrón configurable por proyecto (`{PREFIJO}-{NNN}/{AAAA}` por defecto, correlativo anual cuando el patrón lleva el año) y prefijos derivados del catálogo.
+- Versiones de archivo en el directorio privado (`documentos/<proyecto>/<documento>/`), con huella SHA-256, nota y entrega controlada por `documents.view`; al eliminar un documento los archivos se apartan y vuelven al restaurarlo.
+- Tablas genéricas `gdp_links` (vínculos entre entidades con relación: responde a, se refiere a, respalda, se relaciona con) y `gdp_external_refs` (número, estado y enlace en sistemas institucionales); los módulos declaran sus entidades enlazables con el filtro `gdp_link_entities`.
+- Plazos de respuesta: estado vencido o por vencer en la lista, la ficha del proyecto y el calendario integrado (eventos "Respuesta documental" y "Documento" por `gdp_calendar_events`); revisión diaria con aviso por correo a directores e ingenieros (`gdp_documents_recipients`).
+- Borradores de carta en LaTeX (clase `letter`, babel español) y en Word (.docx escrito sin bibliotecas) a partir de los datos del documento y la identidad del sitio.
+- Operaciones en dos tiempos `document`: create, update, delete (papelera), set_status (la aprobación exige `documents.approve`; "respondido" puede enlazar el documento de respuesta), link, unlink, set_external_ref, remove_external_ref.
+- Herramientas del conector `list-documents`, `get-document` y `propose-document-change`.
+- Pantallas: lista con filtros y resumen de vencimientos, formulario con subida inicial, ficha con versiones, vínculos, referencias externas e historial, patrón de numeración por proyecto; tarjeta en la ficha del proyecto.
+- Tablas `gdp_documents`, `gdp_document_versions`, `gdp_links`, `gdp_external_refs` (esquema 4); pruebas unitarias de numeración y escapado LaTeX.
+
 ## [0.2.0] - 2026-09-30
 
 ### Añadido
