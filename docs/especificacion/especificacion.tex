@@ -240,13 +240,32 @@ Los montos se guardan en la moneda de origen y, además, convertidos a pesos con
 \bottomrule
 \end{longtable}
 
+\subsection{Reuniones y acuerdos (implementado en 0.5.0)}
+
+Un acuerdo pertenece a la reunión en que se tomó y conserva su código (\codigo{REU-003/2026.2}); si se convierte en actividad, su estado efectivo sigue al de la actividad (terminada: cumplido; cancelada: cancelado), de modo que no haya dos verdades. Las revisiones hechas en reuniones posteriores quedan en un registro de seguimiento dentro del propio acuerdo y no en una tabla aparte, porque se consultan siempre junto con él.
+
+\begin{longtable}{p{4.3cm}p{10.5cm}}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endfirsthead
+\continuacion{2}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endhead
+\codigo{gdp_meetings} & Proyecto, correlativo anual y código (patrón configurable, por defecto \codigo{REU-\{NNN\}/\{AAAA\}}), título, tipo (equipo, financiador, proveedor, comité, terreno, otra), estado (programada, realizada, cancelada), fecha, hora de inicio y término, lugar o enlace, temas, resumen, transcripción, organizador, actividad asociada, documento del acta, notas; versión. \\
+\codigo{gdp_meeting_attendees} & Reunión, usuario del sitio o nombre externo con organización y correo, asistió o no. \\
+\codigo{gdp_agreements} & Proyecto, reunión, correlativo dentro de la reunión y código, descripción, responsable (usuario o nombre), plazo, estado (pendiente, en curso, cumplido, cancelado), actividad creada, fecha de cumplimiento, origen (manual, propuesto desde texto, conector), registro de seguimiento (reunión, fecha, estado anterior y nuevo, nota, usuario), última reunión de revisión; versión. \\
+\bottomrule
+\end{longtable}
+
 \subsection{Módulos (a implementar)}
 
 Cada módulo define sus tablas siguiendo las convenciones anteriores. El detalle de campos se fija en la subsección de cada módulo (sección \ref{sec:modulos}); aquí se enumeran las entidades para tener a la vista el conjunto.
 
 \begin{itemize}
 \item \textbf{Planificación y tiempo (pendientes):} registro de horas (\codigo{gdp_timesheets}) y recursos no humanos (\codigo{gdp_resources}), etapa 2.
-\item \textbf{Reuniones y acuerdos:} reuniones (\codigo{gdp_meetings}), asistentes (\codigo{gdp_meeting_attendees}), acuerdos (\codigo{gdp_agreements}) con enlace a la actividad creada.
 \item \textbf{Laboratorio:} muestras (\codigo{gdp_samples}), custodia (\codigo{gdp_custody_events}), ensayos (\codigo{gdp_tests}), resultados (\codigo{gdp_test_results}), umbrales (\codigo{gdp_thresholds}), mezclas (\codigo{gdp_mixes}, \codigo{gdp_mix_components}), probetas (\codigo{gdp_specimens}), equipos e insumos (\codigo{gdp_lab_inventory}).
 \item \textbf{Evidencias:} criterios (catálogo), evidencias (\codigo{gdp_evidence}) que apuntan a cualquier entidad, carpetas (\codigo{gdp_evidence_folders}).
 \item \textbf{Publicaciones y difusión:} publicaciones (\codigo{gdp_publications}), autores (\codigo{gdp_publication_authors}), actividades de difusión (\codigo{gdp_outreach}).
@@ -400,11 +419,14 @@ Una cotización de laboratorio cuyo subconjunto contratado suma \num{73.99} unid
 \end{cajaacento}
 
 \subsection{Reuniones y acuerdos}
+\label{sec:reuniones}
 \begin{itemize}
-\item Actas con fecha, asistentes, temas y acuerdos. \etapa{1}
-\item Conversión de acuerdos en actividades asignadas con responsable y plazo. \etapa{1}
-\item Carga de un resumen o transcripción y propuesta automática de acuerdos para revisión (vía capa de operaciones). \etapa{1}
-\item Seguimiento del cumplimiento de acuerdos de reunión en reunión. \etapa{1}
+\item Actas con código correlativo, fecha y hora, tipo, lugar, asistentes (miembros del proyecto y personas externas, con marca de ausencia), temas, resumen, transcripción y acuerdos; descargables en LaTeX y Word con la identidad del sitio, incluida la tabla de acuerdos anteriores revisados en esa reunión. \textbf{(0.5.0)}
+\item Acuerdos con responsable (usuario del sitio o nombre externo), plazo y estado; aviso de vencidos en la lista, en la ficha del proyecto y por correo diario; reuniones y plazos de acuerdos en el calendario integrado. \textbf{(0.5.0)}
+\item Conversión de un acuerdo en actividad del cronograma (responsable, duración, restricción de término por el plazo, entregable con el código del acuerdo, vínculo entre ambos); el estado del acuerdo sigue desde entonces al de la actividad. \textbf{(0.5.0)}
+\item Propuesta automática de acuerdos a partir de un resumen o transcripción: se detectan frases con marcas de compromiso (se acuerda, a cargo de, deberá, enviará, entre otras) y las viñetas bajo encabezados como "Acuerdos"; se extraen responsable (asistentes nombrados o nombre en la frase) y plazo (fechas absolutas, "en dos semanas", "próxima reunión"); la propuesta se revisa fila por fila (corregir, descartar) y se confirma por la capa de operaciones, en el panel o por el conector. \textbf{(0.5.0)}
+\item Seguimiento de reunión en reunión: cada acta muestra los acuerdos abiertos de reuniones anteriores para revisarlos (cumplido, en curso, cancelado, con nota); cada revisión queda en el registro del acuerdo y en el acta de la reunión en que se hizo. \textbf{(0.5.0)}
+\item Reuniones y acuerdos son entidades enlazables (vínculos con documentos, compras y actividades). \textbf{(0.5.0)} Acta como documento del control documental con número correlativo. \etapa{1}
 \end{itemize}
 
 \subsection{Muestras, ensayos, mezclas y probetas}
@@ -499,6 +521,10 @@ Cada usuario genera sus propios tokens desde el panel, con etiqueta, alcance (so
 \codigo{list-suppliers}, \codigo{get-uf-rate} & consulta & Proveedores visibles; valor de la unidad de fomento de una fecha y conversión de un monto. \\
 \codigo{get-budget} & consulta & Presupuesto por partida: asignado, comprometido, ejecutado, pendiente, saldo (requiere \codigo{procurement.view_amounts}). \\
 \codigo{propose-purchase-change} & propuesta & Crear, actualizar, eliminar, cambiar de etapa, aprobar, cotizaciones (registrar, actualizar, eliminar, elegir, ítems), proveedores y montos asignados; vista previa y \codigo{operation_id}. \\
+\multicolumn{3}{l}{\textit{Reuniones y acuerdos (0.5.0)}} \\
+\codigo{list-meetings}, \codigo{get-meeting} & consulta & Reuniones con filtros y resumen de acuerdos; una reunión con asistentes, acuerdos, acuerdos anteriores abiertos y vínculos. \\
+\codigo{list-agreements} & consulta & Acuerdos con filtros por estado efectivo, abiertos, vencidos, responsable, reunión y texto. \\
+\codigo{propose-meeting-change} & propuesta & Crear, actualizar, eliminar, cambiar de estado, fijar asistentes, registrar acuerdos, proponerlos desde un texto, actualizar, eliminar y revisar acuerdos, convertir uno en actividad; vista previa y \codigo{operation_id}. \\
 \multicolumn{3}{l}{\textit{Laboratorio \etapa{2}}} \\
 \codigo{list-samples}, \codigo{get-test-results} & consulta & Muestras, ensayos y resultados con excedencias. \\
 \codigo{propose-test-results} & propuesta & Carga de resultados a partir de planillas o informes leídos por el asistente. \\
@@ -558,7 +584,7 @@ Gobierno de datos & Los documentos sensibles pueden enlazarse desde el repositor
 \midrule
 \endhead
 0 & Base (versión 0.1.0, hecha) & Núcleo, proyectos y equipo, catálogos, bitácora, capa de operaciones, almacenamiento privado, identidad, conector con herramientas del núcleo, asistente de integración, integración continua, documentación. \\
-1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento (sección \ref{sec:compras}; versión 0.4.0, hecha), reuniones, exportación e importación, informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
+1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento (sección \ref{sec:compras}; versión 0.4.0, hecha), reuniones y acuerdos (sección \ref{sec:reuniones}; versión 0.5.0, hecha), exportación e importación, informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
 2 & Módulo técnico & Muestras, ensayos, mezclas y probetas; recursos no humanos y registro de horas; valor ganado y simulación; lectura asistida de informes. Debe estar listo antes de habilitar el laboratorio. \\
 3 & Evidencias y difusión & Criterios y medios de verificación, carpetas de evidencia e informes; publicaciones, difusión y tablero público. \\
 \bottomrule
@@ -618,6 +644,20 @@ Cada etapa se desarrolla en su propia rama, se integra a la principal cuando pas
 \item Eliminar una compra con orden emitida y tres cotizaciones avisa de ambas cosas; la restauración devuelve cotizaciones, ítems e historial de etapas. \textbf{Verificado.}
 \item Un investigador obtiene las compras sin montos, no puede leer el presupuesto ni aprobar. \textbf{Verificado.}
 \item Desde el panel: crear compra, registrar cotización con ítems y subconjunto a contratar, elegirla, aprobar, pasar a orden de compra con el aviso de saldo de partida, asignar montos por partida, crear proveedor, descargar la rendición en Excel y CSV. \textbf{Verificado.}
+\end{itemize}
+
+\section{Criterios de aceptación del módulo de reuniones (0.5.0)}
+
+\begin{itemize}
+\item La activación crea las tres tablas del módulo (esquema 6) en MariaDB y en la integración SQLite sin errores; la propuesta de acuerdos desde texto se prueba en aislamiento (viñetas bajo "Acuerdos", frases con marcas en prosa, fechas absolutas y relativas, marcas de tiempo de transcripción, duplicados). \textbf{Verificado.}
+\item Una reunión con dos miembros, una persona externa y un ausente recibe el código \codigo{REU-001/2026}; su acuerdo manual con responsable "Inés" queda asignado al usuario Inés Valdés por nombre. \textbf{Verificado.}
+\item Al proponer acuerdos desde una transcripción con tres viñetas: vista previa con tres acuerdos de confianza alta, responsables (dos usuarios del sitio y un nombre externo con aviso), plazos "antes del 30 de septiembre", "próxima reunión" y "en dos semanas" resueltos; la confirmación crea los acuerdos con origen "propuesto" y guarda la transcripción; un texto de pocas palabras se rechaza. \textbf{Verificado.}
+\item En una reunión posterior, los acuerdos abiertos de la anterior aparecen como arrastrados; revisar uno como cumplido con nota deja la entrada en su registro de seguimiento, fija la fecha de cumplimiento y lo muestra en el acta de la segunda reunión. \textbf{Verificado.}
+\item Convertir un acuerdo en actividad crea la actividad con el entregable "Acuerdo REU-001/2026.2", la restricción de término por el plazo y el vínculo; terminar la actividad hace que el acuerdo cuente como cumplido en listas, estadísticas, calendario y revisión diaria; una segunda conversión se rechaza. Una propuesta de edición con versión antigua no es confirmable. \textbf{Verificado.}
+\item Un acuerdo con plazo pasado cuenta como vencido en la lista, en la ficha del proyecto, en el calendario (crítico) y en la revisión diaria; eliminar la reunión avisa de los acuerdos que se llevará y la restauración devuelve asistentes, acuerdos y el vínculo con la actividad. \textbf{Verificado.}
+\item Un observador no puede crear reuniones aunque las ve; un investigador puede registrar acuerdos. \textbf{Verificado.}
+\item Desde el panel: crear reunión con asistentes y externos, añadir acuerdo, analizar el resumen y confirmar la propuesta tras corregir un plazo, crear actividad, revisar un acuerdo anterior, cambiar el estado, descargar el acta en LaTeX (compila con \codigo{pdflatex}) y Word, editar asistentes, filtrar acuerdos del proyecto, verlos en el calendario y en la ficha del proyecto, eliminar y restaurar desde la papelera. \textbf{Verificado.}
+\item Por el conector: \codigo{list-meetings}, \codigo{propose-meeting-change} con creación (asistentes y acuerdos incluidos), propuesta desde texto, eliminación y reversión, \codigo{get-meeting} y \codigo{list-agreements}. \textbf{Verificado.}
 \end{itemize}
 
 \end{document}
