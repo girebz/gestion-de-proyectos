@@ -4,7 +4,7 @@ Tags: gestión de proyectos, investigación, mcp, planificación, control docume
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.6.0
+Stable tag: 0.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,10 @@ Primera versión: núcleo del sistema (proyectos, equipo con perfiles por proyec
 2. Para el conector, instale y active el plugin oficial "MCP Adapter" (WordPress.org Contributors).
 3. Abra Proyectos → Conector y siga el asistente de integración.
 
+= Tableros en el sitio =
+
+Para publicar el avance, configure en Proyectos → Tableros qué se muestra y active la publicación; luego inserte en la portada el código corto [gdp_avance proyecto="CODIGO"]. El tablero del equipo se inserta con [gdp_tablero_equipo proyecto="CODIGO"] en un tema del foro o en una página privada y solo lo ven usuarios con sesión iniciada.
+
 == Frequently Asked Questions ==
 
 = ¿Necesita el plugin MCP Adapter? =
@@ -38,11 +42,22 @@ Solo para el conector con asistentes. El resto del plugin funciona sin él.
 
 Consultar. Toda escritura queda como propuesta hasta que una persona con permiso la confirma, y cada llamada queda en la bitácora.
 
+= ¿Qué muestra el tablero público? =
+
+Solo lo que se marque como publicable en Proyectos → Tableros: título y resumen, avance y plazo transcurrido, indicadores, etapas con nombre público, hitos destacados, instituciones y un llamado a la acción con el correo de contacto ofuscado. Nunca muestra montos, nombres de personas, compras ni documentos.
+
+= ¿Quién ve el tablero del equipo? =
+
+Usuarios con sesión iniciada en el sitio (si el registro está cerrado, solo los que usted registre a mano) o, si así se configura, solo los miembros del proyecto. Los montos aparecen únicamente a quien tiene permiso para verlos. A los visitantes se les pide iniciar sesión.
+
 = ¿Dónde se guardan los adjuntos? =
 
 En un directorio privado dentro de wp-content/uploads, protegido contra acceso web directo y servido solo a usuarios autorizados.
 
 == Changelog ==
+
+= 0.7.0 =
+* Tableros: tablero público de difusión con el código corto [gdp_avance] (mensaje, avance, plazo, indicadores, etapas, logros, próximos hitos, instituciones y contacto con correo ofuscado) que solo muestra lo declarado publicable; tablero del equipo con [gdp_tablero_equipo] (avance real y planificado, atrasos, vencimientos, ruta crítica, acuerdos, respuestas pendientes, compras, próxima reunión) para usuarios con sesión iniciada; pantalla Tableros con vista previa; herramienta del conector get-dashboard.
 
 = 0.6.0 =
 * Exportación, importación y respaldo: exportación por módulos en JSON, ZIP con adjuntos, XLSX y CSV con referencias resueltas y diccionario de datos (variante anonimizada); importación con vista previa por tabla, conflictos por versión, aplicación parcial y reversión; respaldos manuales y semanales con restauración reversible; archivo de ejemplo importable; herramientas del conector.

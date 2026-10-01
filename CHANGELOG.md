@@ -4,6 +4,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.7.0] - 2026-10-01
+
+### Añadido
+- Módulo de tableros (etapa 1): tablero público de difusión insertable con el código corto `[gdp_avance proyecto="CODIGO" bloques="..."]`, con mensaje central y resumen, medidores de avance y plazo transcurrido, indicadores (automáticos o escritos a mano), etapas con nombre y frase públicos, logros y próximos hitos destacados, instituciones y financiamiento, y llamado a la acción con el correo de contacto ofuscado; solo muestra lo declarado publicable en la configuración y nunca montos, personas, compras ni documentos; publicación activable y aviso solo para administradores cuando no está activa.
+- Tablero del equipo insertable con `[gdp_tablero_equipo proyecto="CODIGO"]` (foro o página privada): avance real frente al planificado según la curva S, plazo transcurrido, actividades atrasadas y que vencen en el horizonte configurable, ruta crítica, acuerdos abiertos, documentos con respuesta pendiente, compras abiertas, lo terminado y las reuniones de los últimos siete días, próxima reunión y presupuesto; reservado a usuarios con sesión iniciada (opción de exigir membresía del proyecto), con montos solo para quien tiene `procurement.view_amounts` y enlace al panel para quien puede entrar.
+- Pantalla Tableros (configuración del tablero público con etapas, destacados, indicadores, instituciones y contacto; opciones del tablero del equipo; vista previa de ambos; códigos cortos para copiar e indicación para wpForo), tarjeta en la ficha del proyecto, paso en la guía de inicio, hoja de estilos del sitio con la identidad (`assets/css/dashboards.css`) y herramienta del conector `get-dashboard`.
+- Caché de los tableros por proyecto (transitorios de 30 y 5 minutos) invalidada con cada cambio registrado mediante la nueva acción `gdp_audit_logged` de la bitácora; configuración guardada en `settings.dashboards` del proyecto, sin cambio de esquema; el archivo de ejemplo del proyecto de relaves incorpora la configuración de sus tableros; pruebas unitarias del saneamiento y de los cálculos.
+
 ## [0.6.0] - 2026-10-01
 
 ### Añadido

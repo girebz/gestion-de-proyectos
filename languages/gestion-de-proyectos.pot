@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gestión de Proyectos 0.6.0\n"
+"Project-Id-Version: Gestión de Proyectos 0.7.0\n"
 "Report-Msgid-Bugs-To: https://github.com/girebz/gestion-de-proyectos/issues\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-01T01:48:03+00:00\n"
+"POT-Creation-Date: 2026-10-01T19:00:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gestion-de-proyectos\n"
@@ -50,7 +50,7 @@ msgstr ""
 #: src/Admin/Admin.php:66
 #: src/Admin/Admin.php:70
 #: src/Admin/Admin.php:79
-#: src/Admin/Pages/DashboardPage.php:58
+#: src/Admin/Pages/DashboardPage.php:59
 #: src/Admin/Pages/DataPage.php:432
 #: src/Admin/Pages/ProjectsPage.php:83
 #: src/Modules/Data/DataDictionary.php:183
@@ -90,7 +90,7 @@ msgstr ""
 #: src/Admin/Admin.php:92
 #: src/Admin/Admin.php:205
 #: src/Admin/Pages/ConnectorPage.php:341
-#: src/Admin/Pages/DashboardPage.php:123
+#: src/Admin/Pages/DashboardPage.php:124
 #: src/Admin/Pages/SettingsPage.php:92
 msgid "Conector"
 msgstr ""
@@ -134,6 +134,7 @@ msgid "Sin permiso para ver la bitácora de ese proyecto."
 msgstr ""
 
 #: src/Admin/Pages/AuditPage.php:65
+#: src/Admin/Pages/DashboardsPage.php:149
 #: src/Admin/Pages/DataPage.php:168
 #: src/Admin/Pages/DocumentsPage.php:174
 #: src/Admin/Pages/MeetingsPage.php:175
@@ -270,7 +271,7 @@ msgstr ""
 
 #: src/Admin/Pages/CatalogsPage.php:89
 #: src/Admin/Pages/CatalogsPage.php:138
-#: src/Admin/Pages/DashboardPage.php:66
+#: src/Admin/Pages/DashboardPage.php:67
 #: src/Admin/Pages/PlanningBaselinesPage.php:69
 #: src/Admin/Pages/PlanningImportPage.php:71
 #: src/Admin/Pages/PlanningPage.php:697
@@ -349,6 +350,7 @@ msgid "Para sustituir una entrada global en este proyecto, cree una con la misma
 msgstr ""
 
 #: src/Admin/Pages/CatalogsPage.php:177
+#: src/Admin/Pages/DashboardsPage.php:395
 #: src/Admin/Pages/DocumentsPage.php:737
 #: src/Admin/Pages/DocumentsPage.php:794
 #: src/Admin/Pages/DocumentsPage.php:814
@@ -460,7 +462,7 @@ msgstr ""
 
 #: src/Admin/Pages/ConnectorPage.php:105
 #: src/Admin/Pages/ConnectorPage.php:175
-#: src/Admin/Pages/DashboardPage.php:67
+#: src/Admin/Pages/DashboardPage.php:68
 #: src/Admin/Pages/DocumentsPage.php:270
 #: src/Admin/Pages/DocumentsPage.php:403
 #: src/Admin/Pages/DocumentsPage.php:530
@@ -529,6 +531,7 @@ msgstr ""
 
 #: src/Admin/Pages/ConnectorPage.php:157
 #: src/Admin/Pages/ConnectorPage.php:175
+#: src/Admin/Pages/DashboardsPage.php:285
 msgid "Etiqueta"
 msgstr ""
 
@@ -806,12 +809,20 @@ msgstr ""
 msgid "siguiendo el asistente paso a paso."
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:60
+#: src/Admin/Pages/DashboardPage.php:50
+msgid "Publique el avance"
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:50
+msgid "con los códigos cortos [gdp_avance] (portada del sitio) y [gdp_tablero_equipo] (foro o página del equipo)."
+msgstr ""
+
+#: src/Admin/Pages/DashboardPage.php:61
 #: src/Admin/Pages/ProjectsPage.php:90
 msgid "No hay proyectos visibles para su usuario."
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:65
+#: src/Admin/Pages/DashboardPage.php:66
 #: src/Admin/Pages/MeetingsPage.php:234
 #: src/Admin/Pages/PlanningBaselinesPage.php:132
 #: src/Admin/Pages/PlanningPage.php:399
@@ -823,7 +834,7 @@ msgstr ""
 msgid "Código"
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:68
+#: src/Admin/Pages/DashboardPage.php:69
 #: src/Admin/Pages/MeetingsPage.php:411
 #: src/Admin/Pages/MeetingsPage.php:454
 #: src/Admin/Pages/MeetingsPage.php:590
@@ -833,40 +844,336 @@ msgstr ""
 msgid "Plazo"
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:86
+#: src/Admin/Pages/DashboardPage.php:87
 msgid "Operaciones pendientes de confirmación"
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:88
+#: src/Admin/Pages/DashboardPage.php:89
 msgid "No hay propuestas pendientes."
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:99
+#: src/Admin/Pages/DashboardPage.php:100
 msgid "Ver todas"
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:105
+#: src/Admin/Pages/DashboardPage.php:106
 msgid "Actividad reciente"
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:107
+#: src/Admin/Pages/DashboardPage.php:108
 msgid "Sin actividad registrada."
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:118
+#: src/Admin/Pages/DashboardPage.php:119
 msgid "Ver bitácora"
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:127
+#: src/Admin/Pages/DashboardPage.php:128
 msgid "Adaptador MCP activo. El punto de entrada del conector es:"
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:130
+#: src/Admin/Pages/DashboardPage.php:131
 msgid "El adaptador MCP no está activo; el asistente de integración indica cómo instalarlo."
 msgstr ""
 
-#: src/Admin/Pages/DashboardPage.php:134
+#: src/Admin/Pages/DashboardPage.php:135
 msgid "Abrir el asistente de integración"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:40
+#: src/Admin/Pages/DashboardsPage.php:88
+#: src/Admin/Pages/DashboardsPage.php:121
+#: src/Admin/Pages/DashboardsPage.php:143
+msgid "Tableros"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:89
+#: src/Admin/Pages/DataPage.php:193
+#: src/Admin/Pages/MeetingsPage.php:95
+#: src/Admin/Pages/ProcurementPage.php:99
+msgid "No hay proyectos visibles."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:123
+#: src/Admin/Pages/DashboardsPage.php:156
+msgid "Tablero público"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:123
+msgid "publicado en el sitio"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:123
+msgid "sin publicar"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:124
+msgid "Código corto público"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:125
+msgid "Código corto del equipo"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:127
+msgid "El público va en la portada del sitio; el del equipo, en un tema del foro o en una página privada. Lo que muestra cada uno se decide en Tableros."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:128
+msgid "Configurar los tableros"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:157
+msgid "Tablero del equipo"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:171
+msgid "Código corto"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:200
+msgid "El tablero público es una pieza de difusión para el sitio: muestra el avance, las etapas, los logros y lo que viene, las instituciones que participan y una invitación a escribir al equipo. Solo aparece lo que se marca aquí como publicable; montos, nombres de personas, compras y documentos nunca se muestran."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:202
+msgid "Código corto para la portada del sitio:"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:205
+msgid "Para mostrar solo algunos bloques, en el orden que quiera, agregue por ejemplo bloques=\"portada,indicadores,contacto\". Bloques disponibles: portada, indicadores, etapas, hitos, aliados, contacto. Los datos se actualizan solos cada vez que cambia el proyecto."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:208
+msgid "La publicación está desactivada: el código corto no muestra nada a los visitantes hasta que la active."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:220
+msgid "Mensaje central"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:221
+msgid "Publicar el tablero en el sitio"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:222
+#: src/Admin/Pages/DashboardsPage.php:319
+#: src/Admin/Pages/MeetingsPage.php:293
+#: src/Admin/Pages/ProcurementPage.php:364
+msgid "Título"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:223
+msgid "Resumen para el público (deje una línea en blanco entre párrafos)"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:225
+msgid "Bloques que se muestran"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:230
+msgid "Mostrar la fecha de actualización"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:234
+#: src/Admin/Pages/ProcurementPage.php:497
+msgid "Etapas"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:235
+msgid "Cada etapa es una actividad resumen de primer nivel; su avance se calcula con las actividades que contiene. Puede darle un nombre más cercano al público y una frase que explique para qué sirve."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:237
+msgid "El cronograma no tiene actividades resumen de primer nivel."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:240
+#: src/Admin/Pages/DashboardsPage.php:245
+msgid "Mostrar"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:240
+msgid "En el cronograma"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:240
+msgid "Nombre público"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:240
+msgid "Frase para el público"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:257
+#: src/Modules/Dashboards/DashboardSettings.php:38
+msgid "Logros y próximos hitos"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:258
+msgid "Marque los hitos o actividades que quiere destacar. Los terminados aparecen como logros (los seis más recientes) y los pendientes como lo que viene (los cuatro más próximos). Escriba un texto público si el nombre interno no se entiende fuera del equipo."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:260
+msgid "El cronograma no tiene actividades."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:264
+#: src/Admin/Pages/DashboardsPage.php:269
+msgid "Destacar"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:264
+#: src/Admin/Pages/DocumentsPage.php:534
+#: src/Admin/Pages/PlanningBaselinesPage.php:132
+#: src/Admin/Pages/PlanningPage.php:113
+#: src/Admin/Pages/PlanningPage.php:400
+#: src/Admin/Pages/PlanningPage.php:758
+#: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Modules/Planning/ActivityRepository.php:98
+msgid "Actividad"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:264
+#: src/Admin/Pages/PlanningPage.php:115
+#: src/Admin/Pages/PlanningPage.php:405
+#: src/Admin/Pages/PlanningPage.php:802
+#: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Admin/Pages/ProjectsPage.php:103
+#: src/Admin/Pages/ProjectsPage.php:164
+#: src/Admin/Pages/ProjectsPage.php:345
+#: src/Modules/Planning/EventsService.php:54
+msgid "Término"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:264
+msgid "Texto público"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:270
+msgid "hito"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:270
+#: src/Modules/Dashboards/DashboardRenderer.php:346
+msgid "terminada"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:282
+#: src/Modules/Dashboards/DashboardSettings.php:36
+msgid "Indicadores"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:283
+msgid "Cifras grandes con una etiqueta corta. Las fuentes automáticas se calculan con los datos del proyecto; con \"Valor escrito a mano\" se muestra el valor que escriba (por ejemplo, toneladas de relave estudiadas). Deje la etiqueta vacía para quitar una fila."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:285
+msgid "Fuente"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:285
+msgid "Valor (solo a mano)"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:299
+#: src/Modules/Dashboards/DashboardSettings.php:39
+msgid "Instituciones y financiamiento"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:300
+msgid "Texto de financiamiento"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:302
+msgid "Institución"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:302
+msgid "Rol"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:302
+msgid "Dirección del logo"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:302
+msgid "Enlace"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:314
+msgid "Copie la dirección del logo desde la biblioteca de medios. Deje el nombre vacío para quitar una fila."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:318
+#: src/Modules/Dashboards/DashboardSettings.php:40
+msgid "Llamado a la acción"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:320
+msgid "Texto"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:321
+msgid "Texto del botón"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:322
+msgid "Correo de contacto"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:323
+msgid "Asunto sugerido del correo"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:324
+msgid "El correo se publica codificado para dificultar que lo recojan los programas de envío masivo."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:327
+msgid "Guardar el tablero público"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:331
+#: src/Admin/Pages/OperationsPage.php:184
+msgid "Vista previa"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:354
+msgid "El tablero del equipo resume lo que hay que mirar esta semana: avance real frente al planificado, actividades atrasadas y que vencen pronto, ruta crítica, acuerdos abiertos, respuestas pendientes, compras en curso y la próxima reunión. Solo lo ven usuarios con sesión iniciada; a los visitantes se les pide iniciar sesión. Los montos solo aparecen a quien tenga permiso para verlos."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:355
+msgid "Código corto para el foro o una página privada:"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:357
+msgid "En wpForo, los códigos cortos dentro de un mensaje solo se interpretan si está activada la opción \"Enable WordPress Shortcodes in Post Content\" (Foros → Ajustes → Funciones). Publique el código en un tema de un foro visible solo para los usuarios registrados; el tablero además comprueba la sesión por su cuenta."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:362
+#: src/Admin/Pages/DataPage.php:225
+msgid "Opciones"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:368
+msgid "Exigir que el usuario sea miembro del proyecto (si no se marca, basta con haber iniciado sesión, porque el registro del sitio está cerrado)"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:369
+msgid "Horizonte de \"vencen pronto\" (días)"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:370
+msgid "Guardar opciones"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:375
+msgid "Vista previa (con sus permisos)"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:421
+msgid "Tablero guardado."
 msgstr ""
 
 #: src/Admin/Pages/DataPage.php:46
@@ -909,12 +1216,6 @@ msgstr ""
 msgid "Exportar datos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:193
-#: src/Admin/Pages/MeetingsPage.php:95
-#: src/Admin/Pages/ProcurementPage.php:99
-msgid "No hay proyectos visibles."
-msgstr ""
-
 #: src/Admin/Pages/DataPage.php:199
 #: src/Admin/Pages/DataPage.php:552
 #: src/Modules/Data/DataTools.php:225
@@ -953,10 +1254,6 @@ msgstr ""
 #: src/Admin/Pages/ProjectsPage.php:246
 #: src/Admin/Pages/SettingsPage.php:161
 msgid "Módulos"
-msgstr ""
-
-#: src/Admin/Pages/DataPage.php:225
-msgid "Opciones"
 msgstr ""
 
 #: src/Admin/Pages/DataPage.php:226
@@ -1657,17 +1954,6 @@ msgstr ""
 msgid "Borrador de carta:"
 msgstr ""
 
-#: src/Admin/Pages/DocumentsPage.php:534
-#: src/Admin/Pages/PlanningBaselinesPage.php:132
-#: src/Admin/Pages/PlanningPage.php:113
-#: src/Admin/Pages/PlanningPage.php:400
-#: src/Admin/Pages/PlanningPage.php:758
-#: src/Admin/Pages/PlanningReportPage.php:111
-#: src/Admin/Pages/PlanningReportPage.php:234
-#: src/Modules/Planning/ActivityRepository.php:98
-msgid "Actividad"
-msgstr ""
-
 #: src/Admin/Pages/DocumentsPage.php:536
 #: src/Admin/Pages/ProjectsPage.php:168
 msgid "Versión del registro"
@@ -1779,6 +2065,7 @@ msgid "respondido %s"
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:716
+#: src/Modules/Dashboards/DashboardRenderer.php:327
 msgid "sin plazo"
 msgstr ""
 
@@ -1886,7 +2173,7 @@ msgstr ""
 #: src/Admin/Pages/MeetingsPage.php:143
 #: src/Modules/Data/DataSchema.php:55
 #: src/Modules/Meetings/MeetingsModule.php:40
-#: src/Modules/Registry.php:62
+#: src/Modules/Registry.php:63
 msgid "Reuniones y acuerdos"
 msgstr ""
 
@@ -1895,6 +2182,7 @@ msgid "Próxima reunión"
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:146
+#: src/Modules/Dashboards/DashboardRenderer.php:327
 msgid "Acuerdos abiertos"
 msgstr ""
 
@@ -1927,6 +2215,7 @@ msgid "reuniones"
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:213
+#: src/Modules/Dashboards/DashboardRenderer.php:309
 msgid "acuerdos abiertos"
 msgstr ""
 
@@ -1973,11 +2262,6 @@ msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:284
 msgid "Editar reunión"
-msgstr ""
-
-#: src/Admin/Pages/MeetingsPage.php:293
-#: src/Admin/Pages/ProcurementPage.php:364
-msgid "Título"
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:294
@@ -2335,10 +2619,6 @@ msgstr ""
 
 #: src/Admin/Pages/OperationsPage.php:178
 msgid "Revertir"
-msgstr ""
-
-#: src/Admin/Pages/OperationsPage.php:184
-msgid "Vista previa"
 msgstr ""
 
 #: src/Admin/Pages/OperationsPage.php:186
@@ -2994,17 +3274,6 @@ msgstr ""
 msgid "Inicio"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:115
-#: src/Admin/Pages/PlanningPage.php:405
-#: src/Admin/Pages/PlanningPage.php:802
-#: src/Admin/Pages/PlanningReportPage.php:111
-#: src/Admin/Pages/ProjectsPage.php:103
-#: src/Admin/Pages/ProjectsPage.php:164
-#: src/Admin/Pages/ProjectsPage.php:345
-#: src/Modules/Planning/EventsService.php:54
-msgid "Término"
-msgstr ""
-
 #: src/Admin/Pages/PlanningPage.php:116
 #: src/Admin/Pages/PlanningPage.php:406
 msgid "Holgura"
@@ -3574,6 +3843,7 @@ msgid "Term."
 msgstr ""
 
 #: src/Admin/Pages/PlanningReportPage.php:184
+#: src/Modules/Dashboards/DashboardRenderer.php:154
 #: src/Modules/Meetings/AgreementRepository.php:38
 #: src/Modules/Planning/ActivityRepository.php:83
 msgid "En curso"
@@ -3769,6 +4039,7 @@ msgid "Compras y presupuesto"
 msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:149
+#: src/Modules/Dashboards/DashboardRenderer.php:331
 msgid "Compras abiertas"
 msgstr ""
 
@@ -3778,11 +4049,13 @@ msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:152
 #: src/Admin/Pages/ProcurementPage.php:858
+#: src/Modules/Dashboards/DashboardRenderer.php:357
 msgid "Comprometido"
 msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:153
 #: src/Admin/Pages/ProcurementPage.php:858
+#: src/Modules/Dashboards/DashboardRenderer.php:358
 msgid "Ejecutado"
 msgstr ""
 
@@ -3794,6 +4067,7 @@ msgstr ""
 #: src/Admin/Pages/ProcurementPage.php:178
 #: src/Admin/Pages/ProcurementPage.php:846
 #: src/Admin/Pages/ProjectsPage.php:104
+#: src/Modules/Dashboards/DashboardRenderer.php:354
 msgid "Presupuesto"
 msgstr ""
 
@@ -3990,10 +4264,6 @@ msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:488
 msgid "Antes de emitir la orden"
-msgstr ""
-
-#: src/Admin/Pages/ProcurementPage.php:497
-msgid "Etapas"
 msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:500
@@ -4199,6 +4469,7 @@ msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:858
 #: src/Admin/Pages/ProcurementPage.php:876
+#: src/Modules/Dashboards/DashboardRenderer.php:356
 msgid "Asignado"
 msgstr ""
 
@@ -5237,6 +5508,7 @@ msgstr ""
 #: src/Connector/Tools.php:429
 #: src/Domain/Projects/ProjectRepository.php:306
 #: src/Domain/Projects/ProjectRepository.php:356
+#: src/Modules/Dashboards/DashboardSettings.php:138
 #: src/Modules/Data/DataTools.php:222
 #: src/Modules/Data/Exporter.php:43
 #: src/Modules/Documents/DocumentsTools.php:243
@@ -5552,6 +5824,268 @@ msgstr ""
 
 #: src/Domain/Projects/ProjectRepository.php:336
 msgid "No se pudo actualizar el proyecto."
+msgstr ""
+
+#. translators: fecha de actualización.
+#: src/Modules/Dashboards/DashboardRenderer.php:63
+#, php-format
+msgid "Información actualizada al %s."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:90
+msgid "Avance del proyecto"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:92
+msgid "Plazo transcurrido"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:153
+msgid "Completada"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:155
+msgid "Próximamente"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:159
+#: src/Modules/Dashboards/DashboardSettings.php:37
+msgid "Etapas del proyecto"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:189
+msgid "Lo que hemos logrado"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:199
+msgid "Lo que viene"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:223
+msgid "Quiénes hacen posible este proyecto"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:263
+msgid "Contactar"
+msgstr ""
+
+#. translators: 1: fecha, 2: días del horizonte.
+#: src/Modules/Dashboards/DashboardRenderer.php:288
+#, php-format
+msgid "Estado al %1$s · próximos %2$d días"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:292
+msgid "Abrir en el panel"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:296
+msgid "avance real"
+msgstr ""
+
+#. translators: desviación en puntos porcentuales.
+#: src/Modules/Dashboards/DashboardRenderer.php:301
+#, php-format
+msgid "planificado (%s puntos)"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:306
+msgid "plazo transcurrido"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:308
+msgid "actividades atrasadas"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:310
+msgid "respuestas pendientes"
+msgstr ""
+
+#. translators: 1: título de la reunión, 2: fecha, 3: hora y lugar.
+#: src/Modules/Dashboards/DashboardRenderer.php:318
+#, php-format
+msgid "Próxima reunión: %1$s, %2$s%3$s."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:324
+msgid "Atrasadas"
+msgstr ""
+
+#. translators: días de atraso.
+#: src/Modules/Dashboards/DashboardRenderer.php:324
+#, php-format
+msgid "%d día de atraso"
+msgid_plural "%d días de atraso"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: días de atraso.
+#: src/Modules/Dashboards/DashboardRenderer.php:324
+msgid "Sin actividades atrasadas."
+msgstr ""
+
+#. translators: días de atraso.
+#: src/Modules/Dashboards/DashboardRenderer.php:325
+msgid "Vencen pronto"
+msgstr ""
+
+#. translators: días de atraso.
+#: src/Modules/Dashboards/DashboardRenderer.php:325
+msgid "Nada vence en el horizonte."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:326
+msgid "Ruta crítica en curso o próxima"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:326
+msgid "Sin actividades críticas en el horizonte."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:327
+msgid "Sin acuerdos abiertos."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:328
+msgid "Documentos con respuesta pendiente"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:328
+msgid "Sin respuestas pendientes."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:340
+msgid "Sin compras abiertas."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardRenderer.php:349
+msgid "Últimos siete días"
+msgstr ""
+
+#. translators: número de elementos adicionales.
+#: src/Modules/Dashboards/DashboardRenderer.php:393
+#, php-format
+msgid "y %d más en el panel."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:35
+msgid "Mensaje central y avance"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:51
+msgid "Valor escrito a mano"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:52
+msgid "Avance general (%)"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:53
+msgid "Plazo transcurrido (%)"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:54
+msgid "Meses de ejecución"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:55
+msgid "Hitos cumplidos"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:56
+msgid "Actividades terminadas"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:57
+msgid "Reuniones realizadas"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:58
+msgid "Documentos emitidos"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:59
+msgid "Acuerdos cumplidos"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:60
+msgid "Muestras analizadas (a mano mientras no exista el módulo de laboratorio)"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:83
+msgid "de avance"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:84
+msgid "meses de trabajo"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:85
+msgid "hitos cumplidos"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:89
+msgid "¿Quiere saber más o colaborar con el proyecto?"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:90
+msgid "Escríbanos y le responderemos a la brevedad."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:91
+msgid "Contactar al equipo"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardSettings.php:93
+msgid "Consulta desde el sitio del proyecto"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:50
+msgid "Tableros público y del equipo"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:57
+msgid "Tablero de difusión para el sitio y tablero de gestión para el equipo, con códigos cortos."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:132
+msgid "Tablero de avance: no se encontró el proyecto. Indique su código en el atributo proyecto."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:139
+msgid "Tablero de avance: la publicación está desactivada para este proyecto. Actívela en Proyectos → Tableros. Solo los administradores ven este aviso."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:160
+msgid "Este tablero es solo para el equipo del proyecto."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:160
+msgid "Inicie sesión"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:164
+msgid "Tablero del equipo: no se encontró el proyecto. Indique su código en el atributo proyecto."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:168
+msgid "Su cuenta no tiene acceso al tablero de este proyecto. Pida al administrador que lo agregue al equipo."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:286
+msgid "Obtener tablero"
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:287
+msgid "Devuelve los datos de un tablero del proyecto. kind=public: lo que muestra el tablero de difusión del sitio (mensaje, avance, plazo, etapas, logros, próximos hitos, indicadores, instituciones y contacto) y si está publicado. kind=team: resumen de gestión (avance real y planificado, actividades atrasadas, que vencen pronto y críticas, acuerdos abiertos, respuestas pendientes, compras abiertas, próxima reunión; montos solo con permiso). Incluye los códigos cortos para insertarlo en el sitio."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:318
+msgid "El proyecto no existe. Indique project_id o code."
+msgstr ""
+
+#: src/Modules/Dashboards/DashboardsModule.php:322
+msgid "Sin permiso para ver este proyecto."
 msgstr ""
 
 #: src/Modules/Data/BackupService.php:52
@@ -6511,7 +7045,7 @@ msgid "No se pudo guardar el archivo subido."
 msgstr ""
 
 #: src/Modules/Data/DataModule.php:37
-#: src/Modules/Registry.php:68
+#: src/Modules/Registry.php:69
 msgid "Exportación, importación y respaldo"
 msgstr ""
 
@@ -6525,7 +7059,7 @@ msgstr ""
 
 #: src/Modules/Data/DataSchema.php:51
 #: src/Modules/Planning/PlanningModule.php:45
-#: src/Modules/Registry.php:44
+#: src/Modules/Registry.php:45
 msgid "Planificación y tiempo"
 msgstr ""
 
@@ -6535,7 +7069,7 @@ msgstr ""
 
 #: src/Modules/Data/DataSchema.php:53
 #: src/Modules/Documents/DocumentsModule.php:48
-#: src/Modules/Registry.php:50
+#: src/Modules/Registry.php:51
 msgid "Control documental"
 msgstr ""
 
@@ -7229,7 +7763,7 @@ msgid "No se pudo restaurar la reunión."
 msgstr ""
 
 #: src/Modules/Meetings/MeetingsModule.php:47
-#: src/Modules/Registry.php:63
+#: src/Modules/Registry.php:64
 msgid "Actas, acuerdos convertidos en tareas y seguimiento de cumplimiento."
 msgstr ""
 
@@ -7882,12 +8416,12 @@ msgid "Vence cotización"
 msgstr ""
 
 #: src/Modules/Procurement/ProcurementModule.php:48
-#: src/Modules/Registry.php:56
+#: src/Modules/Registry.php:57
 msgid "Adquisiciones y presupuesto"
 msgstr ""
 
 #: src/Modules/Procurement/ProcurementModule.php:55
-#: src/Modules/Registry.php:57
+#: src/Modules/Registry.php:58
 msgid "Ciclo de compra, proveedores, cotizaciones, partidas, unidades de fomento y rendición."
 msgstr ""
 
@@ -8173,39 +8707,39 @@ msgstr ""
 msgid "Ficha del proyecto, equipo con perfiles por proyecto, configuración y módulos activos."
 msgstr ""
 
-#: src/Modules/Registry.php:45
+#: src/Modules/Registry.php:46
 msgid "Estructura de desglose, cronograma, dependencias, ruta crítica, carta Gantt, línea base, valor ganado."
 msgstr ""
 
-#: src/Modules/Registry.php:51
+#: src/Modules/Registry.php:52
 msgid "Cartas, oficios, contratos y órdenes con numeración, versiones, vínculos cruzados y plazos de respuesta."
 msgstr ""
 
-#: src/Modules/Registry.php:69
+#: src/Modules/Registry.php:70
 msgid "Respaldos, exportación en CSV, XLSX y JSON, diccionario de datos e importación con salvaguardas."
 msgstr ""
 
-#: src/Modules/Registry.php:74
+#: src/Modules/Registry.php:75
 msgid "Muestras, ensayos, mezclas y probetas"
 msgstr ""
 
-#: src/Modules/Registry.php:75
+#: src/Modules/Registry.php:76
 msgid "Cadena de custodia, resultados como datos, umbrales, dosificaciones y resistencia."
 msgstr ""
 
-#: src/Modules/Registry.php:80
+#: src/Modules/Registry.php:81
 msgid "Evidencias para acreditación y rendición"
 msgstr ""
 
-#: src/Modules/Registry.php:81
+#: src/Modules/Registry.php:82
 msgid "Criterios, medios de verificación, carpetas de evidencia e informes por criterio."
 msgstr ""
 
-#: src/Modules/Registry.php:86
+#: src/Modules/Registry.php:87
 msgid "Publicaciones y difusión"
 msgstr ""
 
-#: src/Modules/Registry.php:87
+#: src/Modules/Registry.php:88
 msgid "Artículos, ponencias, difusión y borradores automáticos para el blog."
 msgstr ""
 

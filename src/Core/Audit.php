@@ -91,7 +91,18 @@ final class Audit {
 			array( '%d', '%d', '%s', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%s', '%s' )
 		);
 
-		return (int) $wpdb->insert_id;
+		$id = (int) $wpdb->insert_id;
+
+		/**
+		 * Se dispara tras registrar un cambio (por ejemplo, para invalidar cachés).
+		 *
+		 * @param int    $project_id  Proyecto (0 si es global).
+		 * @param string $entity_type Tipo de entidad.
+		 * @param string $action      Acción.
+		 */
+		do_action( 'gdp_audit_logged', $project_id, sanitize_key( $entity_type ), sanitize_key( $action ) );
+
+		return $id;
 	}
 
 	/**

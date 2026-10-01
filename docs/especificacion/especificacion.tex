@@ -281,6 +281,10 @@ Archivos de importación & Subidos al directorio privado (\codigo{importaciones/
 \bottomrule
 \end{longtable}
 
+\subsection{Tableros público y del equipo (implementado en 0.7.0)}
+
+El módulo de tableros no añade tablas: su configuración vive en los ajustes del proyecto (\codigo{settings.dashboards}), con una parte pública (publicación activada, bloques, título, resumen, etapas con nombre y frase públicos y visibilidad, destacados con texto público, indicadores con fuente y valor manual, instituciones, financiamiento, llamado a la acción con correo y asunto, fecha de actualización) y una parte del equipo (exigir membresía, horizonte en días). Los tableros se guardan en transitorios por proyecto (clave con una generación que sube con cada registro de la bitácora, acción \codigo{gdp_audit_logged}) y se componen de los datos de los demás módulos (decisión 0014).
+
 \subsection{Módulos (a implementar)}
 
 Cada módulo define sus tablas siguiendo las convenciones anteriores. El detalle de campos se fija en la subsección de cada módulo (sección \ref{sec:modulos}); aquí se enumeran las entidades para tener a la vista el conjunto.
@@ -449,6 +453,15 @@ Una cotización de laboratorio cuyo subconjunto contratado suma \num{73.99} unid
 \item Reuniones y acuerdos son entidades enlazables (vínculos con documentos, compras y actividades). \textbf{(0.5.0)} Acta como documento del control documental con número correlativo. \etapa{1}
 \end{itemize}
 
+\subsection{Tableros público y del equipo}
+\label{sec:tableros}
+\begin{itemize}
+\item Tablero público de difusión, insertable en cualquier página o en la portada con el código corto \codigo{[gdp_avance proyecto="CODIGO" bloques="..."]} (proyecto por código o identificador; omisible si el sitio tiene uno solo; bloques en el orden pedido o los configurados): mensaje central con título y resumen escritos para el público y medidores de avance y plazo transcurrido; indicadores con cifra grande (avance, plazo, meses de ejecución, hitos cumplidos, actividades terminadas, reuniones realizadas, documentos emitidos, acuerdos cumplidos o valor escrito a mano); etapas (actividades resumen de primer nivel) con nombre y frase públicos, avance y estado (completada, en curso, próximamente), ocultables una a una; logros (hitos y actividades destacados ya terminados, los seis más recientes) y lo que viene (los cuatro más próximos) con texto público opcional; instituciones con rol, logo y enlace y texto de financiamiento; llamado a la acción con botón \codigo{mailto:} al correo de contacto ofuscado y asunto sugerido; fecha de actualización. Solo aparece lo marcado como publicable: nunca montos, responsables, compras, documentos ni atrasos. Con la publicación desactivada el código corto no muestra nada a los visitantes y un aviso a los administradores. \textbf{(0.7.0)}
+\item Tablero del equipo, insertable con \codigo{[gdp_tablero_equipo proyecto="CODIGO"]} en un tema del foro o en una página privada: avance real frente al planificado según la curva S con la desviación en puntos, plazo transcurrido, actividades atrasadas (con días de atraso) y que vencen dentro del horizonte configurable, ruta crítica en curso o próxima, acuerdos abiertos con plazo, documentos con respuesta pendiente, compras abiertas con etapa y fecha esperada, lo terminado y las reuniones de los últimos siete días, próxima reunión programada y presupuesto (asignado, comprometido, ejecutado). Exige sesión iniciada (a los visitantes se les pide iniciar sesión) y, opcionalmente, membresía del proyecto; los montos solo se muestran a quien tiene \codigo{procurement.view_amounts}; enlace al panel para quien puede entrar. \textbf{(0.7.0)}
+\item Pantalla Tableros con la configuración de ambos, vista previa con la identidad del sitio, códigos cortos para copiar e indicación para wpForo (opción de códigos cortos en el contenido); tarjeta en la ficha del proyecto con el estado de publicación y los códigos; paso en la guía de inicio; herramienta del conector \codigo{get-dashboard}. Los tableros usan la paleta del sitio mediante variables CSS y se adaptan a pantallas angostas. \textbf{(0.7.0)}
+\item Caché por proyecto (30 minutos el público, 5 el del equipo, separada según se muestren montos) invalidada con cada cambio registrado en la bitácora, de modo que lo hecho en el panel, por el conector o por una importación se refleja en la siguiente visita. \textbf{(0.7.0)}
+\end{itemize}
+
 \subsection{Muestras, ensayos, mezclas y probetas}
 \begin{itemize}
 \item Muestras con código, origen, coordenadas, fecha de extracción, masa, fotografías y responsable; cadena de custodia con cada traspaso, envío y recepción. \etapa{2}
@@ -472,7 +485,7 @@ Una cotización de laboratorio cuyo subconjunto contratado suma \num{73.99} unid
 \begin{itemize}
 \item Artículos, ponencias y presentaciones con autores, medio, estado y fechas. \etapa{3}
 \item Creación de un borrador de entrada del blog al cambiar de estado un artículo, para revisión y publicación manual. \etapa{3}
-\item Actividades de difusión (charlas, congresos, prensa, visitas) y tablero público opcional sin datos sensibles. \etapa{3}
+\item Actividades de difusión (charlas, congresos, prensa, visitas). \etapa{3} Tablero público sin datos sensibles: adelantado en el módulo de tableros (sección \ref{sec:tableros}). \textbf{(0.7.0)}
 \end{itemize}
 
 \subsection{Comunicación y alertas}
@@ -550,6 +563,8 @@ Cada usuario genera sus propios tokens desde el panel, con etiqueta, alcance (so
 \codigo{export-project}, \codigo{get-data-dictionary} & consulta & Exportación completa o por módulos de un proyecto (con variante anonimizada); diccionario de datos. \\
 \codigo{list-backups}, \codigo{create-backup} & administración & Respaldos existentes y configuración; creación de un respaldo (solo administradores del plugin). \\
 \codigo{propose-data-change} & propuesta & Importación de un documento (en línea o subido) como proyecto nuevo o actualización, con aplicación parcial por tablas; restauración de un respaldo; vista previa con el plan por tabla y \codigo{operation_id}. \\
+\multicolumn{3}{l}{\textit{Tableros (0.7.0)}} \\
+\codigo{get-dashboard} & consulta & Datos del tablero público (lo publicable, con el estado de publicación) o del equipo (resumen de gestión; montos solo con permiso) de un proyecto, con los códigos cortos para insertarlos en el sitio. \\
 \multicolumn{3}{l}{\textit{Laboratorio \etapa{2}}} \\
 \codigo{list-samples}, \codigo{get-test-results} & consulta & Muestras, ensayos y resultados con excedencias. \\
 \codigo{propose-test-results} & propuesta & Carga de resultados a partir de planillas o informes leídos por el asistente. \\
@@ -609,9 +624,9 @@ Gobierno de datos & Los documentos sensibles pueden enlazarse desde el repositor
 \midrule
 \endhead
 0 & Base (versión 0.1.0, hecha) & Núcleo, proyectos y equipo, catálogos, bitácora, capa de operaciones, almacenamiento privado, identidad, conector con herramientas del núcleo, asistente de integración, integración continua, documentación. \\
-1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento (sección \ref{sec:compras}; versión 0.4.0, hecha), reuniones y acuerdos (sección \ref{sec:reuniones}; versión 0.5.0, hecha), exportación, importación y respaldo (sección \ref{sec:datos}; versión 0.6.0, hecha), informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
+1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento (sección \ref{sec:compras}; versión 0.4.0, hecha), reuniones y acuerdos (sección \ref{sec:reuniones}; versión 0.5.0, hecha), exportación, importación y respaldo (sección \ref{sec:datos}; versión 0.6.0, hecha), tableros público y del equipo (sección \ref{sec:tableros}; versión 0.7.0, hecha), informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
 2 & Módulo técnico & Muestras, ensayos, mezclas y probetas; recursos no humanos y registro de horas; valor ganado y simulación; lectura asistida de informes. Debe estar listo antes de habilitar el laboratorio. \\
-3 & Evidencias y difusión & Criterios y medios de verificación, carpetas de evidencia e informes; publicaciones, difusión y tablero público. \\
+3 & Evidencias y difusión & Criterios y medios de verificación, carpetas de evidencia e informes; publicaciones y difusión (el tablero público se adelantó a la etapa 1). \\
 \bottomrule
 \end{longtable}
 
@@ -697,6 +712,16 @@ Cada etapa se desarrolla en su propia rama, se integra a la principal cuando pas
 \item Desde el panel: descarga en los cuatro formatos, subida de un ZIP e importación como proyecto nuevo con vista previa por tabla, recálculo con tablas desmarcadas (aplicación parcial), confirmación, reversión desde Operaciones; diccionario con descarga en CSV; creación, descarga, restauración (con vista previa y confirmación), configuración y eliminación de respaldos. \textbf{Verificado.}
 \item Por el conector: \codigo{export-project} (módulos y anonimizada), \codigo{get-data-dictionary}, \codigo{propose-data-change} con documento en línea en modo de actualización, confirmación y reversión, \codigo{create-backup} y \codigo{list-backups}. \textbf{Verificado.}
 \item El archivo de ejemplo del proyecto de relaves (21 tablas, 248 filas) se importa como proyecto nuevo sin errores: 33 actividades programadas por el motor con sus dependencias y restricciones, 6 compras con etapas y cotizaciones, 11 documentos vinculados, 3 reuniones y 7 acuerdos. \textbf{Verificado.}
+\end{itemize}
+
+\section{Criterios de aceptación del módulo de tableros (0.7.0)}
+
+\begin{itemize}
+\item El saneamiento de la configuración se prueba en aislamiento: los bloques se conservan en el orden canónico y sin desconocidos, solo entran los destacados marcados como públicos, los indicadores sin etiqueta se descartan y las fuentes desconocidas pasan a manual, las instituciones sin nombre quedan fuera y los logos con esquema no permitido en blanco, un correo inválido vuelve al correo del sitio y el horizonte se acota entre 3 y 60 días; el avance ponderado ignora resúmenes y canceladas y el plazo transcurrido se acota entre 0 y 100. \textbf{Verificado.}
+\item Con el proyecto de relaves importado del archivo de ejemplo, desde la pantalla Tableros se activa la publicación, se escriben título y resumen públicos, se renombra una etapa y se oculta otra, se destacan cinco hitos, se añade un indicador a mano y una institución, y se fija el correo \codigo{contacto@relavecircular.com}; al guardar, la vista previa muestra cuatro etapas, un logro, cuatro próximos hitos y cuatro indicadores; la ficha del proyecto muestra el estado y los dos códigos cortos. \textbf{Verificado en SQLite y MariaDB.}
+\item Un visitante anónimo ve el tablero público en una página con el código corto, con la hoja de estilos cargada; el HTML no contiene el correo en claro (botón y texto codificados) y el enlace abre el correo con el asunto sugerido; con \codigo{bloques="portada,contacto"} solo aparecen esos dos bloques; con un código de proyecto inexistente o con la publicación desactivada no ve nada. \textbf{Verificado.}
+\item El tablero del equipo pide iniciar sesión a los visitantes (con retorno a la misma página); un usuario registrado que no es miembro lo ve sin montos mientras no se exija membresía y recibe el aviso de acceso cuando se exige; un investigador miembro lo ve sin montos y con enlace al panel; un administrador lo ve con presupuesto. En el proyecto de ejemplo muestra avance real 26\,\% frente a 32,3\,\% planificado, seis actividades atrasadas, seis acuerdos abiertos, dos respuestas pendientes y cuatro compras abiertas, sin avisos de PHP. \textbf{Verificado en SQLite y MariaDB.}
+\item Por el conector, \codigo{get-dashboard} devuelve los datos y el código corto de cada tablero y rechaza un proyecto inexistente. \textbf{Verificado.}
 \end{itemize}
 
 \end{document}

@@ -10,7 +10,8 @@ Datos del proyecto "Valorización de Relaves Abandonados en Coquimbo" (Universid
 - proveedores, seis compras con sus cotizaciones, ítems, etapas y órdenes (laboratorios geoquímico, mineralógico y físico, insumos del muestreo, capacitación y equipamiento de planta piloto), y el valor de referencia de la unidad de fomento;
 - once documentos (oficios recibidos, cartas enviadas, cotizaciones, orden de compra y contrato) con sus vínculos;
 - tres reuniones con asistentes y siete acuerdos;
-- referencias en sistemas externos (código BIP, centro de costo, órdenes en el sistema institucional, contrato en firma).
+- referencias en sistemas externos (código BIP, centro de costo, órdenes en el sistema institucional, contrato en firma);
+- configuración de los tableros (en los ajustes del proyecto): tablero público activado, con título y resumen de difusión, nombres y frases públicos de las cinco etapas, siete hitos destacados, cuatro indicadores, instituciones y llamado a la acción dirigido a `contacto@relavecircular.com`; tablero del equipo con horizonte de catorce días.
 
 ### Cómo importarlo
 
@@ -19,6 +20,8 @@ Datos del proyecto "Valorización de Relaves Abandonados en Coquimbo" (Universid
 3. Revise la vista previa (qué se crea por tabla) y confirme. La importación queda registrada como operación y se puede revertir completa desde Proyectos → Operaciones.
 
 Por el conector, la misma carga se hace con `propose-data-change` (`action: import`, `mode: new`, `document: <contenido del archivo>`) y `confirm-operation`.
+
+Importado el proyecto, el tablero público queda listo para insertarse en la portada con `[gdp_avance proyecto="RELAVES-COQUIMBO"]` y el del equipo en el foro con `[gdp_tablero_equipo proyecto="RELAVES-COQUIMBO"]`; ambos se revisan y ajustan en Proyectos → Tableros.
 
 ### Fechas de ejecución
 

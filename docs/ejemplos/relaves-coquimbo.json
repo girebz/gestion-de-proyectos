@@ -1,7 +1,7 @@
 {
     "format": "gestion-de-proyectos/export",
     "format_version": 1,
-    "plugin_version": "0.6.0",
+    "plugin_version": "0.7.0",
     "schema_version": 6,
     "generated_at": "2026-09-30T12:00:00+00:00",
     "generated_by": "",
@@ -94,6 +94,130 @@
                     "procurement": {
                         "quote_max_age_days": 90,
                         "uf_tolerance_percent": 1
+                    },
+                    "dashboards": {
+                        "public": {
+                            "enabled": true,
+                            "blocks": [
+                                "portada",
+                                "indicadores",
+                                "etapas",
+                                "hitos",
+                                "aliados",
+                                "contacto"
+                            ],
+                            "headline": "Relaves que vuelven a la ciudad",
+                            "summary": "Convertimos relaves mineros abandonados de la Región de Coquimbo en prefabricados de hormigón para infraestructura comunitaria: caracterizamos el relave, diseñamos mezclas que lo incorporan como material cementicio suplementario, fabricamos prototipos y construimos con ellos una plaza para la comunidad.\n\nUn proyecto de la Universidad Central de Chile financiado por el Gobierno Regional de Coquimbo.",
+                            "stages": {
+                                "1": {
+                                    "label": "Organización y rendición",
+                                    "text": "Equipo contratado, informes al Gobierno Regional y rendiciones mensuales.",
+                                    "visible": true
+                                },
+                                "2": {
+                                    "label": "Caracterización del relave",
+                                    "text": "Muestreo y ensayos geoquímicos, mineralógicos y físicos para saber qué contiene el relave y cómo se comporta.",
+                                    "visible": true
+                                },
+                                "3": {
+                                    "label": "Mezclas y prototipos",
+                                    "text": "Diseño de mezclas con relave y fabricación de los primeros prefabricados en laboratorio.",
+                                    "visible": true
+                                },
+                                "4": {
+                                    "label": "Plaza comunitaria",
+                                    "text": "Pilotaje de los prefabricados y construcción de una plaza con la comunidad.",
+                                    "visible": true
+                                },
+                                "5": {
+                                    "label": "Difusión y capacitación",
+                                    "text": "Cursos, congresos, publicaciones y eventos abiertos a la comunidad.",
+                                    "visible": true
+                                }
+                            },
+                            "highlights": {
+                                "2.1": {
+                                    "label": "Campaña de extracción de muestras en terreno"
+                                },
+                                "2.7": {
+                                    "label": "Informe de caracterización físico-química y geoquímica del relave"
+                                },
+                                "3.4": {
+                                    "label": "Primeros prototipos de prefabricados con relave"
+                                },
+                                "4.3": {
+                                    "label": "Construcción de la plaza comunitaria"
+                                },
+                                "5.1": {
+                                    "label": "Evento de difusión de inicio del proyecto"
+                                },
+                                "5.3": {
+                                    "label": "Presentación en el congreso internacional de minería sostenible (Colombia)"
+                                },
+                                "5.5": {
+                                    "label": "Informe final y difusión de resultados"
+                                }
+                            },
+                            "indicators": [
+                                {
+                                    "label": "de avance",
+                                    "source": "avance",
+                                    "value": ""
+                                },
+                                {
+                                    "label": "meses de trabajo",
+                                    "source": "meses",
+                                    "value": ""
+                                },
+                                {
+                                    "label": "reuniones de coordinación",
+                                    "source": "reuniones",
+                                    "value": ""
+                                },
+                                {
+                                    "label": "instituciones participantes",
+                                    "source": "manual",
+                                    "value": "4"
+                                }
+                            ],
+                            "partners": [
+                                {
+                                    "name": "Universidad Central de Chile",
+                                    "role": "Institución ejecutora",
+                                    "logo": "",
+                                    "url": "https://www.ucentral.cl/"
+                                },
+                                {
+                                    "name": "Gobierno Regional de Coquimbo",
+                                    "role": "Financiamiento",
+                                    "logo": "",
+                                    "url": "https://www.gorecoquimbo.cl/"
+                                },
+                                {
+                                    "name": "Municipalidad de La Serena",
+                                    "role": "Institución asociada",
+                                    "logo": "",
+                                    "url": ""
+                                },
+                                {
+                                    "name": "Faena Minera Quebrada Honda",
+                                    "role": "Institución asociada",
+                                    "logo": "",
+                                    "url": ""
+                                }
+                            ],
+                            "funding": "Financiado por el Gobierno Regional de Coquimbo a través del Fondo Regional para la Productividad y el Desarrollo (código BIP 40075890-0).",
+                            "cta_title": "¿Quiere saber más o colaborar con el proyecto?",
+                            "cta_text": "Escríbanos: respondemos directamente desde el equipo del proyecto.",
+                            "cta_button": "Contactar al equipo",
+                            "cta_email": "contacto@relavecircular.com",
+                            "cta_subject": "Consulta sobre el proyecto de relaves",
+                            "show_updated": true
+                        },
+                        "team": {
+                            "require_member": false,
+                            "horizon_days": 14
+                        }
                     }
                 },
                 "version": 1,
