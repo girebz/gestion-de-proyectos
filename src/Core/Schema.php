@@ -51,7 +51,91 @@ final class Schema {
 		$tokens   = self::table( 'connector_tokens' );
 		$catalog  = self::table( 'catalog_items' );
 
-		return array_merge( self::core_definitions( $collate, $projects, $members, $audit, $ops, $tokens, $catalog ), self::planning_definitions( $collate ), self::documents_definitions( $collate ), self::procurement_definitions( $collate ) );
+		return array_merge( self::core_definitions( $collate, $projects, $members, $audit, $ops, $tokens, $catalog ), self::planning_definitions( $collate ), self::documents_definitions( $collate ), self::procurement_definitions( $collate ), self::meetings_definitions( $collate ) );
+	}
+
+	/**
+	 * Tablas del módulo de reuniones y acuerdos.
+	 *
+	 * @param string $collate Cotejamiento.
+	 * @return array<string,string>
+	 */
+	private static function meetings_definitions( string $collate ): array {
+		$meetings   = self::table( 'meetings' );
+		$attendees  = self::table( 'meeting_attendees' );
+		$agreements = self::table( 'agreements' );
+
+		return array(
+			'meetings'          => "CREATE TABLE {$meetings} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	seq_no int(10) unsigned NOT NULL DEFAULT 0,
+	code varchar(32) NOT NULL DEFAULT '',
+	title varchar(255) NOT NULL,
+	kind varchar(32) NOT NULL DEFAULT 'equipo',
+	status varchar(20) NOT NULL DEFAULT 'programada',
+	meeting_date date NOT NULL,
+	start_time time NULL,
+	end_time time NULL,
+	location varchar(255) NOT NULL DEFAULT '',
+	agenda longtext NULL,
+	summary longtext NULL,
+	transcript longtext NULL,
+	organizer_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	activity_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	minutes_document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	notes longtext NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_id (project_id),
+	KEY meeting_date (project_id,meeting_date),
+	KEY status (project_id,status)
+) {$collate};",
+
+			'meeting_attendees' => "CREATE TABLE {$attendees} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	meeting_id bigint(20) unsigned NOT NULL,
+	user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	name varchar(255) NOT NULL DEFAULT '',
+	organization varchar(255) NOT NULL DEFAULT '',
+	email varchar(255) NOT NULL DEFAULT '',
+	attended tinyint(1) NOT NULL DEFAULT 1,
+	PRIMARY KEY  (id),
+	KEY meeting_id (meeting_id),
+	KEY user_id (user_id)
+) {$collate};",
+
+			'agreements'        => "CREATE TABLE {$agreements} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	meeting_id bigint(20) unsigned NOT NULL,
+	seq_no int(10) unsigned NOT NULL DEFAULT 0,
+	code varchar(40) NOT NULL DEFAULT '',
+	description text NOT NULL,
+	owner_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	owner_name varchar(255) NOT NULL DEFAULT '',
+	due_date date NULL,
+	status varchar(20) NOT NULL DEFAULT 'pendiente',
+	activity_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	fulfilled_at date NULL,
+	origin varchar(20) NOT NULL DEFAULT 'manual',
+	follow_up longtext NULL,
+	last_review_meeting_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY meeting_id (meeting_id,seq_no),
+	KEY project_status (project_id,status),
+	KEY owner_id (owner_id),
+	KEY due_date (due_date),
+	KEY activity_id (activity_id)
+) {$collate};",
+		);
 	}
 
 	/**

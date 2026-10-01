@@ -4,6 +4,17 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.5.0] - 2026-10-01
+
+### Añadido
+- Módulo de reuniones y acuerdos (etapa 1): reuniones con código correlativo anual y patrón configurable (`REU-{NNN}/{AAAA}`), tipo (equipo, financiador, proveedor, comité, terreno, otra), estado (programada, realizada, cancelada), fecha y horas, lugar, temas, resumen, transcripción, organizador, actividad asociada y notas; asistentes miembros del proyecto o externos (nombre, organización, correo, asistió).
+- Acuerdos por reunión con código (`REU-001/2026.2`), responsable (usuario del sitio resuelto por nombre, usuario o correo, o nombre externo), plazo, estado (pendiente, en curso, cumplido, cancelado), origen (manual, propuesto, conector) y registro de seguimiento por revisión; conversión en actividad del cronograma (restricción de término por el plazo, entregable con el código, vínculo) con estado efectivo que sigue al de la actividad.
+- Propuesta automática de acuerdos desde un resumen o transcripción (`AgreementExtractor`): marcas de compromiso, viñetas bajo encabezados, responsables (asistentes nombrados o nombre en la frase), plazos absolutos y relativos, confianza por acuerdo; revisión fila por fila antes de confirmar por la capa de operaciones.
+- Seguimiento de reunión en reunión: acuerdos abiertos de reuniones anteriores en cada acta, revisión con estado y nota, tabla de revisiones en el acta de la reunión en que se hicieron.
+- Actas descargables en LaTeX y Word con la identidad del sitio; eventos del calendario integrado (reunión, plazo de acuerdo); aviso diario de acuerdos vencidos por correo (`gdp_meetings_recipients`); tarjeta en la ficha del proyecto; reuniones y acuerdos como entidades enlazables.
+- Operaciones en dos tiempos `meeting` (create, update, delete, set_status, set_attendees, add_agreements, propose_from_text, update_agreement, delete_agreement, review_agreement, agreement_to_activity) y herramientas del conector `list-meetings`, `get-meeting`, `list-agreements`, `propose-meeting-change`.
+- Pantallas Reuniones (lista, formulario con asistentes, acta con acuerdos, propuesta desde texto y seguimiento) y Acuerdos del proyecto con filtros; tablas `gdp_meetings`, `gdp_meeting_attendees`, `gdp_agreements` (esquema 6); pruebas unitarias de la propuesta de acuerdos.
+
 ## [0.4.0] - 2026-10-01
 
 ### Añadido

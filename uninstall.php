@@ -48,6 +48,9 @@ $gdp_tables = array(
 	'gdp_quote_items',
 	'gdp_budget_lines',
 	'gdp_uf_rates',
+	'gdp_meetings',
+	'gdp_meeting_attendees',
+	'gdp_agreements',
 );
 
 /**

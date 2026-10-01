@@ -1,0 +1,68 @@
+/* Reuniones y acuerdos. */
+
+.gdp-meetings .gdp-table code,
+.gdp-meetings .gdp-table .gdp-nowrap {
+	white-space: nowrap;
+	word-break: normal;
+}
+
+.gdp-meetings .gdp-table td.gdp-agreement-text {
+	min-width: 260px;
+}
+
+.gdp-meetings .gdp-table td.gdp-agreement-actions {
+	white-space: nowrap;
+}
+
+.gdp-meetings .gdp-agreement-actions .gdp-inline-form {
+	display: inline;
+	margin-left: 6px;
+}
+
+.gdp-meetings .gdp-agreement-actions select {
+	max-width: 160px;
+	vertical-align: middle;
+}
+
+.gdp-meetings .gdp-agreement-review select,
+.gdp-meetings .gdp-agreement-review input[type="text"] {
+	vertical-align: middle;
+}
+
+.gdp-meetings .gdp-agreement-review input[type="text"] {
+	width: 180px;
+}
+
+.gdp-meetings .gdp-proposal th:nth-child(2) {
+	width: 50%;
+}
+
+.gdp-meetings .gdp-proposal input.large-text {
+	width: 100%;
+}
+
+.gdp-meetings .gdp-proposal td {
+	vertical-align: top;
+}
+
+.gdp-meetings .gdp-confidence {
+	font-size: 11px;
+	color: #50575e;
+}
+
+.gdp-meetings .gdp-attendees {
+	columns: 2;
+	column-gap: 24px;
+	margin: 0;
+}
+
+.gdp-meetings .gdp-attendees li {
+	break-inside: avoid;
+	margin: 0 0 4px;
+}
+
+@media (max-width: 782px) {
+	.gdp-meetings .gdp-attendees {
+		columns: 1;
+	}
+}
