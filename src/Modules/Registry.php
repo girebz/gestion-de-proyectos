@@ -10,6 +10,7 @@ declare( strict_types=1 );
 namespace GDP\Modules;
 
 use GDP\Domain\Projects\ProjectRepository;
+use GDP\Modules\Dashboards\DashboardsModule;
 use GDP\Modules\Documents\DocumentsModule;
 use GDP\Modules\Data\DataModule;
 use GDP\Modules\Meetings\MeetingsModule;
@@ -103,6 +104,7 @@ final class Registry {
 		$this->add( new ProcurementModule() );
 		$this->add( new MeetingsModule() );
 		$this->add( new DataModule() );
+		$this->add( new DashboardsModule() );
 
 		/**
 		 * Permite registrar módulos adicionales (propios o de extensiones).

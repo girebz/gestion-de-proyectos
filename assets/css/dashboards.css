@@ -1,0 +1,553 @@
+/* Gestión de Proyectos: tableros público y del equipo. Los colores vienen de la identidad del sitio (variables --gdp-dash-*); la tipografía se hereda del tema. */
+
+.gdp-dash {
+	--gdp-dash-primary-c: var(--gdp-dash-primary, #1f5f8b);
+	--gdp-dash-secondary-c: var(--gdp-dash-secondary, #1d2327);
+	--gdp-dash-accent-c: var(--gdp-dash-accent, #c46a1c);
+	--gdp-dash-line: rgba(0, 0, 0, 0.12);
+	--gdp-dash-soft: rgba(0, 0, 0, 0.035);
+	--gdp-dash-muted: rgba(0, 0, 0, 0.6);
+	--gdp-dash-good: #2e7d32;
+	--gdp-dash-warn: #b26a00;
+	--gdp-dash-bad: #b3261e;
+	box-sizing: border-box;
+	max-width: 1140px;
+	margin: 0 auto 2em;
+	color: inherit;
+	font-family: inherit;
+	line-height: 1.5;
+}
+
+.gdp-dash *,
+.gdp-dash *::before,
+.gdp-dash *::after {
+	box-sizing: border-box;
+}
+
+.gdp-dash h2,
+.gdp-dash h3,
+.gdp-dash p,
+.gdp-dash ul,
+.gdp-dash ol,
+.gdp-dash figure,
+.gdp-dash dl {
+	margin: 0;
+	padding: 0;
+}
+
+.gdp-dash ul,
+.gdp-dash ol {
+	list-style: none;
+}
+
+.gdp-dash__title {
+	font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.4rem);
+	line-height: 1.15;
+	font-weight: 700;
+	color: var(--gdp-dash-secondary-c);
+	letter-spacing: -0.01em;
+}
+
+.gdp-dash__subtitle {
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--gdp-dash-primary-c);
+	margin-bottom: 1em;
+}
+
+.gdp-dash__lead {
+	font-size: 1.08rem;
+	margin-top: 0.9em;
+	max-width: 62ch;
+}
+
+.gdp-dash__muted {
+	color: var(--gdp-dash-muted);
+	font-size: 0.9rem;
+}
+
+.gdp-dash__block {
+	padding: 2em 0;
+	border-top: 1px solid var(--gdp-dash-line);
+}
+
+/* Portada */
+
+.gdp-dash__hero {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 2.5em;
+	align-items: center;
+	padding: 2.5em 0 2em;
+	border-top: 4px solid var(--gdp-dash-primary-c);
+}
+
+.gdp-dash__meters {
+	display: flex;
+	gap: 1.5em;
+}
+
+.gdp-dash__meter {
+	width: 150px;
+	text-align: center;
+}
+
+.gdp-dash__meter svg {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.gdp-dash__meter-track {
+	fill: none;
+	stroke: var(--gdp-dash-line);
+	stroke-width: 8;
+}
+
+.gdp-dash__meter-value {
+	fill: none;
+	stroke: var(--gdp-dash-primary-c);
+	stroke-width: 8;
+	stroke-linecap: butt;
+}
+
+.gdp-dash__meter--secondary .gdp-dash__meter-value {
+	stroke: var(--gdp-dash-accent-c);
+}
+
+.gdp-dash__meter-number {
+	font-size: 20px;
+	font-weight: 700;
+	fill: var(--gdp-dash-secondary-c);
+}
+
+.gdp-dash__meter figcaption {
+	margin-top: 0.4em;
+	font-size: 0.85rem;
+	color: var(--gdp-dash-muted);
+}
+
+/* Indicadores */
+
+.gdp-dash__indicators {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	gap: 1px;
+	background: var(--gdp-dash-line);
+	border: 1px solid var(--gdp-dash-line);
+	margin-bottom: 2em;
+}
+
+.gdp-dash__indicator {
+	background: var(--gdp-dash-bg, #fff);
+	padding: 1.2em 1em;
+	display: flex;
+	flex-direction: column;
+	gap: 0.2em;
+}
+
+.gdp-dash__indicator strong {
+	font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.3rem);
+	line-height: 1.1;
+	color: var(--gdp-dash-primary-c);
+	font-weight: 700;
+}
+
+.gdp-dash__indicator span {
+	font-size: 0.9rem;
+	color: var(--gdp-dash-muted);
+}
+
+.gdp-dash__indicator.is-good strong { color: var(--gdp-dash-good); }
+.gdp-dash__indicator.is-warn strong { color: var(--gdp-dash-warn); }
+.gdp-dash__indicator.is-bad strong { color: var(--gdp-dash-bad); }
+
+/* Etapas */
+
+.gdp-dash__stages {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+	gap: 1.25em;
+	counter-reset: none;
+}
+
+.gdp-dash__stage {
+	display: flex;
+	flex-direction: column;
+	gap: 0.45em;
+	padding-top: 0.9em;
+	border-top: 3px solid var(--gdp-dash-line);
+}
+
+.gdp-dash__stage--done {
+	border-top-color: var(--gdp-dash-primary-c);
+}
+
+.gdp-dash__stage--active {
+	border-top-color: var(--gdp-dash-accent-c);
+}
+
+.gdp-dash__stage-number {
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: var(--gdp-dash-muted);
+}
+
+.gdp-dash__stage-name {
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.gdp-dash__stage-text {
+	font-size: 0.92rem;
+	color: var(--gdp-dash-muted);
+}
+
+.gdp-dash__bar {
+	display: block;
+	height: 6px;
+	background: var(--gdp-dash-line);
+	margin-top: auto;
+}
+
+.gdp-dash__bar span {
+	display: block;
+	height: 100%;
+	background: var(--gdp-dash-primary-c);
+}
+
+.gdp-dash__stage--active .gdp-dash__bar span {
+	background: var(--gdp-dash-accent-c);
+}
+
+.gdp-dash__stage-state {
+	font-size: 0.82rem;
+	color: var(--gdp-dash-muted);
+}
+
+/* Logros y próximos hitos */
+
+.gdp-dash__columns {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 2em;
+}
+
+.gdp-dash__timeline {
+	border-left: 2px solid var(--gdp-dash-line);
+	padding-left: 1.2em !important;
+}
+
+.gdp-dash__event {
+	position: relative;
+	padding-bottom: 1em;
+	display: flex;
+	flex-direction: column;
+}
+
+.gdp-dash__event::before {
+	content: "";
+	position: absolute;
+	left: calc(-1.2em - 6px);
+	top: 0.35em;
+	width: 10px;
+	height: 10px;
+	background: var(--gdp-dash-bg, #fff);
+	border: 2px solid var(--gdp-dash-accent-c);
+}
+
+.gdp-dash__event--done::before {
+	background: var(--gdp-dash-primary-c);
+	border-color: var(--gdp-dash-primary-c);
+}
+
+.gdp-dash__event time {
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--gdp-dash-muted);
+}
+
+/* Instituciones */
+
+.gdp-dash__funding {
+	margin-bottom: 1.2em !important;
+	max-width: 70ch;
+}
+
+.gdp-dash__partners {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5em 2.5em;
+	align-items: center;
+}
+
+.gdp-dash__partner {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3em;
+}
+
+.gdp-dash__partner img {
+	max-height: 64px;
+	max-width: 180px;
+	width: auto;
+	height: auto;
+	display: block;
+}
+
+.gdp-dash__partner a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.gdp-dash__partner-name {
+	font-weight: 700;
+}
+
+.gdp-dash__partner-role {
+	font-size: 0.85rem;
+	color: var(--gdp-dash-muted);
+}
+
+/* Llamado a la acción */
+
+.gdp-dash__cta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5em;
+	justify-content: space-between;
+	align-items: center;
+	padding: 2em;
+	margin-top: 1em;
+	background: var(--gdp-dash-primary-c);
+	color: #fff;
+}
+
+.gdp-dash__cta-title {
+	font-size: 1.4rem;
+	line-height: 1.25;
+	margin-bottom: 0.3em !important;
+	color: #fff;
+}
+
+.gdp-dash__cta p {
+	opacity: 0.92;
+}
+
+.gdp-dash__cta-actions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.5em;
+}
+
+.gdp-dash__cta-email {
+	font-size: 0.9rem;
+	opacity: 0.9;
+}
+
+.gdp-dash__button {
+	display: inline-block;
+	padding: 0.75em 1.5em;
+	background: #fff;
+	color: var(--gdp-dash-primary-c);
+	font-weight: 700;
+	text-decoration: none;
+	border: 2px solid #fff;
+	border-radius: 0;
+	line-height: 1.2;
+}
+
+.gdp-dash__button:hover,
+.gdp-dash__button:focus {
+	background: transparent;
+	color: #fff;
+}
+
+.gdp-dash__button--ghost {
+	background: transparent;
+	color: var(--gdp-dash-primary-c);
+	border-color: var(--gdp-dash-primary-c);
+}
+
+.gdp-dash__button--ghost:hover,
+.gdp-dash__button--ghost:focus {
+	background: var(--gdp-dash-primary-c);
+	color: #fff;
+}
+
+.gdp-dash__updated {
+	margin-top: 1em !important;
+	font-size: 0.82rem;
+	color: var(--gdp-dash-muted);
+}
+
+/* Tablero del equipo */
+
+.gdp-dash__team-header {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 1em;
+	padding: 1.2em 0 1em;
+	border-top: 4px solid var(--gdp-dash-primary-c);
+	margin-bottom: 1.2em;
+}
+
+.gdp-dash--team .gdp-dash__title {
+	font-size: clamp(1.25rem, 1rem + 1vw, 1.7rem);
+}
+
+.gdp-dash__indicators--team {
+	margin-bottom: 1.2em;
+}
+
+.gdp-dash__indicators--team .gdp-dash__indicator strong {
+	font-size: 1.7rem;
+}
+
+.gdp-dash__notice {
+	padding: 0.8em 1em;
+	border-left: 4px solid var(--gdp-dash-accent-c);
+	background: var(--gdp-dash-soft);
+	margin-bottom: 1.2em !important;
+}
+
+.gdp-dash__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 1em;
+}
+
+.gdp-dash__card {
+	border: 1px solid var(--gdp-dash-line);
+	padding: 1em 1.1em;
+	background: var(--gdp-dash-bg, #fff);
+}
+
+.gdp-dash__card .gdp-dash__subtitle {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 0.7em;
+}
+
+.gdp-dash__count {
+	color: var(--gdp-dash-muted);
+	font-weight: 400;
+}
+
+.gdp-dash__list {
+	display: flex;
+	flex-direction: column;
+}
+
+.gdp-dash__item {
+	display: flex;
+	flex-direction: column;
+	padding: 0.5em 0 0.5em 0.7em;
+	border-left: 3px solid transparent;
+	border-bottom: 1px solid var(--gdp-dash-line);
+}
+
+.gdp-dash__item:last-child {
+	border-bottom: 0;
+}
+
+.gdp-dash__item.is-bad { border-left-color: var(--gdp-dash-bad); }
+.gdp-dash__item.is-warn { border-left-color: var(--gdp-dash-warn); }
+.gdp-dash__item.is-good { border-left-color: var(--gdp-dash-good); }
+
+.gdp-dash__item-text {
+	font-size: 0.95rem;
+	line-height: 1.35;
+}
+
+.gdp-dash__item-meta {
+	font-size: 0.82rem;
+	color: var(--gdp-dash-muted);
+}
+
+.gdp-dash__facts {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 0.35em 1em;
+}
+
+.gdp-dash__facts dt {
+	color: var(--gdp-dash-muted);
+}
+
+.gdp-dash__facts dd {
+	margin: 0;
+	text-align: right;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.gdp-dash--notice {
+	padding: 1em 1.2em;
+	border-left: 4px solid var(--gdp-dash-primary-c);
+	background: var(--gdp-dash-soft);
+}
+
+/* Pantallas angostas */
+
+@media (max-width: 720px) {
+	.gdp-dash__hero {
+		grid-template-columns: 1fr;
+		gap: 1.5em;
+	}
+
+	.gdp-dash__meters {
+		justify-content: flex-start;
+	}
+
+	.gdp-dash__meter {
+		width: 120px;
+	}
+
+	.gdp-dash__cta {
+		padding: 1.5em;
+	}
+
+	.gdp-dash__grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Pantalla de configuración en el panel */
+
+.gdp-dashboards-admin .gdp-dash-preview {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	padding: 1.5em 2em;
+	margin-bottom: 2em;
+}
+
+.gdp-dashboards-admin .gdp-dash-preview-title {
+	margin-top: 2em;
+}
+
+.gdp-dashboards-admin .gdp-dash-check {
+	display: inline-block;
+	margin: 0.3em 1.5em 0.3em 0;
+}
+
+.gdp-dashboards-admin .gdp-dash-scroll {
+	max-height: 420px;
+	overflow-y: auto;
+}
+
+.gdp-dashboards-admin .gdp-dash-snippet {
+	font-family: Consolas, Monaco, monospace;
+	max-width: 640px;
+}
+
+.gdp-dashboards-admin .gdp-dash-form .gdp-card {
+	margin-bottom: 1em;
+}
