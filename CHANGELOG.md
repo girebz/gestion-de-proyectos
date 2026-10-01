@@ -4,6 +4,11 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.7.2] - 2026-10-01
+
+### Cambiado
+- La pantalla Tableros y la documentación indican que, en el tema Relave Circular 1.4.0, el código corto va en el área de widgets "Portada: avance del proyecto" (bloque "Shortcode") o se usa el widget del tema "Avance por etapas".
+
 ## [0.7.1] - 2026-10-01
 
 ### Añadido

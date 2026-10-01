@@ -50,7 +50,7 @@ Un tema puede presentar el tablero con su propio diseño en lugar de insertar el
 - `gdp_parse_dashboard_shortcode( $texto )`: interpreta un código corto pegado por el usuario (por ejemplo, en el Personalizador) y devuelve el proyecto y los bloques.
 - Filtro `gdp_site_identity` para declarar colores y tipografía cuando la paleta del tema no usa los nombres habituales de theme.json (primary, secondary, accent, base, contrast); las variables CSS `--gdp-dash-*` permiten además ajustar el tablero desde la hoja de estilos del tema.
 
-El tema Relave Circular (1.3.0) usa esta interfaz: en Apariencia → Personalizar → Relave Circular → 10. Avance desde Gestión de Proyectos se pega el código corto y la sección "Avance" de la portada muestra las etapas del tablero como frentes de trabajo con el diseño del tema, o el tablero completo.
+El tema Relave Circular (1.4.0) usa esta interfaz: su portada tiene el área de widgets "Portada: avance del proyecto", donde el código corto va en un bloque "Shortcode" (tablero completo con los colores del tema) o se usa el widget del tema "Avance por etapas", que presenta las etapas del tablero como frentes de trabajo con el diseño de la portada.
 
 ## Conector con Claude, en breve
 
