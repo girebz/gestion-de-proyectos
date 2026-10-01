@@ -13,6 +13,7 @@ Plugin de WordPress para la gestión integral de proyectos de investigación y d
 | Control documental | disponible (0.3.0) | Documentos por tipo con numeración correlativa configurable, versiones de archivo privadas, vínculos con actividades y otros documentos, plazos de respuesta con alerta y aviso por correo, referencias en sistemas externos, borradores de carta en LaTeX y Word, papelera y herramientas del conector |
 | Adquisiciones y presupuesto | disponible (0.4.0) | Ciclo de compra por etapas con historial, proveedores, cotizaciones con ítems y comparación, elección y aprobación, orden con comprobación de reajuste y valor implícito de la unidad de fomento, presupuesto por partida (asignado, comprometido, ejecutado, saldo), valores diarios de la unidad de fomento, avisos de decisión pendiente, rendición en Excel y CSV, herramientas del conector |
 | Reuniones y acuerdos | disponible (0.5.0) | Actas con asistentes y acuerdos, acuerdos con responsable, plazo y estado convertibles en actividades, propuesta automática de acuerdos desde un resumen o transcripción con revisión antes de confirmar, seguimiento de reunión en reunión, actas en LaTeX y Word, aviso de acuerdos vencidos, herramientas del conector |
+| Tableros público y del equipo | disponible (0.7.0) | Tablero de difusión para la portada del sitio con el código corto `[gdp_avance]` (mensaje, avance y plazo, indicadores, etapas, logros y próximos hitos, instituciones, llamado a la acción con correo ofuscado) que solo muestra lo declarado publicable; tablero de gestión para el equipo con `[gdp_tablero_equipo]` (avance real y planificado, atrasos, vencimientos, ruta crítica, acuerdos, respuestas pendientes, compras, próxima reunión), reservado a usuarios con sesión iniciada y con montos solo para quien puede verlos; configuración con vista previa; herramienta del conector |
 | Exportación, importación y respaldo | disponible (0.6.0) | Exportación por módulos en JSON, ZIP con adjuntos, XLSX y CSV con referencias resueltas y diccionario de datos, variante anonimizada; importación con reconocimiento por clave natural, vista previa por tabla, conflictos por versión, aplicación parcial y reversión; respaldos manuales y semanales con restauración reversible; archivo de ejemplo del proyecto de relaves; herramientas del conector |
 | Muestras, ensayos, mezclas y probetas | etapa 2 | Cadena de custodia, resultados como datos, umbrales, dosificaciones, resistencia |
 | Evidencias para acreditación y rendición | etapa 3 | Criterios, medios de verificación, carpetas de evidencia, informes |
@@ -31,6 +32,14 @@ La especificación funcional completa está en [`docs/especificacion/`](docs/esp
 1. Descargue el ZIP de la [última versión](../../releases) (o constrúyalo con `bash bin/build-zip.sh`).
 2. En WordPress: Plugins → Añadir nuevo → Subir plugin → Activar.
 3. Para el conector: instale y active MCP Adapter, luego abra **Proyectos → Conector** y siga el asistente paso a paso (diagnóstico, credencial, configuración en Claude, prueba, mantenimiento).
+
+## Tableros en el sitio, en breve
+
+1. **Proyectos → Tableros**: elija qué se publica (título, resumen, etapas con nombre público, hitos destacados, indicadores, instituciones, correo de contacto) y marque **Publicar el tablero en el sitio**. La vista previa muestra el resultado con la identidad del sitio.
+2. En la portada o en cualquier página, inserte `[gdp_avance proyecto="CODIGO"]`; con `bloques="portada,indicadores,contacto"` se muestran solo esos bloques, en ese orden.
+3. Para el equipo, inserte `[gdp_tablero_equipo proyecto="CODIGO"]` en un tema del foro o en una página privada. Solo lo ven usuarios con sesión iniciada (opcionalmente, solo miembros del proyecto); los montos aparecen únicamente a quien tiene permiso para verlos. En wpForo, active antes "Enable WordPress Shortcodes in Post Content" (Foros → Ajustes → Funciones).
+
+Los datos se actualizan solos con cada cambio registrado en el proyecto; el tablero público no muestra nunca montos, nombres de personas, compras ni documentos.
 
 ## Conector con Claude, en breve
 

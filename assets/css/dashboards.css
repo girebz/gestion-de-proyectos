@@ -44,7 +44,7 @@
 	font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.4rem);
 	line-height: 1.15;
 	font-weight: 700;
-	color: var(--gdp-dash-secondary-c);
+	color: inherit;
 	letter-spacing: -0.01em;
 }
 
@@ -120,7 +120,7 @@
 .gdp-dash__meter-number {
 	font-size: 20px;
 	font-weight: 700;
-	fill: var(--gdp-dash-secondary-c);
+	fill: currentColor;
 }
 
 .gdp-dash__meter figcaption {
@@ -133,16 +133,15 @@
 
 .gdp-dash__indicators {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-	gap: 1px;
-	background: var(--gdp-dash-line);
-	border: 1px solid var(--gdp-dash-line);
+	grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+	gap: 0.75em;
 	margin-bottom: 2em;
 }
 
 .gdp-dash__indicator {
-	background: var(--gdp-dash-bg, #fff);
-	padding: 1.2em 1em;
+	border: 1px solid var(--gdp-dash-line);
+	border-top: 3px solid var(--gdp-dash-primary-c);
+	padding: 1.1em 1em;
 	display: flex;
 	flex-direction: column;
 	gap: 0.2em;
@@ -160,6 +159,9 @@
 	color: var(--gdp-dash-muted);
 }
 
+.gdp-dash__indicator.is-good { border-top-color: var(--gdp-dash-good); }
+.gdp-dash__indicator.is-warn { border-top-color: var(--gdp-dash-warn); }
+.gdp-dash__indicator.is-bad { border-top-color: var(--gdp-dash-bad); }
 .gdp-dash__indicator.is-good strong { color: var(--gdp-dash-good); }
 .gdp-dash__indicator.is-warn strong { color: var(--gdp-dash-warn); }
 .gdp-dash__indicator.is-bad strong { color: var(--gdp-dash-bad); }
@@ -550,4 +552,15 @@
 
 .gdp-dashboards-admin .gdp-dash-form .gdp-card {
 	margin-bottom: 1em;
+}
+
+.gdp-dashboards-admin .gdp-dash-form .gdp-table input[type="text"],
+.gdp-dashboards-admin .gdp-dash-form .gdp-table input[type="url"],
+.gdp-dashboards-admin .gdp-dash-form .gdp-table select {
+	width: 100%;
+	max-width: none;
+}
+
+.gdp-dashboards-admin .gdp-dash-form .gdp-table input.small-text {
+	width: 5em;
 }

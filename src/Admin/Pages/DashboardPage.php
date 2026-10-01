@@ -47,6 +47,7 @@ final class DashboardPage extends Page {
 					<li><a href="<?php echo esc_url( Admin::url( 'projects', array( 'action' => 'new' ) ) ); ?>"><?php esc_html_e( 'Cree el primer proyecto', 'gestion-de-proyectos' ); ?></a> <?php esc_html_e( 'con su código, financiador, plazo y presupuesto.', 'gestion-de-proyectos' ); ?></li>
 					<li><?php esc_html_e( 'Asigne al equipo con su perfil en el proyecto (director, ingeniero, investigador, apoyo, observador).', 'gestion-de-proyectos' ); ?></li>
 					<li><a href="<?php echo esc_url( Admin::url( 'connector' ) ); ?>"><?php esc_html_e( 'Configure el conector', 'gestion-de-proyectos' ); ?></a> <?php esc_html_e( 'siguiendo el asistente paso a paso.', 'gestion-de-proyectos' ); ?></li>
+					<li><a href="<?php echo esc_url( Admin::url( 'dashboards' ) ); ?>"><?php esc_html_e( 'Publique el avance', 'gestion-de-proyectos' ); ?></a> <?php esc_html_e( 'con los códigos cortos [gdp_avance] (portada del sitio) y [gdp_tablero_equipo] (foro o página del equipo).', 'gestion-de-proyectos' ); ?></li>
 				</ol>
 			</div>
 			<?php

@@ -105,6 +105,32 @@ final class DashboardsPage extends Page {
 	}
 
 	/**
+	 * Tarjeta en la ficha del proyecto: estado de publicación y códigos cortos.
+	 *
+	 * @param array<string,mixed> $p Proyecto.
+	 * @return void
+	 */
+	public static function project_card( array $p ): void {
+		$project_id = (int) $p['id'];
+		if ( ! Access::can( 'project.view', $project_id ) ) {
+			return;
+		}
+		$enabled = ! empty( DashboardSettings::get( $project_id )['public']['enabled'] );
+		?>
+		<div class="gdp-card">
+			<h2><?php esc_html_e( 'Tableros', 'gestion-de-proyectos' ); ?></h2>
+			<table class="gdp-facts">
+				<tr><th><?php esc_html_e( 'Tablero público', 'gestion-de-proyectos' ); ?></th><td><?php echo $enabled ? esc_html__( 'publicado en el sitio', 'gestion-de-proyectos' ) : '<span class="gdp-text-danger">' . esc_html__( 'sin publicar', 'gestion-de-proyectos' ) . '</span>'; ?></td></tr>
+				<tr><th><?php esc_html_e( 'Código corto público', 'gestion-de-proyectos' ); ?></th><td><code>[gdp_avance proyecto="<?php echo esc_html( $p['code'] ); ?>"]</code></td></tr>
+				<tr><th><?php esc_html_e( 'Código corto del equipo', 'gestion-de-proyectos' ); ?></th><td><code>[gdp_tablero_equipo proyecto="<?php echo esc_html( $p['code'] ); ?>"]</code></td></tr>
+			</table>
+			<p class="gdp-muted gdp-small"><?php esc_html_e( 'El público va en la portada del sitio; el del equipo, en un tema del foro o en una página privada. Lo que muestra cada uno se decide en Tableros.', 'gestion-de-proyectos' ); ?></p>
+			<p><a class="button" href="<?php echo esc_url( self::url( $project_id ) ); ?>"><?php esc_html_e( 'Configurar los tableros', 'gestion-de-proyectos' ); ?></a></p>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Cabecera con selector de proyecto y pestañas.
 	 *
 	 * @param array<string,mixed> $project Proyecto.
@@ -214,12 +240,12 @@ final class DashboardsPage extends Page {
 						<thead><tr><th><?php esc_html_e( 'Mostrar', 'gestion-de-proyectos' ); ?></th><th><?php esc_html_e( 'En el cronograma', 'gestion-de-proyectos' ); ?></th><th><?php esc_html_e( 'Nombre público', 'gestion-de-proyectos' ); ?></th><th><?php esc_html_e( 'Frase para el público', 'gestion-de-proyectos' ); ?></th></tr></thead>
 						<tbody>
 						<?php foreach ( $summaries as $s ) : ?>
-							<?php $c = $pub['stages'][ (string) $s['id'] ] ?? array( 'label' => '', 'text' => '', 'visible' => true ); ?>
+							<?php $c = $pub['stages'][ (string) $s['code'] ] ?? array( 'label' => '', 'text' => '', 'visible' => true ); ?>
 							<tr>
-								<td><input type="checkbox" name="public[stages][<?php echo (int) $s['id']; ?>][visible]" value="1" <?php checked( ! empty( $c['visible'] ) ); ?> aria-label="<?php esc_attr_e( 'Mostrar', 'gestion-de-proyectos' ); ?>"></td>
+								<td><input type="checkbox" name="public[stages][<?php echo esc_attr( $s['code'] ); ?>][visible]" value="1" <?php checked( ! empty( $c['visible'] ) ); ?> aria-label="<?php esc_attr_e( 'Mostrar', 'gestion-de-proyectos' ); ?>"></td>
 								<td><?php echo esc_html( trim( $s['code'] . ' ' . $s['name'] ) ); ?></td>
-								<td><input type="text" name="public[stages][<?php echo (int) $s['id']; ?>][label]" class="regular-text" value="<?php echo esc_attr( (string) $c['label'] ); ?>" placeholder="<?php echo esc_attr( $s['name'] ); ?>"></td>
-								<td><input type="text" name="public[stages][<?php echo (int) $s['id']; ?>][text]" class="large-text" value="<?php echo esc_attr( (string) $c['text'] ); ?>"></td>
+								<td><input type="text" name="public[stages][<?php echo esc_attr( $s['code'] ); ?>][label]" class="regular-text" value="<?php echo esc_attr( (string) $c['label'] ); ?>" placeholder="<?php echo esc_attr( $s['name'] ); ?>"></td>
+								<td><input type="text" name="public[stages][<?php echo esc_attr( $s['code'] ); ?>][text]" class="large-text" value="<?php echo esc_attr( (string) $c['text'] ); ?>"></td>
 							</tr>
 						<?php endforeach; ?>
 						</tbody>
@@ -238,12 +264,12 @@ final class DashboardsPage extends Page {
 						<thead><tr><th><?php esc_html_e( 'Destacar', 'gestion-de-proyectos' ); ?></th><th><?php esc_html_e( 'Actividad', 'gestion-de-proyectos' ); ?></th><th><?php esc_html_e( 'Término', 'gestion-de-proyectos' ); ?></th><th><?php esc_html_e( 'Texto público', 'gestion-de-proyectos' ); ?></th></tr></thead>
 						<tbody>
 						<?php foreach ( $candidates as $a ) : ?>
-							<?php $h = $pub['highlights'][ (string) $a['id'] ] ?? null; ?>
+							<?php $h = $pub['highlights'][ (string) $a['code'] ] ?? null; ?>
 							<tr>
-								<td><input type="checkbox" name="public[highlights][<?php echo (int) $a['id']; ?>][public]" value="1" <?php checked( null !== $h ); ?> aria-label="<?php esc_attr_e( 'Destacar', 'gestion-de-proyectos' ); ?>"></td>
+								<td><input type="checkbox" name="public[highlights][<?php echo esc_attr( $a['code'] ); ?>][public]" value="1" <?php checked( null !== $h ); ?> aria-label="<?php esc_attr_e( 'Destacar', 'gestion-de-proyectos' ); ?>"></td>
 								<td><?php echo esc_html( trim( $a['code'] . ' ' . $a['name'] ) ); ?><?php echo 'milestone' === $a['kind'] ? ' <span class="gdp-badge">' . esc_html__( 'hito', 'gestion-de-proyectos' ) . '</span>' : ''; ?><?php echo 'terminada' === $a['status'] ? ' <span class="gdp-badge gdp-badge--terminada">' . esc_html__( 'terminada', 'gestion-de-proyectos' ) . '</span>' : ''; ?></td>
 								<td><?php echo esc_html( (string) $a['end_date'] ); ?></td>
-								<td><input type="text" name="public[highlights][<?php echo (int) $a['id']; ?>][label]" class="large-text" value="<?php echo esc_attr( (string) ( $h['label'] ?? '' ) ); ?>"></td>
+								<td><input type="text" name="public[highlights][<?php echo esc_attr( $a['code'] ); ?>][label]" class="large-text" value="<?php echo esc_attr( (string) ( $h['label'] ?? '' ) ); ?>"></td>
 							</tr>
 						<?php endforeach; ?>
 						</tbody>
@@ -368,14 +394,14 @@ final class DashboardsPage extends Page {
 		if ( ! Access::can( 'project.edit', $project_id ) ) {
 			wp_die( esc_html__( 'Sin permiso.', 'gestion-de-proyectos' ), 403 );
 		}
-		$part    = isset( $_POST['part'] ) && 'team' === $_POST['part'] ? 'team' : 'public';
+		$part    = isset( $_POST['part'] ) && 'team' === sanitize_key( wp_unslash( (string) $_POST['part'] ) ) ? 'team' : 'public';
 		$current = DashboardSettings::get( $project_id );
 		$values  = array(
 			'public' => $current['public'],
 			'team'   => $current['team'],
 		);
 		// Los datos se normalizan en DashboardSettings::sanitize().
-		$posted          = isset( $_POST[ $part ] ) && is_array( $_POST[ $part ] ) ? wp_unslash( $_POST[ $part ] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$posted          = isset( $_POST[ $part ] ) && is_array( $_POST[ $part ] ) ? wp_unslash( $_POST[ $part ] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 		$values[ $part ] = $posted;
 		if ( 'public' === $part ) {
 			// Sin ninguna casilla marcada el navegador no envía el campo.

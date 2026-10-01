@@ -29,6 +29,14 @@ final class DashboardsModule implements ModuleInterface {
 	public const TEAM_TTL   = 5 * MINUTE_IN_SECONDS;
 
 	/**
+	 * Proyectos cuya caché ya se invalidó en esta petición (una importación
+	 * registra cientos de cambios seguidos; basta con invalidar una vez).
+	 *
+	 * @var array<int,bool>
+	 */
+	private static array $flushed = array();
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function slug(): string {
@@ -70,6 +78,7 @@ final class DashboardsModule implements ModuleInterface {
 			add_action( 'gdp_admin_register', array( DashboardsPage::class, 'register_handlers' ) );
 			add_action( 'gdp_admin_menu', array( DashboardsPage::class, 'menu' ) );
 			add_action( 'gdp_admin_assets', array( DashboardsPage::class, 'assets' ) );
+			add_action( 'gdp_project_view_cards', array( DashboardsPage::class, 'project_card' ) );
 		}
 	}
 
@@ -183,6 +192,7 @@ final class DashboardsModule implements ModuleInterface {
 		$data = DashboardData::public_data( $project_id );
 		if ( $data ) {
 			set_transient( $key, $data, self::PUBLIC_TTL );
+			unset( self::$flushed[ $project_id ] );
 		}
 
 		return $data;
@@ -204,6 +214,7 @@ final class DashboardsModule implements ModuleInterface {
 		$data = DashboardData::team_data( $project_id, $amounts );
 		if ( $data ) {
 			set_transient( $key, $data, self::TEAM_TTL );
+			unset( self::$flushed[ $project_id ] );
 		}
 
 		return $data;
@@ -230,13 +241,14 @@ final class DashboardsModule implements ModuleInterface {
 	 * @return void
 	 */
 	public static function flush( int $project_id ): void {
-		if ( $project_id <= 0 ) {
+		if ( $project_id <= 0 || isset( self::$flushed[ $project_id ] ) ) {
 			return;
 		}
 		foreach ( array( 'pub', 'team0', 'team1' ) as $kind ) {
 			delete_transient( self::key( $project_id, $kind ) );
 		}
 		update_option( 'gdp_dash_gen_' . $project_id, (int) get_option( 'gdp_dash_gen_' . $project_id, 0 ) + 1, false );
+		self::$flushed[ $project_id ] = true;
 	}
 
 	/**

@@ -77,8 +77,8 @@ final class DashboardSettings {
 				'blocks'       => self::BLOCKS,
 				'headline'     => (string) ( $project['name'] ?? '' ),
 				'summary'      => $first,
-				'stages'       => array(),
-				'highlights'   => array(),
+				'stages'       => array(), // Por código de actividad resumen: label, text, visible.
+				'highlights'   => array(), // Por código de actividad o hito: label.
 				'indicators'   => array(
 					array( 'label' => __( 'de avance', 'gestion-de-proyectos' ), 'source' => 'avance', 'value' => '' ),
 					array( 'label' => __( 'meses de trabajo', 'gestion-de-proyectos' ), 'source' => 'meses', 'value' => '' ),
@@ -161,22 +161,29 @@ final class DashboardSettings {
 		$p        = is_array( $values['public'] ?? null ) ? $values['public'] : array();
 		$t        = is_array( $values['team'] ?? null ) ? $values['team'] : array();
 
+		// Etapas y destacados se identifican por el código de la actividad (clave
+		// natural), que sobrevive a una exportación e importación; el identificador no.
 		$stages = array();
-		foreach ( (array) ( $p['stages'] ?? array() ) as $id => $s ) {
-			$s = (array) $s;
-			$stages[ (string) (int) $id ] = array(
+		foreach ( (array) ( $p['stages'] ?? array() ) as $code => $s ) {
+			$code = sanitize_text_field( (string) $code );
+			$s    = (array) $s;
+			if ( '' === $code ) {
+				continue;
+			}
+			$stages[ $code ] = array(
 				'label'   => sanitize_text_field( (string) ( $s['label'] ?? '' ) ),
 				'text'    => sanitize_text_field( (string) ( $s['text'] ?? '' ) ),
 				'visible' => ! empty( $s['visible'] ),
 			);
 		}
 		$highlights = array();
-		foreach ( (array) ( $p['highlights'] ?? array() ) as $id => $h ) {
-			$h = (array) $h;
-			if ( empty( $h['public'] ) ) {
+		foreach ( (array) ( $p['highlights'] ?? array() ) as $code => $h ) {
+			$code = sanitize_text_field( (string) $code );
+			$h    = (array) $h;
+			if ( '' === $code || empty( $h['public'] ) ) {
 				continue;
 			}
-			$highlights[ (string) (int) $id ] = array( 'label' => sanitize_text_field( (string) ( $h['label'] ?? '' ) ) );
+			$highlights[ $code ] = array( 'label' => sanitize_text_field( (string) ( $h['label'] ?? '' ) ) );
 		}
 		$indicators = array();
 		foreach ( (array) ( $p['indicators'] ?? array() ) as $ind ) {
@@ -202,7 +209,8 @@ final class DashboardSettings {
 				'url'  => esc_url_raw( (string) ( $pa['url'] ?? '' ) ),
 			);
 		}
-		$email = sanitize_email( (string) ( $p['cta_email'] ?? '' ) );
+		$email  = sanitize_email( (string) ( $p['cta_email'] ?? '' ) );
+		$button = sanitize_text_field( (string) ( $p['cta_button'] ?? '' ) );
 
 		return array(
 			'public' => array(
@@ -217,7 +225,7 @@ final class DashboardSettings {
 				'funding'      => sanitize_text_field( (string) ( $p['funding'] ?? '' ) ),
 				'cta_title'    => sanitize_text_field( (string) ( $p['cta_title'] ?? '' ) ),
 				'cta_text'     => sanitize_text_field( (string) ( $p['cta_text'] ?? '' ) ),
-				'cta_button'   => sanitize_text_field( (string) ( $p['cta_button'] ?? $defaults['public']['cta_button'] ) ),
+				'cta_button'   => '' !== $button ? $button : $defaults['public']['cta_button'],
 				'cta_email'    => is_email( $email ) ? $email : $defaults['public']['cta_email'],
 				'cta_subject'  => sanitize_text_field( (string) ( $p['cta_subject'] ?? '' ) ),
 				'show_updated' => ! empty( $p['show_updated'] ),

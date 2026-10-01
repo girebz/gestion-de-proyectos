@@ -42,16 +42,17 @@ final class DashboardData {
 		}
 		$conf       = DashboardSettings::get( $project_id )['public'];
 		$activities = ActivityRepository::for_project( $project_id );
-		$progress   = self::progress( $activities );
-		$time       = self::time_elapsed( $project );
 		$today      = current_time( 'Y-m-d' );
+		$curve      = self::curve( $project_id, $today );
+		$progress   = null === $curve ? self::progress( $activities ) : (int) round( $curve['actual'] );
+		$time       = self::time_elapsed( $project, $today );
 
 		$stages = array();
 		foreach ( $activities as $a ) {
 			if ( 0 !== (int) $a['parent_id'] || 'summary' !== $a['kind'] ) {
 				continue;
 			}
-			$c = $conf['stages'][ (string) $a['id'] ] ?? null;
+			$c = $conf['stages'][ (string) $a['code'] ] ?? null;
 			if ( is_array( $c ) && empty( $c['visible'] ) ) {
 				continue;
 			}
@@ -67,7 +68,7 @@ final class DashboardData {
 		$achieved = array();
 		$upcoming = array();
 		foreach ( $activities as $a ) {
-			$h = $conf['highlights'][ (string) $a['id'] ] ?? null;
+			$h = $conf['highlights'][ (string) $a['code'] ] ?? null;
 			if ( null === $h || 'cancelada' === $a['status'] ) {
 				continue;
 			}
@@ -128,14 +129,9 @@ final class DashboardData {
 		$until      = gmdate( 'Y-m-d', (int) strtotime( $today . ' +' . (int) $conf['horizon_days'] . ' days' ) );
 		$week_ago   = gmdate( 'Y-m-d', (int) strtotime( $today . ' -7 days' ) );
 		$activities = ActivityRepository::for_project( $project_id );
-		$progress   = self::progress( $activities );
-		$planned    = null;
-		$curve      = ProgressCurve::build( $project_id, $today );
-		if ( ! empty( $curve['weight'] ) && ! empty( $curve['points'] ) ) {
-			// Real y planificado con la misma ponderación que la curva S, para que la desviación sea comparable.
-			$planned  = round( (float) $curve['planned_today'], 1 );
-			$progress = (int) round( (float) $curve['actual_today'] );
-		}
+		$curve      = self::curve( $project_id, $today );
+		$progress   = null === $curve ? self::progress( $activities ) : (int) round( $curve['actual'] );
+		$planned    = null === $curve ? null : round( $curve['planned'], 1 );
 
 		$overdue  = array();
 		$due_soon = array();
@@ -212,7 +208,7 @@ final class DashboardData {
 			'progress'     => $progress,
 			'planned'      => $planned,
 			'deviation'    => null === $planned ? null : round( $progress - $planned, 1 ),
-			'time'         => self::time_elapsed( $project ),
+			'time'         => self::time_elapsed( $project, $today ),
 			'overdue'      => $overdue,
 			'due_soon'     => $due_soon,
 			'critical'     => array_slice( $critical, 0, 8 ),
@@ -225,6 +221,23 @@ final class DashboardData {
 			'amounts'      => $amounts,
 			'budget'       => $budget,
 		);
+	}
+
+	/**
+	 * Avance real y planificado a la fecha según la curva S (misma ponderación
+	 * que el informe semanal, para que las cifras coincidan en todo el plugin).
+	 *
+	 * @param int    $project_id Proyecto.
+	 * @param string $today      Fecha.
+	 * @return array{actual:float,planned:float}|null Null si no hay plan.
+	 */
+	private static function curve( int $project_id, string $today ): ?array {
+		$curve = ProgressCurve::build( $project_id, $today );
+		if ( empty( $curve['weight'] ) || empty( $curve['points'] ) ) {
+			return null;
+		}
+
+		return array( 'actual' => (float) $curve['actual_today'], 'planned' => (float) $curve['planned_today'] );
 	}
 
 	/**
@@ -252,15 +265,16 @@ final class DashboardData {
 	 * Plazo transcurrido del proyecto.
 	 *
 	 * @param array<string,mixed> $project Proyecto.
+	 * @param string|null         $today   Fecha de referencia (por defecto, hoy).
 	 * @return array{percent:int|null,months:int|null,start:string|null,end:string|null}
 	 */
-	public static function time_elapsed( array $project ): array {
+	public static function time_elapsed( array $project, ?string $today = null ): array {
 		$start = $project['start_date'] ?? null;
 		$end   = $project['end_date'] ?? null;
 		if ( ! $start ) {
 			return array( 'percent' => null, 'months' => null, 'start' => null, 'end' => $end );
 		}
-		$now    = strtotime( current_time( 'Y-m-d' ) );
+		$now    = strtotime( $today ?? current_time( 'Y-m-d' ) );
 		$s      = strtotime( (string) $start );
 		$months = max( 0, (int) floor( ( $now - $s ) / ( 30.4375 * DAY_IN_SECONDS ) ) );
 		$pct    = null;

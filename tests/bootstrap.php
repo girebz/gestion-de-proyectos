@@ -52,4 +52,89 @@ if ( ! function_exists( 'wp_json_encode' ) ) {
 	}
 }
 
+if ( ! function_exists( '__' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress: devuelve el texto sin traducir.
+	 *
+	 * @param string $text   Texto.
+	 * @param string $domain Dominio.
+	 * @return string
+	 */
+	function __( string $text, string $domain = 'default' ): string { // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, Universal.Files.SeparateFunctionsFromOO
+		return $text;
+	}
+}
+if ( ! function_exists( 'sanitize_text_field' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress: quita etiquetas y espacios sobrantes.
+	 *
+	 * @param string $text Texto.
+	 * @return string
+	 */
+	function sanitize_text_field( string $text ): string {
+		return trim( (string) preg_replace( '/[\r\n\t ]+/', ' ', strip_tags( $text ) ) );
+	}
+}
+if ( ! function_exists( 'sanitize_textarea_field' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress: conserva los saltos de línea.
+	 *
+	 * @param string $text Texto.
+	 * @return string
+	 */
+	function sanitize_textarea_field( string $text ): string {
+		return trim( strip_tags( $text ) );
+	}
+}
+if ( ! function_exists( 'sanitize_email' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress.
+	 *
+	 * @param string $email Correo.
+	 * @return string
+	 */
+	function sanitize_email( string $email ): string {
+		return (string) filter_var( trim( $email ), FILTER_SANITIZE_EMAIL );
+	}
+}
+if ( ! function_exists( 'is_email' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress.
+	 *
+	 * @param string $email Correo.
+	 * @return string|false
+	 */
+	function is_email( string $email ) {
+		return false === filter_var( $email, FILTER_VALIDATE_EMAIL ) ? false : $email;
+	}
+}
+if ( ! function_exists( 'esc_url_raw' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress: solo direcciones http(s).
+	 *
+	 * @param string $url Dirección.
+	 * @return string
+	 */
+	function esc_url_raw( string $url ): string {
+		$url = trim( $url );
+
+		return preg_match( '#^https?://#i', $url ) ? $url : '';
+	}
+}
+if ( ! function_exists( 'get_option' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress: devuelve el valor por defecto.
+	 *
+	 * @param string $name    Opción.
+	 * @param mixed  $default Valor por defecto.
+	 * @return mixed
+	 */
+	function get_option( string $name, $default = false ) {
+		return 'admin_email' === $name ? 'admin@example.test' : $default;
+	}
+}
+if ( ! defined( 'DAY_IN_SECONDS' ) ) {
+	define( 'DAY_IN_SECONDS', 86400 );
+}
+
 unset( $gdp_root );
