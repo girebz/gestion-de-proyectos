@@ -82,6 +82,7 @@ final class FinanceModule implements ModuleInterface {
 		add_filter( 'gdp_data_personal_columns', array( $this, 'data_personal_columns' ) );
 		add_filter( 'gdp_data_import_row', array( $this, 'import_row' ), 10, 3 );
 		add_filter( 'gdp_data_dictionary', array( $this, 'data_dictionary' ) );
+		Board\BoardShortcode::register();
 
 		if ( is_admin() ) {
 			add_action( 'gdp_admin_register', array( FinancePage::class, 'register_handlers' ) );
