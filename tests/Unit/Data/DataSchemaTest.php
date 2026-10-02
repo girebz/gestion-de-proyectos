@@ -143,4 +143,62 @@ final class DataSchemaTest extends TestCase {
 		$this->assertSame( 'document 3 → activity 8', Exporter::label( 'links', array( 'from_type' => 'document', 'from_id' => 3, 'to_type' => 'activity', 'to_id' => 8 ) ) );
 		$this->assertSame( 'budget_line/rrhh', Exporter::label( 'catalog_items', array( 'catalog' => 'budget_line', 'slug' => 'rrhh' ) ) );
 	}
+
+	/**
+	 * Regresión de la 0.9.0: el módulo de finanzas declaraba sus tablas pero
+	 * no aparecía en el formulario de exportación, que recorría una lista fija.
+	 */
+	public function test_every_declared_module_is_offered_for_export(): void {
+		$labels = DataSchema::module_labels();
+		$this->assertSame( array_keys( DataSchema::modules() ), array_keys( $labels ) );
+		foreach ( $labels as $slug => $label ) {
+			$this->assertNotSame( '', $label, $slug );
+		}
+		$this->assertSame(
+			array( 'core' => 'Proyecto', 'finance' => 'finance' ),
+			DataSchema::labels_for( array( 'core', 'finance' ), array( 'core' => 'Proyecto', 'otro' => 'Sin tablas' ) ),
+			'Un módulo con tablas y sin etiqueta se ofrece con su identificador; una etiqueta sin tablas no se ofrece.'
+		);
+	}
+
+	public function test_modules_without_own_permission_stay_exportable_and_importable(): void {
+		$this->assertSame( array( 'audit' => array( 'export' => 'audit.view' ) ), DataSchema::module_permissions() );
+		$this->assertSame( array( 'core', 'planning', 'audit' ), DataSchema::exportable_modules( array( 'core', 'planning', 'audit' ), 1, static fn( string $permission ): bool => true ) );
+		$this->assertSame( array(), DataSchema::blocked_import_tables( 1, static fn( string $permission ): bool => true ) );
+	}
+
+	/**
+	 * La bitácora guarda cada registro antes y después de cada cambio, con
+	 * montos: exportarla exige verla, igual que en su pantalla.
+	 */
+	public function test_audit_log_export_requires_audit_permission(): void {
+		$this->assertSame( array( 'core', 'planning' ), DataSchema::exportable_modules( array( 'core', 'planning', 'audit' ), 1, static fn( string $permission ): bool => 'audit.view' !== $permission ) );
+		$this->assertSame( array(), DataSchema::blocked_import_tables( 1, static fn( string $permission ): bool => 'audit.view' !== $permission ), 'La bitácora no se importa: no bloquea ninguna tabla.' );
+	}
+
+	/**
+	 * Quien solo puede importar no debe cambiar su perfil en el equipo ni los
+	 * permisos de un grupo: cada tabla del núcleo exige el permiso con que se
+	 * edita en el panel, y los grupos, administrar el plugin.
+	 */
+	public function test_core_tables_require_their_edit_permission_to_import(): void {
+		$columns = DataSchema::columns();
+		foreach ( DataSchema::TABLE_IMPORT_PERMISSIONS as $table => $permission ) {
+			$this->assertArrayHasKey( $table, $columns, $table );
+			$this->assertNotSame( '', $permission, $table );
+		}
+		$this->assertSame(
+			array( 'projects', 'project_members', 'permission_groups' ),
+			DataSchema::blocked_import_tables( 1, static fn( string $permission ): bool => false )
+		);
+		$this->assertSame(
+			array( 'permission_groups' ),
+			DataSchema::blocked_import_tables( 1, static fn( string $permission ): bool => 'manage' !== $permission ),
+			'Un director que no administra el plugin importa el equipo, pero no los grupos.'
+		);
+		$this->assertSame(
+			array( 'project_members' ),
+			DataSchema::blocked_import_tables( 1, static fn( string $permission ): bool => 'project.members' !== $permission )
+		);
+	}
 }

@@ -282,6 +282,8 @@ final class Importer {
 			'tables'   => array(),
 			'touched_planning' => false,
 		);
+		// Tablas que el usuario no puede escribir: se omiten siempre; el proyecto solo ubica el destino.
+		$this->state['skip'] = array_map( 'sanitize_key', (array) ( $options['skip'] ?? array() ) );
 
 		// Proyecto de destino.
 		$source = $document['tables']['projects'][0] ?? null;
@@ -325,11 +327,12 @@ final class Importer {
 		}
 
 		$selected = is_array( $options['tables'] ?? null ) && ! empty( $options['tables'] ) ? array_map( 'sanitize_key', $options['tables'] ) : null;
+		$skip     = $this->state['skip'];
 		foreach ( DataSchema::order() as $table ) {
 			if ( ! isset( $document['tables'][ $table ] ) ) {
 				continue;
 			}
-			if ( null !== $selected && ! in_array( $table, $selected, true ) && 'projects' !== $table ) {
+			if ( 'projects' !== $table && ( in_array( $table, $skip, true ) || ( null !== $selected && ! in_array( $table, $selected, true ) ) ) ) {
 				$this->state['tables'][ $table ] = array( 'create' => 0, 'update' => 0, 'unchanged' => 0, 'skipped' => count( $document['tables'][ $table ] ), 'conflicts' => 0, 'samples' => array(), 'selected' => false );
 				continue;
 			}
@@ -405,6 +408,11 @@ final class Importer {
 				$diff = $this->diff( $table, $existing, array_diff_key( $clean, $deferred ) );
 				if ( empty( $diff ) ) {
 					++$stats['unchanged'];
+					continue;
+				}
+				// El proyecto se recorre aunque el usuario no pueda editarlo: ubica el destino, pero no se escribe.
+				if ( in_array( $table, $this->state['skip'], true ) ) {
+					++$stats['skipped'];
 					continue;
 				}
 				if ( isset( $clean['version'], $existing['version'] ) && (int) $existing['version'] > (int) $clean['version'] ) {

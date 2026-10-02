@@ -4,7 +4,7 @@ Tags: gestión de proyectos, investigación, mcp, planificación, rendición de 
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.9.0
+Stable tag: 0.9.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,10 @@ Quien tenga el permiso "Ver finanzas y rendición de cuentas" en el proyecto: po
 En un directorio privado dentro de wp-content/uploads, protegido contra acceso web directo y servido solo a usuarios autorizados.
 
 == Changelog ==
+
+= 0.9.1 =
+* Corrección: la exportación por proyecto ofrece el módulo de finanzas (antes quedaba fuera de toda exportación y respaldo por proyecto). Exportar las tablas de finanzas exige el permiso de exportar finanzas, e importarlas, el de registrar pagos y rendiciones.
+* Seguridad: importar el equipo exige gestionar los miembros; los grupos de permisos, administrar el plugin; y el registro del proyecto, editarlo. Sin esos permisos esas tablas se omiten con aviso, y al confirmar se respetan las omisiones de la vista previa. Exportar la bitácora exige verla.
 
 = 0.9.0 =
 * Finanzas y rendición de cuentas: convenio, cuotas, ítems por fuente, pagos, rendiciones con estados declarados, garantías y modificaciones; estado de cuentas con el Fondo y el aporte pecuniario por separado; brecha y condiciones de la cuota siguiente; asistente con hojas de ejecución para SISREC; programación de caja con seis controles; conciliación con la cartola; planilla y ZIP de carga masiva, expediente, carta sin movimiento y ficha de giro; herramientas del conector. Grupos de permisos a medida.

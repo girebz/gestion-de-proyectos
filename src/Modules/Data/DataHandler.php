@@ -86,8 +86,21 @@ final class DataHandler implements HandlerInterface {
 						$tables[] = $t;
 					}
 				}
-				$code  = sanitize_text_field( (string) ( $payload['project_code'] ?? '' ) );
-				$clean = array( 'file' => $file, 'mode' => $mode, 'project_code' => $code, 'tables' => $tables );
+				$code = sanitize_text_field( (string) ( $payload['project_code'] ?? '' ) );
+				// Tablas que el usuario no puede escribir en el proyecto de destino (núcleo y módulos con
+				// permiso propio): se omiten. Al confirmar se conservan las omisiones de la propuesta, para
+				// que se aplique exactamente lo que mostró la vista previa aunque confirme otra persona.
+				$target = $project_id;
+				if ( $target <= 0 && 'update' === $mode ) {
+					$found  = ProjectRepository::find_by_code( '' !== $code ? $code : sanitize_text_field( (string) ( $read['document']['tables']['projects'][0]['code'] ?? '' ) ) );
+					$target = $found ? (int) $found['id'] : 0;
+				}
+				$skip = array();
+				if ( 'update' === $mode && $target > 0 ) {
+					$blocked = array_merge( DataSchema::blocked_import_tables( $target ), array_map( 'sanitize_key', (array) ( $payload['skip'] ?? array() ) ) );
+					$skip    = array_values( array_unique( array_intersect( $blocked, array_keys( (array) ( $read['document']['tables'] ?? array() ) ) ) ) );
+				}
+				$clean = array( 'file' => $file, 'mode' => $mode, 'project_code' => $code, 'tables' => array_values( array_diff( $tables, $skip ) ), 'skip' => $skip );
 				$plan  = Importer::plan( $read['document'], $clean );
 				if ( is_wp_error( $plan ) ) {
 					return $plan;
@@ -159,6 +172,10 @@ final class DataHandler implements HandlerInterface {
 		$preview['conflicts'] = $plan['conflicts'];
 		if ( ! empty( $payload['tables'] ) ) {
 			$preview['warnings'][] = sprintf( 'Aplicación parcial: solo se cargan las tablas %s.', implode( ', ', $payload['tables'] ) );
+		}
+		if ( ! empty( $payload['skip'] ) ) {
+			/* translators: lista de tablas. */
+			$preview['warnings'][] = sprintf( __( 'Sin permiso para escribir estas tablas en el proyecto; sus cambios se omiten: %s.', 'gestion-de-proyectos' ), implode( ', ', (array) $payload['skip'] ) );
 		}
 
 		return $preview;

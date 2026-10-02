@@ -4,6 +4,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.9.1] - 2026-10-02
+
+### Corregido
+- La exportación por proyecto no ofrecía el módulo de finanzas: el formulario recorría una lista fija de módulos, de modo que las tablas del convenio, las cuotas, los pagos, las rendiciones y la programación de caja quedaban fuera de toda exportación y de los respaldos por proyecto sin aviso. Ahora se ofrece todo módulo que declare tablas, con su etiqueta (filtro nuevo `gdp_data_module_labels`) o con su identificador.
+
+### Cambiado
+- Mover las tablas de finanzas exige los permisos del módulo además de los de datos: exportarlas, "Exportar expedientes, planillas y fichas de giro" (`finance.export`), y escribirlas por importación, "Registrar pagos, rendiciones y estados" (`finance.edit`). Sin ellos, la casilla aparece deshabilitada, la herramienta del conector las excluye y la vista previa de la importación avisa que se omiten. Filtro nuevo `gdp_data_module_permissions` para que otros módulos declaren permisos propios.
+- La advertencia del editor de grupos sobre "Exportar datos" sin finanzas indica ahora que lo expuesto son los montos de compras, cotizaciones y partidas.
+
+### Seguridad
+- La importación en un proyecto existente ya no permite cambiar lo que el panel reserva: el equipo exige "Gestionar los miembros" (`project.members`), los grupos de permisos, que son globales, exigen administrar el plugin, y el registro del proyecto exige "Editar el proyecto" (`project.edit`); sin esos permisos, esas tablas se omiten con aviso y el proyecto solo ubica el destino. Antes, un grupo a medida con "Importar datos" podía cambiar su propio perfil en el equipo o los permisos de su grupo con un archivo preparado. Los perfiles predefinidos no cambian: quienes importan (director e ingeniero de proyectos) tienen esos permisos.
+- Al confirmar una importación se conservan las omisiones que mostró la vista previa, aunque confirme otra persona con más permisos.
+- Exportar la bitácora exige "Ver la bitácora" (`audit.view`): guarda cada registro antes y después de cada cambio, con los montos de pagos, compras y partidas, y la dirección de origen. Antes bastaba "Exportar datos", que tiene el perfil de investigador. El editor de grupos advierte además cuando un grupo ve la bitácora sin ver las finanzas.
+
 ## [0.9.0] - 2026-10-02
 
 ### Añadido

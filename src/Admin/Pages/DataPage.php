@@ -200,7 +200,8 @@ final class DataPage extends Page {
 			self::close();
 			return;
 		}
-		$labels = DataSchema::module_labels();
+		$labels  = DataSchema::module_labels();
+		$allowed = DataSchema::exportable_modules( array_keys( $labels ), $project_id );
 		?>
 		<div class="gdp-grid">
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gdp-card gdp-card--form">
@@ -218,7 +219,12 @@ final class DataPage extends Page {
 					</td></tr>
 					<tr><th scope="row"><?php esc_html_e( 'Módulos', 'gestion-de-proyectos' ); ?></th><td>
 						<?php foreach ( $labels as $slug => $label ) : ?>
-							<label class="gdp-check"><input type="checkbox" name="modules[]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( 'audit' !== $slug ); ?> <?php disabled( 'core' === $slug ); ?>> <?php echo esc_html( $label ); ?></label><br>
+							<?php $can_export = in_array( $slug, $allowed, true ); ?>
+							<label class="gdp-check"><input type="checkbox" name="modules[]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( 'audit' !== $slug && $can_export ); ?> <?php disabled( 'core' === $slug || ! $can_export ); ?>> <?php echo esc_html( $label ); ?>
+								<?php if ( ! $can_export ) : ?>
+									<span class="description"><?php esc_html_e( '(sin permiso para exportarlo)', 'gestion-de-proyectos' ); ?></span>
+								<?php endif; ?>
+							</label><br>
 						<?php endforeach; ?>
 						<input type="hidden" name="modules[]" value="core">
 					</td></tr>
@@ -553,6 +559,7 @@ final class DataPage extends Page {
 		}
 		$format   = isset( $_POST['format'] ) ? sanitize_key( wp_unslash( (string) $_POST['format'] ) ) : 'json';
 		$modules  = isset( $_POST['modules'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['modules'] ) ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$modules  = DataSchema::exportable_modules( Exporter::modules_from( $modules, false ), $project_id );
 		$options  = array( 'modules' => $modules, 'anonymize' => ! empty( $_POST['anonymize'] ), 'dictionary' => ! empty( $_POST['dictionary'] ), 'attachments' => 'zip' === $format );
 		$document = Exporter::project( $project_id, $options );
 		if ( is_wp_error( $document ) ) {
