@@ -178,6 +178,11 @@
 	margin: 0 0 10px;
 }
 
+/* La última palabra de un rótulo y su ayuda van juntas. */
+.gdp-fin-keep {
+	white-space: nowrap;
+}
+
 /* Un botón con texto largo se parte en líneas antes que desbordar la pantalla. */
 .gdp-front.gdp-fin .button {
 	max-width: 100%;
