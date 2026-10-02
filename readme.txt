@@ -4,7 +4,7 @@ Tags: gestión de proyectos, investigación, mcp, planificación, control docume
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.7.3
+Stable tag: 0.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,7 +30,7 @@ Primera versión: núcleo del sistema (proyectos, equipo con perfiles por proyec
 
 = Tableros en el sitio =
 
-Para publicar el avance, configure en Proyectos → Tableros qué se muestra y active la publicación; luego inserte en la portada el código corto [gdp_avance proyecto="CODIGO"]. El tablero del equipo se inserta con [gdp_tablero_equipo proyecto="CODIGO"] en un tema del foro o en una página privada y solo lo ven usuarios con sesión iniciada.
+Para publicar el avance, configure en Proyectos → Tableros qué se muestra y active la publicación; luego inserte en la portada el código corto [gdp_avance proyecto="CODIGO"]. El tablero del equipo se inserta con [gdp_tablero_equipo proyecto="CODIGO"] en un tema del foro o en una página privada y solo lo ven usuarios con sesión iniciada. Para la página privada del equipo hay además [gdp_gantt], [gdp_kanban], [gdp_calendario], [gdp_alertas], [gdp_carga] e [gdp_informe_semanal], con el mismo atributo proyecto y la misma regla de acceso.
 
 == Frequently Asked Questions ==
 
@@ -50,6 +50,10 @@ Solo lo que se marque como publicable en Proyectos → Tableros: título y resum
 
 Usuarios con sesión iniciada en el sitio (si el registro está cerrado, solo los que usted registre a mano) o, si así se configura, solo los miembros del proyecto. Los montos aparecen únicamente a quien tiene permiso para verlos. A los visitantes se les pide iniciar sesión.
 
+= ¿Puede el equipo ver la carta Gantt o el calendario sin entrar al panel? =
+
+Sí: [gdp_gantt], [gdp_kanban], [gdp_calendario], [gdp_alertas], [gdp_carga] e [gdp_informe_semanal] muestran esas vistas en modo lectura en cualquier página, entrada o tema de foro, solo a usuarios con sesión iniciada (y, si así se configura, solo a miembros del proyecto). Quien puede entrar al panel conserva los enlaces hacia él. La pestaña Tablero del equipo de Proyectos → Tableros entrega los códigos listos para copiar.
+
 = El código corto aparece como texto en un mensaje del foro (wpForo) =
 
 Active "Enable WordPress Shortcodes in Post Content" en Foros → Ajustes → pestaña Features ("Características"). Hasta entonces wpForo no interpreta ningún código corto dentro de los mensajes.
@@ -59,6 +63,9 @@ Active "Enable WordPress Shortcodes in Post Content" en Foros → Ajustes → pe
 En un directorio privado dentro de wp-content/uploads, protegido contra acceso web directo y servido solo a usuarios autorizados.
 
 == Changelog ==
+
+= 0.8.0 =
+* Códigos cortos para la página privada del equipo: carta Gantt, tablero de tarjetas, calendario, alertas, carga de trabajo e informe semanal, en modo lectura y solo para usuarios con sesión iniciada; vistas compartidas entre el panel y el sitio; alineación de las barras de la carta Gantt con sus filas.
 
 = 0.7.3 =
 * Códigos cortos dentro de foros: atributos con comillas convertidas en entidades o tipográficas, colores del sitio también en la hoja de estilos, indicaciones para wpForo.

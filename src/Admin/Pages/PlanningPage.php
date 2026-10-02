@@ -13,15 +13,15 @@ use GDP\Admin\Admin;
 use GDP\Core\Access;
 use GDP\Core\Catalogs;
 use GDP\Core\Roles;
-use GDP\Domain\Projects\MemberRepository;
 use GDP\Domain\Projects\ProjectRepository;
 use GDP\Modules\Planning\ActivityRepository;
 use GDP\Modules\Planning\AssignmentRepository;
-use GDP\Modules\Planning\BaselineRepository;
 use GDP\Modules\Planning\CalendarRepository;
 use GDP\Modules\Planning\DependencyRepository;
 use GDP\Modules\Planning\ProgressRepository;
 use GDP\Modules\Planning\ScheduleService;
+use GDP\Modules\Planning\Views\CanvasView;
+use GDP\Modules\Planning\Views\ViewContext;
 use GDP\Operations\OperationManager;
 
 defined( 'ABSPATH' ) || exit;
@@ -80,50 +80,40 @@ final class PlanningPage extends Page {
 		wp_enqueue_style( 'gdp-planning', GDP_URL . 'assets/css/planning.css', array( 'gdp-admin' ), GDP_VERSION );
 		wp_enqueue_script( 'gdp-planning', GDP_URL . 'assets/js/planning.js', array( 'gdp-admin' ), GDP_VERSION, true );
 
-		$project = self::current_project();
-		$view    = self::current_view();
-		$data    = array(
-			'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
-			'nonce'     => wp_create_nonce( 'gdp_planning_ajax' ),
-			'projectId' => $project ? (int) $project['id'] : 0,
-			'view'      => $view,
-			'canEdit'   => $project ? Access::can( 'planning.edit', (int) $project['id'] ) : false,
-			'editUrl'   => $project ? self::url( (int) $project['id'], 'edit', array( 'id' => 0 ) ) : '',
-			'strings'   => array(
-				'saving'     => __( 'Guardando…', 'gestion-de-proyectos' ),
-				'error'      => __( 'No se pudo guardar el cambio.', 'gestion-de-proyectos' ),
-				'today'      => __( 'Hoy', 'gestion-de-proyectos' ),
-				'baseline'   => __( 'Línea base', 'gestion-de-proyectos' ),
-				'days'       => __( 'días hábiles', 'gestion-de-proyectos' ),
-				'fixed'      => __( 'Con fechas reales: no se puede arrastrar.', 'gestion-de-proyectos' ),
-				'zoomDay'    => __( 'Día', 'gestion-de-proyectos' ),
-				'zoomWeek'   => __( 'Semana', 'gestion-de-proyectos' ),
-				'zoomMonth'  => __( 'Mes', 'gestion-de-proyectos' ),
-				'zoomQuarter' => __( 'Trimestre', 'gestion-de-proyectos' ),
-				'allFronts'  => __( 'Todos los frentes', 'gestion-de-proyectos' ),
-				'allOwners'  => __( 'Todos los responsables', 'gestion-de-proyectos' ),
-				'noFront'    => __( 'Sin frente', 'gestion-de-proyectos' ),
-				'noOwner'    => __( 'Sin responsable', 'gestion-de-proyectos' ),
-				'linkTo'     => __( 'Suelte sobre la actividad sucesora', 'gestion-de-proyectos' ),
-				/* translators: notación de la dependencia. */
-				'unlink'     => __( '¿Quitar la dependencia %s?', 'gestion-de-proyectos' ),
-				'collapse'   => __( 'Contraer', 'gestion-de-proyectos' ),
-				'expand'     => __( 'Expandir', 'gestion-de-proyectos' ),
-				'noDates'    => __( 'Sin fechas programadas.', 'gestion-de-proyectos' ),
-				'activity'   => __( 'Actividad', 'gestion-de-proyectos' ),
-				'start'      => __( 'Inicio', 'gestion-de-proyectos' ),
-				'end'        => __( 'Término', 'gestion-de-proyectos' ),
-				'float'      => __( 'Holgura', 'gestion-de-proyectos' ),
-				'critical'   => __( 'crítica', 'gestion-de-proyectos' ),
-				/* translators: nombre de la actividad. */
-				'clear'      => __( '¿Quitar la restricción de fecha de %s?', 'gestion-de-proyectos' ),
-				'statuses'   => ActivityRepository::status_labels(),
-			),
-		);
-		if ( $project && in_array( $view, array( 'gantt', 'board' ), true ) ) {
-			$data['data'] = self::client_data( (int) $project['id'] );
+		$project    = self::current_project();
+		$view       = self::current_view();
+		$project_id = $project ? (int) $project['id'] : 0;
+		$data       = CanvasView::config( $project_id, $view, $project_id > 0 && Access::can( 'planning.edit', $project_id ), $project_id > 0 ? self::url( $project_id, 'edit', array( 'id' => 0 ) ) : '' );
+		if ( $project_id > 0 && in_array( $view, array( 'gantt', 'board' ), true ) ) {
+			$data['data'] = CanvasView::data( $project_id );
 		}
 		wp_localize_script( 'gdp-planning', 'gdpPlanning', $data );
+	}
+
+	/**
+	 * Contexto de presentación de las vistas compartidas, para el panel: enlaces
+	 * a esta pantalla, parámetros sin prefijo, edición si corresponde y descargas.
+	 *
+	 * @param int    $project_id Proyecto.
+	 * @param string $view       Vista.
+	 * @return ViewContext
+	 */
+	public static function context( int $project_id, string $view ): ViewContext {
+		return new ViewContext(
+			admin_url( 'admin.php' ),
+			array(
+				'page'       => Admin::SLUG . '-' . self::SLUG,
+				'project_id' => (string) $project_id,
+				'view'       => $view,
+			),
+			array(
+				'admin'     => true,
+				'edit'      => Access::can( 'planning.edit', $project_id ) ? self::url( $project_id, 'edit', array( 'id' => '%d' ) ) : '',
+				'baselines' => self::url( $project_id, 'baselines' ),
+				'exports'   => true,
+				'editable'  => true,
+			)
+		);
 	}
 
 	/**
@@ -479,7 +469,7 @@ final class PlanningPage extends Page {
 	}
 
 	/**
-	 * Contenedor de la carta Gantt o del tablero (los dibuja el script).
+	 * Carta Gantt o tablero (los dibuja el script a partir de la vista compartida).
 	 *
 	 * @param array<string,mixed> $project Proyecto.
 	 * @param string              $kind    gantt|board.
@@ -488,141 +478,8 @@ final class PlanningPage extends Page {
 	private static function render_canvas( array $project, string $kind ): void {
 		$project_id = (int) $project['id'];
 		self::header( $project, $kind, 'gantt' === $kind ? __( 'Carta Gantt', 'gestion-de-proyectos' ) : __( 'Tablero', 'gestion-de-proyectos' ) );
-
-		if ( 0 === ActivityRepository::count( $project_id ) ) {
-			echo '<p class="gdp-muted">' . esc_html__( 'El proyecto aún no tiene actividades.', 'gestion-de-proyectos' ) . '</p>';
-			self::close();
-			return;
-		}
-
-		if ( 'gantt' === $kind ) {
-			?>
-			<div class="gdp-gantt-toolbar">
-				<span class="gdp-gantt-zoom" role="group" aria-label="<?php esc_attr_e( 'Escala', 'gestion-de-proyectos' ); ?>"></span>
-				<label><input type="checkbox" id="gdp-gantt-baseline" checked> <?php esc_html_e( 'Línea base', 'gestion-de-proyectos' ); ?></label>
-				<label><input type="checkbox" id="gdp-gantt-critical" checked> <?php esc_html_e( 'Ruta crítica', 'gestion-de-proyectos' ); ?></label>
-				<label><input type="checkbox" id="gdp-gantt-links" checked> <?php esc_html_e( 'Dependencias', 'gestion-de-proyectos' ); ?></label>
-				<label><input type="checkbox" id="gdp-gantt-only-critical"> <?php esc_html_e( 'Solo críticas', 'gestion-de-proyectos' ); ?></label>
-				<select id="gdp-gantt-front" aria-label="<?php esc_attr_e( 'Frente', 'gestion-de-proyectos' ); ?>"></select>
-				<select id="gdp-gantt-owner" aria-label="<?php esc_attr_e( 'Responsable', 'gestion-de-proyectos' ); ?>"></select>
-				<button type="button" class="button button-small" id="gdp-gantt-print"><?php esc_html_e( 'Imprimir o guardar en PDF', 'gestion-de-proyectos' ); ?></button>
-				<span class="gdp-gantt-status" aria-live="polite"></span>
-			</div>
-			<?php if ( Access::can( 'planning.edit', $project_id ) ) : ?>
-				<p class="gdp-muted gdp-small gdp-no-print"><?php esc_html_e( 'Arrastre una barra para fijar su inicio (restricción "no empezar antes de") o su borde derecho para cambiar la duración. Arrastre desde el círculo del extremo de una barra hasta otra para crear una dependencia fin a inicio; pulse sobre una flecha para quitarla; doble clic sobre una barra quita su restricción.', 'gestion-de-proyectos' ); ?></p>
-			<?php endif; ?>
-			<div id="gdp-gantt" class="gdp-gantt" data-project="<?php echo (int) $project_id; ?>"></div>
-			<?php
-		} else {
-			?>
-			<div class="gdp-planning-toolbar">
-				<label for="gdp-board-group"><?php esc_html_e( 'Agrupar por', 'gestion-de-proyectos' ); ?></label>
-				<select id="gdp-board-group">
-					<option value="status"><?php esc_html_e( 'Estado', 'gestion-de-proyectos' ); ?></option>
-					<option value="front"><?php esc_html_e( 'Frente de trabajo', 'gestion-de-proyectos' ); ?></option>
-					<option value="owner"><?php esc_html_e( 'Responsable', 'gestion-de-proyectos' ); ?></option>
-				</select>
-				<label><input type="checkbox" id="gdp-board-hide-done"> <?php esc_html_e( 'Ocultar terminadas y canceladas', 'gestion-de-proyectos' ); ?></label>
-				<span class="gdp-muted gdp-small"><?php esc_html_e( 'Arrastre las tarjetas entre columnas: cambia el estado, el frente o el responsable según la agrupación. Marcar como terminada fija el avance en 100 % y la fecha real de término en hoy.', 'gestion-de-proyectos' ); ?></span>
-			</div>
-			<div id="gdp-board" class="gdp-board" data-project="<?php echo (int) $project_id; ?>"></div>
-			<?php
-		}
+		CanvasView::render( $project_id, self::context( $project_id, $kind ), $kind );
 		self::close();
-	}
-
-	/**
-	 * Datos para el script (Gantt y tablero).
-	 *
-	 * @param int $project_id Proyecto.
-	 * @return array<string,mixed>
-	 */
-	public static function client_data( int $project_id ): array {
-		$result   = ScheduleService::recalculate( $project_id );
-		$baseline = BaselineRepository::current( $project_id );
-		$base     = $baseline ? BaselineRepository::activities( $baseline['id'] ) : array();
-		$calendar = CalendarRepository::build( $project_id );
-		$record   = CalendarRepository::effective( $project_id );
-		$fronts   = array();
-		foreach ( Catalogs::items( Catalogs::WORK_FRONT, $project_id ) as $item ) {
-			$fronts[ $item['slug'] ] = $item['label'];
-		}
-
-		$activities = array();
-		foreach ( $result['activities'] as $a ) {
-			$activities[] = array(
-				'id'          => $a['id'],
-				'code'        => $a['code'],
-				'name'        => $a['name'],
-				'kind'        => $a['kind'],
-				'level'       => $a['level'],
-				'parent'      => $a['parent_id'],
-				'front'       => $fronts[ $a['work_front'] ] ?? $a['work_front'],
-				'frontSlug'   => $a['work_front'],
-				'ownerId'     => $a['owner_id'],
-				'status'      => $a['status'],
-				'priority'    => $a['priority'],
-				'duration'    => $a['duration'],
-				'percent'     => $a['percent'],
-				'start'       => $a['start_date'],
-				'end'         => $a['end_date'],
-				'lateStart'   => $a['late_start'],
-				'lateFinish'  => $a['late_finish'],
-				'float'       => $a['total_float'],
-				'critical'    => $a['is_critical'],
-				'fixed'       => ! empty( $a['actual_start'] ) || ! empty( $a['actual_finish'] ),
-				'constraint'  => $a['constraint_type'],
-				'owner'       => ScheduleService::user_name( $a['owner_id'] ),
-				'conflicts'   => $a['schedule_conflicts'],
-				'baseStart'   => $base[ $a['id'] ]['start_date'] ?? null,
-				'baseEnd'     => $base[ $a['id'] ]['end_date'] ?? null,
-				'version'     => $a['version'],
-			);
-		}
-
-		$deps = array();
-		foreach ( DependencyRepository::for_project( $project_id ) as $d ) {
-			$deps[] = array( 'from' => $d['predecessor_id'], 'to' => $d['successor_id'], 'type' => $d['type'], 'lag' => $d['lag'] );
-		}
-
-		$exceptions = array();
-		foreach ( $calendar->exceptions() as $date => $working ) {
-			$exceptions[ $date ] = $working;
-		}
-
-		$owners = array();
-		foreach ( $activities as $a ) {
-			if ( '' !== $a['owner'] ) {
-				$owners[ $a['owner'] ] = $a['owner'];
-			}
-		}
-		ksort( $owners );
-
-		// Opciones para agrupar el tablero: frentes del catálogo y miembros del proyecto.
-		$owner_options = array();
-		foreach ( MemberRepository::for_project( $project_id ) as $m ) {
-			$owner_options[ (string) $m['user_id'] ] = $m['display_name'];
-		}
-		foreach ( $activities as $a ) {
-			if ( $a['ownerId'] > 0 && ! isset( $owner_options[ (string) $a['ownerId'] ] ) ) {
-				$owner_options[ (string) $a['ownerId'] ] = $a['owner'];
-			}
-		}
-		asort( $owner_options );
-
-		return array(
-			'activities'   => $activities,
-			'dependencies' => $deps,
-			'calendar'     => array( 'weekdays' => $calendar->weekdays(), 'exceptions' => $exceptions, 'name' => $record ? $record['name'] : '' ),
-			'project'      => $result['project'],
-			'today'        => current_time( 'Y-m-d' ),
-			'baseline'     => $baseline ? $baseline['name'] : null,
-			'statuses'     => ActivityRepository::status_labels(),
-			'fronts'       => array_values( $fronts ),
-			'owners'       => array_values( $owners ),
-			'frontOptions' => $fronts,
-			'ownerOptions' => $owner_options,
-		);
 	}
 
 	/**
@@ -1240,7 +1097,7 @@ final class PlanningPage extends Page {
 		}
 
 		if ( 'data' === $op ) {
-			wp_send_json_success( self::client_data( $project_id ) );
+			wp_send_json_success( CanvasView::data( $project_id ) );
 		}
 
 		if ( ! Access::can( 'planning.edit', $project_id ) ) {
@@ -1269,7 +1126,7 @@ final class PlanningPage extends Page {
 			}
 			DependencyRepository::replace_predecessors( $project_id, $to, $clean );
 			ScheduleService::recalculate( $project_id );
-			wp_send_json_success( self::client_data( $project_id ) );
+			wp_send_json_success( CanvasView::data( $project_id ) );
 		}
 
 		$id       = isset( $_POST['activity_id'] ) ? (int) $_POST['activity_id'] : 0;
@@ -1328,6 +1185,6 @@ final class PlanningPage extends Page {
 		}
 		ScheduleService::recalculate( $project_id );
 
-		wp_send_json_success( self::client_data( $project_id ) );
+		wp_send_json_success( CanvasView::data( $project_id ) );
 	}
 }

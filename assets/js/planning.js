@@ -447,6 +447,17 @@
 		table.appendChild( tbody );
 		var left = el( 'div', { 'class': 'gdp-gantt__table' }, [ table ] );
 
+		// La altura real de las filas depende de la hoja de estilos del contexto (panel o tema del sitio):
+		// se mide una vez dibujada la tabla para que las barras queden alineadas con sus filas.
+		this.container.appendChild( left );
+		var headRow = thead.firstChild ? thead.firstChild.getBoundingClientRect().height : 0;
+		var bodyRow = tbody.firstChild ? tbody.firstChild.getBoundingClientRect().height : 0;
+		if ( headRow > 0 && bodyRow > 0 ) {
+			this.headerH = Math.round( headRow );
+			this.rowH = Math.round( bodyRow );
+			height = this.headerH + rows.length * this.rowH;
+		}
+
 		/* Gráfico. */
 		var chart = el( 'div', { 'class': 'gdp-gantt__chart' } );
 		var svg = svgEl( 'svg', { width: width, height: height, viewBox: '0 0 ' + width + ' ' + height } );

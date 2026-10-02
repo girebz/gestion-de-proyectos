@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gestión de Proyectos 0.7.3\n"
+"Project-Id-Version: Gestión de Proyectos 0.8.0\n"
 "Report-Msgid-Bugs-To: https://github.com/girebz/gestion-de-proyectos/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-02T02:19:22+00:00\n"
+"POT-Creation-Date: 2026-10-02T03:06:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gestion-de-proyectos\n"
@@ -108,7 +108,7 @@ msgstr ""
 #: src/Admin/Admin.php:115
 #: src/Admin/Pages/ConnectorPage.php:146
 #: src/Admin/Pages/ConnectorPage.php:221
-#: src/Admin/Pages/PlanningCalendarViewPage.php:159
+#: src/Admin/Pages/PlanningCalendarViewPage.php:53
 msgid "Copiar"
 msgstr ""
 
@@ -134,12 +134,12 @@ msgid "Sin permiso para ver la bitácora de ese proyecto."
 msgstr ""
 
 #: src/Admin/Pages/AuditPage.php:65
-#: src/Admin/Pages/DashboardsPage.php:149
+#: src/Admin/Pages/DashboardsPage.php:150
 #: src/Admin/Pages/DataPage.php:168
 #: src/Admin/Pages/DocumentsPage.php:174
 #: src/Admin/Pages/MeetingsPage.php:175
 #: src/Admin/Pages/OperationsPage.php:144
-#: src/Admin/Pages/PlanningPage.php:263
+#: src/Admin/Pages/PlanningPage.php:253
 #: src/Admin/Pages/ProcurementPage.php:186
 #: src/Admin/Pages/TrashPage.php:56
 #: src/Admin/Pages/TrashPage.php:72
@@ -161,7 +161,7 @@ msgstr ""
 #: src/Admin/Pages/DocumentsPage.php:255
 #: src/Admin/Pages/MeetingsPage.php:227
 #: src/Admin/Pages/MeetingsPage.php:650
-#: src/Admin/Pages/PlanningPage.php:389
+#: src/Admin/Pages/PlanningPage.php:379
 #: src/Admin/Pages/ProcurementPage.php:291
 msgid "Filtrar"
 msgstr ""
@@ -181,7 +181,7 @@ msgstr ""
 #: src/Admin/Pages/OperationsPage.php:90
 #: src/Admin/Pages/PlanningBaselinesPage.php:69
 #: src/Admin/Pages/PlanningCalendarsPage.php:181
-#: src/Admin/Pages/PlanningPage.php:936
+#: src/Admin/Pages/PlanningPage.php:793
 #: src/Admin/Pages/ProcurementPage.php:544
 #: src/Admin/Pages/ProcurementPage.php:605
 #: src/Admin/Pages/ProcurementPage.php:906
@@ -274,7 +274,7 @@ msgstr ""
 #: src/Admin/Pages/DashboardPage.php:67
 #: src/Admin/Pages/PlanningBaselinesPage.php:69
 #: src/Admin/Pages/PlanningImportPage.php:71
-#: src/Admin/Pages/PlanningPage.php:697
+#: src/Admin/Pages/PlanningPage.php:554
 #: src/Admin/Pages/ProcurementPage.php:774
 #: src/Admin/Pages/ProcurementPage.php:799
 #: src/Admin/Pages/ProjectsPage.php:99
@@ -285,7 +285,7 @@ msgstr ""
 
 #: src/Admin/Pages/CatalogsPage.php:89
 #: src/Admin/Pages/ConnectorPage.php:288
-#: src/Admin/Pages/PlanningPage.php:842
+#: src/Admin/Pages/PlanningPage.php:699
 #: src/Admin/Pages/ProcurementPage.php:365
 #: src/Admin/Pages/ProjectsPage.php:172
 #: src/Admin/Pages/ProjectsPage.php:356
@@ -350,7 +350,7 @@ msgid "Para sustituir una entrada global en este proyecto, cree una con la misma
 msgstr ""
 
 #: src/Admin/Pages/CatalogsPage.php:177
-#: src/Admin/Pages/DashboardsPage.php:395
+#: src/Admin/Pages/DashboardsPage.php:414
 #: src/Admin/Pages/DocumentsPage.php:737
 #: src/Admin/Pages/DocumentsPage.php:794
 #: src/Admin/Pages/DocumentsPage.php:814
@@ -377,17 +377,17 @@ msgstr ""
 #: src/Admin/Pages/PlanningBaselinesPage.php:191
 #: src/Admin/Pages/PlanningBaselinesPage.php:211
 #: src/Admin/Pages/PlanningCalendarsPage.php:222
-#: src/Admin/Pages/PlanningCalendarViewPage.php:230
+#: src/Admin/Pages/PlanningCalendarViewPage.php:104
 #: src/Admin/Pages/PlanningImportPage.php:148
 #: src/Admin/Pages/PlanningImportPage.php:177
-#: src/Admin/Pages/PlanningPage.php:1024
-#: src/Admin/Pages/PlanningPage.php:1077
-#: src/Admin/Pages/PlanningPage.php:1107
-#: src/Admin/Pages/PlanningPage.php:1131
-#: src/Admin/Pages/PlanningPage.php:1194
-#: src/Admin/Pages/PlanningPage.php:1221
-#: src/Admin/Pages/PlanningPage.php:1239
-#: src/Admin/Pages/PlanningReportPage.php:389
+#: src/Admin/Pages/PlanningPage.php:881
+#: src/Admin/Pages/PlanningPage.php:934
+#: src/Admin/Pages/PlanningPage.php:964
+#: src/Admin/Pages/PlanningPage.php:988
+#: src/Admin/Pages/PlanningPage.php:1051
+#: src/Admin/Pages/PlanningPage.php:1078
+#: src/Admin/Pages/PlanningPage.php:1096
+#: src/Admin/Pages/PlanningReportPage.php:130
 #: src/Admin/Pages/ProcurementPage.php:943
 #: src/Admin/Pages/ProcurementPage.php:993
 #: src/Admin/Pages/ProcurementPage.php:1013
@@ -474,11 +474,9 @@ msgstr ""
 #: src/Admin/Pages/MeetingsPage.php:657
 #: src/Admin/Pages/OperationsPage.php:142
 #: src/Admin/Pages/PlanningBaselinesPage.php:132
-#: src/Admin/Pages/PlanningPage.php:402
-#: src/Admin/Pages/PlanningPage.php:521
-#: src/Admin/Pages/PlanningPage.php:790
-#: src/Admin/Pages/PlanningPage.php:936
-#: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Admin/Pages/PlanningPage.php:392
+#: src/Admin/Pages/PlanningPage.php:647
+#: src/Admin/Pages/PlanningPage.php:793
 #: src/Admin/Pages/ProcurementPage.php:523
 #: src/Admin/Pages/ProcurementPage.php:544
 #: src/Admin/Pages/ProcurementPage.php:601
@@ -487,11 +485,13 @@ msgstr ""
 #: src/Admin/Pages/SettingsPage.php:163
 #: src/Modules/Meetings/MinutesTemplate.php:95
 #: src/Modules/Meetings/MinutesTemplate.php:176
+#: src/Modules/Planning/Views/CanvasView.php:68
+#: src/Modules/Planning/Views/ReportView.php:124
 msgid "Estado"
 msgstr ""
 
 #: src/Admin/Pages/ConnectorPage.php:105
-#: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Modules/Planning/Views/AlertsView.php:61
 msgid "Detalle"
 msgstr ""
 
@@ -531,7 +531,7 @@ msgstr ""
 
 #: src/Admin/Pages/ConnectorPage.php:157
 #: src/Admin/Pages/ConnectorPage.php:175
-#: src/Admin/Pages/DashboardsPage.php:285
+#: src/Admin/Pages/DashboardsPage.php:286
 msgid "Etiqueta"
 msgstr ""
 
@@ -699,11 +699,11 @@ msgstr ""
 #: src/Admin/Pages/MeetingsPage.php:389
 #: src/Admin/Pages/PlanningCalendarsPage.php:181
 #: src/Admin/Pages/PlanningImportPage.php:71
-#: src/Admin/Pages/PlanningPage.php:701
-#: src/Admin/Pages/PlanningPage.php:758
-#: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Admin/Pages/PlanningPage.php:558
+#: src/Admin/Pages/PlanningPage.php:615
 #: src/Modules/Data/DataDictionary.php:92
 #: src/Modules/Meetings/MinutesTemplate.php:62
+#: src/Modules/Planning/Views/AlertsView.php:61
 msgid "Tipo"
 msgstr ""
 
@@ -825,8 +825,8 @@ msgstr ""
 #: src/Admin/Pages/DashboardPage.php:66
 #: src/Admin/Pages/MeetingsPage.php:234
 #: src/Admin/Pages/PlanningBaselinesPage.php:132
-#: src/Admin/Pages/PlanningPage.php:399
-#: src/Admin/Pages/PlanningPage.php:871
+#: src/Admin/Pages/PlanningPage.php:389
+#: src/Admin/Pages/PlanningPage.php:728
 #: src/Admin/Pages/ProcurementPage.php:299
 #: src/Admin/Pages/ProcurementPage.php:471
 #: src/Admin/Pages/ProjectsPage.php:98
@@ -880,299 +880,320 @@ msgstr ""
 msgid "Abrir el asistente de integración"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:40
-#: src/Admin/Pages/DashboardsPage.php:88
-#: src/Admin/Pages/DashboardsPage.php:121
-#: src/Admin/Pages/DashboardsPage.php:143
+#: src/Admin/Pages/DashboardsPage.php:41
+#: src/Admin/Pages/DashboardsPage.php:89
+#: src/Admin/Pages/DashboardsPage.php:122
+#: src/Admin/Pages/DashboardsPage.php:144
 msgid "Tableros"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:89
+#: src/Admin/Pages/DashboardsPage.php:90
 #: src/Admin/Pages/DataPage.php:193
 #: src/Admin/Pages/MeetingsPage.php:95
 #: src/Admin/Pages/ProcurementPage.php:99
 msgid "No hay proyectos visibles."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:123
-#: src/Admin/Pages/DashboardsPage.php:156
+#: src/Admin/Pages/DashboardsPage.php:124
+#: src/Admin/Pages/DashboardsPage.php:157
 msgid "Tablero público"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:123
+#: src/Admin/Pages/DashboardsPage.php:124
 msgid "publicado en el sitio"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:123
+#: src/Admin/Pages/DashboardsPage.php:124
 msgid "sin publicar"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:124
+#: src/Admin/Pages/DashboardsPage.php:125
 msgid "Código corto público"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:125
+#: src/Admin/Pages/DashboardsPage.php:126
 msgid "Código corto del equipo"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:127
+#: src/Admin/Pages/DashboardsPage.php:128
 msgid "El público va en la portada del sitio; el del equipo, en un tema del foro o en una página privada. Lo que muestra cada uno se decide en Tableros."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:128
+#: src/Admin/Pages/DashboardsPage.php:129
 msgid "Configurar los tableros"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:157
+#: src/Admin/Pages/DashboardsPage.php:158
 msgid "Tablero del equipo"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:171
+#: src/Admin/Pages/DashboardsPage.php:172
+#: src/Admin/Pages/DashboardsPage.php:365
 msgid "Código corto"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:200
+#: src/Admin/Pages/DashboardsPage.php:201
 msgid "El tablero público es una pieza de difusión para el sitio: muestra el avance, las etapas, los logros y lo que viene, las instituciones que participan y una invitación a escribir al equipo. Solo aparece lo que se marca aquí como publicable; montos, nombres de personas, compras y documentos nunca se muestran."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:202
+#: src/Admin/Pages/DashboardsPage.php:203
 msgid "Código corto para la portada del sitio:"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:205
+#: src/Admin/Pages/DashboardsPage.php:206
 msgid "Para mostrar solo algunos bloques, en el orden que quiera, agregue por ejemplo bloques=\"portada,indicadores,contacto\". Bloques disponibles: portada, indicadores, etapas, hitos, aliados, contacto. Los datos se actualizan solos cada vez que cambia el proyecto. Si el tema del sitio tiene un área de widgets para el avance (Relave Circular: Apariencia → Widgets → \"Portada: avance del proyecto\"), pegue este mismo código en un bloque \"Shortcode\" de esa área."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:208
+#: src/Admin/Pages/DashboardsPage.php:209
 msgid "La publicación está desactivada: el código corto no muestra nada a los visitantes hasta que la active."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:220
+#: src/Admin/Pages/DashboardsPage.php:221
 msgid "Mensaje central"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:221
+#: src/Admin/Pages/DashboardsPage.php:222
 msgid "Publicar el tablero en el sitio"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:222
-#: src/Admin/Pages/DashboardsPage.php:319
+#: src/Admin/Pages/DashboardsPage.php:223
+#: src/Admin/Pages/DashboardsPage.php:320
 #: src/Admin/Pages/MeetingsPage.php:293
 #: src/Admin/Pages/ProcurementPage.php:364
 msgid "Título"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:223
+#: src/Admin/Pages/DashboardsPage.php:224
 msgid "Resumen para el público (deje una línea en blanco entre párrafos)"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:225
+#: src/Admin/Pages/DashboardsPage.php:226
 msgid "Bloques que se muestran"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:230
+#: src/Admin/Pages/DashboardsPage.php:231
 msgid "Mostrar la fecha de actualización"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:234
+#: src/Admin/Pages/DashboardsPage.php:235
 #: src/Admin/Pages/ProcurementPage.php:497
 msgid "Etapas"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:235
+#: src/Admin/Pages/DashboardsPage.php:236
 msgid "Cada etapa es una actividad resumen de primer nivel; su avance se calcula con las actividades que contiene. Puede darle un nombre más cercano al público y una frase que explique para qué sirve."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:237
+#: src/Admin/Pages/DashboardsPage.php:238
 msgid "El cronograma no tiene actividades resumen de primer nivel."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:240
-#: src/Admin/Pages/DashboardsPage.php:245
+#: src/Admin/Pages/DashboardsPage.php:241
+#: src/Admin/Pages/DashboardsPage.php:246
 msgid "Mostrar"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:240
+#: src/Admin/Pages/DashboardsPage.php:241
 msgid "En el cronograma"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:240
+#: src/Admin/Pages/DashboardsPage.php:241
 msgid "Nombre público"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:240
+#: src/Admin/Pages/DashboardsPage.php:241
 msgid "Frase para el público"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:257
+#: src/Admin/Pages/DashboardsPage.php:258
 #: src/Modules/Dashboards/DashboardSettings.php:38
 msgid "Logros y próximos hitos"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:258
+#: src/Admin/Pages/DashboardsPage.php:259
 msgid "Marque los hitos o actividades que quiere destacar. Los terminados aparecen como logros (los seis más recientes) y los pendientes como lo que viene (los cuatro más próximos). Escriba un texto público si el nombre interno no se entiende fuera del equipo."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:260
+#: src/Admin/Pages/DashboardsPage.php:261
 msgid "El cronograma no tiene actividades."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:264
-#: src/Admin/Pages/DashboardsPage.php:269
+#: src/Admin/Pages/DashboardsPage.php:265
+#: src/Admin/Pages/DashboardsPage.php:270
 msgid "Destacar"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:264
+#: src/Admin/Pages/DashboardsPage.php:265
 #: src/Admin/Pages/DocumentsPage.php:534
 #: src/Admin/Pages/PlanningBaselinesPage.php:132
-#: src/Admin/Pages/PlanningPage.php:113
-#: src/Admin/Pages/PlanningPage.php:400
-#: src/Admin/Pages/PlanningPage.php:758
-#: src/Admin/Pages/PlanningReportPage.php:111
-#: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Admin/Pages/PlanningPage.php:390
+#: src/Admin/Pages/PlanningPage.php:615
 #: src/Modules/Planning/ActivityRepository.php:98
+#: src/Modules/Planning/Views/AlertsView.php:61
+#: src/Modules/Planning/Views/CanvasView.php:119
+#: src/Modules/Planning/Views/ReportView.php:124
 msgid "Actividad"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:264
-#: src/Admin/Pages/PlanningPage.php:115
-#: src/Admin/Pages/PlanningPage.php:405
-#: src/Admin/Pages/PlanningPage.php:802
-#: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Admin/Pages/DashboardsPage.php:265
+#: src/Admin/Pages/PlanningPage.php:395
+#: src/Admin/Pages/PlanningPage.php:659
 #: src/Admin/Pages/ProjectsPage.php:103
 #: src/Admin/Pages/ProjectsPage.php:164
 #: src/Admin/Pages/ProjectsPage.php:345
 #: src/Modules/Planning/EventsService.php:54
+#: src/Modules/Planning/Views/AlertsView.php:61
+#: src/Modules/Planning/Views/CanvasView.php:121
 msgid "Término"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:264
+#: src/Admin/Pages/DashboardsPage.php:265
 msgid "Texto público"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:270
+#: src/Admin/Pages/DashboardsPage.php:271
 msgid "hito"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:270
+#: src/Admin/Pages/DashboardsPage.php:271
 #: src/Modules/Dashboards/DashboardRenderer.php:346
 msgid "terminada"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:282
+#: src/Admin/Pages/DashboardsPage.php:283
 #: src/Modules/Dashboards/DashboardSettings.php:36
 msgid "Indicadores"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:283
+#: src/Admin/Pages/DashboardsPage.php:284
 msgid "Cifras grandes con una etiqueta corta. Las fuentes automáticas se calculan con los datos del proyecto; con \"Valor escrito a mano\" se muestra el valor que escriba (por ejemplo, toneladas de relave estudiadas). Deje la etiqueta vacía para quitar una fila."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:285
+#: src/Admin/Pages/DashboardsPage.php:286
 msgid "Fuente"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:285
+#: src/Admin/Pages/DashboardsPage.php:286
 msgid "Valor (solo a mano)"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:299
+#: src/Admin/Pages/DashboardsPage.php:300
 #: src/Modules/Dashboards/DashboardSettings.php:39
 msgid "Instituciones y financiamiento"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:300
+#: src/Admin/Pages/DashboardsPage.php:301
 msgid "Texto de financiamiento"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:302
+#: src/Admin/Pages/DashboardsPage.php:303
 msgid "Institución"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:302
+#: src/Admin/Pages/DashboardsPage.php:303
 msgid "Rol"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:302
+#: src/Admin/Pages/DashboardsPage.php:303
 msgid "Dirección del logo"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:302
+#: src/Admin/Pages/DashboardsPage.php:303
 msgid "Enlace"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:314
+#: src/Admin/Pages/DashboardsPage.php:315
 msgid "Copie la dirección del logo desde la biblioteca de medios. Deje el nombre vacío para quitar una fila."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:318
+#: src/Admin/Pages/DashboardsPage.php:319
 #: src/Modules/Dashboards/DashboardSettings.php:40
 msgid "Llamado a la acción"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:320
+#: src/Admin/Pages/DashboardsPage.php:321
 msgid "Texto"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:321
+#: src/Admin/Pages/DashboardsPage.php:322
 msgid "Texto del botón"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:322
+#: src/Admin/Pages/DashboardsPage.php:323
 msgid "Correo de contacto"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:323
+#: src/Admin/Pages/DashboardsPage.php:324
 msgid "Asunto sugerido del correo"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:324
+#: src/Admin/Pages/DashboardsPage.php:325
 msgid "El correo se publica codificado para dificultar que lo recojan los programas de envío masivo."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:327
+#: src/Admin/Pages/DashboardsPage.php:328
 msgid "Guardar el tablero público"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:331
+#: src/Admin/Pages/DashboardsPage.php:332
 #: src/Admin/Pages/OperationsPage.php:184
 msgid "Vista previa"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:354
+#: src/Admin/Pages/DashboardsPage.php:355
 msgid "El tablero del equipo resume lo que hay que mirar esta semana: avance real frente al planificado, actividades atrasadas y que vencen pronto, ruta crítica, acuerdos abiertos, respuestas pendientes, compras en curso y la próxima reunión. Solo lo ven usuarios con sesión iniciada; a los visitantes se les pide iniciar sesión. Los montos solo aparecen a quien tenga permiso para verlos."
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:355
+#: src/Admin/Pages/DashboardsPage.php:356
 msgid "Código corto para el foro o una página privada:"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:357
+#: src/Admin/Pages/DashboardsPage.php:358
 msgid "En wpForo, los códigos cortos dentro de un mensaje solo se interpretan si está activada la opción \"Enable WordPress Shortcodes in Post Content\" (escritorio → Foros → Ajustes → pestaña Features, \"Características\" en la traducción); mientras esté desactivada, el mensaje muestra el código tal cual. Pegue el código con el proyecto exacto que aparece aquí, en un tema de un foro visible solo para los usuarios registrados; el tablero además comprueba la sesión por su cuenta. Si wpForo tiene activada su caché de HTML, el tablero se renueva cuando esa caché expira."
 msgstr ""
 
 #: src/Admin/Pages/DashboardsPage.php:362
+msgid "Vistas de planificación para la página del equipo"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:363
+msgid "Estos códigos muestran en el sitio las mismas vistas de la pantalla de planificación, en modo lectura, con la misma regla de acceso que el tablero del equipo (sesión iniciada y, si se marca abajo, pertenencia al proyecto). Quien puede entrar al panel conserva los enlaces hacia él; quien tiene permiso para ver la planificación conserva las descargas del informe. Pueden combinarse en una misma página; la carta Gantt y el tablero deben ser del mismo proyecto."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:365
+msgid "Vista"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:365
+msgid "Qué muestra"
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:376
+msgid "La navegación de calendario, carga de trabajo e informe semanal usa parámetros gdp_ en la dirección de la página, así que funciona en páginas, entradas y temas de foro. Si el tema del sitio tiene estilos muy marcados para botones o tablas, puede afinar la presentación con reglas CSS sobre el contenedor .gdp-front."
+msgstr ""
+
+#: src/Admin/Pages/DashboardsPage.php:381
 #: src/Admin/Pages/DataPage.php:225
 msgid "Opciones"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:368
+#: src/Admin/Pages/DashboardsPage.php:387
 msgid "Exigir que el usuario sea miembro del proyecto (si no se marca, basta con haber iniciado sesión, porque el registro del sitio está cerrado)"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:369
+#: src/Admin/Pages/DashboardsPage.php:388
 msgid "Horizonte de \"vencen pronto\" (días)"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:370
+#: src/Admin/Pages/DashboardsPage.php:389
 msgid "Guardar opciones"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:375
+#: src/Admin/Pages/DashboardsPage.php:394
 msgid "Vista previa (con sus permisos)"
 msgstr ""
 
-#: src/Admin/Pages/DashboardsPage.php:421
+#: src/Admin/Pages/DashboardsPage.php:440
 msgid "Tablero guardado."
 msgstr ""
 
@@ -1198,7 +1219,7 @@ msgstr ""
 #: src/Admin/Pages/DataPage.php:102
 #: src/Admin/Pages/DataPage.php:156
 #: src/Admin/Pages/PlanningImportPage.php:102
-#: src/Admin/Pages/PlanningPage.php:363
+#: src/Admin/Pages/PlanningPage.php:353
 msgid "Importar"
 msgstr ""
 
@@ -1467,12 +1488,12 @@ msgstr ""
 #: src/Admin/Pages/DocumentsPage.php:554
 #: src/Admin/Pages/DocumentsPage.php:635
 #: src/Admin/Pages/MeetingsPage.php:478
-#: src/Admin/Pages/PlanningPage.php:936
-#: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Admin/Pages/PlanningPage.php:793
 #: src/Admin/Pages/ProcurementPage.php:517
 #: src/Admin/Pages/ProcurementPage.php:877
 #: src/Modules/Meetings/MinutesTemplate.php:95
 #: src/Modules/Meetings/MinutesTemplate.php:176
+#: src/Modules/Planning/Views/ReportView.php:124
 msgid "Nota"
 msgstr ""
 
@@ -1678,8 +1699,9 @@ msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:183
 #: src/Admin/Pages/MeetingsPage.php:184
-#: src/Admin/Pages/PlanningCalendarViewPage.php:88
-#: src/Admin/Pages/PlanningPage.php:249
+#: src/Admin/Pages/PlanningCalendarViewPage.php:46
+#: src/Admin/Pages/PlanningPage.php:239
+#: src/Modules/Planning/Views/Shortcodes.php:86
 msgid "Calendario"
 msgstr ""
 
@@ -1712,7 +1734,7 @@ msgstr ""
 #: src/Admin/Pages/DocumentsPage.php:242
 #: src/Admin/Pages/MeetingsPage.php:224
 #: src/Admin/Pages/MeetingsPage.php:646
-#: src/Admin/Pages/PlanningPage.php:376
+#: src/Admin/Pages/PlanningPage.php:366
 #: src/Admin/Pages/ProcurementPage.php:279
 msgid "Todos los estados"
 msgstr ""
@@ -1724,7 +1746,7 @@ msgstr ""
 #: src/Admin/Pages/DocumentsPage.php:254
 #: src/Admin/Pages/MeetingsPage.php:226
 #: src/Admin/Pages/MeetingsPage.php:649
-#: src/Admin/Pages/PlanningPage.php:388
+#: src/Admin/Pages/PlanningPage.php:378
 #: src/Admin/Pages/ProcurementPage.php:290
 #: src/Admin/Pages/ProcurementPage.php:767
 #: src/Admin/Pages/ProcurementPage.php:768
@@ -1771,17 +1793,17 @@ msgstr ""
 #: src/Admin/Pages/MeetingsPage.php:590
 #: src/Admin/Pages/MeetingsPage.php:657
 #: src/Admin/Pages/PlanningImportPage.php:71
-#: src/Admin/Pages/PlanningPage.php:409
-#: src/Admin/Pages/PlanningPage.php:507
-#: src/Admin/Pages/PlanningPage.php:523
-#: src/Admin/Pages/PlanningPage.php:807
-#: src/Admin/Pages/PlanningReportPage.php:111
+#: src/Admin/Pages/PlanningPage.php:399
+#: src/Admin/Pages/PlanningPage.php:664
 #: src/Admin/Pages/ProcurementPage.php:305
 #: src/Admin/Pages/ProcurementPage.php:389
 #: src/Admin/Pages/ProcurementPage.php:484
 #: src/Modules/Meetings/MinutesTemplate.php:82
 #: src/Modules/Meetings/MinutesTemplate.php:168
 #: src/Modules/Planning/AssignmentRepository.php:33
+#: src/Modules/Planning/Views/AlertsView.php:61
+#: src/Modules/Planning/Views/CanvasView.php:53
+#: src/Modules/Planning/Views/CanvasView.php:70
 msgid "Responsable"
 msgstr ""
 
@@ -1882,9 +1904,9 @@ msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:423
 #: src/Admin/Pages/MeetingsPage.php:598
-#: src/Admin/Pages/PlanningPage.php:106
-#: src/Admin/Pages/PlanningPage.php:817
+#: src/Admin/Pages/PlanningPage.php:674
 #: src/Admin/Pages/ProcurementPage.php:391
+#: src/Modules/Planning/Views/CanvasView.php:112
 msgid "Sin responsable"
 msgstr ""
 
@@ -1911,7 +1933,7 @@ msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:453
 #: src/Admin/Pages/MeetingsPage.php:323
-#: src/Admin/Pages/PlanningPage.php:858
+#: src/Admin/Pages/PlanningPage.php:715
 #: src/Admin/Pages/ProcurementPage.php:404
 #: src/Admin/Pages/ProjectsPage.php:382
 msgid "Guardar cambios"
@@ -1969,7 +1991,7 @@ msgid "Sin archivo adjunto."
 msgstr ""
 
 #: src/Admin/Pages/DocumentsPage.php:554
-#: src/Admin/Pages/PlanningPage.php:877
+#: src/Admin/Pages/PlanningPage.php:734
 #: src/Admin/Pages/ProjectsPage.php:105
 msgid "Versión"
 msgstr ""
@@ -2425,14 +2447,14 @@ msgid "Guardar el texto como transcripción de la reunión"
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:548
-#: src/Admin/Pages/PlanningReportPage.php:115
 #: src/Modules/Planning/ActivityRepository.php:127
+#: src/Modules/Planning/Views/AlertsView.php:66
 msgid "Alta"
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:549
-#: src/Admin/Pages/PlanningReportPage.php:115
 #: src/Modules/Planning/ActivityRepository.php:128
+#: src/Modules/Planning/Views/AlertsView.php:66
 msgid "Media"
 msgstr ""
 
@@ -2474,7 +2496,7 @@ msgid "Descartar propuesta"
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:647
-#: src/Admin/Pages/PlanningPage.php:104
+#: src/Modules/Planning/Views/CanvasView.php:110
 msgid "Todos los responsables"
 msgstr ""
 
@@ -2686,7 +2708,7 @@ msgid "Sin fechas"
 msgstr ""
 
 #: src/Admin/Pages/PlanningBaselinesPage.php:60
-#: src/Admin/Pages/PlanningPage.php:253
+#: src/Admin/Pages/PlanningPage.php:243
 #: src/Modules/Data/DataDictionary.php:192
 msgid "Líneas base"
 msgstr ""
@@ -2841,7 +2863,7 @@ msgid "El proyecto no tiene calendario propio ni existe uno global: se programa 
 msgstr ""
 
 #: src/Admin/Pages/PlanningCalendarsPage.php:73
-#: src/Admin/Pages/PlanningPage.php:254
+#: src/Admin/Pages/PlanningPage.php:244
 msgid "Calendarios"
 msgstr ""
 
@@ -2931,7 +2953,7 @@ msgid "No laborable"
 msgstr ""
 
 #: src/Admin/Pages/PlanningCalendarsPage.php:197
-#: src/Admin/Pages/PlanningPage.php:778
+#: src/Admin/Pages/PlanningPage.php:635
 msgid "Quitar"
 msgstr ""
 
@@ -2967,91 +2989,24 @@ msgstr ""
 msgid "%d feriados cargados."
 msgstr ""
 
-#. translators: 1: número de semana, 2: fecha de inicio, 3: fecha de término.
-#: src/Admin/Pages/PlanningCalendarViewPage.php:71
-#, php-format
-msgid "Semana %1$d: %2$s al %3$s"
-msgstr ""
-
-#. translators: 1: fecha de inicio, 2: fecha de término.
-#: src/Admin/Pages/PlanningCalendarViewPage.php:78
-#, php-format
-msgid "Agenda: %1$s al %2$s"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:86
-msgid "Lun"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:86
-msgid "Mar"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:86
-msgid "Mié"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:86
-msgid "Jue"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:86
-msgid "Vie"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:86
-msgid "Sáb"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:86
-msgid "Dom"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:92
-#: src/Admin/Pages/PlanningPage.php:95
-msgid "Hoy"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:96
-#: src/Admin/Pages/PlanningPage.php:101
-msgid "Mes"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:96
-#: src/Admin/Pages/PlanningPage.php:100
-msgid "Semana"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:96
-msgid "Agenda"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:104
-msgid "Sin eventos en el periodo."
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:108
-msgid "(no laborable)"
-msgstr ""
-
-#: src/Admin/Pages/PlanningCalendarViewPage.php:156
+#: src/Admin/Pages/PlanningCalendarViewPage.php:50
 msgid "Suscripción desde su calendario"
 msgstr ""
 
-#: src/Admin/Pages/PlanningCalendarViewPage.php:157
+#: src/Admin/Pages/PlanningCalendarViewPage.php:51
 msgid "Añada esta dirección como calendario por URL en Google Calendar, Outlook o Apple Calendar: los hitos, inicios y términos se actualizan solos (cada seis horas). La dirección lleva una clave secreta: no la publique; puede regenerarla para invalidar la anterior."
 msgstr ""
 
-#: src/Admin/Pages/PlanningCalendarViewPage.php:165
+#: src/Admin/Pages/PlanningCalendarViewPage.php:59
 msgid "Regenerar clave"
 msgstr ""
 
-#: src/Admin/Pages/PlanningCalendarViewPage.php:233
+#: src/Admin/Pages/PlanningCalendarViewPage.php:107
 msgid "Clave regenerada: las suscripciones anteriores dejan de funcionar."
 msgstr ""
 
 #: src/Admin/Pages/PlanningImportPage.php:47
-#: src/Admin/Pages/PlanningPage.php:637
+#: src/Admin/Pages/PlanningPage.php:494
 msgid "Sin permiso para editar la planificación."
 msgstr ""
 
@@ -3078,7 +3033,7 @@ msgid "actividades"
 msgstr ""
 
 #: src/Admin/Pages/PlanningImportPage.php:64
-#: src/Admin/Pages/PlanningPage.php:296
+#: src/Admin/Pages/PlanningPage.php:286
 msgid "hitos"
 msgstr ""
 
@@ -3091,18 +3046,18 @@ msgid "Ref."
 msgstr ""
 
 #: src/Admin/Pages/PlanningImportPage.php:71
-#: src/Admin/Pages/PlanningPage.php:712
+#: src/Admin/Pages/PlanningPage.php:569
 msgid "Dentro de"
 msgstr ""
 
 #: src/Admin/Pages/PlanningImportPage.php:71
-#: src/Admin/Pages/PlanningPage.php:403
+#: src/Admin/Pages/PlanningPage.php:393
 msgid "Dur."
 msgstr ""
 
 #: src/Admin/Pages/PlanningImportPage.php:71
-#: src/Admin/Pages/PlanningPage.php:408
-#: src/Admin/Pages/PlanningPage.php:755
+#: src/Admin/Pages/PlanningPage.php:398
+#: src/Admin/Pages/PlanningPage.php:612
 msgid "Predecesoras"
 msgstr ""
 
@@ -3111,9 +3066,9 @@ msgid "Restricción"
 msgstr ""
 
 #: src/Admin/Pages/PlanningImportPage.php:71
-#: src/Admin/Pages/PlanningPage.php:401
-#: src/Admin/Pages/PlanningPage.php:506
-#: src/Admin/Pages/PlanningReportPage.php:184
+#: src/Admin/Pages/PlanningPage.php:391
+#: src/Modules/Planning/Views/CanvasView.php:52
+#: src/Modules/Planning/Views/ReportView.php:73
 msgid "Frente"
 msgstr ""
 
@@ -3189,311 +3144,213 @@ msgid "Dependencias omitidas: %s"
 msgstr ""
 
 #: src/Admin/Pages/PlanningPage.php:45
-#: src/Admin/Pages/PlanningPage.php:186
-#: src/Admin/Pages/PlanningPage.php:294
-#: src/Admin/Pages/PlanningPage.php:341
+#: src/Admin/Pages/PlanningPage.php:176
+#: src/Admin/Pages/PlanningPage.php:284
+#: src/Admin/Pages/PlanningPage.php:331
 msgid "Planificación"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:93
-msgid "Guardando…"
+#: src/Admin/Pages/PlanningPage.php:177
+msgid "No hay proyectos visibles para su usuario. Cree uno en la pantalla de proyectos."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:94
-msgid "No se pudo guardar el cambio."
+#: src/Admin/Pages/PlanningPage.php:184
+#: src/Modules/Planning/PlanningTools.php:253
+#: src/Modules/Planning/PlanningTools.php:470
+msgid "Sin permiso para ver la planificación de este proyecto."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:96
-#: src/Admin/Pages/PlanningPage.php:502
-msgid "Línea base"
+#: src/Admin/Pages/PlanningPage.php:236
+#: src/Admin/Pages/PlanningPage.php:286
+#: src/Admin/Pages/PlanningPage.php:295
+#: src/Modules/Data/DataDictionary.php:188
+msgid "Actividades"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:97
-#: src/Admin/Pages/PlanningPage.php:300
-#: src/Admin/Pages/PlanningPage.php:875
+#: src/Admin/Pages/PlanningPage.php:237
+#: src/Admin/Pages/PlanningPage.php:296
+#: src/Admin/Pages/PlanningPage.php:480
+#: src/Modules/Planning/Views/Shortcodes.php:84
+msgid "Carta Gantt"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:238
+#: src/Admin/Pages/PlanningPage.php:480
+msgid "Tablero"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:240
+msgid "Alertas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:241
+#: src/Admin/Pages/PlanningReportPage.php:114
+#: src/Modules/Planning/Views/Shortcodes.php:88
+msgid "Carga de trabajo"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:242
+#: src/Admin/Pages/PlanningPage.php:297
+#: src/Admin/Pages/PlanningReportPage.php:101
+#: src/Modules/Planning/PlanningTools.php:100
+#: src/Modules/Planning/Views/Shortcodes.php:89
+msgid "Informe semanal"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:287
+msgid "Avance ponderado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:288
+#: src/Admin/Pages/PlanningPage.php:730
+#: src/Modules/Planning/Views/ReportView.php:96
+msgid "Término programado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:290
+msgid "Holgura contractual"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:290
+#: src/Admin/Pages/PlanningPage.php:732
 #: src/Admin/Pages/ProjectsPage.php:362
 #: src/Modules/Data/DataDictionary.php:167
 #: src/Modules/Data/DataDictionary.php:254
 #: src/Modules/Data/DataDictionary.php:265
 #: src/Modules/Data/DataDictionary.php:266
 #: src/Modules/Data/DataDictionary.php:275
+#: src/Modules/Planning/Views/CanvasView.php:103
 msgid "días hábiles"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:98
-msgid "Con fechas reales: no se puede arrastrar."
+#: src/Admin/Pages/PlanningPage.php:292
+#: src/Modules/Planning/Views/ReportView.php:73
+#: src/Modules/Planning/Views/ReportView.php:141
+msgid "Vencidas"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:99
-msgid "Día"
+#: src/Admin/Pages/PlanningPage.php:338
+msgid "actividades e hitos"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:102
-msgid "Trimestre"
+#: src/Admin/Pages/PlanningPage.php:339
+msgid "avance ponderado"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:103
-#: src/Admin/Pages/PlanningPage.php:382
+#: src/Admin/Pages/PlanningPage.php:340
+msgid "término programado"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:342
+#: src/Modules/Planning/Views/ReportView.php:64
+msgid "días hábiles de holgura contractual"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:344
+#: src/Modules/Planning/Views/ReportView.php:62
+msgid "vencidas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:345
+msgid "críticas"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:350
+#: src/Admin/Pages/PlanningPage.php:538
+msgid "Nueva actividad"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:351
+msgid "Nueva fase"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:352
+msgid "Nuevo hito"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:356
+msgid "Exportar:"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:372
+#: src/Modules/Planning/Views/CanvasView.php:109
 msgid "Todos los frentes"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:105
-#: src/Admin/Pages/PlanningPage.php:726
-msgid "Sin frente"
+#: src/Admin/Pages/PlanningPage.php:377
+#: src/Modules/Planning/Views/CanvasView.php:51
+msgid "Solo críticas"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:107
-msgid "Suelte sobre la actividad sucesora"
+#: src/Admin/Pages/PlanningPage.php:384
+msgid "El proyecto aún no tiene actividades. Empiece creando las fases (resúmenes) y dentro de ellas las actividades e hitos."
 msgstr ""
 
-#. translators: notación de la dependencia.
-#: src/Admin/Pages/PlanningPage.php:109
-#, php-format
-msgid "¿Quitar la dependencia %s?"
+#: src/Admin/Pages/PlanningPage.php:384
+msgid "Ninguna actividad coincide con el filtro."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:110
-msgid "Contraer"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:111
-msgid "Expandir"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:112
-msgid "Sin fechas programadas."
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:114
-#: src/Admin/Pages/PlanningPage.php:404
-#: src/Admin/Pages/PlanningPage.php:801
+#: src/Admin/Pages/PlanningPage.php:394
+#: src/Admin/Pages/PlanningPage.php:658
 #: src/Admin/Pages/ProjectsPage.php:102
 #: src/Admin/Pages/ProjectsPage.php:163
 #: src/Admin/Pages/ProjectsPage.php:341
 #: src/Modules/Planning/EventsService.php:51
+#: src/Modules/Planning/Views/CanvasView.php:120
 msgid "Inicio"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:116
-#: src/Admin/Pages/PlanningPage.php:406
+#: src/Admin/Pages/PlanningPage.php:396
+#: src/Modules/Planning/Views/CanvasView.php:122
 msgid "Holgura"
 msgstr ""
 
-#. translators: días hábiles de atraso.
-#: src/Admin/Pages/PlanningPage.php:117
-#: src/Admin/Pages/PlanningPage.php:433
-#: src/Admin/Pages/PlanningReportPage.php:265
-msgid "crítica"
-msgstr ""
-
-#. translators: nombre de la actividad.
-#: src/Admin/Pages/PlanningPage.php:119
-#, php-format
-msgid "¿Quitar la restricción de fecha de %s?"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:187
-msgid "No hay proyectos visibles para su usuario. Cree uno en la pantalla de proyectos."
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:194
-#: src/Modules/Planning/PlanningTools.php:253
-#: src/Modules/Planning/PlanningTools.php:470
-msgid "Sin permiso para ver la planificación de este proyecto."
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:246
-#: src/Admin/Pages/PlanningPage.php:296
-#: src/Admin/Pages/PlanningPage.php:305
-#: src/Modules/Data/DataDictionary.php:188
-msgid "Actividades"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:247
-#: src/Admin/Pages/PlanningPage.php:306
-#: src/Admin/Pages/PlanningPage.php:490
-msgid "Carta Gantt"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:248
-#: src/Admin/Pages/PlanningPage.php:490
-msgid "Tablero"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:250
-msgid "Alertas"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:251
-#: src/Admin/Pages/PlanningReportPage.php:320
-msgid "Carga de trabajo"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:252
-#: src/Admin/Pages/PlanningPage.php:307
-#: src/Admin/Pages/PlanningReportPage.php:149
-#: src/Modules/Planning/PlanningTools.php:100
-msgid "Informe semanal"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:297
-msgid "Avance ponderado"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:298
-#: src/Admin/Pages/PlanningPage.php:873
-#: src/Admin/Pages/PlanningReportPage.php:206
-msgid "Término programado"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:300
-msgid "Holgura contractual"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:302
-#: src/Admin/Pages/PlanningReportPage.php:184
-#: src/Admin/Pages/PlanningReportPage.php:251
-msgid "Vencidas"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:348
-msgid "actividades e hitos"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:349
-msgid "avance ponderado"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:350
-msgid "término programado"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:352
-#: src/Admin/Pages/PlanningReportPage.php:176
-msgid "días hábiles de holgura contractual"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:354
-#: src/Admin/Pages/PlanningReportPage.php:174
-msgid "vencidas"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:355
-msgid "críticas"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:360
-#: src/Admin/Pages/PlanningPage.php:681
-msgid "Nueva actividad"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:361
-msgid "Nueva fase"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:362
-msgid "Nuevo hito"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:366
-msgid "Exportar:"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:387
-#: src/Admin/Pages/PlanningPage.php:505
-msgid "Solo críticas"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:394
-msgid "El proyecto aún no tiene actividades. Empiece creando las fases (resúmenes) y dentro de ellas las actividades e hitos."
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:394
-msgid "Ninguna actividad coincide con el filtro."
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:407
-#: src/Admin/Pages/PlanningPage.php:456
-#: src/Admin/Pages/PlanningPage.php:795
-#: src/Admin/Pages/PlanningPage.php:936
-#: src/Admin/Pages/PlanningReportPage.php:184
-#: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Admin/Pages/PlanningPage.php:397
+#: src/Admin/Pages/PlanningPage.php:446
+#: src/Admin/Pages/PlanningPage.php:652
+#: src/Admin/Pages/PlanningPage.php:793
+#: src/Modules/Planning/Views/ReportView.php:73
+#: src/Modules/Planning/Views/ReportView.php:124
 msgid "Avance"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:434
+#. translators: días hábiles de atraso.
+#: src/Admin/Pages/PlanningPage.php:423
+#: src/Modules/Planning/Views/CanvasView.php:123
+#: src/Modules/Planning/Views/ReportView.php:155
+msgid "crítica"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:424
 msgid "conflicto"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:457
+#: src/Admin/Pages/PlanningPage.php:447
 msgid "Guardar avance"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:464
+#: src/Admin/Pages/PlanningPage.php:454
 msgid "Subir"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:465
+#: src/Admin/Pages/PlanningPage.php:455
 msgid "Bajar"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:466
+#: src/Admin/Pages/PlanningPage.php:456
 msgid "Anidar en la fase anterior"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:467
+#: src/Admin/Pages/PlanningPage.php:457
 msgid "Sacar de la fase"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:475
+#: src/Admin/Pages/PlanningPage.php:465
 msgid "Duraciones y holguras en días hábiles del calendario del proyecto. Un hito se fecha el día en que se alcanza. Las fechas se recalculan automáticamente a partir de las dependencias, restricciones, fechas reales y calendario."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:493
-msgid "El proyecto aún no tiene actividades."
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:501
-msgid "Escala"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:503
-#: src/Admin/Pages/PlanningPage.php:876
-msgid "Ruta crítica"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:504
-#: src/Modules/Data/DataDictionary.php:189
-msgid "Dependencias"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:508
-msgid "Imprimir o guardar en PDF"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:512
-msgid "Arrastre una barra para fijar su inicio (restricción \"no empezar antes de\") o su borde derecho para cambiar la duración. Arrastre desde el círculo del extremo de una barra hasta otra para crear una dependencia fin a inicio; pulse sobre una flecha para quitarla; doble clic sobre una barra quita su restricción."
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:519
-msgid "Agrupar por"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:522
-#: src/Admin/Pages/PlanningPage.php:723
-msgid "Frente de trabajo"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:525
-msgid "Ocultar terminadas y canceladas"
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:526
-msgid "Arrastre las tarjetas entre columnas: cambia el estado, el frente o el responsable según la agrupación. Marcar como terminada fija el avance en 100 % y la fecha real de término en hoy."
-msgstr ""
-
-#: src/Admin/Pages/PlanningPage.php:643
-#: src/Admin/Pages/PlanningPage.php:1040
+#: src/Admin/Pages/PlanningPage.php:500
+#: src/Admin/Pages/PlanningPage.php:897
 #: src/Modules/Documents/DocumentRepository.php:309
 #: src/Modules/Meetings/MeetingRepository.php:211
 #: src/Modules/Planning/ActivityHandler.php:709
@@ -3501,222 +3358,237 @@ msgstr ""
 msgid "La actividad no existe en este proyecto."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:708
+#: src/Admin/Pages/PlanningPage.php:565
 msgid "Los resúmenes agrupan actividades y toman sus fechas de ellas; los hitos tienen duración cero."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:715
+#: src/Admin/Pages/PlanningPage.php:572
 msgid "Primer nivel"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:731
+#: src/Admin/Pages/PlanningPage.php:580
+#: src/Modules/Planning/Views/CanvasView.php:69
+msgid "Frente de trabajo"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:583
+#: src/Modules/Planning/Views/CanvasView.php:111
+msgid "Sin frente"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:588
 msgid "Prioridad"
 msgstr ""
 
 #. translators: etiqueta de la prioridad.
-#: src/Admin/Pages/PlanningPage.php:733
+#: src/Admin/Pages/PlanningPage.php:590
 #, php-format
 msgid "Prioridad %s"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:739
+#: src/Admin/Pages/PlanningPage.php:596
 msgid "Duración (días hábiles)"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:743
+#: src/Admin/Pages/PlanningPage.php:600
 msgid "Restricción de fecha"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:750
+#: src/Admin/Pages/PlanningPage.php:607
 msgid "Fecha de la restricción"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:751
+#: src/Admin/Pages/PlanningPage.php:608
 msgid "Sin restricción, la actividad se programa lo antes posible según sus predecesoras."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:758
+#: src/Admin/Pages/PlanningPage.php:615
 msgid "Retraso"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:764
+#: src/Admin/Pages/PlanningPage.php:621
 msgid "(ninguna)"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:783
+#: src/Admin/Pages/PlanningPage.php:640
 msgid "Añadir predecesora"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:784
+#: src/Admin/Pages/PlanningPage.php:641
 msgid "FS: empieza cuando la otra termina. SS: empiezan juntas. FF: terminan juntas. SF: termina cuando la otra empieza. El retraso se expresa en días hábiles; negativo es adelanto."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:788
+#: src/Admin/Pages/PlanningPage.php:645
 msgid "Estado y avance"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:799
+#: src/Admin/Pages/PlanningPage.php:656
 msgid "Fechas reales"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:803
+#: src/Admin/Pages/PlanningPage.php:660
 msgid "Las fechas reales fijan la programación: una actividad terminada ya no se mueve."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:826
+#: src/Admin/Pages/PlanningPage.php:683
 msgid "Entregable"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:827
+#: src/Admin/Pages/PlanningPage.php:684
 msgid "Informe, muestra, prototipo, acta…"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:830
+#: src/Admin/Pages/PlanningPage.php:687
 msgid "Partida y costo planificado"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:833
+#: src/Admin/Pages/PlanningPage.php:690
 #: src/Admin/Pages/ProcurementPage.php:368
 #: src/Modules/Procurement/BudgetService.php:45
 msgid "Sin partida"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:838
+#: src/Admin/Pages/PlanningPage.php:695
 msgid "Costo planificado"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:846
+#: src/Admin/Pages/PlanningPage.php:703
 msgid "Notas de seguimiento"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:851
+#: src/Admin/Pages/PlanningPage.php:708
 msgid "Nota de este avance"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:852
+#: src/Admin/Pages/PlanningPage.php:709
 msgid "Se anota en el historial si cambian el avance, el estado o las fechas reales."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:858
+#: src/Admin/Pages/PlanningPage.php:715
 msgid "Crear"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:860
+#: src/Admin/Pages/PlanningPage.php:717
 msgid "Crear y añadir otra"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:862
+#: src/Admin/Pages/PlanningPage.php:719
 #: src/Admin/Pages/ProjectsPage.php:149
 msgid "Volver a la lista"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:869
+#: src/Admin/Pages/PlanningPage.php:726
 msgid "Programación"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:872
+#: src/Admin/Pages/PlanningPage.php:729
 msgid "Inicio programado"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:874
+#: src/Admin/Pages/PlanningPage.php:731
 msgid "Inicio y término tardíos"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:875
+#: src/Admin/Pages/PlanningPage.php:732
 msgid "Holgura total / libre"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:876
+#: src/Admin/Pages/PlanningPage.php:733
+#: src/Modules/Planning/Views/CanvasView.php:49
+msgid "Ruta crítica"
+msgstr ""
+
+#: src/Admin/Pages/PlanningPage.php:733
 msgid "Sí"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:876
+#: src/Admin/Pages/PlanningPage.php:733
 msgid "No"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:881
+#: src/Admin/Pages/PlanningPage.php:738
 msgid "Sucesoras"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:892
+#: src/Admin/Pages/PlanningPage.php:749
 msgid "Personas asignadas"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:894
+#: src/Admin/Pages/PlanningPage.php:751
 msgid "Sin asignaciones."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:909
+#: src/Admin/Pages/PlanningPage.php:766
 #: src/Admin/Pages/ProjectsPage.php:197
 msgid "Retirar"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:927
+#: src/Admin/Pages/PlanningPage.php:784
 msgid "Dedicación"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:928
+#: src/Admin/Pages/PlanningPage.php:785
 msgid "Asignar"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:934
+#: src/Admin/Pages/PlanningPage.php:791
 msgid "Historial de avance"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:936
-#: src/Admin/Pages/PlanningReportPage.php:234
+#: src/Admin/Pages/PlanningPage.php:793
+#: src/Modules/Planning/Views/ReportView.php:124
 msgid "Quién"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:956
+#: src/Admin/Pages/PlanningPage.php:813
 msgid "Eliminar actividad"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:957
+#: src/Admin/Pages/PlanningPage.php:814
 msgid "Se eliminan también las actividades contenidas, sus dependencias, asignaciones e historial."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1054
+#: src/Admin/Pages/PlanningPage.php:911
 msgid "Actividad guardada, pero las predecesoras no se aplicaron:"
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1061
+#: src/Admin/Pages/PlanningPage.php:918
 msgid "Actividad creada."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1063
+#: src/Admin/Pages/PlanningPage.php:920
 msgid "Actividad guardada."
 msgstr ""
 
 #. translators: 1: registros eliminados, 2: enlace a la papelera
-#: src/Admin/Pages/PlanningPage.php:1089
+#: src/Admin/Pages/PlanningPage.php:946
 #, php-format
 msgid "Actividad eliminada (%1$d registros). Puede restaurarla desde la <a href=\"%2$s\">papelera</a>."
 msgstr ""
 
 #. translators: 1: nombre de la actividad, 2: porcentaje.
-#: src/Admin/Pages/PlanningPage.php:1117
+#: src/Admin/Pages/PlanningPage.php:974
 #, php-format
 msgid "Avance de \"%1$s\" fijado en %2$d %%."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1164
+#: src/Admin/Pages/PlanningPage.php:1021
 msgid "No hay una fase anterior en la que anidar la actividad."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1207
+#: src/Admin/Pages/PlanningPage.php:1064
 msgid "Asignación guardada."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1224
+#: src/Admin/Pages/PlanningPage.php:1081
 msgid "Asignación retirada."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1247
+#: src/Admin/Pages/PlanningPage.php:1104
 msgid "Sin permiso de edición."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1278
+#: src/Admin/Pages/PlanningPage.php:1135
 #: src/Modules/Planning/ActivityRepository.php:558
 #: src/Modules/Planning/ActivityRepository.php:634
 #: src/Modules/Planning/ActivityRepository.php:726
@@ -3724,296 +3596,36 @@ msgstr ""
 msgid "La actividad no existe."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1287
+#: src/Admin/Pages/PlanningPage.php:1144
 msgid "La actividad tiene fechas reales y no se puede mover."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1293
+#: src/Admin/Pages/PlanningPage.php:1150
 #: src/Modules/Procurement/PurchaseHandler.php:109
 #: src/Modules/Procurement/UfService.php:108
 msgid "Fecha no válida."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1300
+#: src/Admin/Pages/PlanningPage.php:1157
 msgid "Solo las actividades cambian de duración."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1307
+#: src/Admin/Pages/PlanningPage.php:1164
 msgid "El estado de un resumen se deriva de sus actividades."
 msgstr ""
 
-#: src/Admin/Pages/PlanningPage.php:1322
+#: src/Admin/Pages/PlanningPage.php:1179
 msgid "Operación desconocida."
 msgstr ""
 
-#: src/Admin/Pages/PlanningReportPage.php:49
+#: src/Admin/Pages/PlanningReportPage.php:48
 msgid "Project (XML)"
 msgstr ""
 
-#: src/Admin/Pages/PlanningReportPage.php:92
-msgid "Vencida"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:93
-msgid "Vence pronto"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:94
-msgid "No iniciada"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:95
-msgid "Holgura negativa"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:96
-msgid "Conflicto de fechas"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:97
-#: src/Modules/Planning/EventsService.php:62
-msgid "Término contractual"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:98
-msgid "Sobreasignación"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:99
-msgid "Exige aprobación"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:102
+#: src/Admin/Pages/PlanningReportPage.php:88
 #: src/Modules/Planning/PlanningCron.php:133
+#: src/Modules/Planning/Views/Shortcodes.php:87
 msgid "Alertas de plazo"
-msgstr ""
-
-#. translators: fecha de hoy.
-#: src/Admin/Pages/PlanningReportPage.php:104
-#, php-format
-msgid "Calculadas ahora sobre el cronograma vigente (hoy es %s). El recálculo diario guarda un resumen y, si las notificaciones están activas, avisa por correo a directores e ingenieros cuando hay alertas de severidad alta."
-msgstr ""
-
-#. translators: 1: fecha y hora, 2: alertas altas, 3: alertas medias.
-#: src/Admin/Pages/PlanningReportPage.php:105
-#, php-format
-msgid "Último recálculo programado: %1$s (%2$d altas, %3$d medias)."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:108
-msgid "Sin alertas: el cronograma está al día."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:111
-msgid "Severidad"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:158
-msgid "Ver semana"
-msgstr ""
-
-#. translators: 1: número de semana, 2: año, 3: fecha de inicio, 4: fecha de término.
-#: src/Admin/Pages/PlanningReportPage.php:168
-#, php-format
-msgid "Semana %1$d de %2$d (%3$s al %4$s)"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:171
-msgid "avance global"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:172
-msgid "terminadas"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:173
-msgid "en curso"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:182
-msgid "Avance por frente de trabajo"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:184
-msgid "Act."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:184
-msgid "Term."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:184
-#: src/Modules/Dashboards/DashboardRenderer.php:154
-#: src/Modules/Meetings/AgreementRepository.php:38
-#: src/Modules/Planning/ActivityRepository.php:83
-msgid "En curso"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:194
-msgid "Cambios respecto de la semana anterior"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:197
-msgid "Semana futura: sin fotografía del cronograma todavía."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:199
-msgid "Primera fotografía del cronograma: la comparación empieza la próxima semana."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:202
-msgid "Frentes que se abren"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:203
-msgid "Frentes que se cierran"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:204
-msgid "Entran en la ruta crítica"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:205
-msgid "Salen de la ruta crítica"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:207
-msgid "Avance global"
-msgstr ""
-
-#. translators: lunes de la semana comparada.
-#: src/Admin/Pages/PlanningReportPage.php:207
-#, php-format
-msgid "semana comparada: %s"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:213
-msgid "Curva S de avance"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:217
-msgid "planificado a la fecha"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:218
-msgid "real"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:219
-msgid "puntos de desviación"
-msgstr ""
-
-#. translators: nombre de la línea base.
-#: src/Admin/Pages/PlanningReportPage.php:222
-#, php-format
-msgid "Plan según la línea base \"%s\"; real según el historial de avances, ponderado por duración."
-msgstr ""
-
-#. translators: nombre de la línea base.
-#: src/Admin/Pages/PlanningReportPage.php:222
-msgid "Sin línea base vigente: el plan se toma del cronograma actual. Fije una línea base para medir la desviación contra el compromiso."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:224
-msgid "Sin actividades con fechas y duración."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:229
-msgid "Avances registrados en la semana"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:231
-msgid "No se registraron avances durante la semana."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:246
-msgid "Terminado en la semana"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:247
-msgid "Iniciado en la semana"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:248
-msgid "En ejecución durante la semana"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:249
-msgid "Comienza la próxima semana"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:250
-msgid "Hitos de las próximas cuatro semanas"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:258
-msgid "Sin registros."
-msgstr ""
-
-#. translators: días hábiles de atraso.
-#: src/Admin/Pages/PlanningReportPage.php:264
-#, php-format
-msgid "%d días de atraso"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:274
-msgid "Desviación respecto de la línea base"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:276
-msgid "El proyecto no tiene una línea base vigente."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:276
-msgid "Fijar una"
-msgstr ""
-
-#. translators: 1: nombre de la línea base, 2: fecha, 3: atrasadas, 4: adelantadas, 5: nuevas, 6: eliminadas.
-#: src/Admin/Pages/PlanningReportPage.php:279
-#, php-format
-msgid "Línea base \"%1$s\" (%2$s): %3$d atrasadas, %4$d adelantadas, %5$d nuevas, %6$d eliminadas."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:292
-msgid "Alertas de severidad alta"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:301
-msgid "La exportación LaTeX genera un documento completo (babel español, tablas longtable con continuación, carta Gantt resumida con pgfgantt) listo para compilar con pdflatex."
-msgstr ""
-
-#. translators: número de semanas.
-#: src/Admin/Pages/PlanningReportPage.php:331
-#, php-format
-msgid "%d semanas"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:334
-#: src/Admin/Pages/ProjectsPage.php:115
-msgid "Ver"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:337
-msgid "Porcentaje de dedicación por semana: responsables al 100 % salvo asignación propia, participantes por su dedicación, prorrateado por los días hábiles de cada actividad en la semana. Más de 100 % es sobreasignación."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:340
-msgid "No hay actividades abiertas con responsable o asignaciones en este periodo."
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:346
-#: src/Admin/Pages/ProjectsPage.php:183
-msgid "Persona"
-msgstr ""
-
-#: src/Admin/Pages/PlanningReportPage.php:350
-msgid "Máx."
-msgstr ""
-
-#. translators: número de semanas con sobreasignación.
-#: src/Admin/Pages/PlanningReportPage.php:356
-#, php-format
-msgid "%d sem. >100 %%"
 msgstr ""
 
 #: src/Admin/Pages/ProcurementPage.php:48
@@ -4624,6 +4236,11 @@ msgstr ""
 msgid "Financiador"
 msgstr ""
 
+#: src/Admin/Pages/ProjectsPage.php:115
+#: src/Modules/Planning/Views/WorkloadView.php:46
+msgid "Ver"
+msgstr ""
+
 #: src/Admin/Pages/ProjectsPage.php:157
 msgid "Ficha"
 msgstr ""
@@ -4659,6 +4276,11 @@ msgstr ""
 
 #: src/Admin/Pages/ProjectsPage.php:180
 msgid "Sin miembros asignados."
+msgstr ""
+
+#: src/Admin/Pages/ProjectsPage.php:183
+#: src/Modules/Planning/Views/WorkloadView.php:58
+msgid "Persona"
 msgstr ""
 
 #: src/Admin/Pages/ProjectsPage.php:183
@@ -5844,6 +5466,13 @@ msgstr ""
 msgid "Completada"
 msgstr ""
 
+#: src/Modules/Dashboards/DashboardRenderer.php:154
+#: src/Modules/Meetings/AgreementRepository.php:38
+#: src/Modules/Planning/ActivityRepository.php:83
+#: src/Modules/Planning/Views/ReportView.php:73
+msgid "En curso"
+msgstr ""
+
 #: src/Modules/Dashboards/DashboardRenderer.php:155
 msgid "Próximamente"
 msgstr ""
@@ -6061,6 +5690,7 @@ msgid "Este tablero es solo para el equipo del proyecto."
 msgstr ""
 
 #: src/Modules/Dashboards/DashboardsModule.php:180
+#: src/Modules/Planning/Views/Shortcodes.php:160
 msgid "Inicie sesión"
 msgstr ""
 
@@ -6285,6 +5915,11 @@ msgstr ""
 
 #: src/Modules/Data/DataDictionary.php:188
 msgid "Estructura de desglose y cronograma: resúmenes, actividades e hitos con fechas calculadas por ruta crítica."
+msgstr ""
+
+#: src/Modules/Data/DataDictionary.php:189
+#: src/Modules/Planning/Views/CanvasView.php:50
+msgid "Dependencias"
 msgstr ""
 
 #: src/Modules/Data/DataDictionary.php:189
@@ -7058,7 +6693,7 @@ msgid "Proyecto, equipo y catálogos"
 msgstr ""
 
 #: src/Modules/Data/DataSchema.php:51
-#: src/Modules/Planning/PlanningModule.php:45
+#: src/Modules/Planning/PlanningModule.php:46
 #: src/Modules/Registry.php:45
 msgid "Planificación y tiempo"
 msgstr ""
@@ -8124,6 +7759,11 @@ msgstr ""
 msgid "La dependencia crearía un ciclo: una actividad terminaría dependiendo de sí misma."
 msgstr ""
 
+#: src/Modules/Planning/EventsService.php:62
+#: src/Modules/Planning/Views/AlertsView.php:35
+msgid "Término contractual"
+msgstr ""
+
 #. translators: nombre del proyecto.
 #: src/Modules/Planning/EventsService.php:64
 #, php-format
@@ -8144,7 +7784,7 @@ msgstr ""
 msgid "Abrir el informe completo en el panel"
 msgstr ""
 
-#: src/Modules/Planning/PlanningModule.php:52
+#: src/Modules/Planning/PlanningModule.php:53
 msgid "Estructura de desglose, cronograma, dependencias, ruta crítica, carta Gantt, línea base, avances, alertas e informe semanal."
 msgstr ""
 
@@ -8324,6 +7964,463 @@ msgstr ""
 #: src/Modules/Planning/ScheduleImporter.php:385
 #, php-format
 msgid "Responsables sin usuario en el sitio (quedan sin responsable): %s."
+msgstr ""
+
+#: src/Modules/Planning/Views/AlertsView.php:30
+msgid "Vencida"
+msgstr ""
+
+#: src/Modules/Planning/Views/AlertsView.php:31
+msgid "Vence pronto"
+msgstr ""
+
+#: src/Modules/Planning/Views/AlertsView.php:32
+msgid "No iniciada"
+msgstr ""
+
+#: src/Modules/Planning/Views/AlertsView.php:33
+msgid "Holgura negativa"
+msgstr ""
+
+#: src/Modules/Planning/Views/AlertsView.php:34
+msgid "Conflicto de fechas"
+msgstr ""
+
+#: src/Modules/Planning/Views/AlertsView.php:36
+msgid "Sobreasignación"
+msgstr ""
+
+#: src/Modules/Planning/Views/AlertsView.php:37
+msgid "Exige aprobación"
+msgstr ""
+
+#. translators: fecha de hoy.
+#: src/Modules/Planning/Views/AlertsView.php:53
+#, php-format
+msgid "Calculadas ahora sobre el cronograma vigente (hoy es %s). El recálculo diario guarda un resumen y, si las notificaciones están activas, avisa por correo a directores e ingenieros cuando hay alertas de severidad alta."
+msgstr ""
+
+#. translators: 1: fecha y hora, 2: alertas altas, 3: alertas medias.
+#: src/Modules/Planning/Views/AlertsView.php:54
+#, php-format
+msgid "Último recálculo programado: %1$s (%2$d altas, %3$d medias)."
+msgstr ""
+
+#: src/Modules/Planning/Views/AlertsView.php:57
+msgid "Sin alertas: el cronograma está al día."
+msgstr ""
+
+#: src/Modules/Planning/Views/AlertsView.php:61
+msgid "Severidad"
+msgstr ""
+
+#. translators: 1: número de semana, 2: fecha de inicio, 3: fecha de término.
+#: src/Modules/Planning/Views/CalendarView.php:56
+#, php-format
+msgid "Semana %1$d: %2$s al %3$s"
+msgstr ""
+
+#. translators: 1: fecha de inicio, 2: fecha de término.
+#: src/Modules/Planning/Views/CalendarView.php:63
+#, php-format
+msgid "Agenda: %1$s al %2$s"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:71
+msgid "Lun"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:71
+msgid "Mar"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:71
+msgid "Mié"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:71
+msgid "Jue"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:71
+msgid "Vie"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:71
+msgid "Sáb"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:71
+msgid "Dom"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:74
+msgid "Anterior"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:75
+#: src/Modules/Planning/Views/CanvasView.php:101
+msgid "Hoy"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:76
+msgid "Siguiente"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:79
+#: src/Modules/Planning/Views/CanvasView.php:107
+msgid "Mes"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:79
+#: src/Modules/Planning/Views/CanvasView.php:106
+msgid "Semana"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:79
+msgid "Agenda"
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:87
+msgid "Sin eventos en el periodo."
+msgstr ""
+
+#: src/Modules/Planning/Views/CalendarView.php:91
+msgid "(no laborable)"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:40
+msgid "El proyecto aún no tiene actividades."
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:47
+msgid "Escala"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:48
+#: src/Modules/Planning/Views/CanvasView.php:102
+msgid "Línea base"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:54
+msgid "Imprimir o guardar en PDF"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:58
+msgid "Arrastre una barra para fijar su inicio (restricción \"no empezar antes de\") o su borde derecho para cambiar la duración. Arrastre desde el círculo del extremo de una barra hasta otra para crear una dependencia fin a inicio; pulse sobre una flecha para quitarla; doble clic sobre una barra quita su restricción."
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:66
+msgid "Agrupar por"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:72
+msgid "Ocultar terminadas y canceladas"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:74
+msgid "Arrastre las tarjetas entre columnas: cambia el estado, el frente o el responsable según la agrupación. Marcar como terminada fija el avance en 100 % y la fecha real de término en hoy."
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:99
+msgid "Guardando…"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:100
+msgid "No se pudo guardar el cambio."
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:104
+msgid "Con fechas reales: no se puede arrastrar."
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:105
+msgid "Día"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:108
+msgid "Trimestre"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:113
+msgid "Suelte sobre la actividad sucesora"
+msgstr ""
+
+#. translators: notación de la dependencia.
+#: src/Modules/Planning/Views/CanvasView.php:115
+#, php-format
+msgid "¿Quitar la dependencia %s?"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:116
+msgid "Contraer"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:117
+msgid "Expandir"
+msgstr ""
+
+#: src/Modules/Planning/Views/CanvasView.php:118
+msgid "Sin fechas programadas."
+msgstr ""
+
+#. translators: nombre de la actividad.
+#: src/Modules/Planning/Views/CanvasView.php:125
+#, php-format
+msgid "¿Quitar la restricción de fecha de %s?"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:42
+msgid "Semana anterior"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:44
+msgid "Ver semana"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:45
+msgid "Semana siguiente"
+msgstr ""
+
+#. translators: 1: número de semana, 2: año, 3: fecha de inicio, 4: fecha de término.
+#: src/Modules/Planning/Views/ReportView.php:56
+#, php-format
+msgid "Semana %1$d de %2$d (%3$s al %4$s)"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:59
+msgid "avance global"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:60
+msgid "terminadas"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:61
+msgid "en curso"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:70
+msgid "Avance por frente de trabajo"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:73
+msgid "Act."
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:73
+msgid "Term."
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:84
+msgid "Cambios respecto de la semana anterior"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:87
+msgid "Semana futura: sin fotografía del cronograma todavía."
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:89
+msgid "Primera fotografía del cronograma: la comparación empieza la próxima semana."
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:92
+msgid "Frentes que se abren"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:93
+msgid "Frentes que se cierran"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:94
+msgid "Entran en la ruta crítica"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:95
+msgid "Salen de la ruta crítica"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:97
+msgid "Avance global"
+msgstr ""
+
+#. translators: lunes de la semana comparada.
+#: src/Modules/Planning/Views/ReportView.php:97
+#, php-format
+msgid "semana comparada: %s"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:103
+msgid "Curva S de avance"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:107
+msgid "planificado a la fecha"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:108
+msgid "real"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:109
+msgid "puntos de desviación"
+msgstr ""
+
+#. translators: nombre de la línea base.
+#: src/Modules/Planning/Views/ReportView.php:112
+#, php-format
+msgid "Plan según la línea base \"%s\"; real según el historial de avances, ponderado por duración."
+msgstr ""
+
+#. translators: nombre de la línea base.
+#: src/Modules/Planning/Views/ReportView.php:112
+msgid "Sin línea base vigente: el plan se toma del cronograma actual. Fije una línea base para medir la desviación contra el compromiso."
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:114
+msgid "Sin actividades con fechas y duración."
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:119
+msgid "Avances registrados en la semana"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:121
+msgid "No se registraron avances durante la semana."
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:136
+msgid "Terminado en la semana"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:137
+msgid "Iniciado en la semana"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:138
+msgid "En ejecución durante la semana"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:139
+msgid "Comienza la próxima semana"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:140
+msgid "Hitos de las próximas cuatro semanas"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:148
+msgid "Sin registros."
+msgstr ""
+
+#. translators: días hábiles de atraso.
+#: src/Modules/Planning/Views/ReportView.php:154
+#, php-format
+msgid "%d días de atraso"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:164
+msgid "Desviación respecto de la línea base"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:166
+msgid "El proyecto no tiene una línea base vigente."
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:166
+msgid "Fijar una"
+msgstr ""
+
+#. translators: 1: nombre de la línea base, 2: fecha, 3: atrasadas, 4: adelantadas, 5: nuevas, 6: eliminadas.
+#: src/Modules/Planning/Views/ReportView.php:169
+#, php-format
+msgid "Línea base \"%1$s\" (%2$s): %3$d atrasadas, %4$d adelantadas, %5$d nuevas, %6$d eliminadas."
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:182
+msgid "Alertas de severidad alta"
+msgstr ""
+
+#: src/Modules/Planning/Views/ReportView.php:192
+msgid "La exportación LaTeX genera un documento completo (babel español, tablas longtable con continuación, carta Gantt resumida con pgfgantt) listo para compilar con pdflatex."
+msgstr ""
+
+#: src/Modules/Planning/Views/Shortcodes.php:85
+msgid "Tablero de tarjetas"
+msgstr ""
+
+#: src/Modules/Planning/Views/Shortcodes.php:160
+msgid "Esta vista es solo para el equipo del proyecto."
+msgstr ""
+
+#. translators: código corto.
+#: src/Modules/Planning/Views/Shortcodes.php:168
+#, php-format
+msgid "%s: no se encontró el proyecto. Indique su código en el atributo proyecto. Solo los administradores ven este aviso."
+msgstr ""
+
+#: src/Modules/Planning/Views/Shortcodes.php:172
+msgid "Su cuenta no tiene acceso a la planificación de este proyecto. Pida al administrador que lo agregue al equipo."
+msgstr ""
+
+#: src/Modules/Planning/Views/Shortcodes.php:184
+msgid "La carta Gantt y el tablero de una misma página deben ser del mismo proyecto. Solo los administradores ven este aviso."
+msgstr ""
+
+#: src/Modules/Planning/Views/Shortcodes.php:290
+msgid "Barras por actividad, línea base, ruta crítica y dependencias; escala por día, semana, mes o trimestre y filtros por frente y responsable. Solo lectura."
+msgstr ""
+
+#: src/Modules/Planning/Views/Shortcodes.php:291
+msgid "Tarjetas agrupadas por estado, frente de trabajo o responsable. Solo lectura."
+msgstr ""
+
+#: src/Modules/Planning/Views/Shortcodes.php:292
+msgid "Hitos, inicios y términos, término contractual y eventos de otros módulos; vistas de mes, semana y agenda con navegación."
+msgstr ""
+
+#: src/Modules/Planning/Views/Shortcodes.php:293
+msgid "Alertas de plazo calculadas al momento: vencidas, próximas, holgura negativa, conflictos, sobreasignación."
+msgstr ""
+
+#: src/Modules/Planning/Views/Shortcodes.php:294
+msgid "Porcentaje de dedicación por persona y semana, con sobreasignaciones destacadas."
+msgstr ""
+
+#: src/Modules/Planning/Views/Shortcodes.php:295
+msgid "Resumen de la semana: avance por frente, cambios, curva S, avances registrados, desviación respecto de la línea base y alertas altas; navegación por semana."
+msgstr ""
+
+#: src/Modules/Planning/Views/WorkloadView.php:39
+msgid "Periodo anterior"
+msgstr ""
+
+#. translators: número de semanas.
+#: src/Modules/Planning/Views/WorkloadView.php:43
+#, php-format
+msgid "%d semanas"
+msgstr ""
+
+#: src/Modules/Planning/Views/WorkloadView.php:47
+msgid "Periodo siguiente"
+msgstr ""
+
+#: src/Modules/Planning/Views/WorkloadView.php:49
+msgid "Porcentaje de dedicación por semana: responsables al 100 % salvo asignación propia, participantes por su dedicación, prorrateado por los días hábiles de cada actividad en la semana. Más de 100 % es sobreasignación."
+msgstr ""
+
+#: src/Modules/Planning/Views/WorkloadView.php:52
+msgid "No hay actividades abiertas con responsable o asignaciones en este periodo."
+msgstr ""
+
+#: src/Modules/Planning/Views/WorkloadView.php:62
+msgid "Máx."
+msgstr ""
+
+#. translators: número de semanas con sobreasignación.
+#: src/Modules/Planning/Views/WorkloadView.php:68
+#, php-format
+msgid "%d sem. >100 %%"
 msgstr ""
 
 #: src/Modules/Planning/WeeklyReport.php:88

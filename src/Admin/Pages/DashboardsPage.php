@@ -17,6 +17,7 @@ use GDP\Modules\Dashboards\DashboardData;
 use GDP\Modules\Dashboards\DashboardRenderer;
 use GDP\Modules\Dashboards\DashboardSettings;
 use GDP\Modules\Planning\ActivityRepository;
+use GDP\Modules\Planning\Views\Shortcodes;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -355,6 +356,24 @@ final class DashboardsPage extends Page {
 			<p><strong><?php esc_html_e( 'Código corto para el foro o una página privada:', 'gestion-de-proyectos' ); ?></strong></p>
 			<?php self::snippet( '[gdp_tablero_equipo proyecto="' . $project['code'] . '"]' ); ?>
 			<p class="gdp-muted gdp-small"><?php esc_html_e( 'En wpForo, los códigos cortos dentro de un mensaje solo se interpretan si está activada la opción "Enable WordPress Shortcodes in Post Content" (escritorio → Foros → Ajustes → pestaña Features, "Características" en la traducción); mientras esté desactivada, el mensaje muestra el código tal cual. Pegue el código con el proyecto exacto que aparece aquí, en un tema de un foro visible solo para los usuarios registrados; el tablero además comprueba la sesión por su cuenta. Si wpForo tiene activada su caché de HTML, el tablero se renueva cuando esa caché expira.', 'gestion-de-proyectos' ); ?></p>
+		</div>
+
+		<div class="gdp-card">
+			<h2><?php esc_html_e( 'Vistas de planificación para la página del equipo', 'gestion-de-proyectos' ); ?></h2>
+			<p><?php esc_html_e( 'Estos códigos muestran en el sitio las mismas vistas de la pantalla de planificación, en modo lectura, con la misma regla de acceso que el tablero del equipo (sesión iniciada y, si se marca abajo, pertenencia al proyecto). Quien puede entrar al panel conserva los enlaces hacia él; quien tiene permiso para ver la planificación conserva las descargas del informe. Pueden combinarse en una misma página; la carta Gantt y el tablero deben ser del mismo proyecto.', 'gestion-de-proyectos' ); ?></p>
+			<table class="widefat striped gdp-table gdp-dash-views">
+				<thead><tr><th><?php esc_html_e( 'Vista', 'gestion-de-proyectos' ); ?></th><th class="gdp-dash-views__code"><?php esc_html_e( 'Código corto', 'gestion-de-proyectos' ); ?></th><th><?php esc_html_e( 'Qué muestra', 'gestion-de-proyectos' ); ?></th></tr></thead>
+				<tbody>
+				<?php foreach ( Shortcodes::snippets( (string) $project['code'] ) as $s ) : ?>
+					<tr>
+						<td><strong><?php echo esc_html( $s['label'] ); ?></strong></td>
+						<td><input type="text" class="large-text code gdp-dash-snippet" readonly value="<?php echo esc_attr( $s['shortcode'] ); ?>" onclick="this.select()" aria-label="<?php echo esc_attr( $s['label'] ); ?>"></td>
+						<td class="gdp-small"><?php echo esc_html( $s['text'] ); ?></td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+			<p class="gdp-muted gdp-small"><?php esc_html_e( 'La navegación de calendario, carga de trabajo e informe semanal usa parámetros gdp_ en la dirección de la página, así que funciona en páginas, entradas y temas de foro. Si el tema del sitio tiene estilos muy marcados para botones o tablas, puede afinar la presentación con reglas CSS sobre el contenedor .gdp-front.', 'gestion-de-proyectos' ); ?></p>
 		</div>
 
 		<?php if ( Access::can( 'project.edit', $project_id ) ) : ?>

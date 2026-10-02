@@ -183,19 +183,21 @@ final class Identity {
 	/**
 	 * Variables CSS con la identidad resuelta, para inyectar en las pantallas del plugin.
 	 *
+	 * @param string $selector Selector que recibe las variables (:root en el panel; en el sitio, el contenedor del plugin).
 	 * @return string
 	 */
-	public static function css_variables(): string {
+	public static function css_variables( string $selector = ':root' ): string {
 		$i = self::get();
 
 		$css = sprintf(
-			':root{--gdp-primary:%1$s;--gdp-secondary:%2$s;--gdp-accent:%3$s;--gdp-background:%4$s;--gdp-text:%5$s;--gdp-font:%6$s;}',
+			'%7$s{--gdp-primary:%1$s;--gdp-secondary:%2$s;--gdp-accent:%3$s;--gdp-background:%4$s;--gdp-text:%5$s;--gdp-font:%6$s;}',
 			self::sanitize_color( $i['primary'] ),
 			self::sanitize_color( $i['secondary'] ),
 			self::sanitize_color( $i['accent'] ),
 			self::sanitize_color( $i['background'] ),
 			self::sanitize_color( $i['text'] ),
-			self::sanitize_font( $i['font'] )
+			self::sanitize_font( $i['font'] ),
+			$selector
 		);
 
 		return $css;

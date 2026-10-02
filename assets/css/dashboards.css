@@ -550,6 +550,15 @@
 	max-width: 640px;
 }
 
+.gdp-dashboards-admin .gdp-dash-views .gdp-dash-views__code {
+	width: 40%;
+}
+
+.gdp-dashboards-admin .gdp-dash-views .gdp-dash-snippet {
+	width: 100%;
+	max-width: none;
+}
+
 .gdp-dashboards-admin .gdp-dash-form .gdp-card {
 	margin-bottom: 1em;
 }
