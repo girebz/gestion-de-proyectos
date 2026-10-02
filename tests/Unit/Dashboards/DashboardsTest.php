@@ -11,6 +11,7 @@ namespace GDP\Tests\Unit\Dashboards;
 
 use GDP\Modules\Dashboards\DashboardData;
 use GDP\Modules\Dashboards\DashboardSettings;
+use GDP\Modules\Dashboards\DashboardsModule;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -118,6 +119,14 @@ final class DashboardsTest extends TestCase {
 		// (10 × 100 + 30 × 50 + 1 × 0) / 41 = 61.
 		$this->assertSame( 61, DashboardData::progress( $activities ) );
 		$this->assertSame( 0, DashboardData::progress( array() ) );
+	}
+
+	public function test_clean_attribute_accepts_forum_quotes(): void {
+		$this->assertSame( 'RELAVES-COQUIMBO', DashboardsModule::clean_attribute( ' "RELAVES-COQUIMBO" ' ) );
+		$this->assertSame( 'relaves-coquimbo', DashboardsModule::clean_attribute( '&quot;relaves-coquimbo&quot;' ) );
+		$this->assertSame( '01', DashboardsModule::clean_attribute( '“01”' ) );
+		$this->assertSame( "portada,etapas", DashboardsModule::clean_attribute( '&#8220;portada,etapas&#8221;' ) );
+		$this->assertSame( '', DashboardsModule::clean_attribute( '&nbsp;' ) );
 	}
 
 	public function test_time_elapsed(): void {

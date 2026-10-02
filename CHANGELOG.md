@@ -4,6 +4,11 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.7.3] - 2026-10-01
+
+### Cambiado
+- Códigos cortos dentro de foros y editores: los atributos `proyecto` y `bloques` se aceptan con las comillas convertidas en entidades (`&quot;`) o en comillas tipográficas, como las guarda el editor de wpForo; los colores de la identidad del sitio se añaden también a la hoja de estilos del tablero (`wp_add_inline_style`), de modo que el tablero conserva su aspecto si el foro elimina el atributo `style` del HTML. Indicaciones sobre wpForo (opción "Enable WordPress Shortcodes in Post Content", caché) en la pantalla Tableros y el README.
+
 ## [0.7.2] - 2026-10-01
 
 ### Cambiado
