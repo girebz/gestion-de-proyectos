@@ -30,7 +30,7 @@ final class DataSchema {
 	 * @var array<string,string[]>
 	 */
 	private const MODULES = array(
-		'core'        => array( 'projects', 'project_members', 'catalog_items' ),
+		'core'        => array( 'projects', 'permission_groups', 'project_members', 'catalog_items' ),
 		'planning'    => array( 'calendars', 'calendar_exceptions', 'activities', 'dependencies', 'assignments', 'progress', 'baselines', 'baseline_activities', 'schedule_snapshots' ),
 		'procurement' => array( 'suppliers', 'budget_lines', 'uf_rates' ),
 		'documents'   => array( 'documents', 'document_versions' ),
@@ -47,7 +47,7 @@ final class DataSchema {
 	 */
 	public static function module_labels(): array {
 		return array(
-			'core'        => __( 'Proyecto, equipo y catálogos', 'gestion-de-proyectos' ),
+			'core'        => __( 'Proyecto, equipo, grupos de permisos y catálogos', 'gestion-de-proyectos' ),
 			'planning'    => __( 'Planificación y tiempo', 'gestion-de-proyectos' ),
 			'procurement' => __( 'Proveedores, partidas y unidad de fomento', 'gestion-de-proyectos' ),
 			'documents'   => __( 'Control documental', 'gestion-de-proyectos' ),
@@ -122,7 +122,7 @@ final class DataSchema {
 	 * @return string[]
 	 */
 	public static function project_or_global(): array {
-		return array( 'catalog_items', 'suppliers', 'calendars' );
+		return array( 'catalog_items', 'suppliers', 'calendars', 'permission_groups' );
 	}
 
 	/**
@@ -132,7 +132,7 @@ final class DataSchema {
 	 * @return array<string,array{0:string,1:string}> tabla => [columna, tabla padre].
 	 */
 	public static function parents(): array {
-		return array(
+		$parents = array(
 			'calendar_exceptions' => array( 'calendar_id', 'calendars' ),
 			'baseline_activities' => array( 'baseline_id', 'baselines' ),
 			'document_versions'   => array( 'document_id', 'documents' ),
@@ -140,6 +140,13 @@ final class DataSchema {
 			'purchase_stages'     => array( 'purchase_id', 'purchases' ),
 			'meeting_attendees'   => array( 'meeting_id', 'meetings' ),
 		);
+
+		/**
+		 * Permite a los módulos declarar tablas hijas (tabla => [columna, tabla padre]).
+		 *
+		 * @param array<string,array{0:string,1:string}> $parents Tablas hijas.
+		 */
+		return (array) apply_filters( 'gdp_data_parents', $parents );
 	}
 
 	/**
@@ -149,6 +156,7 @@ final class DataSchema {
 	 */
 	public static function refs(): array {
 		$refs = array(
+			'permission_groups'   => array( 'project_id' => 'projects' ),
 			'project_members'     => array( 'project_id' => 'projects' ),
 			'catalog_items'       => array( 'project_id' => 'projects' ),
 			'calendars'           => array( 'project_id' => 'projects' ),
@@ -190,12 +198,20 @@ final class DataSchema {
 	 * @return array<string,array<int,array{0:string,1:string}>>
 	 */
 	public static function polymorphic(): array {
-		return array(
+		$pairs = array(
 			'dependencies'  => array( array( 'predecessor_type', 'predecessor_id' ) ),
 			'links'         => array( array( 'from_type', 'from_id' ), array( 'to_type', 'to_id' ) ),
 			'external_refs' => array( array( 'entity_type', 'entity_id' ) ),
 			'audit_log'     => array( array( 'entity_type', 'entity_id' ) ),
 		);
+
+		/**
+		 * Permite a los módulos declarar referencias polimórficas
+		 * (tabla => lista de [columna de tipo, columna de identificador]).
+		 *
+		 * @param array<string,array<int,array{0:string,1:string}>> $pairs Referencias.
+		 */
+		return (array) apply_filters( 'gdp_data_polymorphic', $pairs );
 	}
 
 	/**
@@ -204,7 +220,7 @@ final class DataSchema {
 	 * @return array<string,string>
 	 */
 	public static function entity_tables(): array {
-		return array(
+		$tables = array(
 			'project'   => 'projects',
 			'activity'  => 'activities',
 			'document'  => 'documents',
@@ -216,6 +232,13 @@ final class DataSchema {
 			'baseline'  => 'baselines',
 			'calendar'  => 'calendars',
 		);
+
+		/**
+		 * Permite a los módulos declarar sus entidades enlazables (tipo => tabla).
+		 *
+		 * @param array<string,string> $tables Entidades.
+		 */
+		return (array) apply_filters( 'gdp_data_entity_tables', $tables );
 	}
 
 	/**
@@ -233,14 +256,22 @@ final class DataSchema {
 	 * @return array<string,string[]>
 	 */
 	public static function json_columns(): array {
-		return array(
+		$columns = array(
 			'projects'           => array( 'settings' ),
+			'permission_groups'  => array( 'permissions' ),
 			'catalog_items'      => array( 'meta' ),
 			'activities'         => array( 'schedule_conflicts' ),
 			'schedule_snapshots' => array( 'stats', 'data' ),
 			'agreements'         => array( 'follow_up' ),
 			'audit_log'          => array( 'before_data', 'after_data' ),
 		);
+
+		/**
+		 * Permite a los módulos declarar sus columnas JSON (tabla => columnas).
+		 *
+		 * @param array<string,array<int,string>> $columns Columnas JSON.
+		 */
+		return (array) apply_filters( 'gdp_data_json_columns', $columns );
 	}
 
 	/**
@@ -252,6 +283,7 @@ final class DataSchema {
 	public static function keys(): array {
 		$keys = array(
 			'projects'            => array( 'code' ),
+			'permission_groups'   => array( 'project_id', 'slug' ),
 			'project_members'     => array( 'project_id', 'user_id' ),
 			'catalog_items'       => array( 'project_id', 'catalog', 'slug' ),
 			'calendars'           => array( 'project_id', 'name' ),
@@ -315,12 +347,19 @@ final class DataSchema {
 	 * @return array<string,string[]>
 	 */
 	public static function personal_columns(): array {
-		return array(
+		$columns = array(
 			'suppliers'         => array( 'contact_name', 'email', 'phone' ),
 			'meeting_attendees' => array( 'name', 'email' ),
 			'agreements'        => array( 'owner_name' ),
 			'audit_log'         => array( 'ip', 'before_data', 'after_data' ),
 		);
+
+		/**
+		 * Permite a los módulos declarar columnas con datos personales (tabla => columnas).
+		 *
+		 * @param array<string,array<int,string>> $columns Columnas personales.
+		 */
+		return (array) apply_filters( 'gdp_data_personal_columns', $columns );
 	}
 
 	/**
@@ -329,7 +368,7 @@ final class DataSchema {
 	 * @return array<string,string[]>
 	 */
 	public static function amount_columns(): array {
-		return array(
+		$columns = array(
 			'projects'     => array( 'budget_total' ),
 			'activities'   => array( 'cost_planned' ),
 			'baseline_activities' => array( 'cost_planned' ),
@@ -338,6 +377,13 @@ final class DataSchema {
 			'quotes'       => array( 'amount_net', 'amount_total' ),
 			'quote_items'  => array( 'unit_price', 'line_total' ),
 		);
+
+		/**
+		 * Permite a los módulos declarar sus columnas de montos (tabla => columnas).
+		 *
+		 * @param array<string,array<int,string>> $columns Columnas de montos.
+		 */
+		return (array) apply_filters( 'gdp_data_amount_columns', $columns );
 	}
 
 	/**

@@ -51,6 +51,19 @@ $gdp_tables = array(
 	'gdp_meetings',
 	'gdp_meeting_attendees',
 	'gdp_agreements',
+	'gdp_finance_agreements',
+	'gdp_finance_installments',
+	'gdp_finance_items',
+	'gdp_finance_payments',
+	'gdp_finance_renditions',
+	'gdp_finance_events',
+	'gdp_finance_guarantees',
+	'gdp_finance_cash_plans',
+	'gdp_finance_cash_plan_rows',
+	'gdp_finance_ledger',
+	'gdp_finance_rules',
+	'gdp_finance_modifications',
+	'gdp_permission_groups',
 );
 
 /**
@@ -69,6 +82,10 @@ foreach ( $gdp_tables as $gdp_table ) {
 foreach ( array( 'gdp_settings', 'gdp_db_version', 'gdp_version', 'gdp_installed_at' ) as $gdp_option ) {
 	delete_option( $gdp_option );
 }
+
+// Resúmenes diarios del asistente de rendición, uno por proyecto.
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'gdp\\_finance\\_alerts\\_%'" );
 
 // Transitorios del plugin.
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery

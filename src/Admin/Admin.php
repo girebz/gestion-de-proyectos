@@ -11,6 +11,7 @@ namespace GDP\Admin;
 
 use GDP\Admin\Pages\AuditPage;
 use GDP\Admin\Pages\CatalogsPage;
+use GDP\Admin\Pages\GroupsPage;
 use GDP\Admin\Pages\ConnectorPage;
 use GDP\Admin\Pages\DashboardPage;
 use GDP\Admin\Pages\OperationsPage;
@@ -49,6 +50,7 @@ final class Admin {
 		OperationsPage::register_handlers();
 		TrashPage::register_handlers();
 		CatalogsPage::register_handlers();
+		GroupsPage::register_handlers();
 
 		/**
 		 * Permite a los módulos registrar sus manejadores de formularios y peticiones.
@@ -90,6 +92,7 @@ final class Admin {
 		add_submenu_page( self::SLUG, __( 'Papelera', 'gestion-de-proyectos' ), __( 'Papelera', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-trash', array( TrashPage::class, 'render' ) );
 		add_submenu_page( self::SLUG, __( 'Bitácora', 'gestion-de-proyectos' ), __( 'Bitácora', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-audit', array( AuditPage::class, 'render' ) );
 		add_submenu_page( self::SLUG, __( 'Conector', 'gestion-de-proyectos' ), __( 'Conector', 'gestion-de-proyectos' ), Roles::CAP_ACCESS, self::SLUG . '-connector', array( ConnectorPage::class, 'render' ) );
+		add_submenu_page( self::SLUG, __( 'Grupos de permisos', 'gestion-de-proyectos' ), __( 'Grupos', 'gestion-de-proyectos' ), Roles::CAP_MANAGE, self::SLUG . '-' . GroupsPage::SLUG, array( GroupsPage::class, 'render' ) );
 		add_submenu_page( self::SLUG, __( 'Ajustes', 'gestion-de-proyectos' ), __( 'Ajustes', 'gestion-de-proyectos' ), Roles::CAP_MANAGE, self::SLUG . '-settings', array( SettingsPage::class, 'render' ) );
 	}
 

@@ -147,4 +147,27 @@ final class Access {
 
 		return MemberRepository::project_ids_for_user( $user_id );
 	}
+
+	/**
+	 * Indica si el usuario tiene un permiso en al menos uno de sus proyectos
+	 * (para decidir si se muestra una pantalla en el menú).
+	 *
+	 * @param string   $permission Permiso.
+	 * @param int|null $user_id    Usuario.
+	 * @return bool
+	 */
+	public static function can_anywhere( string $permission, ?int $user_id = null ): bool {
+		$user_id = $user_id ?? get_current_user_id();
+		$ids     = self::visible_project_ids( $user_id );
+		if ( null === $ids ) {
+			return $user_id > 0 && ! ( TwoFactor::is_sensitive( $permission ) && TwoFactor::blocks( $user_id ) );
+		}
+		foreach ( $ids as $project_id ) {
+			if ( self::can( $permission, (int) $project_id, $user_id ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

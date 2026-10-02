@@ -559,6 +559,16 @@ final class Importer {
 		if ( 'document_versions' === $table ) {
 			$row['path'] = $this->new_attachment_path( $row );
 		}
+
+		/**
+		 * Permite a los módulos reasignar identificadores guardados dentro de
+		 * columnas JSON (por ejemplo, documentos de respaldo de un pago).
+		 *
+		 * @param array<string,mixed>                $row   Fila con referencias ya reasignadas.
+		 * @param string                             $table Tabla.
+		 * @param array<string,array<int,int|null>> $map   Tabla => identificador antiguo => nuevo (null: por crear).
+		 */
+		$row = (array) apply_filters( 'gdp_data_import_row', $row, $table, $this->state['map'] );
 		// Filas hijas cuyo padre no se importó (omitido o sin usuario) se omiten.
 		foreach ( DataSchema::parents() as $child => $pair ) {
 			if ( $child === $table && 0 === (int) ( $row[ $pair[0] ] ?? 0 ) && ! isset( $deferred[ $pair[0] ] ) ) {

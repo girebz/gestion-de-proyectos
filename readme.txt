@@ -1,10 +1,10 @@
 === Gestión de Proyectos ===
 Contributors: girebz
-Tags: gestión de proyectos, investigación, mcp, planificación, control documental
+Tags: gestión de proyectos, investigación, mcp, planificación, rendición de cuentas
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.8.0
+Stable tag: 0.9.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,10 @@ Primera versión: núcleo del sistema (proyectos, equipo con perfiles por proyec
 1. Suba el ZIP desde Plugins → Añadir nuevo → Subir plugin y actívelo.
 2. Para el conector, instale y active el plugin oficial "MCP Adapter" (WordPress.org Contributors).
 3. Abra Proyectos → Conector y siga el asistente de integración.
+
+= Rendición de cuentas =
+
+En Proyectos → Finanzas registre el convenio, las cuotas, los ítems con su asignado por fuente y los pagos; cada mes, la rendición agrupa los pagos y entrega la planilla y el ZIP de carga masiva para SISREC. El estado de cuentas muestra cuánto falta pagar y rendir para la cuota siguiente y el asistente abre una hoja de ejecución por tarea, con la pantalla de la plataforma y cada valor listo para copiar. El Fondo y el aporte pecuniario de la institución se muestran siempre por separado. En Proyectos → Grupos el administrador crea perfiles a medida, por ejemplo uno que ve todo salvo las finanzas.
 
 = Tableros en el sitio =
 
@@ -58,11 +62,22 @@ Sí: [gdp_gantt], [gdp_kanban], [gdp_calendario], [gdp_alertas], [gdp_carga] e [
 
 Active "Enable WordPress Shortcodes in Post Content" en Foros → Ajustes → pestaña Features ("Características"). Hasta entonces wpForo no interpreta ningún código corto dentro de los mensajes.
 
+= ¿El plugin se conecta con SISREC? =
+
+No. SISREC no ofrece una interfaz para otros sistemas: el plugin prepara los datos (planilla de carga masiva, carpetas de respaldos, valores de cada pantalla listos para copiar) y usted declara cada estado de la rendición con su fecha y el documento que lo prueba. El estado de cuentas se calcula con lo declarado.
+
+= ¿Quién ve las finanzas? =
+
+Quien tenga el permiso "Ver finanzas y rendición de cuentas" en el proyecto: por omisión, el director y el ingeniero de proyectos. Con un grupo a medida se puede dar lectura de todo, finanzas incluidas, sin permisos de edición, o todo salvo las finanzas; el editor de grupos advierte si un grupo sin finanzas conserva los montos de las compras.
+
 = ¿Dónde se guardan los adjuntos? =
 
 En un directorio privado dentro de wp-content/uploads, protegido contra acceso web directo y servido solo a usuarios autorizados.
 
 == Changelog ==
+
+= 0.9.0 =
+* Finanzas y rendición de cuentas: convenio, cuotas, ítems por fuente, pagos, rendiciones con estados declarados, garantías y modificaciones; estado de cuentas con el Fondo y el aporte pecuniario por separado; brecha y condiciones de la cuota siguiente; asistente con hojas de ejecución para SISREC; programación de caja con seis controles; conciliación con la cartola; planilla y ZIP de carga masiva, expediente, carta sin movimiento y ficha de giro; herramientas del conector. Grupos de permisos a medida.
 
 = 0.8.0 =
 * Códigos cortos para la página privada del equipo: carta Gantt, tablero de tarjetas, calendario, alertas, carga de trabajo e informe semanal, en modo lectura y solo para usuarios con sesión iniciada; vistas compartidas entre el panel y el sitio; alineación de las barras de la carta Gantt con sus filas.

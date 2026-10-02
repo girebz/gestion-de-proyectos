@@ -1,0 +1,334 @@
+/* Finanzas y rendición de cuentas */
+
+.gdp-finance-sources {
+	grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+}
+
+.gdp-source {
+	border-top: 4px solid #2271b1;
+}
+
+.gdp-source--pecuniario {
+	border-top-color: #b26b00;
+}
+
+.gdp-source--pecuniario h2 {
+	color: #7a4a00;
+}
+
+.gdp-source-head {
+	text-align: center;
+	background: #e9f0f8;
+}
+
+.gdp-source-head--pecuniario {
+	background: #fbf1e2;
+}
+
+.gdp-source-chip {
+	display: inline-block;
+	padding: 1px 8px;
+	border-radius: 10px;
+	font-size: 11px;
+	background: #e9f0f8;
+	color: #1d3f6b;
+}
+
+.gdp-source-chip--pecuniario {
+	background: #fbf1e2;
+	color: #7a4a00;
+}
+
+.gdp-source-row--pecuniario td:first-child {
+	box-shadow: inset 3px 0 0 #b26b00;
+}
+
+.gdp-light {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 10px;
+	font-size: 11px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.gdp-light--green {
+	background: #d9f2df;
+	color: #1a6b2e;
+}
+
+.gdp-light--red {
+	background: #fbe0e0;
+	color: #a1261f;
+}
+
+.gdp-light--gray {
+	background: #eee;
+	color: #555;
+}
+
+.gdp-conditions td:last-child {
+	width: 110px;
+	text-align: right;
+}
+
+.gdp-next {
+	border-left: 4px solid #d63638;
+}
+
+.gdp-row-danger td {
+	background: #fff5f5 !important;
+}
+
+.gdp-row-current td {
+	background: #f3f8ff !important;
+}
+
+.gdp-actions {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+	gap: 12px;
+}
+
+.gdp-action {
+	margin: 0;
+	border-left: 4px solid #999;
+}
+
+.gdp-action--alta {
+	border-left-color: #d63638;
+}
+
+.gdp-action--media {
+	border-left-color: #dba617;
+}
+
+.gdp-action--baja {
+	border-left-color: #2271b1;
+}
+
+.gdp-action__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.gdp-action__head h3 {
+	margin: 0;
+	font-size: 14px;
+	flex: 1 1 auto;
+}
+
+.gdp-action__due {
+	font-size: 12px;
+	color: #555;
+}
+
+.gdp-badge--alta {
+	background: #fbe0e0;
+	color: #a1261f;
+}
+
+.gdp-badge--media {
+	background: #fff4d6;
+	color: #7a5600;
+}
+
+.gdp-badge--baja {
+	background: #e9f0f8;
+	color: #1d3f6b;
+}
+
+/* Hojas de ejecución: columna estrecha, legible junto a la plataforma */
+.gdp-sheet {
+	max-width: 760px;
+}
+
+.gdp-steps {
+	list-style: decimal;
+	margin: 0 0 0 1.4em;
+	padding: 0;
+}
+
+.gdp-step {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 10px 14px;
+	margin: 0 0 10px;
+}
+
+.gdp-step--done {
+	border-color: #1a6b2e;
+	background: #f6fbf7;
+}
+
+.gdp-step__head {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	font-size: 12px;
+}
+
+.gdp-step__actor {
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	font-weight: 600;
+	color: #555;
+}
+
+.gdp-step__screen {
+	color: #1d3f6b;
+	font-weight: 600;
+}
+
+.gdp-step__instruction {
+	margin: 6px 0;
+	font-size: 14px;
+}
+
+.gdp-fields {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 6px 0;
+}
+
+.gdp-fields th {
+	text-align: left;
+	width: 38%;
+	padding: 4px 6px 4px 0;
+	font-weight: 500;
+	color: #444;
+	vertical-align: top;
+}
+
+.gdp-fields td {
+	padding: 4px 0;
+}
+
+.gdp-copy-value {
+	display: inline-block;
+	max-width: 100%;
+	overflow-wrap: anywhere;
+	padding: 2px 6px;
+	background: #f6f7f7;
+}
+
+.gdp-copy--done {
+	color: #1a6b2e !important;
+}
+
+.gdp-step__check {
+	margin: 6px 0 0;
+	font-size: 12px;
+	color: #555;
+	border-left: 3px solid #dba617;
+	padding-left: 8px;
+}
+
+.gdp-step__foot {
+	margin-top: 8px;
+	font-size: 12px;
+}
+
+.gdp-step__foot form {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+}
+
+.gdp-payment-sheet {
+	border: 1px dashed #c3c4c7;
+	padding: 6px 10px;
+	margin: 6px 0;
+}
+
+.gdp-payment-sheet summary {
+	cursor: pointer;
+}
+
+.gdp-issues {
+	margin: 4px 0 0;
+	padding-left: 1.2em;
+	list-style: disc;
+}
+
+.gdp-issue--bloquea {
+	color: #a1261f;
+	font-weight: 600;
+}
+
+.gdp-issue--falta {
+	color: #7a5600;
+}
+
+.gdp-issue--advierte {
+	color: #555;
+}
+
+.gdp-stack-form label {
+	display: block;
+	margin: 6px 0;
+}
+
+.gdp-stack-form textarea,
+.gdp-stack-form input[type="text"] {
+	width: 100%;
+	max-width: 480px;
+}
+
+.gdp-detail-row {
+	margin: 4px 0;
+}
+
+.gdp-stack-form .gdp-detail-row input[type="text"] {
+	width: 160px;
+}
+
+.gdp-detached-form {
+	display: none;
+}
+
+.gdp-amount {
+	width: 120px;
+	text-align: right;
+}
+
+.gdp-short {
+	width: 110px;
+}
+
+.gdp-support td {
+	padding: 2px 6px 2px 0;
+}
+
+.gdp-plan-grid input[type="month"] {
+	width: 140px;
+}
+
+@media (max-width: 782px) {
+	.gdp-wrap .button {
+		white-space: normal;
+		height: auto;
+		max-width: 100%;
+	}
+
+	.gdp-fields th {
+		display: block;
+		width: auto;
+	}
+
+	.gdp-fields td {
+		display: block;
+		padding-bottom: 8px;
+	}
+}
+
+.gdp-entity-picker {
+	margin: 8px 0 16px;
+	padding: 10px 12px;
+	background: #fff8e5;
+	border-left: 4px solid #dba617;
+}

@@ -181,7 +181,8 @@ final class DataDictionary {
 	private static function tables(): array {
 		return array(
 			'projects'            => array( 'label' => __( 'Proyectos', 'gestion-de-proyectos' ), 'description' => __( 'Ficha de cada proyecto: código, nombre, financiador, fechas, presupuesto y ajustes.', 'gestion-de-proyectos' ) ),
-			'project_members'     => array( 'label' => __( 'Equipo', 'gestion-de-proyectos' ), 'description' => __( 'Usuarios del sitio que integran cada proyecto y su perfil.', 'gestion-de-proyectos' ) ),
+			'permission_groups'   => array( 'label' => __( 'Grupos de permisos', 'gestion-de-proyectos' ), 'description' => __( 'Perfiles a medida con nombre y una selección explícita de permisos; se asignan a los miembros como los perfiles predefinidos.', 'gestion-de-proyectos' ) ),
+			'project_members'     => array( 'label' => __( 'Equipo', 'gestion-de-proyectos' ), 'description' => __( 'Usuarios del sitio que integran cada proyecto y su perfil (predefinido o grupo a medida).', 'gestion-de-proyectos' ) ),
 			'catalog_items'       => array( 'label' => __( 'Catálogos', 'gestion-de-proyectos' ), 'description' => __( 'Valores configurables (frentes de trabajo, tipos de documento, etapas de compra, partidas), globales o por proyecto.', 'gestion-de-proyectos' ) ),
 			'calendars'           => array( 'label' => __( 'Calendarios laborales', 'gestion-de-proyectos' ), 'description' => __( 'Días laborables de la semana por calendario.', 'gestion-de-proyectos' ) ),
 			'calendar_exceptions' => array( 'label' => __( 'Excepciones de calendario', 'gestion-de-proyectos' ), 'description' => __( 'Feriados y días laborables excepcionales.', 'gestion-de-proyectos' ) ),
