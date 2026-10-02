@@ -89,6 +89,12 @@ final class DashboardsModule implements ModuleInterface {
 	 */
 	public static function register_assets(): void {
 		wp_register_style( 'gdp-dashboards', GDP_URL . 'assets/css/dashboards.css', array(), GDP_VERSION );
+		// Los colores del sitio también van en la hoja de estilos: wpForo y otros
+		// editores pueden quitar el atributo style del HTML que produce un código corto.
+		$vars = DashboardRenderer::vars();
+		if ( '' !== $vars ) {
+			wp_add_inline_style( 'gdp-dashboards', '.gdp-dash{' . $vars . '}' );
+		}
 	}
 
 	/**
@@ -101,7 +107,7 @@ final class DashboardsModule implements ModuleInterface {
 	 * @return array<string,mixed>|null
 	 */
 	public static function resolve_project( string $ref ): ?array {
-		$ref = trim( $ref );
+		$ref = self::clean_attribute( $ref );
 		if ( '' === $ref ) {
 			$all = ProjectRepository::all();
 			return 1 === count( $all ) ? $all[0] : null;
@@ -117,6 +123,20 @@ final class DashboardsModule implements ModuleInterface {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Limpia un atributo escrito en un editor que pudo guardar las comillas como
+	 * entidades (&quot;) o como comillas tipográficas, lo habitual en los foros.
+	 *
+	 * @param string $value Valor recibido.
+	 * @return string
+	 */
+	public static function clean_attribute( string $value ): string {
+		$value = html_entity_decode( $value, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+		$value = str_replace( array( "\xC2\xA0", '“', '”', '„', '‟', '«', '»', '‘', '’' ), array( ' ', '"', '"', '"', '"', '"', '"', "'", "'" ), $value );
+
+		return trim( $value, " \t\n\r\0\x0B\"'" );
 	}
 
 	/**
@@ -139,7 +159,7 @@ final class DashboardsModule implements ModuleInterface {
 			return self::manager_notice( __( 'Tablero de avance: la publicación está desactivada para este proyecto. Actívela en Proyectos → Tableros. Solo los administradores ven este aviso.', 'gestion-de-proyectos' ) );
 		}
 		wp_enqueue_style( 'gdp-dashboards' );
-		$blocks = array_filter( array_map( 'trim', explode( ',', strtolower( (string) $atts['bloques'] ) ) ) );
+		$blocks = array_filter( array_map( 'trim', explode( ',', strtolower( self::clean_attribute( (string) $atts['bloques'] ) ) ) ) );
 
 		return DashboardRenderer::public_html( $data, $blocks );
 	}

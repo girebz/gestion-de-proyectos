@@ -37,7 +37,18 @@ La especificación funcional completa está en [`docs/especificacion/`](docs/esp
 
 1. **Proyectos → Tableros**: elija qué se publica (título, resumen, etapas con nombre público, hitos destacados, indicadores, instituciones, correo de contacto) y marque **Publicar el tablero en el sitio**. La vista previa muestra el resultado con la identidad del sitio.
 2. En la portada o en cualquier página, inserte `[gdp_avance proyecto="CODIGO"]`; con `bloques="portada,indicadores,contacto"` se muestran solo esos bloques, en ese orden.
-3. Para el equipo, inserte `[gdp_tablero_equipo proyecto="CODIGO"]` en un tema del foro o en una página privada. Solo lo ven usuarios con sesión iniciada (opcionalmente, solo miembros del proyecto); los montos aparecen únicamente a quien tiene permiso para verlos. En wpForo, active antes "Enable WordPress Shortcodes in Post Content" (Foros → Ajustes → Funciones).
+3. Para el equipo, inserte `[gdp_tablero_equipo proyecto="CODIGO"]` en un tema del foro o en una página privada. Solo lo ven usuarios con sesión iniciada (opcionalmente, solo miembros del proyecto); los montos aparecen únicamente a quien tiene permiso para verlos.
+
+### El tablero del equipo en wpForo
+
+wpForo no interpreta códigos cortos dentro de los mensajes mientras no se active la opción **Enable WordPress Shortcodes in Post Content** (escritorio → Foros → Ajustes → pestaña *Features*, "Características" en la traducción); hasta entonces, el mensaje muestra el código tal cual. Una vez activada:
+
+1. Cree un tema (por ejemplo, "Tablero del equipo") en un foro visible solo para los usuarios registrados y pegue en el mensaje el código corto exacto que entrega Proyectos → Tableros → Tablero del equipo. El plugin admite las comillas que el editor del foro pueda convertir en entidades o en comillas tipográficas, y el proyecto puede indicarse por código o por identificador.
+2. El tablero comprueba la sesión por su cuenta: un visitante sin sesión ve la invitación a iniciar sesión aunque llegue al tema.
+3. Los colores del sitio se aplican también desde la hoja de estilos del plugin, de modo que el tablero conserva su aspecto aunque el foro elimine atributos del HTML; el tablero del equipo no usa elementos que los filtros de HTML habituales descarten.
+4. Si wpForo tiene activada su caché de HTML, el tablero se renueva cuando esa caché expira; sin ella, en cuanto cambia el proyecto (la caché del plugin se invalida con cada cambio registrado).
+
+Alternativa sin esa opción: una página privada de WordPress con el código corto, enlazada desde el menú del foro (Foros → Menú).
 
 Los datos se actualizan solos con cada cambio registrado en el proyecto; el tablero público no muestra nunca montos, nombres de personas, compras ni documentos.
 

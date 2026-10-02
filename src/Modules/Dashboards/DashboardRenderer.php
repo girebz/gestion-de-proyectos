@@ -413,11 +413,12 @@ final class DashboardRenderer {
 	}
 
 	/**
-	 * Variables de color de la identidad del sitio.
+	 * Variables de color de la identidad del sitio (atributo style del tablero
+	 * y, por si un foro o editor elimina los atributos, también la hoja de estilos).
 	 *
 	 * @return string
 	 */
-	private static function vars(): string {
+	public static function vars(): string {
 		$id  = Identity::get();
 		$map = array( '--gdp-dash-primary' => $id['primary'] ?? '', '--gdp-dash-secondary' => $id['secondary'] ?? '', '--gdp-dash-accent' => $id['accent'] ?? '' );
 		$out = '';

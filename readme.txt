@@ -4,7 +4,7 @@ Tags: gestión de proyectos, investigación, mcp, planificación, control docume
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.7.2
+Stable tag: 0.7.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,11 +50,18 @@ Solo lo que se marque como publicable en Proyectos → Tableros: título y resum
 
 Usuarios con sesión iniciada en el sitio (si el registro está cerrado, solo los que usted registre a mano) o, si así se configura, solo los miembros del proyecto. Los montos aparecen únicamente a quien tiene permiso para verlos. A los visitantes se les pide iniciar sesión.
 
+= El código corto aparece como texto en un mensaje del foro (wpForo) =
+
+Active "Enable WordPress Shortcodes in Post Content" en Foros → Ajustes → pestaña Features ("Características"). Hasta entonces wpForo no interpreta ningún código corto dentro de los mensajes.
+
 = ¿Dónde se guardan los adjuntos? =
 
 En un directorio privado dentro de wp-content/uploads, protegido contra acceso web directo y servido solo a usuarios autorizados.
 
 == Changelog ==
+
+= 0.7.3 =
+* Códigos cortos dentro de foros: atributos con comillas convertidas en entidades o tipográficas, colores del sitio también en la hoja de estilos, indicaciones para wpForo.
 
 = 0.7.2 =
 * Indicaciones actualizadas para el tema Relave Circular 1.4.0 (área de widgets de la portada).
