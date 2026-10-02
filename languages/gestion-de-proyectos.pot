@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gestión de Proyectos 0.9.0\n"
+"Project-Id-Version: Gestión de Proyectos 0.9.1\n"
 "Report-Msgid-Bugs-To: https://github.com/girebz/gestion-de-proyectos/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-02T21:31:02+00:00\n"
+"POT-Creation-Date: 2026-10-02T22:35:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gestion-de-proyectos\n"
@@ -51,7 +51,7 @@ msgstr ""
 #: src/Admin/Admin.php:72
 #: src/Admin/Admin.php:81
 #: src/Admin/Pages/DashboardPage.php:59
-#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/DataPage.php:434
 #: src/Admin/Pages/ProjectsPage.php:83
 #: src/Modules/Data/DataDictionary.php:183
 #: src/Modules/Projects/ProjectsModule.php:34
@@ -176,7 +176,7 @@ msgid "Todos"
 msgstr ""
 
 #: src/Admin/Pages/AuditPage.php:74
-#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/DataPage.php:434
 msgid "Filas"
 msgstr ""
 
@@ -195,7 +195,7 @@ msgid "Sin entradas."
 msgstr ""
 
 #: src/Admin/Pages/AuditPage.php:84
-#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/DataPage.php:434
 #: src/Admin/Pages/DocumentsPage.php:266
 #: src/Admin/Pages/DocumentsPage.php:383
 #: src/Admin/Pages/DocumentsPage.php:527
@@ -336,7 +336,7 @@ msgid "Activa"
 msgstr ""
 
 #: src/Admin/Pages/CatalogsPage.php:107
-#: src/Admin/Pages/DataPage.php:474
+#: src/Admin/Pages/DataPage.php:476
 #: src/Admin/Pages/DocumentsPage.php:304
 #: src/Admin/Pages/FinanceViews.php:736
 #: src/Admin/Pages/FinanceViews.php:1071
@@ -761,7 +761,7 @@ msgid "Herramienta"
 msgstr ""
 
 #: src/Admin/Pages/ConnectorPage.php:288
-#: src/Admin/Pages/DataPage.php:514
+#: src/Admin/Pages/DataPage.php:516
 #: src/Admin/Pages/DocumentsPage.php:267
 #: src/Admin/Pages/DocumentsPage.php:363
 #: src/Admin/Pages/DocumentsPage.php:526
@@ -1264,7 +1264,7 @@ msgid "La navegación de calendario, carga de trabajo e informe semanal usa par�
 msgstr ""
 
 #: src/Admin/Pages/DashboardsPage.php:381
-#: src/Admin/Pages/DataPage.php:225
+#: src/Admin/Pages/DataPage.php:227
 msgid "Opciones"
 msgstr ""
 
@@ -1321,8 +1321,8 @@ msgid "Diccionario"
 msgstr ""
 
 #: src/Admin/Pages/DataPage.php:160
-#: src/Admin/Pages/DataPage.php:413
-#: src/Admin/Pages/DataPage.php:480
+#: src/Admin/Pages/DataPage.php:415
+#: src/Admin/Pages/DataPage.php:482
 #: src/Admin/Pages/FinanceViews.php:943
 #: src/Modules/Finance/Assistant.php:412
 #: src/Modules/Finance/FinanceExport.php:225
@@ -1335,255 +1335,259 @@ msgid "Exportar datos"
 msgstr ""
 
 #: src/Admin/Pages/DataPage.php:199
-#: src/Admin/Pages/DataPage.php:552
-#: src/Modules/Data/DataTools.php:225
+#: src/Admin/Pages/DataPage.php:554
+#: src/Modules/Data/DataTools.php:226
 msgid "Sin permiso para exportar este proyecto."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:210
+#: src/Admin/Pages/DataPage.php:211
 msgid "Exportación del proyecto"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:211
+#: src/Admin/Pages/DataPage.php:212
 msgid "Todas las tablas del proyecto con sus referencias traducidas a códigos y nombres, más el diccionario de datos. Los identificadores internos se reasignan al importar; los registros se reconocen por su código."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:213
+#: src/Admin/Pages/DataPage.php:214
 msgid "Formato"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:214
+#: src/Admin/Pages/DataPage.php:215
 msgid "(importable; un solo archivo)"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:215
+#: src/Admin/Pages/DataPage.php:216
 msgid "(JSON, diccionario y adjuntos; importable con archivos)"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:216
+#: src/Admin/Pages/DataPage.php:217
 msgid "(una hoja por tabla y hoja de diccionario)"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:217
+#: src/Admin/Pages/DataPage.php:218
 msgid "(ZIP con un archivo por tabla y el diccionario)"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:219
+#: src/Admin/Pages/DataPage.php:220
 #: src/Admin/Pages/ProjectsPage.php:246
 #: src/Admin/Pages/SettingsPage.php:161
 msgid "Módulos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:226
+#: src/Admin/Pages/DataPage.php:223
+msgid "(sin permiso para exportarlo)"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:228
 msgid "Incluir el diccionario de datos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:227
+#: src/Admin/Pages/DataPage.php:229
 msgid "Anonimizada: sin usuarios, nombres de contacto, correos, bitácora ni montos individuales"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:230
+#: src/Admin/Pages/DataPage.php:232
 msgid "Descargar exportación"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:233
+#: src/Admin/Pages/DataPage.php:235
 msgid "Qué contiene"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:235
+#: src/Admin/Pages/DataPage.php:237
 #: src/Admin/Pages/SettingsPage.php:163
 msgid "Módulo"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:235
+#: src/Admin/Pages/DataPage.php:237
 msgid "Tablas"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:242
+#: src/Admin/Pages/DataPage.php:244
 msgid "Los tokens del conector y las operaciones pendientes nunca se exportan; la clave de la suscripción iCalendar se omite de los ajustes del proyecto."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:256
+#: src/Admin/Pages/DataPage.php:258
 #: src/Core/Roles.php:108
 msgid "Importar datos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:260
+#: src/Admin/Pages/DataPage.php:262
 msgid "Sin permiso para importar datos."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:270
+#: src/Admin/Pages/DataPage.php:272
 msgid "Archivo exportado por el plugin"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:271
+#: src/Admin/Pages/DataPage.php:273
 msgid "JSON o ZIP en el formato gestion-de-proyectos/export. Nada se escribe hasta que confirme la vista previa; la importación completa se puede revertir desde Operaciones."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:273
-#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/DataPage.php:275
+#: src/Admin/Pages/DataPage.php:434
 #: src/Admin/Pages/DocumentsPage.php:447
 #: src/Admin/Pages/DocumentsPage.php:554
 #: src/Modules/Finance/Profiles/FrpdCoquimbo.php:155
 msgid "Archivo"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:274
+#: src/Admin/Pages/DataPage.php:276
 msgid "Destino"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:276
+#: src/Admin/Pages/DataPage.php:278
 msgid "Crear un proyecto nuevo"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:277
+#: src/Admin/Pages/DataPage.php:279
 msgid "código (opcional, si el del archivo ya existe)"
 msgstr ""
 
 #. translators: código del proyecto.
-#: src/Admin/Pages/DataPage.php:283
+#: src/Admin/Pages/DataPage.php:285
 #, php-format
 msgid "Actualizar el proyecto %s (los registros se reconocen por su código; lo modificado en el sitio después de la exportación se marca como conflicto)"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:290
+#: src/Admin/Pages/DataPage.php:292
 #: src/Admin/Pages/MeetingsPage.php:535
 msgid "Analizar y proponer"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:293
+#: src/Admin/Pages/DataPage.php:295
 msgid "Propuestas pendientes"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:295
+#: src/Admin/Pages/DataPage.php:297
 msgid "No hay importaciones pendientes de confirmar."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:303
+#: src/Admin/Pages/DataPage.php:305
 msgid "Cómo se reconoce cada registro"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:304
+#: src/Admin/Pages/DataPage.php:306
 msgid "Proyecto por código; actividades, compras, reuniones y acuerdos por código; documentos por tipo y número; proveedores, calendarios y líneas base por nombre; cotizaciones por número; vínculos por sus extremos. Los usuarios se buscan por nombre de usuario y luego por correo; los que no existan quedan sin asignar."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:319
+#: src/Admin/Pages/DataPage.php:321
 msgid "Vista previa de la importación"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:321
-#: src/Admin/Pages/DataPage.php:642
+#: src/Admin/Pages/DataPage.php:323
+#: src/Admin/Pages/DataPage.php:645
 #: src/Admin/Pages/MeetingsPage.php:570
 msgid "La propuesta no existe."
 msgstr ""
 
 #. translators: 1: número de operación, 2: estado, 3: usuario.
-#: src/Admin/Pages/DataPage.php:335
+#: src/Admin/Pages/DataPage.php:337
 #, php-format
 msgid "Operación #%1$d · %2$s · %3$s"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:350
+#: src/Admin/Pages/DataPage.php:352
 #: src/Modules/Data/DataDictionary.php:92
 msgid "Tabla"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:350
+#: src/Admin/Pages/DataPage.php:352
 msgid "Nuevos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:350
+#: src/Admin/Pages/DataPage.php:352
 msgid "Actualizados"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:350
+#: src/Admin/Pages/DataPage.php:352
 msgid "Sin cambios"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:350
+#: src/Admin/Pages/DataPage.php:352
 msgid "Omitidos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:350
+#: src/Admin/Pages/DataPage.php:352
 msgid "Conflictos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:350
+#: src/Admin/Pages/DataPage.php:352
 msgid "Ejemplos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:370
+#: src/Admin/Pages/DataPage.php:372
 msgid "Desmarque las tablas que no quiera cargar: la propuesta se vuelve a calcular solo con las marcadas (aplicación parcial). La importación completa se revierte desde Operaciones."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:373
+#: src/Admin/Pages/DataPage.php:375
 msgid "Confirmar importación"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:374
+#: src/Admin/Pages/DataPage.php:376
 msgid "Recalcular con las tablas marcadas"
-msgstr ""
-
-#: src/Admin/Pages/DataPage.php:375
-#: src/Admin/Pages/DataPage.php:394
-msgid "Descartar"
 msgstr ""
 
 #: src/Admin/Pages/DataPage.php:377
 #: src/Admin/Pages/DataPage.php:396
+msgid "Descartar"
+msgstr ""
+
+#: src/Admin/Pages/DataPage.php:379
+#: src/Admin/Pages/DataPage.php:398
 msgid "Ver en Operaciones"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:387
+#: src/Admin/Pages/DataPage.php:389
 msgid "Respaldo"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:388
+#: src/Admin/Pages/DataPage.php:390
 msgid "Filas ahora / en el respaldo"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:389
+#: src/Admin/Pages/DataPage.php:391
 msgid "Proyectos del respaldo"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:393
+#: src/Admin/Pages/DataPage.php:395
 msgid "Restaurar (reemplaza todos los datos)"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:420
+#: src/Admin/Pages/DataPage.php:422
 msgid "Respaldos del sitio"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:421
+#: src/Admin/Pages/DataPage.php:423
 msgid "Cada respaldo es un ZIP en el directorio privado con todas las tablas (datos.json y datos.sql), el diccionario y los adjuntos. Restaurar reemplaza todos los datos del plugin tras crear un respaldo de seguridad; la restauración se revierte desde Operaciones."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:425
+#: src/Admin/Pages/DataPage.php:427
 msgid "Nota (opcional)"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:426
+#: src/Admin/Pages/DataPage.php:428
 msgid "Crear respaldo ahora"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:429
+#: src/Admin/Pages/DataPage.php:431
 msgid "Todavía no hay respaldos."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/DataPage.php:434
 #: src/Admin/Pages/ProcurementPage.php:906
 msgid "Origen"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/DataPage.php:434
 msgid "Adjuntos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/DataPage.php:434
 msgid "Tamaño"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:432
+#: src/Admin/Pages/DataPage.php:434
 #: src/Admin/Pages/DocumentsPage.php:554
 #: src/Admin/Pages/DocumentsPage.php:635
 #: src/Admin/Pages/FinanceViews.php:553
@@ -1601,156 +1605,156 @@ msgstr ""
 msgid "Nota"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:445
+#: src/Admin/Pages/DataPage.php:447
 msgid "descargar"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:450
+#: src/Admin/Pages/DataPage.php:452
 msgid "restaurar"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:456
+#: src/Admin/Pages/DataPage.php:458
 msgid "eliminar"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:468
+#: src/Admin/Pages/DataPage.php:470
 msgid "Respaldos automáticos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:470
+#: src/Admin/Pages/DataPage.php:472
 msgid "Semanal"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:470
+#: src/Admin/Pages/DataPage.php:472
 msgid "Crear un respaldo cada semana con la tarea programada del plugin"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:471
+#: src/Admin/Pages/DataPage.php:473
 msgid "Conservar"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:471
+#: src/Admin/Pages/DataPage.php:473
 msgid "respaldos automáticos (los manuales no se borran solos)"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:472
+#: src/Admin/Pages/DataPage.php:474
 msgid "Copia externa"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:472
+#: src/Admin/Pages/DataPage.php:474
 msgid "Carpeta del servidor (idealmente fuera del directorio web o en un disco montado) a la que se copia cada respaldo. Para otros destinos use la acción gdp_backup_created."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:477
+#: src/Admin/Pages/DataPage.php:479
 #: src/Admin/Pages/SettingsPage.php:155
 msgid "Directorio privado"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:479
+#: src/Admin/Pages/DataPage.php:481
 msgid "Ruta"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:479
+#: src/Admin/Pages/DataPage.php:481
 msgid "(sin permiso de escritura)"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:481
+#: src/Admin/Pages/DataPage.php:483
 msgid "Próxima tarea semanal"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:481
+#: src/Admin/Pages/DataPage.php:483
 msgid "sin programar"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:495
+#: src/Admin/Pages/DataPage.php:497
 msgid "Diccionario de datos"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:500
+#: src/Admin/Pages/DataPage.php:502
 msgid "Descargar CSV"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:501
+#: src/Admin/Pages/DataPage.php:503
 msgid "Descargar JSON"
 msgstr ""
 
 #. translators: 1: versión del esquema, 2: número de tablas.
-#: src/Admin/Pages/DataPage.php:505
+#: src/Admin/Pages/DataPage.php:507
 #, php-format
 msgid "Esquema %1$s · %2$d tablas"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:514
+#: src/Admin/Pages/DataPage.php:516
 #: src/Admin/Pages/OperationsPage.php:193
 #: src/Modules/Data/DataDictionary.php:92
 msgid "Campo"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:514
+#: src/Admin/Pages/DataPage.php:516
 #: src/Admin/Pages/ProcurementPage.php:621
 #: src/Modules/Data/DataDictionary.php:92
 msgid "Unidad"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:514
+#: src/Admin/Pages/DataPage.php:516
 #: src/Modules/Data/DataDictionary.php:92
 msgid "Significado"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:514
+#: src/Admin/Pages/DataPage.php:516
 #: src/Admin/Pages/FinanceViews.php:1411
 #: src/Modules/Data/DataDictionary.php:92
 msgid "Referencia"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:535
+#: src/Admin/Pages/DataPage.php:537
 msgid "Manual"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:536
+#: src/Admin/Pages/DataPage.php:538
 msgid "Programado"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:537
+#: src/Admin/Pages/DataPage.php:539
 msgid "Seguridad (antes de restaurar)"
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:616
+#: src/Admin/Pages/DataPage.php:619
 msgid "Suba un archivo JSON o ZIP."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:646
+#: src/Admin/Pages/DataPage.php:649
 #: src/Admin/Pages/MeetingsPage.php:912
 msgid "Propuesta descartada."
 msgstr ""
 
 #. translators: número de filas.
-#: src/Admin/Pages/DataPage.php:666
+#: src/Admin/Pages/DataPage.php:669
 #, php-format
 msgid "Respaldo restaurado: %d filas cargadas. La restauración se puede revertir desde Operaciones."
 msgstr ""
 
 #. translators: 1: registros creados, 2: registros actualizados.
-#: src/Admin/Pages/DataPage.php:670
+#: src/Admin/Pages/DataPage.php:673
 #, php-format
 msgid "Importación aplicada: %1$d registros creados y %2$d actualizados. Se puede revertir desde Operaciones."
 msgstr ""
 
 #. translators: 1: nombre del archivo, 2: filas, 3: adjuntos.
-#: src/Admin/Pages/DataPage.php:686
+#: src/Admin/Pages/DataPage.php:689
 #, php-format
 msgid "Respaldo creado: %1$s (%2$d filas, %3$d adjuntos)."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:699
+#: src/Admin/Pages/DataPage.php:702
 msgid "Respaldo eliminado."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:735
+#: src/Admin/Pages/DataPage.php:738
 msgid "Configuración guardada."
 msgstr ""
 
-#: src/Admin/Pages/DataPage.php:737
+#: src/Admin/Pages/DataPage.php:740
 msgid "La carpeta de copia externa no existe o no admite escritura; se guardó igualmente."
 msgstr ""
 
@@ -2408,23 +2412,23 @@ msgstr ""
 #: src/Admin/Pages/FinanceViews.php:55
 #: src/Admin/Pages/FinanceViews.php:322
 #: src/Admin/Pages/FinanceViews.php:696
-#: src/Modules/Finance/FinanceModule.php:334
+#: src/Modules/Finance/FinanceModule.php:364
 msgid "Rendiciones"
 msgstr ""
 
 #: src/Admin/Pages/FinanceViews.php:56
 #: src/Admin/Pages/FinanceViews.php:926
-#: src/Modules/Finance/FinanceModule.php:333
+#: src/Modules/Finance/FinanceModule.php:363
 msgid "Pagos"
 msgstr ""
 
 #: src/Admin/Pages/FinanceViews.php:57
-#: src/Modules/Finance/FinanceModule.php:330
+#: src/Modules/Finance/FinanceModule.php:360
 msgid "Cuotas"
 msgstr ""
 
 #: src/Admin/Pages/FinanceViews.php:58
-#: src/Modules/Finance/FinanceModule.php:329
+#: src/Modules/Finance/FinanceModule.php:359
 msgid "Convenio"
 msgstr ""
 
@@ -2437,7 +2441,7 @@ msgid "Caja"
 msgstr ""
 
 #: src/Admin/Pages/FinanceViews.php:61
-#: src/Modules/Finance/FinanceModule.php:336
+#: src/Modules/Finance/FinanceModule.php:366
 msgid "Garantías"
 msgstr ""
 
@@ -3616,7 +3620,7 @@ msgid "Volver al perfil"
 msgstr ""
 
 #: src/Admin/Pages/FinanceViews.php:1225
-#: src/Modules/Finance/FinanceModule.php:340
+#: src/Modules/Finance/FinanceModule.php:370
 msgid "Modificaciones del convenio"
 msgstr ""
 
@@ -3951,7 +3955,7 @@ msgid "Sin permiso para ver las reuniones de este proyecto."
 msgstr ""
 
 #: src/Admin/Pages/MeetingsPage.php:143
-#: src/Modules/Data/DataSchema.php:55
+#: src/Modules/Data/DataSchema.php:61
 #: src/Modules/Meetings/MeetingsModule.php:40
 #: src/Modules/Registry.php:70
 msgid "Reuniones y acuerdos"
@@ -6761,7 +6765,7 @@ msgid "Indique project_id."
 msgstr ""
 
 #: src/Connector/Tools.php:325
-#: src/Modules/Data/DataHandler.php:115
+#: src/Modules/Data/DataHandler.php:128
 #: src/Modules/Documents/DocumentHandler.php:193
 #: src/Modules/Documents/DocumentHandler.php:385
 #: src/Modules/Documents/DocumentHandler.php:437
@@ -6793,7 +6797,7 @@ msgid "Para revertir la operación, envíe confirm=true tras la aprobación expl
 msgstr ""
 
 #: src/Connector/Tools.php:425
-#: src/Modules/Data/DataTools.php:219
+#: src/Modules/Data/DataTools.php:220
 #: src/Modules/Documents/DocumentsTools.php:240
 #: src/Modules/Finance/FinanceTools.php:313
 #: src/Modules/Meetings/MeetingsTools.php:287
@@ -6806,7 +6810,7 @@ msgstr ""
 #: src/Domain/Projects/ProjectRepository.php:306
 #: src/Domain/Projects/ProjectRepository.php:356
 #: src/Modules/Dashboards/DashboardSettings.php:138
-#: src/Modules/Data/DataTools.php:222
+#: src/Modules/Data/DataTools.php:223
 #: src/Modules/Data/Exporter.php:43
 #: src/Modules/Documents/DocumentsTools.php:243
 #: src/Modules/Finance/FinanceTools.php:291
@@ -7012,24 +7016,28 @@ msgid "El grupo no ve finanzas pero sí los montos de las compras: sumándolos p
 msgstr ""
 
 #: src/Core/Groups.php:260
-msgid "El grupo no ve finanzas pero puede exportar datos: la exportación completa incluye las tablas financieras del proyecto. Quite \"Exportar datos\" o limite la exportación."
+msgid "El grupo no ve finanzas pero puede exportar datos: las tablas financieras quedan fuera sin el permiso de exportar finanzas, pero la exportación incluye los montos de compras, cotizaciones y partidas. Quite \"Exportar datos\" si la ejecución financiera debe quedar reservada."
 msgstr ""
 
-#: src/Core/Groups.php:264
+#: src/Core/Groups.php:263
+msgid "El grupo no ve finanzas pero sí la bitácora, que registra cada cambio de pagos, compras y partidas con sus montos (y, con \"Exportar datos\", los entrega completos). Quite \"Ver la bitácora\" si la parte financiera debe quedar reservada."
+msgstr ""
+
+#: src/Core/Groups.php:267
 msgid "El grupo tiene permisos de edición o exportación financiera sin el permiso de ver finanzas; añada \"Ver finanzas y rendición de cuentas\"."
 msgstr ""
 
-#: src/Core/Groups.php:270
+#: src/Core/Groups.php:273
 msgid "El grupo ve finanzas pero no las compras: los pagos remiten a compras que no podrá abrir."
 msgstr ""
 
 #. translators: nombre del módulo.
-#: src/Core/Groups.php:277
+#: src/Core/Groups.php:280
 #, php-format
 msgid "El grupo tiene permisos de %s sin el permiso de ver ese módulo."
 msgstr ""
 
-#: src/Core/Groups.php:284
+#: src/Core/Groups.php:287
 msgid "Sin \"Ver la ficha del proyecto\" el grupo no podrá entrar al proyecto, de modo que los demás permisos no tendrán efecto."
 msgstr ""
 
@@ -7579,7 +7587,7 @@ msgstr ""
 
 #: src/Modules/Data/BackupService.php:181
 #: src/Modules/Data/BackupService.php:198
-#: src/Modules/Data/DataHandler.php:106
+#: src/Modules/Data/DataHandler.php:119
 msgid "El respaldo no existe."
 msgstr ""
 
@@ -8274,12 +8282,12 @@ msgid "solicitada, recibida, elegida, descartada."
 msgstr ""
 
 #: src/Modules/Data/DataDictionary.php:357
-#: src/Modules/Finance/FinanceModule.php:512
+#: src/Modules/Finance/FinanceModule.php:542
 msgid "Fecha de solicitud."
 msgstr ""
 
 #: src/Modules/Data/DataDictionary.php:358
-#: src/Modules/Finance/FinanceModule.php:473
+#: src/Modules/Finance/FinanceModule.php:503
 msgid "Fecha de emisión."
 msgstr ""
 
@@ -8496,19 +8504,25 @@ msgstr ""
 msgid "El archivo a importar no está disponible; vuelva a subirlo."
 msgstr ""
 
-#: src/Modules/Data/DataHandler.php:96
+#: src/Modules/Data/DataHandler.php:109
 msgid "El archivo corresponde a otro proyecto."
 msgstr ""
 
-#: src/Modules/Data/DataHandler.php:109
+#: src/Modules/Data/DataHandler.php:122
 msgid "El respaldo proviene de un esquema más nuevo que el de este sitio."
 msgstr ""
 
-#: src/Modules/Data/DataHandler.php:202
+#. translators: lista de tablas.
+#: src/Modules/Data/DataHandler.php:178
+#, php-format
+msgid "Sin permiso para escribir estas tablas en el proyecto; sus cambios se omiten: %s."
+msgstr ""
+
+#: src/Modules/Data/DataHandler.php:219
 msgid "No hay respaldo de seguridad asociado."
 msgstr ""
 
-#: src/Modules/Data/DataHandler.php:209
+#: src/Modules/Data/DataHandler.php:226
 #: src/Modules/Documents/DocumentHandler.php:400
 #: src/Modules/Meetings/MeetingHandler.php:447
 #: src/Modules/Meetings/MeetingHandler.php:470
@@ -8520,15 +8534,15 @@ msgstr ""
 msgid "No hay estado anterior guardado."
 msgstr ""
 
-#: src/Modules/Data/DataHandler.php:226
+#: src/Modules/Data/DataHandler.php:243
 msgid "No se pudo crear la carpeta de importaciones."
 msgstr ""
 
-#: src/Modules/Data/DataHandler.php:236
+#: src/Modules/Data/DataHandler.php:253
 msgid "Suba un archivo JSON o ZIP exportado por el plugin."
 msgstr ""
 
-#: src/Modules/Data/DataHandler.php:240
+#: src/Modules/Data/DataHandler.php:257
 msgid "No se pudo guardar el archivo subido."
 msgstr ""
 
@@ -8541,35 +8555,35 @@ msgstr ""
 msgid "Datos en formatos abiertos con diccionario, importación con vista previa y reversión, respaldos completos."
 msgstr ""
 
-#: src/Modules/Data/DataSchema.php:50
+#: src/Modules/Data/DataSchema.php:56
 msgid "Proyecto, equipo, grupos de permisos y catálogos"
 msgstr ""
 
-#: src/Modules/Data/DataSchema.php:51
+#: src/Modules/Data/DataSchema.php:57
 #: src/Modules/Planning/PlanningModule.php:46
 #: src/Modules/Registry.php:46
 msgid "Planificación y tiempo"
 msgstr ""
 
-#: src/Modules/Data/DataSchema.php:52
+#: src/Modules/Data/DataSchema.php:58
 msgid "Proveedores, partidas y unidad de fomento"
 msgstr ""
 
-#: src/Modules/Data/DataSchema.php:53
+#: src/Modules/Data/DataSchema.php:59
 #: src/Modules/Documents/DocumentsModule.php:48
 #: src/Modules/Registry.php:52
 msgid "Control documental"
 msgstr ""
 
-#: src/Modules/Data/DataSchema.php:54
+#: src/Modules/Data/DataSchema.php:60
 msgid "Compras y cotizaciones"
 msgstr ""
 
-#: src/Modules/Data/DataSchema.php:56
+#: src/Modules/Data/DataSchema.php:62
 msgid "Vínculos y referencias externas"
 msgstr ""
 
-#: src/Modules/Data/DataSchema.php:57
+#: src/Modules/Data/DataSchema.php:63
 msgid "Bitácora de auditoría (solo exportación)"
 msgstr ""
 
@@ -8613,12 +8627,12 @@ msgstr ""
 msgid "Crea ahora un respaldo completo del sitio (datos, SQL, diccionario y adjuntos) en el directorio privado y devuelve sus metadatos. No modifica datos. Solo administradores del plugin. Opcional: note."
 msgstr ""
 
-#: src/Modules/Data/DataTools.php:139
+#: src/Modules/Data/DataTools.php:140
 msgid "Sin acceso al plugin."
 msgstr ""
 
-#: src/Modules/Data/DataTools.php:172
-#: src/Modules/Data/DataTools.php:195
+#: src/Modules/Data/DataTools.php:173
+#: src/Modules/Data/DataTools.php:196
 msgid "Solo los administradores del plugin gestionan respaldos."
 msgstr ""
 
@@ -8699,42 +8713,42 @@ msgstr ""
 msgid "El archivo no contiene JSON válido."
 msgstr ""
 
-#: src/Modules/Data/Importer.php:293
+#: src/Modules/Data/Importer.php:294
 msgid "Indique el código del proyecto a crear."
 msgstr ""
 
 #. translators: código del proyecto.
-#: src/Modules/Data/Importer.php:298
+#: src/Modules/Data/Importer.php:299
 #, php-format
 msgid "Ya existe un proyecto con el código %s; elija \"actualizar el proyecto existente\" o indique otro código."
 msgstr ""
 
 #. translators: código del proyecto.
-#: src/Modules/Data/Importer.php:302
+#: src/Modules/Data/Importer.php:303
 #, php-format
 msgid "No existe un proyecto con el código %s para actualizar; elija \"crear proyecto nuevo\"."
 msgstr ""
 
 #. translators: lista de usuarios.
-#: src/Modules/Data/Importer.php:324
+#: src/Modules/Data/Importer.php:325
 #, php-format
 msgid "Usuarios del sitio de origen que no existen aquí (sus referencias quedan sin usuario; las pertenencias al equipo y asignaciones se omiten): %s."
 msgstr ""
 
 #. translators: 1: tabla, 2: registro, 3: versión en el sitio, 4: versión en el archivo.
-#: src/Modules/Data/Importer.php:413
+#: src/Modules/Data/Importer.php:421
 #, php-format
 msgid "%1$s %2$s: modificado en el sitio después de la exportación (versión %3$d frente a %4$d)."
 msgstr ""
 
 #. translators: 1: tabla, 2: tabla referida, 3: identificador.
-#: src/Modules/Data/Importer.php:606
+#: src/Modules/Data/Importer.php:614
 #, php-format
 msgid "Referencia sin destino omitida: %1$s → %2$s %3$d."
 msgstr ""
 
 #. translators: nombre del archivo.
-#: src/Modules/Data/Importer.php:914
+#: src/Modules/Data/Importer.php:922
 #, php-format
 msgid "Adjunto no incluido en el paquete: %s."
 msgstr ""
@@ -9873,6 +9887,7 @@ msgid "Operación no reversible."
 msgstr ""
 
 #: src/Modules/Finance/FinanceModule.php:45
+#: src/Modules/Finance/FinanceModule.php:172
 #: src/Modules/Registry.php:64
 msgid "Finanzas y rendición de cuentas"
 msgstr ""
@@ -9881,567 +9896,567 @@ msgstr ""
 msgid "Convenio, cuotas, pagos, rendiciones, estado de cuentas, cuadratura de caja y asistente de rendición con hojas de ejecución para la plataforma del otorgante."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:109
+#: src/Modules/Finance/FinanceModule.php:111
 msgid "pago"
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:126
+#: src/Modules/Finance/FinanceModule.php:128
 msgid "rendición"
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:329
+#: src/Modules/Finance/FinanceModule.php:359
 msgid "Perfil de fondo, otorgante, fechas, montos por fuente y datos del proyecto en la plataforma de rendición."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:330
+#: src/Modules/Finance/FinanceModule.php:360
 msgid "Programa de desembolso: monto, ventana, informe habilitante, aporte pecuniario y fechas de solicitud, transferencia, ingreso y aceptación."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:331
+#: src/Modules/Finance/FinanceModule.php:361
 msgid "Ítems del convenio"
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:331
+#: src/Modules/Finance/FinanceModule.php:361
 msgid "Asignado vigente por fuente y proyección a la clasificación de la plataforma."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:332
+#: src/Modules/Finance/FinanceModule.php:362
 msgid "Reglas del proyecto"
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:332
+#: src/Modules/Finance/FinanceModule.php:362
 msgid "Valores que sustituyen a los del perfil de fondo, con fuente y vigencia."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:333
+#: src/Modules/Finance/FinanceModule.php:363
 msgid "Unidad de rendición: documento pagado con fuente, ítem, egreso, cuota imputada, estado y respaldos."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:334
+#: src/Modules/Finance/FinanceModule.php:364
 msgid "Rendiciones por período y fuente con estado declarado y plazos."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:335
+#: src/Modules/Finance/FinanceModule.php:365
 msgid "Eventos de rendición"
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:335
+#: src/Modules/Finance/FinanceModule.php:365
 msgid "Estados declarados y pasos cumplidos, con fecha, autor, nota y documento."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:336
+#: src/Modules/Finance/FinanceModule.php:366
 msgid "Instrumentos de garantía con monto, vigencia y estado."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:337
+#: src/Modules/Finance/FinanceModule.php:367
 msgid "Programaciones de caja"
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:337
+#: src/Modules/Finance/FinanceModule.php:367
 msgid "Planes de transferencias, gasto y aporte por mes."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:338
+#: src/Modules/Finance/FinanceModule.php:368
 msgid "Filas de programación"
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:338
+#: src/Modules/Finance/FinanceModule.php:368
 msgid "Un mes de una programación de caja."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:339
+#: src/Modules/Finance/FinanceModule.php:369
 msgid "Movimientos del centro de costo"
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:339
+#: src/Modules/Finance/FinanceModule.php:369
 msgid "Cartola importada y emparejada con pagos y transferencias para la conciliación."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:340
+#: src/Modules/Finance/FinanceModule.php:370
 msgid "Reitemizaciones, prórrogas y otras modificaciones con su estado y acto."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:371
+#: src/Modules/Finance/FinanceModule.php:401
 msgid "Perfil de fondo con las reglas, ítems, respaldos y guías (por ejemplo frpd_coquimbo_sisrec)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:372
+#: src/Modules/Finance/FinanceModule.php:402
 msgid "Institución otorgante."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:373
+#: src/Modules/Finance/FinanceModule.php:403
 msgid "Fondo o programa del concurso."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:374
+#: src/Modules/Finance/FinanceModule.php:404
 msgid "Fecha de firma del convenio."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:375
+#: src/Modules/Finance/FinanceModule.php:405
 msgid "Acto que aprueba el convenio (por ejemplo, número de resolución exenta)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:376
+#: src/Modules/Finance/FinanceModule.php:406
 msgid "Fecha del acto aprobatorio; desde ella se pueden rendir gastos."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:377
+#: src/Modules/Finance/FinanceModule.php:407
 msgid "Inicio de la ejecución; primer mes de la línea de tiempo de rendiciones."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:378
+#: src/Modules/Finance/FinanceModule.php:408
 msgid "Término de la ejecución vigente (con prórrogas)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:379
+#: src/Modules/Finance/FinanceModule.php:409
 msgid "Plazo de ejecución."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:380
+#: src/Modules/Finance/FinanceModule.php:410
 msgid "Monto aportado por el otorgante (Fondo)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:381
+#: src/Modules/Finance/FinanceModule.php:411
 msgid "Aporte pecuniario de la entidad ejecutora."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:382
+#: src/Modules/Finance/FinanceModule.php:412
 msgid "Aporte no pecuniario (valorizado, no se rinde con egresos)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:383
+#: src/Modules/Finance/FinanceModule.php:413
 msgid "Indica si el convenio exige garantía de fiel cumplimiento (1 sí, 0 no)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:384
+#: src/Modules/Finance/FinanceModule.php:414
 msgid "Plataforma de rendición."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:385
+#: src/Modules/Finance/FinanceModule.php:415
 msgid "Código del proyecto en la plataforma de rendición."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:386
+#: src/Modules/Finance/FinanceModule.php:416
 msgid "Fecha de término registrada en la plataforma."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:387
+#: src/Modules/Finance/FinanceModule.php:417
 msgid "Último día en que la plataforma admite rendir."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:388
+#: src/Modules/Finance/FinanceModule.php:418
 msgid "Cuenta donde ingresan las transferencias."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:389
+#: src/Modules/Finance/FinanceModule.php:419
 msgid "Centro de costo de la universidad que administra los fondos."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:392
+#: src/Modules/Finance/FinanceModule.php:422
 msgid "Número de cuota en el programa de desembolso."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:393
+#: src/Modules/Finance/FinanceModule.php:423
 msgid "Monto de la cuota con cargo al Fondo."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:394
+#: src/Modules/Finance/FinanceModule.php:424
 msgid "Porcentaje del Fondo que representa la cuota."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:395
+#: src/Modules/Finance/FinanceModule.php:425
 msgid "Inicio de la ventana del programa de desembolso."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:396
+#: src/Modules/Finance/FinanceModule.php:426
 msgid "Fin de la ventana del programa de desembolso."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:397
+#: src/Modules/Finance/FinanceModule.php:427
 msgid "Informe de avance cuya aprobación habilita la cuota (0 si no aplica)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:398
+#: src/Modules/Finance/FinanceModule.php:428
 msgid "Aporte pecuniario que debe enterarse junto con la cuota."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:399
+#: src/Modules/Finance/FinanceModule.php:429
 msgid "Fecha en que el aporte pecuniario quedó acreditado."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:400
+#: src/Modules/Finance/FinanceModule.php:430
 msgid "Comprobante del aporte pecuniario."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:401
+#: src/Modules/Finance/FinanceModule.php:431
 msgid "Fecha de la carta de solicitud de la transferencia."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:402
+#: src/Modules/Finance/FinanceModule.php:432
 msgid "Fecha de la transferencia del otorgante."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:403
+#: src/Modules/Finance/FinanceModule.php:433
 msgid "Fecha de ingreso a caja (y aceptación en la plataforma)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:404
+#: src/Modules/Finance/FinanceModule.php:434
 msgid "Número del comprobante de ingreso."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:405
+#: src/Modules/Finance/FinanceModule.php:435
 msgid "Fecha de envío del comprobante de ingreso al otorgante."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:406
+#: src/Modules/Finance/FinanceModule.php:436
 msgid "Estado de la transferencia en la plataforma: pendiente, enviada, aceptada, rechazada."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:409
+#: src/Modules/Finance/FinanceModule.php:439
 msgid "Identificador del ítem (personal, subcontratos, capacitacion, difusion, generales, inversion, administracion)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:410
+#: src/Modules/Finance/FinanceModule.php:440
 msgid "Grupo del ítem en el presupuesto."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:411
+#: src/Modules/Finance/FinanceModule.php:441
 msgid "Asignado vigente con cargo al Fondo."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:412
+#: src/Modules/Finance/FinanceModule.php:442
 msgid "Asignado vigente con cargo al aporte pecuniario."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:413
+#: src/Modules/Finance/FinanceModule.php:443
 msgid "Asignado vigente del aporte no pecuniario."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:414
+#: src/Modules/Finance/FinanceModule.php:444
 msgid "Tipo de gasto en la plataforma: personal, operacion o inversion."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:415
+#: src/Modules/Finance/FinanceModule.php:445
 msgid "Subclasificación del gasto en la plataforma."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:416
+#: src/Modules/Finance/FinanceModule.php:446
 msgid "Partida presupuestaria del módulo de compras con la que se corresponde."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:417
+#: src/Modules/Finance/FinanceModule.php:447
 msgid "Regla de tope aplicable (personal_max, admin_max)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:420
+#: src/Modules/Finance/FinanceModule.php:450
 msgid "Código correlativo del pago (PG-0001)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:421
+#: src/Modules/Finance/FinanceModule.php:451
 msgid "Compra que origina el pago (0 si no hay)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:422
+#: src/Modules/Finance/FinanceModule.php:452
 msgid "Proveedor o persona a quien se paga."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:423
+#: src/Modules/Finance/FinanceModule.php:453
 msgid "Fuente: fondo (otorgante) o pecuniario (aporte de la universidad)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:424
+#: src/Modules/Finance/FinanceModule.php:454
 msgid "Ítem del convenio al que se imputa."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:425
+#: src/Modules/Finance/FinanceModule.php:455
 msgid "Documento que compromete el gasto (orden de compra, contrato)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:426
+#: src/Modules/Finance/FinanceModule.php:456
 msgid "Fecha de ejecución del gasto; controla el plazo de rendición."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:427
+#: src/Modules/Finance/FinanceModule.php:457
 msgid "Fecha de pago (egreso); define el mes de rendición."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:428
+#: src/Modules/Finance/FinanceModule.php:458
 msgid "Número del comprobante de egreso; puede repetirse si un egreso paga varios documentos."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:429
+#: src/Modules/Finance/FinanceModule.php:459
 msgid "Documento digitalizado del comprobante de egreso."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:430
+#: src/Modules/Finance/FinanceModule.php:460
 msgid "Tipo de documento: factura, factura_exenta, boleta, boleta_honorarios, documento_extranjero, otro."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:431
+#: src/Modules/Finance/FinanceModule.php:461
 msgid "Número del documento pagado."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:432
+#: src/Modules/Finance/FinanceModule.php:462
 msgid "Fecha del documento pagado."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:433
+#: src/Modules/Finance/FinanceModule.php:463
 msgid "Monto pagado."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:434
+#: src/Modules/Finance/FinanceModule.php:464
 msgid "Cuota a la que se imputa (0: imputación cronológica automática)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:435
+#: src/Modules/Finance/FinanceModule.php:465
 msgid "Estado: comprometido, devengado, pagado, rendido, observado, corregido, aprobado, rechazado."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:436
+#: src/Modules/Finance/FinanceModule.php:466
 msgid "Rendición en la que se presenta."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:437
+#: src/Modules/Finance/FinanceModule.php:467
 msgid "Folio dentro de la carga masiva."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:438
+#: src/Modules/Finance/FinanceModule.php:468
 msgid "Observación del otorgante."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:439
+#: src/Modules/Finance/FinanceModule.php:469
 msgid "Fecha de la observación."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:440
+#: src/Modules/Finance/FinanceModule.php:470
 msgid "Respaldos: lista de objetos {kind, document_id, note}."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:443
+#: src/Modules/Finance/FinanceModule.php:473
 msgid "Fuente rendida: fondo o pecuniario."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:444
+#: src/Modules/Finance/FinanceModule.php:474
 msgid "Mes rendido."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:445
+#: src/Modules/Finance/FinanceModule.php:475
 msgid "Tipo: mensual, sin_movimiento, regularizacion, final."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:446
+#: src/Modules/Finance/FinanceModule.php:476
 msgid "Estado declarado: preparada, enviada_universidad, en_carga, en_autenticacion, en_firma_interna, rendida, en_revision, aprobada, aprobada_parcial, devuelta."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:447
+#: src/Modules/Finance/FinanceModule.php:477
 msgid "Plazo para entregar los respaldos a la universidad."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:448
+#: src/Modules/Finance/FinanceModule.php:478
 msgid "Plazo para enviar la rendición en la plataforma."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:449
+#: src/Modules/Finance/FinanceModule.php:479
 msgid "Plazo de subsanación de una rendición devuelta."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:450
+#: src/Modules/Finance/FinanceModule.php:480
 msgid "Fecha de envío de los respaldos a la universidad."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:451
+#: src/Modules/Finance/FinanceModule.php:481
 msgid "Fecha de carga en la plataforma."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:452
+#: src/Modules/Finance/FinanceModule.php:482
 msgid "Fecha de envío al otorgante (rendida)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:453
+#: src/Modules/Finance/FinanceModule.php:483
 msgid "Fecha de aprobación."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:454
+#: src/Modules/Finance/FinanceModule.php:484
 msgid "Fecha de devolución con observaciones."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:455
+#: src/Modules/Finance/FinanceModule.php:485
 msgid "Informe o comprobante de la rendición."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:456
+#: src/Modules/Finance/FinanceModule.php:486
 msgid "Carta conductora (por ejemplo, de rendición sin movimiento)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:459
+#: src/Modules/Finance/FinanceModule.php:489
 msgid "Entidad: project, installment, payment, rendition, guarantee o supplier."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:460
+#: src/Modules/Finance/FinanceModule.php:490
 msgid "Identificador de la entidad (0 para el proyecto)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:461
+#: src/Modules/Finance/FinanceModule.php:491
 msgid "estado (estado declarado) o paso (paso de una guía cumplido)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:462
+#: src/Modules/Finance/FinanceModule.php:492
 msgid "Estado o paso."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:463
+#: src/Modules/Finance/FinanceModule.php:493
 msgid "Guía a la que pertenece el paso."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:464
+#: src/Modules/Finance/FinanceModule.php:494
 msgid "Fecha del hecho."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:465
+#: src/Modules/Finance/FinanceModule.php:495
 msgid "Documento que respalda el hecho."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:468
+#: src/Modules/Finance/FinanceModule.php:498
 msgid "Tipo: fiel_cumplimiento, fraccion_no_rendida o prorroga."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:469
+#: src/Modules/Finance/FinanceModule.php:499
 msgid "Instrumento: boleta_garantia, poliza, vale_vista u otro."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:470
+#: src/Modules/Finance/FinanceModule.php:500
 msgid "Número del instrumento."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:471
+#: src/Modules/Finance/FinanceModule.php:501
 msgid "Emisor del instrumento."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:472
+#: src/Modules/Finance/FinanceModule.php:502
 msgid "Monto garantizado."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:474
+#: src/Modules/Finance/FinanceModule.php:504
 msgid "Vigencia."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:475
+#: src/Modules/Finance/FinanceModule.php:505
 msgid "Cuota que habilita (garantía por fracción no rendida)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:476
+#: src/Modules/Finance/FinanceModule.php:506
 msgid "Estado: vigente, devuelta, cobrada o vencida."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:479
+#: src/Modules/Finance/FinanceModule.php:509
 msgid "Estado: borrador, enviada, vigente, reemplazada."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:480
+#: src/Modules/Finance/FinanceModule.php:510
 msgid "Fecha de envío a la Dirección de Investigación."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:483
+#: src/Modules/Finance/FinanceModule.php:513
 msgid "Mes programado."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:484
+#: src/Modules/Finance/FinanceModule.php:514
 msgid "Transferencia que se solicitará al otorgante en el mes."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:485
+#: src/Modules/Finance/FinanceModule.php:515
 msgid "Gasto programado con cargo al Fondo en el mes."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:486
+#: src/Modules/Finance/FinanceModule.php:516
 msgid "Aporte pecuniario a enterar en el mes."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:487
+#: src/Modules/Finance/FinanceModule.php:517
 msgid "Hito que respalda la programación del mes."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:490
+#: src/Modules/Finance/FinanceModule.php:520
 msgid "Fuente: fondo o pecuniario."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:491
+#: src/Modules/Finance/FinanceModule.php:521
 msgid "Fecha del movimiento en el centro de costo."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:492
+#: src/Modules/Finance/FinanceModule.php:522
 msgid "Referencia del movimiento (número de egreso, folio contable)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:493
+#: src/Modules/Finance/FinanceModule.php:523
 msgid "Glosa del movimiento."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:494
+#: src/Modules/Finance/FinanceModule.php:524
 msgid "Cargo (salida de caja)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:495
+#: src/Modules/Finance/FinanceModule.php:525
 msgid "Abono (ingreso de caja)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:496
+#: src/Modules/Finance/FinanceModule.php:526
 msgid "Tipo: pago, transferencia, aporte, reintegro, cargo_bancario u otro."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:497
+#: src/Modules/Finance/FinanceModule.php:527
 msgid "Pago emparejado."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:498
+#: src/Modules/Finance/FinanceModule.php:528
 msgid "Cuota emparejada (abonos)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:499
+#: src/Modules/Finance/FinanceModule.php:529
 msgid "Estado: conciliado, por_aclarar o excluido."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:500
+#: src/Modules/Finance/FinanceModule.php:530
 msgid "Lote de importación."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:503
+#: src/Modules/Finance/FinanceModule.php:533
 msgid "Clave de la regla del perfil de fondo."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:504
+#: src/Modules/Finance/FinanceModule.php:534
 msgid "Valor vigente para el proyecto."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:505
+#: src/Modules/Finance/FinanceModule.php:535
 msgid "Fuente del valor (convenio, correo, oficio)."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:506
+#: src/Modules/Finance/FinanceModule.php:536
 msgid "Vigente desde."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:507
+#: src/Modules/Finance/FinanceModule.php:537
 msgid "Vigente hasta."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:510
+#: src/Modules/Finance/FinanceModule.php:540
 msgid "Tipo: reitemizacion, redistribucion, personal, prorroga, reprogramacion u otra."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:511
+#: src/Modules/Finance/FinanceModule.php:541
 msgid "Estado: solicitada, aprobada o rechazada."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:513
+#: src/Modules/Finance/FinanceModule.php:543
 msgid "Fecha del acto que la aprueba."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:514
+#: src/Modules/Finance/FinanceModule.php:544
 msgid "Acto que la aprueba."
 msgstr ""
 
-#: src/Modules/Finance/FinanceModule.php:515
+#: src/Modules/Finance/FinanceModule.php:545
 msgid "Detalle: lista de {item, source, delta, note}; en una reitemización la suma de los delta es cero."
 msgstr ""
 

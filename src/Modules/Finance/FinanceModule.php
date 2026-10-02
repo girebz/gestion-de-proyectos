@@ -70,6 +70,8 @@ final class FinanceModule implements ModuleInterface {
 		add_action( 'gdp_daily_tasks', array( FinanceCron::class, 'daily' ) );
 		add_action( 'gdp_project_deleted', array( $this, 'cleanup_project' ) );
 		add_filter( 'gdp_data_modules', array( $this, 'data_modules' ) );
+		add_filter( 'gdp_data_module_labels', array( $this, 'data_module_labels' ) );
+		add_filter( 'gdp_data_module_permissions', array( $this, 'data_module_permissions' ) );
 		add_filter( 'gdp_data_refs', array( $this, 'data_refs' ) );
 		add_filter( 'gdp_data_keys', array( $this, 'data_keys' ) );
 		add_filter( 'gdp_data_parents', array( $this, 'data_parents' ) );
@@ -158,6 +160,34 @@ final class FinanceModule implements ModuleInterface {
 		$modules['finance'] = array( 'finance_agreements', 'finance_installments', 'finance_items', 'finance_rules', 'finance_renditions', 'finance_payments', 'finance_guarantees', 'finance_cash_plans', 'finance_cash_plan_rows', 'finance_ledger', 'finance_modifications', 'finance_events' );
 
 		return $modules;
+	}
+
+	/**
+	 * Nombre del módulo en las pantallas de exportación.
+	 *
+	 * @param array<string,string> $labels Módulo => etiqueta.
+	 * @return array<string,string>
+	 */
+	public function data_module_labels( array $labels ): array {
+		$labels['finance'] = __( 'Finanzas y rendición de cuentas', 'gestion-de-proyectos' );
+
+		return $labels;
+	}
+
+	/**
+	 * Permisos propios para mover las tablas del módulo: exportarlas exige
+	 * finance.export y escribirlas por importación exige finance.edit.
+	 *
+	 * @param array<string,array<string,string>> $permissions Módulo => [export, import].
+	 * @return array<string,array<string,string>>
+	 */
+	public function data_module_permissions( array $permissions ): array {
+		$permissions['finance'] = array(
+			'export' => 'finance.export',
+			'import' => 'finance.edit',
+		);
+
+		return $permissions;
 	}
 
 	/**

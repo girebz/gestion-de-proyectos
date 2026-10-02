@@ -120,7 +120,8 @@ final class DataTools {
 		if ( is_wp_error( $project ) ) {
 			return $project;
 		}
-		$document = Exporter::project( (int) $project['id'], array( 'modules' => $input['modules'] ?? null, 'anonymize' => ! empty( $input['anonymize'] ), 'dictionary' => ! empty( $input['dictionary'] ) ) );
+		$modules  = DataSchema::exportable_modules( Exporter::modules_from( $input['modules'] ?? null, false ), (int) $project['id'] );
+		$document = Exporter::project( (int) $project['id'], array( 'modules' => $modules, 'anonymize' => ! empty( $input['anonymize'] ), 'dictionary' => ! empty( $input['dictionary'] ) ) );
 		if ( ! is_wp_error( $document ) ) {
 			\GDP\Core\Audit::log( 'project', (int) $project['id'], 'export', (int) $project['id'], sprintf( 'Exportación por el conector (%s)', implode( ', ', (array) $document['scope']['modules'] ) ) );
 		}

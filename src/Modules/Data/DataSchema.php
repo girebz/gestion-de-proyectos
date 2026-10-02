@@ -11,6 +11,7 @@ declare( strict_types=1 );
 
 namespace GDP\Modules\Data;
 
+use GDP\Core\Access;
 use GDP\Core\Schema;
 
 defined( 'ABSPATH' ) || exit;
@@ -41,12 +42,17 @@ final class DataSchema {
 	);
 
 	/**
-	 * Etiquetas de los módulos para la interfaz.
+	 * Etiquetas de los módulos para la interfaz, en el orden de carga.
+	 *
+	 * Todo módulo que declare tablas por el filtro gdp_data_modules aparece
+	 * aquí, aunque no declare etiqueta: si la lista fuera fija, un módulo
+	 * nuevo existiría para la importación pero no se ofrecería al exportar,
+	 * y su contenido se perdería en silencio en cada respaldo por proyecto.
 	 *
 	 * @return array<string,string>
 	 */
 	public static function module_labels(): array {
-		return array(
+		$labels = array(
 			'core'        => __( 'Proyecto, equipo, grupos de permisos y catálogos', 'gestion-de-proyectos' ),
 			'planning'    => __( 'Planificación y tiempo', 'gestion-de-proyectos' ),
 			'procurement' => __( 'Proveedores, partidas y unidad de fomento', 'gestion-de-proyectos' ),
@@ -56,6 +62,125 @@ final class DataSchema {
 			'links'       => __( 'Vínculos y referencias externas', 'gestion-de-proyectos' ),
 			'audit'       => __( 'Bitácora de auditoría (solo exportación)', 'gestion-de-proyectos' ),
 		);
+
+		/**
+		 * Permite a otros módulos dar nombre a sus tablas en las pantallas de exportación.
+		 *
+		 * @param array<string,string> $labels Módulo => etiqueta.
+		 */
+		$labels = (array) apply_filters( 'gdp_data_module_labels', $labels );
+
+		return self::labels_for( array_keys( self::modules() ), $labels );
+	}
+
+	/**
+	 * Etiqueta de cada módulo de la lista, en su orden; el identificador
+	 * cuando el módulo no declara etiqueta.
+	 *
+	 * @param string[]             $modules Módulos declarados.
+	 * @param array<string,string> $labels  Etiquetas conocidas.
+	 * @return array<string,string>
+	 */
+	public static function labels_for( array $modules, array $labels ): array {
+		$out = array();
+		foreach ( $modules as $slug ) {
+			$label        = (string) ( $labels[ $slug ] ?? '' );
+			$out[ $slug ] = '' !== $label ? $label : (string) $slug;
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Permisos propios que exige un módulo para exportar o importar sus
+	 * tablas, además de data.export y data.import.
+	 *
+	 * Un permiso de datos general no debe abrir lo que el permiso del módulo
+	 * cierra: quien no ve las finanzas tampoco debe poder llevárselas en una
+	 * exportación ni escribirlas con una importación. La bitácora exige
+	 * verla para exportarla: guarda cada registro antes y después de cada
+	 * cambio (montos de pagos y compras incluidos) y la dirección de origen.
+	 *
+	 * @return array<string,array<string,string>> Módulo => [export => permiso, import => permiso].
+	 */
+	public static function module_permissions(): array {
+		/**
+		 * Permite a un módulo exigir permisos propios para exportar o importar sus tablas.
+		 *
+		 * @param array<string,array<string,string>> $permissions Módulo => [export => permiso, import => permiso].
+		 */
+		return (array) apply_filters( 'gdp_data_module_permissions', array( 'audit' => array( 'export' => 'audit.view' ) ) );
+	}
+
+	/**
+	 * Módulos de la lista que el usuario actual puede exportar del proyecto.
+	 *
+	 * @param string[]      $modules    Módulos pedidos.
+	 * @param int           $project_id Proyecto.
+	 * @param callable|null $can        Comprobación de un permiso (para pruebas); por omisión, la del usuario actual.
+	 * @return string[]
+	 */
+	public static function exportable_modules( array $modules, int $project_id, ?callable $can = null ): array {
+		$can      = $can ?? static fn( string $permission ): bool => Access::can( $permission, $project_id );
+		$required = self::module_permissions();
+		$out      = array();
+		foreach ( $modules as $slug ) {
+			$permission = (string) ( $required[ $slug ]['export'] ?? '' );
+			if ( '' === $permission || $can( $permission ) ) {
+				$out[] = (string) $slug;
+			}
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Permiso que exige importar cada tabla del núcleo, además de data.import:
+	 * el mismo que exige editarla en el panel. Sin esta regla, quien solo
+	 * puede importar podría cambiar su propio perfil en el equipo o los
+	 * permisos de un grupo, que son globales y solo administra quien
+	 * administra el plugin (seudopermiso "manage").
+	 *
+	 * @var array<string,string>
+	 */
+	public const TABLE_IMPORT_PERMISSIONS = array(
+		'projects'          => 'project.edit',
+		'project_members'   => 'project.members',
+		'permission_groups' => 'manage',
+	);
+
+	/**
+	 * Tablas que el usuario actual no puede importar en el proyecto: las del
+	 * núcleo cuyo permiso de edición no tiene y las de los módulos cuyo
+	 * permiso propio no tiene. El registro del proyecto se usa igual para
+	 * ubicar el destino, pero sus cambios no se aplican.
+	 *
+	 * @param int           $project_id Proyecto de destino.
+	 * @param callable|null $can        Comprobación de un permiso (para pruebas); por omisión, la del usuario actual.
+	 * @return string[]
+	 */
+	public static function blocked_import_tables( int $project_id, ?callable $can = null ): array {
+		$can     = $can ?? static function ( string $permission ) use ( $project_id ): bool {
+			return 'manage' === $permission ? Access::is_manager() : Access::can( $permission, $project_id );
+		};
+		$modules = self::modules();
+		$out     = array();
+		foreach ( self::TABLE_IMPORT_PERMISSIONS as $table => $permission ) {
+			if ( ! $can( $permission ) ) {
+				$out[] = $table;
+			}
+		}
+		foreach ( self::module_permissions() as $slug => $permissions ) {
+			$permission = (string) ( $permissions['import'] ?? '' );
+			if ( '' === $permission || $can( $permission ) ) {
+				continue;
+			}
+			foreach ( $modules[ $slug ] ?? array() as $table ) {
+				$out[] = (string) $table;
+			}
+		}
+
+		return array_values( array_unique( $out ) );
 	}
 
 	/**

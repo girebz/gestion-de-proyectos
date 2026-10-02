@@ -257,7 +257,10 @@ final class Groups {
 				$out[] = __( 'El grupo no ve finanzas pero sí los montos de las compras: sumándolos podría reconstruir la ejecución financiera. Quite "Ver montos de compras y presupuesto" si la parte financiera debe quedar reservada.', 'gestion-de-proyectos' );
 			}
 			if ( $has( 'data.export' ) ) {
-				$out[] = __( 'El grupo no ve finanzas pero puede exportar datos: la exportación completa incluye las tablas financieras del proyecto. Quite "Exportar datos" o limite la exportación.', 'gestion-de-proyectos' );
+				$out[] = __( 'El grupo no ve finanzas pero puede exportar datos: las tablas financieras quedan fuera sin el permiso de exportar finanzas, pero la exportación incluye los montos de compras, cotizaciones y partidas. Quite "Exportar datos" si la ejecución financiera debe quedar reservada.', 'gestion-de-proyectos' );
+			}
+			if ( $has( 'audit.view' ) ) {
+				$out[] = __( 'El grupo no ve finanzas pero sí la bitácora, que registra cada cambio de pagos, compras y partidas con sus montos (y, con "Exportar datos", los entrega completos). Quite "Ver la bitácora" si la parte financiera debe quedar reservada.', 'gestion-de-proyectos' );
 			}
 			foreach ( array( 'finance.edit', 'finance.reconcile', 'finance.export', 'finance.rules' ) as $p ) {
 				if ( $has( $p ) ) {
