@@ -74,6 +74,14 @@
 	white-space: nowrap;
 }
 
+.gdp-nowrap {
+	white-space: nowrap;
+}
+
+.gdp-table-scroll {
+	overflow-x: auto;
+}
+
 .gdp-grid--form {
 	grid-template-columns: minmax(420px, 2fr) minmax(320px, 1fr);
 }
@@ -224,6 +232,7 @@
 	border-collapse: collapse;
 	width: 100%;
 	table-layout: fixed;
+	margin: 0;
 }
 
 .gdp-gantt__table th,

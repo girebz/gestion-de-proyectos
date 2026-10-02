@@ -118,7 +118,136 @@ if ( ! function_exists( 'esc_url_raw' ) ) {
 	function esc_url_raw( string $url ): string {
 		$url = trim( $url );
 
-		return preg_match( '#^https?://#i', $url ) ? $url : '';
+		return preg_match( '#^(https?://|/)#i', $url ) ? $url : '';
+	}
+}
+if ( ! function_exists( 'esc_url' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress.
+	 *
+	 * @param string $url Dirección.
+	 * @return string
+	 */
+	function esc_url( string $url ): string {
+		return esc_url_raw( $url );
+	}
+}
+if ( ! function_exists( 'esc_attr' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress.
+	 *
+	 * @param string $text Texto.
+	 * @return string
+	 */
+	function esc_attr( string $text ): string {
+		return htmlspecialchars( $text, ENT_QUOTES, 'UTF-8' );
+	}
+}
+if ( ! function_exists( 'esc_html' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress.
+	 *
+	 * @param string $text Texto.
+	 * @return string
+	 */
+	function esc_html( string $text ): string {
+		return htmlspecialchars( $text, ENT_QUOTES, 'UTF-8' );
+	}
+}
+if ( ! function_exists( 'sanitize_html_class' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress.
+	 *
+	 * @param string $class Clase.
+	 * @return string
+	 */
+	function sanitize_html_class( string $class ): string {
+		return (string) preg_replace( '/[^A-Za-z0-9_-]/', '', $class );
+	}
+}
+if ( ! function_exists( 'wp_unslash' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress.
+	 *
+	 * @param mixed $value Valor.
+	 * @return mixed
+	 */
+	function wp_unslash( $value ) {
+		return is_array( $value ) ? array_map( 'wp_unslash', $value ) : ( is_string( $value ) ? stripslashes( $value ) : $value );
+	}
+}
+if ( ! function_exists( 'wp_parse_str' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress.
+	 *
+	 * @param string $text   Cadena de consulta.
+	 * @param array  $result Resultado.
+	 * @return void
+	 */
+	function wp_parse_str( string $text, &$result ): void {
+		parse_str( $text, $result );
+	}
+}
+if ( ! function_exists( 'add_query_arg' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress, con el mismo comportamiento esencial:
+	 * los parámetros existentes se vuelven a codificar y los nuevos se añaden tal cual.
+	 *
+	 * @param mixed ...$args Parámetros (array y URL, o clave, valor y URL).
+	 * @return string
+	 */
+	function add_query_arg( ...$args ): string {
+		if ( is_array( $args[0] ) ) {
+			$new = $args[0];
+			$url = (string) ( $args[1] ?? '' );
+		} else {
+			$new = array( (string) $args[0] => $args[1] );
+			$url = (string) ( $args[2] ?? '' );
+		}
+		$frag = '';
+		$hash = strpos( $url, '#' );
+		if ( false !== $hash ) {
+			$frag = substr( $url, $hash );
+			$url  = substr( $url, 0, $hash );
+		}
+		$query = '';
+		$pos   = strpos( $url, '?' );
+		if ( false !== $pos ) {
+			$query = substr( $url, $pos + 1 );
+			$url   = substr( $url, 0, $pos );
+		}
+		parse_str( $query, $qs );
+		$qs = array_map( 'urlencode', array_filter( $qs, 'is_string' ) );
+		foreach ( $new as $k => $v ) {
+			if ( false === $v ) {
+				unset( $qs[ $k ] );
+			} else {
+				$qs[ $k ] = (string) $v;
+			}
+		}
+		$pairs = array();
+		foreach ( $qs as $k => $v ) {
+			$pairs[] = $k . '=' . $v;
+		}
+
+		return $url . ( $pairs ? '?' . implode( '&', $pairs ) : '' ) . $frag;
+	}
+}
+if ( ! function_exists( 'remove_query_arg' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress.
+	 *
+	 * @param string|array $keys Parámetros a quitar.
+	 * @param string       $url  Dirección.
+	 * @return string
+	 */
+	function remove_query_arg( $keys, string $url ): string {
+		$remove = array();
+		foreach ( (array) $keys as $key ) {
+			$remove[ $key ] = false;
+		}
+
+		return add_query_arg( $remove, $url );
 	}
 }
 if ( ! function_exists( 'get_option' ) ) {

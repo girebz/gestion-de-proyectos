@@ -4,6 +4,16 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.8.0] - 2026-10-02
+
+### Añadido
+- Seis códigos cortos para la página privada del equipo (o los foros), reservados a usuarios con sesión iniciada: `[gdp_gantt]` (carta Gantt), `[gdp_kanban]` (tablero de tarjetas), `[gdp_calendario]`, `[gdp_alertas]`, `[gdp_carga]` (carga de trabajo) e `[gdp_informe_semanal]`, todos con el atributo `proyecto`. Muestran las mismas vistas de la pantalla de planificación en modo lectura, con la regla de acceso del tablero del equipo (sesión iniciada y, si se configura, pertenencia al proyecto); quien puede entrar al panel conserva los enlaces hacia él y quien tiene permiso para ver la planificación conserva las descargas del informe. La navegación (mes, semana, agenda, semana del informe, periodo de la carga) usa parámetros con prefijo `gdp_` sobre la dirección de la página, de modo que funciona en páginas, entradas y temas de foro.
+- Hoja de estilos del sitio `assets/css/frontend.css` (botones, tablas y controles dentro de `.gdp-front`, con la identidad del sitio en variables CSS), tabla con los seis códigos en la pestaña Tablero del equipo de la pantalla Tableros y pruebas unitarias del contexto de presentación.
+
+### Cambiado
+- Las vistas de calendario, alertas, carga de trabajo, informe semanal, carta Gantt y tablero se extrajeron de las pantallas del panel a clases compartidas (`src/Modules/Planning/Views/`), parametrizadas por un contexto (`ViewContext`) que decide enlaces, parámetros, edición y descargas; las pantallas del panel las usan sin cambios visibles. Los datos y la configuración del script de la carta Gantt y el tablero viven en `CanvasView`.
+- La carta Gantt mide la altura real de las filas de su tabla para alinear las barras con ellas (antes se desplazaban un píxel por fila); las tablas de alertas y de avance por frente se desplazan horizontalmente en pantallas angostas.
+
 ## [0.7.3] - 2026-10-01
 
 ### Cambiado

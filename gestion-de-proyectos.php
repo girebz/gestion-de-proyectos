@@ -3,7 +3,7 @@
  * Plugin Name:       Gestión de Proyectos
  * Plugin URI:        https://github.com/girebz/gestion-de-proyectos
  * Description:       Gestión integral de proyectos de investigación y desarrollo con financiamiento externo: planificación y control del tiempo, control documental, adquisiciones y presupuesto, laboratorio, evidencias, exportación de datos y conector para asistentes de inteligencia artificial.
- * Version:           0.7.3
+ * Version:           0.8.0
  * Requires at least: 6.9
  * Requires PHP:      8.1
  * Author:            Giorgio Reveco Barraza
@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 
 // Identidad técnica del plugin. El prefijo "gdp_" se usa en tablas, opciones,
 // ganchos y capacidades para no colisionar con otros plugins.
-define( 'GDP_VERSION', '0.7.3' );
+define( 'GDP_VERSION', '0.8.0' );
 define( 'GDP_DB_VERSION', '6' );
 define( 'GDP_FILE', __FILE__ );
 define( 'GDP_PATH', plugin_dir_path( __FILE__ ) );

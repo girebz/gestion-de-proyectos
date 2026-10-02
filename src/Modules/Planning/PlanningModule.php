@@ -27,6 +27,7 @@ defined( 'ABSPATH' ) || exit;
  * - ActivityHandler: operaciones en dos tiempos (conector e importación).
  * - PlanningTools  : herramientas del conector.
  * - PlanningCron   : recálculo diario, alertas e informe semanal.
+ * - Views\*        : vistas compartidas por el panel y los códigos cortos del sitio.
  * - Admin\PlanningPage: pantallas del panel.
  */
 final class PlanningModule implements ModuleInterface {
@@ -68,6 +69,7 @@ final class PlanningModule implements ModuleInterface {
 		add_action( 'gdp_daily_tasks', array( PlanningCron::class, 'daily' ) );
 		add_action( 'gdp_weekly_tasks', array( PlanningCron::class, 'weekly' ) );
 		add_action( 'gdp_project_deleted', array( $this, 'cleanup_project' ) );
+		Views\Shortcodes::register();
 
 		if ( is_admin() ) {
 			add_action( 'gdp_admin_register', array( \GDP\Admin\Pages\PlanningPage::class, 'register_handlers' ) );

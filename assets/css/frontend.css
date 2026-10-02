@@ -1,0 +1,277 @@
+/* Gestión de Proyectos: códigos cortos de las vistas de planificación en el sitio.
+   Las hojas admin.css y planning.css dan por hechos los estilos base del panel de
+   WordPress (botones, tablas); aquí se reponen dentro de .gdp-front, y se neutralizan
+   las acciones de edición, que en el sitio no existen. Los colores vienen de la
+   identidad del sitio (variables --gdp-* declaradas sobre .gdp-front). */
+
+.gdp-front {
+	--gdp-border: #dcdcde;
+	--gdp-radius: 0;
+	box-sizing: border-box;
+	margin: 0 0 1.5em;
+	font-family: var(--gdp-font, inherit);
+	font-size: 14px;
+	line-height: 1.5;
+	color: var(--gdp-text, #1d2327);
+}
+
+.gdp-front *,
+.gdp-front *::before,
+.gdp-front *::after {
+	box-sizing: border-box;
+}
+
+.gdp-front--notice {
+	margin: 0 0 1em;
+}
+
+.gdp-front__notice {
+	margin: 0;
+	padding: 10px 14px;
+	border: 1px solid var(--gdp-border, #dcdcde);
+	border-left: 4px solid var(--gdp-primary, #2271b1);
+	background: #f6f7f7;
+	color: var(--gdp-text, #1d2327);
+}
+
+/* Botones y controles de formulario (los temas no definen .button). */
+.gdp-front .button,
+.gdp-front button.button {
+	display: inline-block;
+	margin: 0;
+	padding: 0 10px;
+	min-height: 30px;
+	line-height: 28px;
+	font-size: 13px;
+	font-family: inherit;
+	font-weight: 400;
+	text-decoration: none;
+	text-transform: none;
+	letter-spacing: normal;
+	color: var(--gdp-primary, #2271b1);
+	background: #f6f7f7;
+	border: 1px solid var(--gdp-primary, #2271b1);
+	border-radius: var(--gdp-radius, 0);
+	cursor: pointer;
+	white-space: nowrap;
+	vertical-align: middle;
+	box-shadow: none;
+}
+
+.gdp-front .button:hover,
+.gdp-front .button:focus {
+	background: #fff;
+	color: var(--gdp-primary, #2271b1);
+	text-decoration: none;
+}
+
+.gdp-front .button-small {
+	min-height: 26px;
+	line-height: 24px;
+	padding: 0 8px;
+	font-size: 12px;
+}
+
+.gdp-front .button.is-active {
+	background: var(--gdp-primary, #2271b1);
+	color: #fff;
+}
+
+.gdp-front input[type="date"],
+.gdp-front select {
+	display: inline-block;
+	margin: 0;
+	padding: 0 8px;
+	min-height: 30px;
+	font-size: 13px;
+	font-family: inherit;
+	line-height: 1.5;
+	color: var(--gdp-text, #1d2327);
+	background: #fff;
+	border: 1px solid #8c8f94;
+	border-radius: var(--gdp-radius, 0);
+	vertical-align: middle;
+	width: auto;
+	max-width: 100%;
+}
+
+.gdp-front input[type="checkbox"] {
+	margin: 0 4px 0 0;
+	vertical-align: middle;
+}
+
+.gdp-front label {
+	display: inline;
+	margin: 0;
+	font-weight: 400;
+	font-size: 13px;
+}
+
+.gdp-front .gdp-inline-form {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+}
+
+/* Tablas (los estilos .widefat y .striped son del panel). */
+.gdp-front table.widefat,
+.gdp-front table.gdp-table {
+	width: 100%;
+	margin: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+	background: #fff;
+	border: 1px solid var(--gdp-border, #dcdcde);
+	font-size: 13px;
+}
+
+.gdp-front .widefat th,
+.gdp-front .widefat td,
+.gdp-front .gdp-table th,
+.gdp-front .gdp-table td {
+	padding: 8px 10px;
+	text-align: left;
+	vertical-align: top;
+	border: 0;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.gdp-front .widefat thead th,
+.gdp-front .gdp-table thead th {
+	font-weight: 600;
+	background: #f6f7f7;
+	border-bottom: 1px solid var(--gdp-border, #dcdcde);
+}
+
+.gdp-front .striped > tbody > tr:nth-child(odd) {
+	background: #f6f7f7;
+}
+
+.gdp-front table code,
+.gdp-front code {
+	padding: 1px 4px;
+	font-size: 12px;
+	background: rgba(0, 0, 0, 0.06);
+	border: 0;
+	color: inherit;
+}
+
+.gdp-front h2,
+.gdp-front h3 {
+	font-family: inherit;
+	letter-spacing: normal;
+	text-transform: none;
+	color: var(--gdp-text, #1d2327);
+}
+
+.gdp-front h2.gdp-report__title {
+	margin: 0 0 12px;
+	font-size: 18px;
+}
+
+.gdp-front .gdp-card h2 {
+	margin: 0 0 12px;
+	font-size: 16px;
+}
+
+.gdp-front .gdp-card h3 {
+	font-size: 14px;
+}
+
+.gdp-front p {
+	margin: 0 0 1em;
+}
+
+.gdp-front p:last-child {
+	margin-bottom: 0;
+}
+
+.gdp-front ul.gdp-list {
+	list-style: disc;
+	margin: 0;
+	padding-left: 18px;
+}
+
+.gdp-front .gdp-grid {
+	margin-bottom: 16px;
+}
+
+.gdp-front .gdp-calendar__num a,
+.gdp-front .gdp-chip-link {
+	text-decoration: none;
+	box-shadow: none;
+}
+
+.gdp-front .gdp-calendar th,
+.gdp-front .gdp-calendar td {
+	padding: 4px 6px 6px;
+}
+
+.gdp-front .gdp-calendar th {
+	padding: 6px 8px;
+}
+
+/* Los temas suelen escalar todo SVG al ancho disponible; el gráfico conserva su tamaño y se desplaza. */
+.gdp-front .gdp-gantt__chart svg {
+	max-width: none;
+	width: auto;
+	height: auto;
+}
+
+/* Solo lectura: sin cursores de arrastre ni conectores de dependencias. */
+.gdp-front .gdp-gantt-bar,
+.gdp-front .gdp-gantt-bar--fixed,
+.gdp-front .gdp-board__card {
+	cursor: default;
+}
+
+.gdp-front .gdp-gantt-handle {
+	cursor: default;
+}
+
+.gdp-front .gdp-gantt-bar:hover .gdp-gantt-handle {
+	fill: transparent;
+}
+
+.gdp-front .gdp-gantt-connector,
+.gdp-front .gdp-gantt-bar:hover .gdp-gantt-connector {
+	display: none;
+}
+
+.gdp-front .gdp-gantt-link-hit {
+	cursor: default;
+}
+
+/* En contenidos angostos la tabla de la carta Gantt cede espacio al gráfico. */
+.gdp-front .gdp-gantt__table {
+	width: min(440px, 45%);
+}
+
+/* El tablero ocupa el ancho disponible del contenido. */
+.gdp-front .gdp-board {
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+@media (max-width: 782px) {
+	.gdp-front .gdp-gantt__table {
+		width: 200px;
+	}
+
+	/* En pantallas angostas se ocultan las fechas para que se lea el nombre de la actividad. */
+	.gdp-front .gdp-gantt__table .gdp-gantt__col-date {
+		display: none;
+	}
+
+	.gdp-front .gdp-workload__person {
+		min-width: 120px;
+	}
+}
+
+@media print {
+	.gdp-front .gdp-gantt-toolbar,
+	.gdp-front .gdp-planning-toolbar {
+		display: none !important;
+	}
+}
