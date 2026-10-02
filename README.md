@@ -6,7 +6,7 @@ Plugin de WordPress para la gestión integral de proyectos de investigación y d
 
 | Módulo | Estado | Contenido |
 |---|---|---|
-| Proyectos y equipo | disponible (0.1.0) | Ficha del proyecto, perfiles por proyecto (director, ingeniero, investigador, apoyo, observador), catálogos, bitácora de auditoría, doble factor exigible delegado en Two Factor, WP 2FA o Wordfence (0.2.0) |
+| Proyectos y equipo | disponible (0.1.0) | Ficha del proyecto, perfiles por proyecto (director, ingeniero, investigador, apoyo, observador) y grupos de permisos a medida con advertencias de filtración (0.9.0), catálogos, bitácora de auditoría, doble factor exigible delegado en Two Factor, WP 2FA o Wordfence (0.2.0) |
 | Operaciones en dos tiempos | disponible (0.1.0) | Toda escritura externa (conector, importación) se propone con vista previa y se aplica solo al confirmarla; reversible |
 | Conector para asistentes | disponible (0.1.0) | Herramientas MCP sobre la API de habilidades de WordPress, tokens por usuario, diagnóstico y asistente de integración |
 | Planificación y tiempo | disponible (0.2.0) | Estructura de desglose, cronograma con dependencias y restricciones, ruta crítica, carta Gantt interactiva (dependencias con el ratón, zoom hasta trimestre, impresión), tableros por estado, frente o persona, calendario integrado con suscripción iCalendar, carga de trabajo con sobreasignación, curva S, calendarios con feriados de Chile, líneas base con alerta de aprobación del financiador, papelera, informe semanal con comparación semanal (LaTeX, CSV, XLSX, JSON, iCalendar), exportación a XML de Microsoft Project e importación desde CSV, XLSX y Project; valor ganado en etapa 2 |
@@ -15,6 +15,7 @@ Plugin de WordPress para la gestión integral de proyectos de investigación y d
 | Reuniones y acuerdos | disponible (0.5.0) | Actas con asistentes y acuerdos, acuerdos con responsable, plazo y estado convertibles en actividades, propuesta automática de acuerdos desde un resumen o transcripción con revisión antes de confirmar, seguimiento de reunión en reunión, actas en LaTeX y Word, aviso de acuerdos vencidos, herramientas del conector |
 | Tableros público y del equipo | disponible (0.7.0) | Tablero de difusión para la portada del sitio con el código corto `[gdp_avance]` (mensaje, avance y plazo, indicadores, etapas, logros y próximos hitos, instituciones, llamado a la acción con correo ofuscado) que solo muestra lo declarado publicable; tablero de gestión para el equipo con `[gdp_tablero_equipo]` (avance real y planificado, atrasos, vencimientos, ruta crítica, acuerdos, respuestas pendientes, compras, próxima reunión), reservado a usuarios con sesión iniciada y con montos solo para quien puede verlos; vistas de planificación para la página del equipo con `[gdp_gantt]`, `[gdp_kanban]`, `[gdp_calendario]`, `[gdp_alertas]`, `[gdp_carga]` e `[gdp_informe_semanal]` (0.8.0); configuración con vista previa; herramienta del conector |
 | Exportación, importación y respaldo | disponible (0.6.0) | Exportación por módulos en JSON, ZIP con adjuntos, XLSX y CSV con referencias resueltas y diccionario de datos, variante anonimizada; importación con reconocimiento por clave natural, vista previa por tabla, conflictos por versión, aplicación parcial y reversión; respaldos manuales y semanales con restauración reversible; archivo de ejemplo del proyecto de relaves; herramientas del conector |
+| Finanzas y rendición de cuentas | disponible (0.9.0) | Convenio, cuotas, ítems con asignado por fuente, pagos como unidad de rendición, rendiciones con estados declarados y plazos, garantías y modificaciones; estado de cuentas con el Fondo y el aporte pecuniario por separado; cuánto pagar y rendir, en qué ítems y antes de qué fecha para la cuota siguiente, con las siete condiciones de giro; asistente con hojas de ejecución para SISREC (valores listos para copiar); programación de caja con seis controles; conciliación con la cartola del centro de costo; planilla y ZIP de carga masiva, expediente, carta sin movimiento y ficha de giro; perfiles de fondo con reglas, fuente y vigencia; herramientas del conector |
 | Muestras, ensayos, mezclas y probetas | etapa 2 | Cadena de custodia, resultados como datos, umbrales, dosificaciones, resistencia |
 | Evidencias para acreditación y rendición | etapa 3 | Criterios, medios de verificación, carpetas de evidencia, informes |
 | Publicaciones y difusión | etapa 3 | Artículos, ponencias, difusión, borradores para el blog |
@@ -64,6 +65,16 @@ Un tema puede presentar el tablero con su propio diseño en lugar de insertar el
 
 El tema Relave Circular (1.4.0) usa esta interfaz: su portada tiene el área de widgets "Portada: avance del proyecto", donde el código corto va en un bloque "Shortcode" (tablero completo con los colores del tema) o se usa el widget del tema "Avance por etapas", que presenta las etapas del tablero como frentes de trabajo con el diseño de la portada.
 
+## Rendición de cuentas, en breve
+
+1. **Proyectos → Finanzas → Convenio**: registre otorgante, actos, fechas de ejecución, montos por fuente (Fondo, aporte pecuniario, aporte no pecuniario) y el código del proyecto en la plataforma; en **Ítems y reglas**, cree los ítems del perfil y fije el asignado vigente por fuente. Las reglas del perfil traen su fuente; una regla distinta para el proyecto (un criterio escrito de la contraparte, por ejemplo) se fija con su fuente y vigencia.
+2. **Cuotas**: monto, ventana del programa de desembolso, informe que la habilita y aporte pecuniario; los hechos (informe aprobado, carta de solicitud, transferencia aceptada, comprobante enviado, aporte acreditado) se declaran con fecha y documento.
+3. **Pagos**: cada documento pagado con su fuente, ítem, egreso y respaldos; el validador marca lo que bloquea la rendición y lo que falta. **Rendiciones**: una por mes (o sin movimiento), con los pagos del mes, la planilla y el ZIP de carga masiva, el expediente y la declaración de cada estado de SISREC.
+4. **Estado de cuentas** responde cuánto falta pagar, rendir y aprobar para la cuota siguiente, el último mes de pago útil y qué compromisos cierran la brecha; **Asistente** ordena lo que hay que hacer y abre la hoja de ejecución de cada tarea, con la pantalla de la plataforma y cada valor listo para copiar.
+5. **Caja**: la programación en el formato de la Dirección de Investigación con sus seis controles, y la cartola del centro de costo pegada para conciliar.
+
+**Proyectos → Grupos** (solo administradores) crea perfiles a medida: por ejemplo, "Dirección" con todo en lectura, finanzas incluidas, y "Equipo" con todo en lectura salvo finanzas y montos. El Fondo y el aporte pecuniario de la universidad se muestran siempre por separado.
+
 ## Conector con Claude, en breve
 
 1. **Proyectos → Conector → paso 2**: genere un token (alcance de solo lectura o de lectura y propuestas).
@@ -94,7 +105,7 @@ src/Planning               motor de programación puro: calendario laboral, feri
 src/Operations             capa única de operaciones: proponer, previsualizar, confirmar, revertir
 src/Connector              habilidades, herramientas, tokens, autenticación, diagnóstico, servidor MCP
 src/Admin                  menú y pantallas del panel (incluidas las del módulo de planificación)
-src/Modules                registro de módulos, hoja de ruta y módulos (Planning, Documents y Procurement: repositorios, servicios, manejadores, herramientas, cron)
+src/Modules                registro de módulos, hoja de ruta y módulos (Projects, Planning, Documents, Procurement, Meetings, Data, Dashboards y Finance: repositorios, servicios, manejadores, herramientas, cron; Finance/Logic reúne las identidades puras de la rendición y Finance/Profiles los perfiles de fondo)
 assets/                    estilos y scripts del panel (carta Gantt y tablero propios, sin dependencias)
 languages/                 plantilla de traducción (.pot); las traducciones .po/.mo van en esta misma carpeta
 tests/                     pruebas unitarias del motor y ejecutor mínimo

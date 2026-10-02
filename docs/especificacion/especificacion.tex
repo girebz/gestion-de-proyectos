@@ -58,7 +58,7 @@
 
 \title{\color{marino}\bfseries Gestión de Proyectos\\[4pt]\large\mdseries Especificación funcional del plugin de WordPress}
 \author{Giorgio Reveco Barraza}
-\date{30 de septiembre de 2026 \quad\textcolor{grismedio}{versión 0.2, en construcción}}
+\date{2 de octubre de 2026 \quad\textcolor{grismedio}{versión 0.3, en construcción}}
 
 \begin{document}
 \maketitle
@@ -118,8 +118,8 @@ El acceso se decide en dos niveles. En el nivel de sitio existen tres capacidade
 \endhead
 Director & Todos los permisos del proyecto, incluidas la aprobación de documentos y compras y la gestión de miembros. \\
 Ingeniero de proyectos & Administrador funcional: todo salvo las aprobaciones formales reservadas al director. \\
-Investigador & Ve el proyecto y lo administrativo sin montos; edita planificación, laboratorio, reuniones, evidencias y publicaciones; exporta. \\
-Apoyo administrativo & Ve y edita documentos y compras, con montos; ve planificación y reuniones; edita evidencias; exporta; no accede a resultados de laboratorio. \\
+Investigador & Ve el proyecto y lo administrativo sin montos ni finanzas; edita planificación, laboratorio, reuniones, evidencias y publicaciones; exporta. \\
+Apoyo administrativo & Ve y edita documentos y compras, con montos; ve planificación y reuniones; edita evidencias; exporta; no accede a resultados de laboratorio ni a finanzas. \\
 Observador externo & Solo lectura de proyecto, planificación, documentos, reuniones y publicaciones. \\
 \bottomrule
 \end{longtable}
@@ -137,10 +137,15 @@ Observador externo & Solo lectura de proyecto, planificación, documentos, reuni
 \codigo{publications.view}, \codigo{publications.edit};
 \codigo{data.export}, \codigo{data.import};
 \codigo{operations.confirm};
-\codigo{audit.view}.
+\codigo{audit.view};
+\codigo{finance.view}, \codigo{finance.edit}, \codigo{finance.reconcile}, \codigo{finance.export}, \codigo{finance.rules} \textbf{(0.9.0)}.
 \end{caja}
 
 El punto único de decisión es la clase \codigo{GDP\Core\Access}: ningún módulo ni herramienta comprueba permisos por su cuenta. El filtro \codigo{gdp_user_can} permite ajustar una decisión concreta sin tocar el mapa.
+
+\subsection{Grupos a medida}
+
+Un grupo es un perfil de proyecto definido por el administrador del plugin: nombre, identificador inmutable, descripción y una selección explícita de permisos finos, guardados en \codigo{gdp_permission_groups}. Se asigna a un miembro igual que un perfil predefinido y se resuelve en el mismo mapa de permisos; si un grupo usara el identificador de un perfil predefinido, prevalece el predefinido. Al eliminar un grupo, sus miembros pasan a observador. El editor advierte las combinaciones que filtran información: un grupo sin \codigo{finance.view} que conserve \codigo{procurement.view_amounts} podría reconstruir la ejecución financiera sumando los montos de las compras. Los permisos de escritura de finanzas (\codigo{finance.edit}, \codigo{finance.reconcile}, \codigo{finance.rules}) exigen doble factor cuando la exigencia está activa. Para el proyecto de relaves bastan dos grupos: \emph{Dirección}, con todos los permisos de lectura y las finanzas, sin edición, y \emph{Equipo}, con todos los permisos de lectura salvo finanzas y montos. \textbf{(0.9.0)}
 
 \section{Modelo de datos}
 
@@ -284,6 +289,35 @@ Archivos de importación & Subidos al directorio privado (\codigo{importaciones/
 \subsection{Tableros público y del equipo (implementado en 0.7.0)}
 
 El módulo de tableros no añade tablas: su configuración vive en los ajustes del proyecto (\codigo{settings.dashboards}), con una parte pública (publicación activada, bloques, título, resumen, etapas con nombre y frase públicos y visibilidad, destacados con texto público, indicadores con fuente y valor manual, instituciones, financiamiento, llamado a la acción con correo y asunto, fecha de actualización) y una parte del equipo (exigir membresía, horizonte en días). Los tableros se guardan en transitorios por proyecto (clave con una generación que sube con cada registro de la bitácora, acción \codigo{gdp_audit_logged}) y se componen de los datos de los demás módulos (decisión 0014).
+
+\subsection{Finanzas y rendición de cuentas (implementado en 0.9.0)}
+
+Doce tablas del módulo y la tabla de grupos de permisos (esquema 7). Los montos son pesos con dos decimales; las fuentes son \codigo{fondo} y \codigo{pecuniario}, y el aporte no pecuniario solo se valoriza en el convenio y en los ítems (decisión 0016).
+
+\begin{longtable}{p{4.3cm}p{10.5cm}}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endfirsthead
+\continuacion{2}
+\toprule
+\textbf{Tabla} & \textbf{Contenido} \\
+\midrule
+\endhead
+\codigo{gdp_finance_agreements} & Un convenio por proyecto: perfil de fondo, otorgante, programa, fecha de firma, acto aprobatorio y su fecha, inicio y término de la ejecución, meses, montos del Fondo, del aporte pecuniario y del no pecuniario, exigencia de garantía, plataforma, código y fechas del proyecto en ella, cuenta y centro de costo. \\
+\codigo{gdp_finance_installments} & Cuotas del programa de desembolso: número, monto, porcentaje, ventana, informe que la habilita, aporte pecuniario asociado y su acreditación, solicitud, transferencia, ingreso, comprobante de ingreso y estado en la plataforma. \\
+\codigo{gdp_finance_items} & Ítems del convenio con asignado vigente por fuente, grupo, tipo y subclasificación de la plataforma, partida de compras correspondiente y regla de tope. \\
+\codigo{gdp_finance_payments} & Pagos: código correlativo, compra y proveedor, fuente, ítem, compromiso, fechas de ejecución y de pago, egreso y su documento, documento pagado, monto, cuota declarada, estado (comprometido, devengado, pagado, rendido, aprobado, observado, corregido, rechazado), rendición, folio, observación y respaldos (JSON con tipo, documento y nota). \\
+\codigo{gdp_finance_renditions} & Rendiciones por fuente, mes y tipo (mensual, sin movimiento, regularización, final), con estado declarado, plazos interno, de la plataforma y de subsanación, fechas de cada estado y documentos del informe y de la carta. \\
+\codigo{gdp_finance_events} & Estados declarados y pasos de guía cumplidos de cualquier entidad del módulo, con fecha, autor, nota y documento. \\
+\codigo{gdp_finance_guarantees} & Garantías de fiel cumplimiento, por fracción no rendida o por prórroga: instrumento, número, emisor, monto, vigencia, cuota y estado. \\
+\codigo{gdp_finance_cash_plans}, \codigo{gdp_finance_cash_plan_rows} & Programaciones de caja (nombre, estado, envío) y sus meses: transferencia solicitada, gasto programado, aporte pecuniario e hito. \\
+\codigo{gdp_finance_ledger} & Movimientos del centro de costo por fuente: fecha, referencia, glosa, cargo, abono, tipo, pago o cuota emparejados, estado de conciliación y lote. \\
+\codigo{gdp_finance_rules} & Reglas del proyecto que sustituyen a las del perfil: clave, valor, fuente, vigencia y nota. \\
+\codigo{gdp_finance_modifications} & Modificaciones del convenio: tipo, estado, fechas, acto y detalle (en una reitemización, los cambios por ítem y fuente, que suman cero). \\
+\codigo{gdp_permission_groups} & Grupos de permisos a medida: identificador, nombre, descripción y permisos (JSON). \\
+\bottomrule
+\end{longtable}
 
 \subsection{Módulos (a implementar)}
 
@@ -464,6 +498,28 @@ Una cotización de laboratorio cuyo subconjunto contratado suma \num{73.99} unid
 \item Vistas de planificación para la página privada del equipo (o los foros), con seis códigos cortos y el mismo atributo \codigo{proyecto}: \codigo{[gdp_gantt]} (carta Gantt con línea base, ruta crítica, dependencias, escala por día, semana, mes o trimestre, filtros por frente y responsable e impresión), \codigo{[gdp_kanban]} (tablero de tarjetas agrupadas por estado, frente o responsable), \codigo{[gdp_calendario]} (mes, semana y agenda con navegación), \codigo{[gdp_alertas]}, \codigo{[gdp_carga]} (carga de trabajo por persona y semana, con periodo elegible) e \codigo{[gdp_informe_semanal]} (informe completo con navegación por semana). Son las mismas vistas de la pantalla de planificación, extraídas a clases compartidas y parametrizadas por un contexto de presentación (decisión 0015), en modo lectura: sin arrastre, enlaces ni edición; quien puede entrar al panel conserva los enlaces hacia él y quien tiene permiso para ver la planificación conserva las descargas del informe. La regla de acceso es la del tablero del equipo (sesión iniciada y, si se configura, pertenencia al proyecto); a los visitantes se les pide iniciar sesión y, sin proyecto o con la carta Gantt y el tablero de proyectos distintos en una misma página, solo los administradores ven un aviso. La navegación usa parámetros con prefijo \codigo{gdp_} sobre la dirección de la página, de modo que funciona en páginas, entradas y temas de foro; una hoja de estilos del sitio repone botones, tablas y controles dentro del contenedor \codigo{.gdp-front} con la identidad del sitio en variables CSS. La pestaña Tablero del equipo de la pantalla Tableros entrega los seis códigos. \textbf{(0.8.0)}
 \end{itemize}
 
+\subsection{Finanzas y rendición de cuentas}
+\label{sec:finanzas}
+
+El módulo responde dos preguntas: cuánto hay que pagar y rendir, en qué ítems y antes de qué fecha, para acceder a la cuota siguiente; y cómo está exactamente el estado de cuentas. Sirve a la familia de proyectos financiados por transferencias que se rinden: el proyecto de relaves es la primera instancia, configurada con el perfil del Fondo Regional para la Productividad y el Desarrollo de Coquimbo y la plataforma SISREC (decisión 0016).
+
+\begin{itemize}
+\item Convenio, cuotas, ítems con asignado vigente por fuente y su proyección a la clasificación de la plataforma, garantías y modificaciones; una reitemización aprobada ajusta los asignados y cuenta contra el máximo del perfil. \textbf{(0.9.0)}
+\item Pagos como unidad de rendición, con validación antes de rendir: fechas dentro del convenio y del plazo de la plataforma, boleta bajo o sobre el umbral de factura, cotizaciones o licitación según el monto, proveedor registrado en la plataforma, ítem con disponible y respaldos exigidos por ítem; cada hallazgo bloquea, advierte o marca un faltante. \textbf{(0.9.0)}
+\item Rendiciones por mes y fuente, con los pagos del mes y los estados de la plataforma declarados con fecha, nota y documento; la declaración se propaga a los pagos y una devuelta fija el plazo de subsanación en días hábiles. Una rendición sin movimiento no pasa por el ministro de fe. \textbf{(0.9.0)}
+\item Estado de cuentas a una fecha, con el Fondo y el aporte pecuniario siempre por separado: saldo de caja $S=T+E-G-G_P-D$ por fuente, diferencia con la cartola, caja no negativa, avance por cuota con imputación cronológica, disponible por ítem $L=M-G-K-X$, topes de personal y administración, línea de tiempo de las rendiciones con días hábiles restantes y diferencia de cierre $\sum_k T_k-A-D$. \textbf{(0.9.0)}
+\item Cuota siguiente: brechas de pago, rendición y aprobación, garantía alternativa por la fracción no rendida, último mes de pago útil $m^*=\max\{m:\rho(m)+\delta_{rev}+\delta_{sol}\le D\}$, fecha límite de facturación, compromisos que cierran la brecha y siete condiciones de giro con su detalle. \textbf{(0.9.0)}
+\item Asistente: acciones ordenadas por severidad y vencimiento y guías del perfil convertidas en hojas de ejecución, con actor, pantalla de la plataforma, indicación breve y cada valor en el formato que la pantalla pide, listo para copiar; hojas por pago; pasos marcables con fecha, nota y documento. \textbf{(0.9.0)}
+\item Programación de caja en el formato de la Dirección de Investigación, con seis controles medidos desde la línea base del primer mes del plan: las dos sumas del formato, caja no negativa, condición de giro, ventana del convenio e ítems. \textbf{(0.9.0)}
+\item Conciliación con la cartola del centro de costo pegada desde la planilla: cada cargo se empareja con el pago de su egreso, con el grupo de pagos de un mismo egreso o con un pago del mismo monto a quince días o menos; cada abono, con una cuota o un aporte; el resto queda por aclarar. \textbf{(0.9.0)}
+\item Exportaciones: planilla de carga masiva con las columnas del manual y texto sin tildes ni eñe, ZIP con una carpeta por folio y sus subcarpetas CE y T, expediente imprimible, carta de rendición sin movimiento, ficha de giro y programación de caja con hoja de controles. \textbf{(0.9.0)}
+\item Perfiles de fondo con reglas (valor, fuente), ítems, respaldos, guías y enlaces públicos; registro de reglas por proyecto con fuente y vigencia, que prevalece sobre el perfil. \textbf{(0.9.0)} Perfiles de otros fondos y lectura de los informes de la plataforma. \etapa{2}
+\end{itemize}
+
+\begin{cajaacento}{Instancia verificable}
+Con la cuota 1 transferida ($T_1=\num{19998000}$) y \num{5808619} pesos pagados al 30 de septiembre de 2026, la brecha de pago para la cuota 2 es $\num{19998000}-\num{5808619}=\num{14189381}$ pesos. La programación del 14 de septiembre parte de \num{1908619} pesos pagados antes de septiembre y programa \num{2000000}, \num{8333645} y \num{40583204} pesos en septiembre, octubre y noviembre, con la cuota 2 en octubre: el gasto acumulado es \num{3908619}, \num{12242264} y \num{52825468}. Cumple las dos sumas del formato (transferencias por \num{79996000} y gasto por \num{98085381}), pero no la condición de giro, porque en octubre $\num{12242264}<\num{19998000}$: la cuota 1 se agota recién en noviembre. Contraejemplo: medir el plan desde lo pagado al 30 de septiembre en lugar de su línea base contaría dos veces el gasto de septiembre y haría fallar la segunda suma aunque el plan esté bien construido.
+\end{cajaacento}
+
 \subsection{Muestras, ensayos, mezclas y probetas}
 \begin{itemize}
 \item Muestras con código, origen, coordenadas, fecha de extracción, masa, fotografías y responsable; cadena de custodia con cada traspaso, envío y recepción. \etapa{2}
@@ -567,6 +623,12 @@ Cada usuario genera sus propios tokens desde el panel, con etiqueta, alcance (so
 \codigo{propose-data-change} & propuesta & Importación de un documento (en línea o subido) como proyecto nuevo o actualización, con aplicación parcial por tablas; restauración de un respaldo; vista previa con el plan por tabla y \codigo{operation_id}. \\
 \multicolumn{3}{l}{\textit{Tableros (0.7.0)}} \\
 \codigo{get-dashboard} & consulta & Datos del tablero público (lo publicable, con el estado de publicación) o del equipo (resumen de gestión; montos solo con permiso) de un proyecto, con los códigos cortos para insertarlos en el sitio. \\
+\multicolumn{3}{l}{\textit{Finanzas y rendición de cuentas (0.9.0)}} \\
+\codigo{get-finance-status} & consulta & Estado de cuentas por fuente, avance por cuota, disponible por ítem, línea de tiempo de las rendiciones, programación de caja con sus controles, diferencia de cierre y reglas efectivas con su fuente; admite una fecha de evaluación. \\
+\codigo{get-next-installment} & consulta & Brechas de la cuota siguiente, garantía alternativa, último mes de pago útil, fecha límite de facturación, compromisos candidatos y condiciones de giro. \\
+\codigo{list-finance-renditions}, \codigo{list-finance-payments} & consulta & Rendiciones con plazos y estados, o el detalle de una con sus pagos, hallazgos y problemas de carga masiva; pagos con filtros por fuente, estado, ítem, mes y texto. \\
+\codigo{get-finance-assistant} & consulta & Acciones del asistente y, si se pide, la hoja de ejecución de una guía con sus valores resueltos. \\
+\codigo{propose-finance-change} & propuesta & Cualquiera de las 34 acciones del módulo (convenio, cuotas, ítems, reglas, pagos, rendiciones y sus estados, garantías, programación, cartola, modificaciones, pasos); vista previa con hallazgos y \codigo{operation_id}. \\
 \multicolumn{3}{l}{\textit{Laboratorio \etapa{2}}} \\
 \codigo{list-samples}, \codigo{get-test-results} & consulta & Muestras, ensayos y resultados con excedencias. \\
 \codigo{propose-test-results} & propuesta & Carga de resultados a partir de planillas o informes leídos por el asistente. \\
@@ -626,7 +688,7 @@ Gobierno de datos & Los documentos sensibles pueden enlazarse desde el repositor
 \midrule
 \endhead
 0 & Base (versión 0.1.0, hecha) & Núcleo, proyectos y equipo, catálogos, bitácora, capa de operaciones, almacenamiento privado, identidad, conector con herramientas del núcleo, asistente de integración, integración continua, documentación. \\
-1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento (sección \ref{sec:compras}; versión 0.4.0, hecha), reuniones y acuerdos (sección \ref{sec:reuniones}; versión 0.5.0, hecha), exportación, importación y respaldo (sección \ref{sec:datos}; versión 0.6.0, hecha), tableros público y del equipo (sección \ref{sec:tableros}; versión 0.7.0, hecha), informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
+1 & Mínimo funcional & Planificación y tiempo (sección \ref{sec:tiempo}; versión 0.2.0, hecha), control documental (sección \ref{sec:documentos}; versión 0.3.0, hecha), adquisiciones con unidades de fomento (sección \ref{sec:compras}; versión 0.4.0, hecha), reuniones y acuerdos (sección \ref{sec:reuniones}; versión 0.5.0, hecha), exportación, importación y respaldo (sección \ref{sec:datos}; versión 0.6.0, hecha), tableros público y del equipo (sección \ref{sec:tableros}; versión 0.7.0, hecha), finanzas y rendición de cuentas (sección \ref{sec:finanzas}; versión 0.9.0, hecha), informe semanal, notificaciones, herramientas del conector de estos módulos, migración inicial de datos. Resuelve el cuello de botella administrativo. \\
 2 & Módulo técnico & Muestras, ensayos, mezclas y probetas; recursos no humanos y registro de horas; valor ganado y simulación; lectura asistida de informes. Debe estar listo antes de habilitar el laboratorio. \\
 3 & Evidencias y difusión & Criterios y medios de verificación, carpetas de evidencia e informes; publicaciones y difusión (el tablero público se adelantó a la etapa 1). \\
 \bottomrule
@@ -734,6 +796,17 @@ Cada etapa se desarrolla en su propia rama, se integra a la principal cuando pas
 \item Las seis pantallas del panel (carta Gantt, tablero, calendario, alertas, carga de trabajo e informe semanal) se dibujan con las vistas compartidas sin cambios visibles ni avisos de PHP: navegación del calendario por mes y semana, formulario de semana del informe, formulario de periodo de la carga, enlaces de edición y descargas. \textbf{Verificado.}
 \item Una página con los seis códigos cortos del proyecto de relaves: un visitante anónimo ve seis invitaciones a iniciar sesión (con retorno a la página) y ninguna vista; un investigador miembro ve la carta Gantt (33 filas y gráfico alineado con ellas), el tablero (cinco columnas, 28 tarjetas, ninguna arrastrable), el calendario (18 fichas), las alertas, la carga y el informe, con enlaces al panel y descargas; un usuario registrado que no es miembro ve lo mismo sin enlaces al panel ni descargas mientras no se exija membresía y el aviso de acceso cuando se exige; un administrador ve todo. La navegación del calendario cambia solo \codigo{gdp_mode} y \codigo{gdp_date}, y el formulario del informe conserva esos parámetros al añadir \codigo{gdp_week}. Sin errores de JavaScript ni avisos de PHP, y sin desbordes horizontales en un teléfono salvo el desplazamiento propio de cada tabla. \textbf{Verificado con el tema Relave Circular.}
 \item En una página con la carta Gantt de un proyecto y el tablero de otro, el segundo no se dibuja y solo los administradores ven el aviso; un código sin proyecto en un sitio con varios, o con un código inexistente, muestra el aviso solo a los administradores; el tablero del equipo sigue funcionando en la misma página. \textbf{Verificado.}
+\end{itemize}
+
+\section{Criterios de aceptación del módulo de finanzas (0.9.0)}
+
+\begin{itemize}
+\item Las identidades se prueban en aislamiento con las cifras del proyecto: imputación cronológica y declarada, brechas de pago y rendición (\num{14189381} pesos con \num{5808619} pagados), mes que alcanza un acumulado, cobertura de la brecha con compromisos, saldo y diferencia, días hábiles con los feriados de Chile, plazos de rendición, último mes de pago útil, los seis controles de la programación del 14 de septiembre (cumple las sumas, falla la condición de giro), las siete condiciones de giro, las validaciones de un pago, la transliteración y la carga masiva (egreso compartido por toda la carga solo en la primera carpeta CE, copiado en cada folio cuando lo comparte una parte) y el emparejamiento de la cartola por egreso y por grupo de pagos. \textbf{Verificado (26 pruebas, 130 aserciones).}
+\item La actualización desde la versión 0.8.0 crea las trece tablas nuevas (esquema 7) en MariaDB con sus claves e índices, sin errores de análisis, y la integración SQLite las crea con las mismas columnas. \textbf{Verificado.}
+\item Con el proyecto de relaves: convenio, ítems, tres cuotas, quince pagos y dos compromisos con cargo al Fondo y un pago del aporte pecuniario, rendiciones de febrero a septiembre, programación del 14 de septiembre, cartola y garantía; el estado de cuentas muestra \num{5808619} pesos pagados, la brecha de \num{14189381} pesos, octubre como último mes de pago útil y las condiciones de giro que fallan, y el asistente ordena las acciones con sus hojas. \textbf{Verificado.}
+\item Declarar una rendición como rendida lleva sus pagos a rendido y la reversión devuelve la rendición, los pagos y los eventos al estado anterior; los hallazgos que bloquean impiden confirmar y los faltantes se advierten desde el envío a la universidad. \textbf{Verificado.}
+\item Exportar el proyecto e importarlo como proyecto nuevo reproduce las doce tablas del módulo con sus referencias reasignadas (eventos de pagos, rendiciones y cuotas, pagos de cada rendición, movimientos emparejados, filas de la programación) y el mismo estado de cuentas. \textbf{Verificado.}
+\item Desde el panel: las nueve pestañas y la pantalla de grupos se dibujan sin avisos de PHP y sin desborde horizontal en un teléfono; se declara un estado, se marca un paso, se descargan la planilla, el ZIP y el expediente, se guarda la programación con sus controles, se importa una cartola (un egreso de trece boletas se empareja con el grupo) y se registra un pago con sus advertencias. Un grupo sin finanzas creado desde la pantalla de grupos advierte la filtración por montos; un miembro de ese grupo no ve el menú Finanzas ni puede abrir la pantalla, y conserva la planificación. \textbf{Verificado en MariaDB.}
 \end{itemize}
 
 \end{document}

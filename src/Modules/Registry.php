@@ -13,6 +13,7 @@ use GDP\Domain\Projects\ProjectRepository;
 use GDP\Modules\Dashboards\DashboardsModule;
 use GDP\Modules\Documents\DocumentsModule;
 use GDP\Modules\Data\DataModule;
+use GDP\Modules\Finance\FinanceModule;
 use GDP\Modules\Meetings\MeetingsModule;
 use GDP\Modules\Planning\PlanningModule;
 use GDP\Modules\Procurement\ProcurementModule;
@@ -59,6 +60,12 @@ final class Registry {
 				'stage'       => 1,
 				'core'        => true,
 			),
+			'finance'      => array(
+				'label'       => __( 'Finanzas y rendición de cuentas', 'gestion-de-proyectos' ),
+				'description' => __( 'Convenio, cuotas, pagos, rendiciones, estado de cuentas, cuadratura de caja y asistente con hojas de ejecución.', 'gestion-de-proyectos' ),
+				'stage'       => 1,
+				'core'        => true,
+			),
 			'meetings'     => array(
 				'label'       => __( 'Reuniones y acuerdos', 'gestion-de-proyectos' ),
 				'description' => __( 'Actas, acuerdos convertidos en tareas y seguimiento de cumplimiento.', 'gestion-de-proyectos' ),
@@ -102,6 +109,7 @@ final class Registry {
 		$this->add( new PlanningModule() );
 		$this->add( new DocumentsModule() );
 		$this->add( new ProcurementModule() );
+		$this->add( new FinanceModule() );
 		$this->add( new MeetingsModule() );
 		$this->add( new DataModule() );
 		$this->add( new DashboardsModule() );

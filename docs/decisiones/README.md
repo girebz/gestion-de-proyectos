@@ -19,3 +19,4 @@ Cada decisión estructural se registra en un archivo numerado con el formato: co
 | [0013](0013-exportacion-e-importacion-por-tablas.md) | Exportación e importación por tablas con claves naturales; respaldos como exportaciones del sitio | aceptada |
 | [0014](0014-tableros-por-codigo-corto-con-lista-blanca.md) | Tableros insertables por código corto; el público solo muestra lo declarado publicable | aceptada |
 | [0015](0015-vistas-compartidas-entre-panel-y-sitio.md) | Vistas de planificación compartidas entre el panel y los códigos cortos del sitio, parametrizadas por un contexto de presentación | aceptada |
+| [0016](0016-finanzas-rendicion-y-grupos.md) | Finanzas y rendición de cuentas con estados declarados, perfiles de fondo, hojas de ejecución y grupos de permisos a medida | aceptada |

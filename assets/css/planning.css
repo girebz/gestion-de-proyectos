@@ -447,6 +447,13 @@
 }
 
 /* Impresión: solo el gráfico, a lo ancho de la hoja apaisada. */
+@media (max-width: 782px) {
+	.gdp-planning-bar .gdp-inline-form,
+	.gdp-planning-bar select {
+		max-width: 100%;
+	}
+}
+
 @media print {
 	@page {
 		size: landscape;

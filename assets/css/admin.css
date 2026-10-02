@@ -312,3 +312,28 @@
 		align-items: flex-start;
 	}
 }
+
+/* Grupos de permisos */
+.gdp-permission-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 12px;
+	margin: 12px 0;
+}
+
+.gdp-permission-group {
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 8px 12px;
+	background: #fff;
+}
+
+.gdp-permission-group legend {
+	font-weight: 600;
+	padding: 0 4px;
+}
+
+.gdp-permission-group label {
+	display: block;
+	margin: 4px 0;
+}

@@ -51,7 +51,318 @@ final class Schema {
 		$tokens   = self::table( 'connector_tokens' );
 		$catalog  = self::table( 'catalog_items' );
 
-		return array_merge( self::core_definitions( $collate, $projects, $members, $audit, $ops, $tokens, $catalog ), self::planning_definitions( $collate ), self::documents_definitions( $collate ), self::procurement_definitions( $collate ), self::meetings_definitions( $collate ) );
+		return array_merge( self::core_definitions( $collate, $projects, $members, $audit, $ops, $tokens, $catalog ), self::planning_definitions( $collate ), self::documents_definitions( $collate ), self::procurement_definitions( $collate ), self::meetings_definitions( $collate ), self::finance_definitions( $collate ) );
+	}
+
+	/**
+	 * Tablas del módulo de finanzas y rendición de cuentas, y de los grupos de permisos.
+	 *
+	 * El convenio fija fuentes, montos y plazos; las cuotas registran cada
+	 * transferencia y su aceptación en la plataforma; los ítems llevan el
+	 * asignado por fuente; los pagos son la unidad de rendición (un egreso
+	 * puede pagar varios documentos); las rendiciones agrupan pagos por
+	 * período y fuente, y sus estados en la plataforma se declaran como
+	 * eventos fechados; las reglas guardan cada valor con su fuente y
+	 * vigencia, para que ninguna particularidad del fondo viva en el código.
+	 *
+	 * @param string $collate Cotejamiento.
+	 * @return array<string,string>
+	 */
+	private static function finance_definitions( string $collate ): array {
+		$agreements    = self::table( 'finance_agreements' );
+		$installments  = self::table( 'finance_installments' );
+		$items         = self::table( 'finance_items' );
+		$payments      = self::table( 'finance_payments' );
+		$renditions    = self::table( 'finance_renditions' );
+		$events        = self::table( 'finance_events' );
+		$guarantees    = self::table( 'finance_guarantees' );
+		$plans         = self::table( 'finance_cash_plans' );
+		$plan_rows     = self::table( 'finance_cash_plan_rows' );
+		$ledger        = self::table( 'finance_ledger' );
+		$rules         = self::table( 'finance_rules' );
+		$modifications = self::table( 'finance_modifications' );
+		$groups        = self::table( 'permission_groups' );
+
+		return array(
+			'finance_agreements'     => "CREATE TABLE {$agreements} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	profile varchar(64) NOT NULL DEFAULT 'frpd_coquimbo_sisrec',
+	funder varchar(255) NOT NULL DEFAULT '',
+	program varchar(255) NOT NULL DEFAULT '',
+	agreement_date date NULL,
+	approval_act varchar(100) NOT NULL DEFAULT '',
+	approval_date date NULL,
+	start_date date NULL,
+	end_date date NULL,
+	months int(10) unsigned NOT NULL DEFAULT 0,
+	fund_amount decimal(18,2) NOT NULL DEFAULT 0,
+	cash_amount decimal(18,2) NOT NULL DEFAULT 0,
+	inkind_amount decimal(18,2) NOT NULL DEFAULT 0,
+	guarantee_required tinyint(1) NOT NULL DEFAULT 0,
+	platform varchar(64) NOT NULL DEFAULT 'SISREC',
+	platform_code varchar(100) NOT NULL DEFAULT '',
+	platform_end_date date NULL,
+	platform_render_until date NULL,
+	bank_account varchar(255) NOT NULL DEFAULT '',
+	cost_center varchar(100) NOT NULL DEFAULT '',
+	notes longtext NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY project_id (project_id)
+) {$collate};",
+
+			'finance_installments'   => "CREATE TABLE {$installments} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	number int(10) unsigned NOT NULL DEFAULT 1,
+	label varchar(100) NOT NULL DEFAULT '',
+	amount decimal(18,2) NOT NULL DEFAULT 0,
+	share_pct decimal(6,2) NOT NULL DEFAULT 0,
+	window_from date NULL,
+	window_to date NULL,
+	report_no int(10) unsigned NOT NULL DEFAULT 0,
+	cash_amount decimal(18,2) NOT NULL DEFAULT 0,
+	cash_received_at date NULL,
+	cash_receipt varchar(100) NOT NULL DEFAULT '',
+	requested_at date NULL,
+	transferred_at date NULL,
+	received_at date NULL,
+	receipt_number varchar(100) NOT NULL DEFAULT '',
+	receipt_sent_at date NULL,
+	platform_status varchar(20) NOT NULL DEFAULT 'pendiente',
+	document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	notes longtext NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY project_number (project_id,number)
+) {$collate};",
+
+			'finance_items'          => "CREATE TABLE {$items} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	slug varchar(64) NOT NULL,
+	label varchar(255) NOT NULL DEFAULT '',
+	item_group varchar(32) NOT NULL DEFAULT 'programa',
+	assigned_fund decimal(18,2) NOT NULL DEFAULT 0,
+	assigned_cash decimal(18,2) NOT NULL DEFAULT 0,
+	assigned_inkind decimal(18,2) NOT NULL DEFAULT 0,
+	platform_type varchar(32) NOT NULL DEFAULT 'operacion',
+	platform_subclass varchar(100) NOT NULL DEFAULT '',
+	budget_line varchar(64) NOT NULL DEFAULT '',
+	cap_rule varchar(64) NOT NULL DEFAULT '',
+	sort_order int(11) NOT NULL DEFAULT 0,
+	notes text NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY project_slug (project_id,slug)
+) {$collate};",
+
+			'finance_payments'       => "CREATE TABLE {$payments} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	seq_no int(10) unsigned NOT NULL DEFAULT 0,
+	code varchar(32) NOT NULL DEFAULT '',
+	purchase_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	supplier_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	source varchar(20) NOT NULL DEFAULT 'fondo',
+	item_slug varchar(64) NOT NULL DEFAULT '',
+	description varchar(255) NOT NULL DEFAULT '',
+	commitment varchar(255) NOT NULL DEFAULT '',
+	executed_at date NULL,
+	paid_at date NULL,
+	egress_number varchar(64) NOT NULL DEFAULT '',
+	egress_document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	doc_type varchar(32) NOT NULL DEFAULT 'factura',
+	doc_number varchar(64) NOT NULL DEFAULT '',
+	doc_date date NULL,
+	amount decimal(18,2) NOT NULL DEFAULT 0,
+	installment_no int(10) unsigned NOT NULL DEFAULT 0,
+	status varchar(20) NOT NULL DEFAULT 'comprometido',
+	rendition_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	folio int(10) unsigned NOT NULL DEFAULT 0,
+	observation text NULL,
+	observed_at date NULL,
+	support longtext NULL,
+	notes longtext NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_id (project_id),
+	KEY project_status (project_id,status),
+	KEY project_paid (project_id,paid_at),
+	KEY rendition_id (rendition_id),
+	KEY purchase_id (purchase_id),
+	KEY supplier_id (supplier_id)
+) {$collate};",
+
+			'finance_renditions'     => "CREATE TABLE {$renditions} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	source varchar(20) NOT NULL DEFAULT 'fondo',
+	period char(7) NOT NULL,
+	kind varchar(20) NOT NULL DEFAULT 'mensual',
+	status varchar(32) NOT NULL DEFAULT 'preparada',
+	internal_due date NULL,
+	platform_due date NULL,
+	fix_due date NULL,
+	sent_internal_at date NULL,
+	loaded_at date NULL,
+	sent_at date NULL,
+	approved_at date NULL,
+	returned_at date NULL,
+	report_document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	letter_document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	notes longtext NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY project_period (project_id,source,period,kind),
+	KEY project_status (project_id,status)
+) {$collate};",
+
+			'finance_events'         => "CREATE TABLE {$events} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	entity_type varchar(32) NOT NULL,
+	entity_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	kind varchar(16) NOT NULL DEFAULT 'estado',
+	event_key varchar(64) NOT NULL,
+	guide varchar(64) NOT NULL DEFAULT '',
+	event_date date NOT NULL,
+	user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	note text NULL,
+	document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY entity (entity_type,entity_id,kind),
+	KEY project_date (project_id,event_date)
+) {$collate};",
+
+			'finance_guarantees'     => "CREATE TABLE {$guarantees} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	kind varchar(32) NOT NULL DEFAULT 'fiel_cumplimiento',
+	instrument varchar(32) NOT NULL DEFAULT 'boleta_garantia',
+	number varchar(100) NOT NULL DEFAULT '',
+	issuer varchar(255) NOT NULL DEFAULT '',
+	amount decimal(18,2) NOT NULL DEFAULT 0,
+	issued_at date NULL,
+	valid_until date NULL,
+	installment_no int(10) unsigned NOT NULL DEFAULT 0,
+	document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	status varchar(20) NOT NULL DEFAULT 'vigente',
+	notes text NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_id (project_id)
+) {$collate};",
+
+			'finance_cash_plans'     => "CREATE TABLE {$plans} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	name varchar(255) NOT NULL DEFAULT '',
+	status varchar(20) NOT NULL DEFAULT 'borrador',
+	submitted_at date NULL,
+	notes longtext NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_id (project_id)
+) {$collate};",
+
+			'finance_cash_plan_rows' => "CREATE TABLE {$plan_rows} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	plan_id bigint(20) unsigned NOT NULL,
+	period char(7) NOT NULL,
+	transfer_planned decimal(18,2) NOT NULL DEFAULT 0,
+	spend_planned decimal(18,2) NOT NULL DEFAULT 0,
+	cash_planned decimal(18,2) NOT NULL DEFAULT 0,
+	milestone varchar(255) NOT NULL DEFAULT '',
+	PRIMARY KEY  (id),
+	UNIQUE KEY plan_period (plan_id,period)
+) {$collate};",
+
+			'finance_ledger'         => "CREATE TABLE {$ledger} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	source varchar(20) NOT NULL DEFAULT 'fondo',
+	entry_date date NOT NULL,
+	reference varchar(100) NOT NULL DEFAULT '',
+	description varchar(255) NOT NULL DEFAULT '',
+	debit decimal(18,2) NOT NULL DEFAULT 0,
+	credit decimal(18,2) NOT NULL DEFAULT 0,
+	kind varchar(20) NOT NULL DEFAULT 'otro',
+	payment_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	installment_no int(10) unsigned NOT NULL DEFAULT 0,
+	status varchar(20) NOT NULL DEFAULT 'por_aclarar',
+	batch varchar(64) NOT NULL DEFAULT '',
+	created_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_date (project_id,entry_date),
+	KEY payment_id (payment_id)
+) {$collate};",
+
+			'finance_rules'          => "CREATE TABLE {$rules} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	rule_key varchar(64) NOT NULL,
+	value varchar(255) NOT NULL DEFAULT '',
+	source varchar(255) NOT NULL DEFAULT '',
+	valid_from date NULL,
+	valid_to date NULL,
+	note text NULL,
+	updated_by bigint(20) unsigned NOT NULL DEFAULT 0,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY project_rule (project_id,rule_key)
+) {$collate};",
+
+			'finance_modifications'  => "CREATE TABLE {$modifications} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL,
+	kind varchar(32) NOT NULL DEFAULT 'reitemizacion',
+	status varchar(20) NOT NULL DEFAULT 'solicitada',
+	requested_at date NULL,
+	approved_at date NULL,
+	act_number varchar(100) NOT NULL DEFAULT '',
+	document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	details longtext NULL,
+	notes text NULL,
+	version int(10) unsigned NOT NULL DEFAULT 1,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	KEY project_kind (project_id,kind)
+) {$collate};",
+
+			'permission_groups'      => "CREATE TABLE {$groups} (
+	id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	project_id bigint(20) unsigned NOT NULL DEFAULT 0,
+	slug varchar(64) NOT NULL,
+	label varchar(100) NOT NULL,
+	description text NULL,
+	permissions longtext NULL,
+	created_at datetime NOT NULL,
+	updated_at datetime NOT NULL,
+	PRIMARY KEY  (id),
+	UNIQUE KEY project_slug (project_id,slug)
+) {$collate};",
+		);
 	}
 
 	/**
