@@ -280,9 +280,10 @@ final class Importer {
 			'project_id' => 0,
 			'old_project_id' => 0,
 			'tables'   => array(),
-			'skip'     => array_map( 'sanitize_key', (array) ( $options['skip'] ?? array() ) ),
 			'touched_planning' => false,
 		);
+		// Tablas que el usuario no puede escribir: se omiten siempre; el proyecto solo ubica el destino.
+		$this->state['skip'] = array_map( 'sanitize_key', (array) ( $options['skip'] ?? array() ) );
 
 		// Proyecto de destino.
 		$source = $document['tables']['projects'][0] ?? null;
@@ -326,8 +327,7 @@ final class Importer {
 		}
 
 		$selected = is_array( $options['tables'] ?? null ) && ! empty( $options['tables'] ) ? array_map( 'sanitize_key', $options['tables'] ) : null;
-		// Tablas que el usuario no puede escribir: se omiten siempre; el proyecto solo ubica el destino.
-		$skip = $this->state['skip'];
+		$skip     = $this->state['skip'];
 		foreach ( DataSchema::order() as $table ) {
 			if ( ! isset( $document['tables'][ $table ] ) ) {
 				continue;

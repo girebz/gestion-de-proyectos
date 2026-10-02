@@ -220,7 +220,11 @@ final class DataPage extends Page {
 					<tr><th scope="row"><?php esc_html_e( 'Módulos', 'gestion-de-proyectos' ); ?></th><td>
 						<?php foreach ( $labels as $slug => $label ) : ?>
 							<?php $can_export = in_array( $slug, $allowed, true ); ?>
-							<label class="gdp-check"><input type="checkbox" name="modules[]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( 'audit' !== $slug && $can_export ); ?> <?php disabled( 'core' === $slug || ! $can_export ); ?>> <?php echo esc_html( $label ); ?><?php if ( ! $can_export ) : ?> <span class="description"><?php esc_html_e( '(sin permiso para exportarlo)', 'gestion-de-proyectos' ); ?></span><?php endif; ?></label><br>
+							<label class="gdp-check"><input type="checkbox" name="modules[]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( 'audit' !== $slug && $can_export ); ?> <?php disabled( 'core' === $slug || ! $can_export ); ?>> <?php echo esc_html( $label ); ?>
+								<?php if ( ! $can_export ) : ?>
+									<span class="description"><?php esc_html_e( '(sin permiso para exportarlo)', 'gestion-de-proyectos' ); ?></span>
+								<?php endif; ?>
+							</label><br>
 						<?php endforeach; ?>
 						<input type="hidden" name="modules[]" value="core">
 					</td></tr>
