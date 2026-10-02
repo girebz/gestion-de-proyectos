@@ -182,7 +182,8 @@ final class BoardView {
 		self::kpi( __( 'Por transferir', 'gestion-de-proyectos' ), BoardMetrics::money( (float) $fund['to_receive'] ), sprintf( /* translators: porcentaje. */ __( '%s del convenio', 'gestion-de-proyectos' ), BoardMetrics::pct_label( BoardMetrics::pct( (float) $fund['to_receive'], $total ) ) ), 'convenio' );
 		echo '</div>';
 		echo self::chart_with_tip( BoardCharts::usage( $usage, __( 'Uso del Fondo', 'gestion-de-proyectos' ), self::usage_labels( __( 'Transferido', 'gestion-de-proyectos' ) ) ), 'uso' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML generado con escape interno.
-		if ( (float) $usage['uncovered'] > 0.5 ) {
+		// Con transferencias recibidas, la misma advertencia ya figura entre las alertas.
+		if ( (float) $usage['uncovered'] > 0.5 && (float) $usage['received'] <= 0 ) {
 			echo '<p class="gdp-fin-note">' . esc_html( sprintf( /* translators: monto. */ __( 'Lo pagado más lo comprometido supera lo transferido en %s: esa parte de los compromisos se paga con la cuota siguiente.', 'gestion-de-proyectos' ), BoardMetrics::money( (float) $usage['uncovered'] ) ) ) . '</p>';
 		}
 		echo '</section>';
@@ -268,7 +269,7 @@ final class BoardView {
 	 * @return void
 	 */
 	private static function kpi( string $label, string $value, string $sub, string $tip = '' ): void {
-		echo '<div class="gdp-fin-kpi"><div class="gdp-fin-kpi__label">' . esc_html( $label ) . ( '' !== $tip ? self::tip( $tip ) : '' ) . '</div><span class="gdp-fin-kpi__value">' . esc_html( $value ) . '</span>' . ( '' !== $sub ? '<span class="gdp-fin-kpi__sub">' . esc_html( $sub ) . '</span>' : '' ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- ayuda escapada.
+		echo '<div class="gdp-fin-kpi"><div class="gdp-fin-kpi__label">' . self::with_tip( $label, $tip ) . '</div><span class="gdp-fin-kpi__value">' . esc_html( $value ) . '</span>' . ( '' !== $sub ? '<span class="gdp-fin-kpi__sub">' . esc_html( $sub ) . '</span>' : '' ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- ayuda escapada.
 	}
 
 	/**
@@ -1419,6 +1420,26 @@ final class BoardView {
 		}
 
 		return '<details class="gdp-fin-tip"><summary aria-label="' . esc_attr__( 'Qué significa', 'gestion-de-proyectos' ) . '"><span aria-hidden="true">?</span></summary><span class="gdp-fin-tip__body" role="note">' . esc_html( $text ) . '</span></details>';
+	}
+
+	/**
+	 * Texto con su ayuda al final, sin que la ayuda quede sola en una línea:
+	 * la última palabra y la ayuda no se separan.
+	 *
+	 * @param string $text Texto sin escapar.
+	 * @param string $key  Clave de la ayuda ('' sin ayuda).
+	 * @return string HTML.
+	 */
+	private static function with_tip( string $text, string $key ): string {
+		$tip = '' !== $key ? self::tip( $key ) : '';
+		if ( '' === $tip ) {
+			return esc_html( $text );
+		}
+		$pos  = strrpos( $text, ' ' );
+		$head = false === $pos ? '' : substr( $text, 0, $pos + 1 );
+		$last = false === $pos ? $text : substr( $text, $pos + 1 );
+
+		return esc_html( $head ) . '<span class="gdp-fin-keep">' . esc_html( $last ) . $tip . '</span>';
 	}
 
 	/**
