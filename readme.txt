@@ -4,7 +4,7 @@ Tags: gestión de proyectos, investigación, mcp, planificación, rendición de 
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.9.1
+Stable tag: 0.10.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,7 +34,7 @@ En Proyectos → Finanzas registre el convenio, las cuotas, los ítems con su as
 
 = Tableros en el sitio =
 
-Para publicar el avance, configure en Proyectos → Tableros qué se muestra y active la publicación; luego inserte en la portada el código corto [gdp_avance proyecto="CODIGO"]. El tablero del equipo se inserta con [gdp_tablero_equipo proyecto="CODIGO"] en un tema del foro o en una página privada y solo lo ven usuarios con sesión iniciada. Para la página privada del equipo hay además [gdp_gantt], [gdp_kanban], [gdp_calendario], [gdp_alertas], [gdp_carga] e [gdp_informe_semanal], con el mismo atributo proyecto y la misma regla de acceso.
+Para publicar el avance, configure en Proyectos → Tableros qué se muestra y active la publicación; luego inserte en la portada el código corto [gdp_avance proyecto="CODIGO"]. El tablero del equipo se inserta con [gdp_tablero_equipo proyecto="CODIGO"] en un tema del foro o en una página privada y solo lo ven usuarios con sesión iniciada. Para la página privada del equipo hay además [gdp_gantt], [gdp_kanban], [gdp_calendario], [gdp_alertas], [gdp_carga] e [gdp_informe_semanal], con el mismo atributo proyecto y la misma regla de acceso, y el tablero de finanzas [gdp_finanzas], que además exige el permiso de ver las finanzas.
 
 == Frequently Asked Questions ==
 
@@ -70,11 +70,18 @@ No. SISREC no ofrece una interfaz para otros sistemas: el plugin prepara los dat
 
 Quien tenga el permiso "Ver finanzas y rendición de cuentas" en el proyecto: por omisión, el director y el ingeniero de proyectos. Con un grupo a medida se puede dar lectura de todo, finanzas incluidas, sin permisos de edición, o todo salvo las finanzas; el editor de grupos advierte si un grupo sin finanzas conserva los montos de las compras.
 
+= ¿Puede el director ver las finanzas sin entrar al panel? =
+
+Sí: [gdp_finanzas proyecto="CODIGO"] muestra en una página privada el estado financiero completo en modo lectura, en nueve pestañas: un resumen con alertas, saldo de caja, plazo frente a ejecución, cuota siguiente y gráficos; el detalle de cuotas, ítems, pagos, rendiciones, caja y convenio; el paso a paso de cada trámite de rendición en SISREC con los valores listos para copiar; y reportes (informe imprimible, texto para informes y planillas CSV). Un menú de ayuda lleva de la tarea a su hoja de ejecución. Solo lo ve quien tiene el permiso de ver las finanzas del proyecto; los demás reciben un aviso sin cifras. Con vista="paso" (u otra pestaña) la página muestra solo esa parte.
+
 = ¿Dónde se guardan los adjuntos? =
 
 En un directorio privado dentro de wp-content/uploads, protegido contra acceso web directo y servido solo a usuarios autorizados.
 
 == Changelog ==
+
+= 0.10.0 =
+* Novedad: tablero de finanzas en el sitio con [gdp_finanzas proyecto="CODIGO"], en modo lectura y solo para quien puede ver las finanzas: resumen para el director con alertas y gráficos (uso de cada fuente, avance de las cuotas, ejecución por ítem, curva de caja y franja de rendiciones), detalle de cuotas, ítems, pagos, rendiciones, caja y convenio, paso a paso de la rendición en SISREC, reportes (informe imprimible, texto para informes, planillas CSV) y menú de ayuda por tareas. El atributo vista deja una sola pestaña. La pestaña Tablero del equipo de Proyectos → Tableros entrega los códigos.
 
 = 0.9.1 =
 * Corrección: la exportación por proyecto ofrece el módulo de finanzas (antes quedaba fuera de toda exportación y respaldo por proyecto). Exportar las tablas de finanzas exige el permiso de exportar finanzas, e importarlas, el de registrar pagos y rendiciones.

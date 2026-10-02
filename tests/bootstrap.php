@@ -262,6 +262,30 @@ if ( ! function_exists( 'get_option' ) ) {
 		return 'admin_email' === $name ? 'admin@example.test' : $default;
 	}
 }
+if ( ! function_exists( 'esc_html__' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress: texto sin traducir, escapado.
+	 *
+	 * @param string $text   Texto.
+	 * @param string $domain Dominio.
+	 * @return string
+	 */
+	function esc_html__( string $text, string $domain = 'default' ): string {
+		return esc_html( $text );
+	}
+}
+if ( ! function_exists( 'esc_attr__' ) ) {
+	/**
+	 * Sustituto mínimo fuera de WordPress: texto sin traducir, escapado.
+	 *
+	 * @param string $text   Texto.
+	 * @param string $domain Dominio.
+	 * @return string
+	 */
+	function esc_attr__( string $text, string $domain = 'default' ): string {
+		return esc_attr( $text );
+	}
+}
 if ( ! defined( 'DAY_IN_SECONDS' ) ) {
 	define( 'DAY_IN_SECONDS', 86400 );
 }

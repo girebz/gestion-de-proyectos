@@ -1,0 +1,1501 @@
+/* Gestión de Proyectos: tablero de finanzas del sitio ([gdp_finanzas]).
+   Se apoya en admin.css y frontend.css (botones y tablas dentro de .gdp-front).
+   Los tonos de los gráficos forman una escala ordinal del color principal del
+   sitio (--gdp-primary): más oscuro, más avanzado el dinero. Los colores de estado
+   son fijos y siempre van con símbolo y texto. Los textos usan la tinta del sitio. */
+
+.gdp-fin {
+	--fin-ink: var(--gdp-text, #1d2327);
+	--fin-ink-2: #50575e;
+	--fin-muted: #646970;
+	--fin-line: #dcdcde;
+	--fin-line-soft: #f0f0f1;
+	--fin-surface: #fff;
+	--fin-surface-2: #f6f7f7;
+	--fin-c1: var(--gdp-primary, #2271b1);
+	--fin-c1d: #11436c;
+	--fin-c2: #5890c3;
+	--fin-c3: #8ab0d6;
+	--fin-c0: #e3ecf6;
+	--fin-time: #8c8f94;
+	--fin-good: #0ca30c;
+	--fin-warning: #fab219;
+	--fin-serious: #ec835a;
+	--fin-critical: #d03b3b;
+	--fin-good-text: #006300;
+	--fin-critical-text: #a12626;
+	--fin-warning-text: #7a5200;
+	--fin-good-tint: #e8f6e8;
+	--fin-warning-tint: #fff5df;
+	--fin-critical-tint: #fbeaea;
+	--fin-radius: 4px;
+	color: var(--fin-ink);
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+/* Un tablero necesita más que el ancho de lectura: los temas de bloques limitan
+   cada bloque del contenido al ancho del texto (con una regla de especificidad
+   mínima); aquí se libera hasta un ancho de tablero. */
+.gdp-front.gdp-fin {
+	max-width: 1340px;
+	/* Los enlaces del tablero vuelven a su ancla: el margen deja el título a la
+	   vista bajo las cabeceras fijas de los temas. */
+	scroll-margin-top: 80px;
+}
+
+@supports ( color: color-mix( in oklab, red, white ) ) {
+	.gdp-fin {
+		--fin-c1d: color-mix( in oklab, var( --fin-c1 ) 70%, #000 );
+		--fin-c2: color-mix( in oklab, var( --fin-c1 ) 78%, #fff );
+		--fin-c3: color-mix( in oklab, var( --fin-c1 ) 55%, #fff );
+		--fin-c0: color-mix( in oklab, var( --fin-c1 ) 13%, #fff );
+	}
+}
+
+.gdp-fin .screen-reader-text {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect( 0, 0, 0, 0 );
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Cabecera, herramientas y pestañas. */
+.gdp-fin__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 8px 16px;
+	margin-bottom: 8px;
+}
+
+.gdp-fin__title {
+	min-width: 0;
+}
+
+.gdp-front .gdp-fin__title h2 {
+	margin: 0 0 2px;
+	font-size: 20px;
+	line-height: 1.3;
+}
+
+.gdp-fin__title p {
+	margin: 0;
+}
+
+.gdp-fin__tools {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+}
+
+.gdp-fin-tabs {
+	display: flex;
+	gap: 2px;
+	overflow-x: auto;
+	margin: 0 0 16px;
+	border-bottom: 1px solid var( --fin-line );
+	scrollbar-width: thin;
+}
+
+.gdp-front .gdp-fin-tab {
+	flex: 0 0 auto;
+	padding: 8px 12px;
+	color: var( --fin-ink-2 );
+	text-decoration: none;
+	border-bottom: 3px solid transparent;
+	box-shadow: none;
+	white-space: nowrap;
+}
+
+.gdp-front .gdp-fin-tab:hover,
+.gdp-front .gdp-fin-tab:focus {
+	color: var( --fin-ink );
+	border-bottom-color: var( --fin-c3 );
+}
+
+.gdp-front .gdp-fin-tab.is-active {
+	color: var( --fin-ink );
+	font-weight: 600;
+	border-bottom-color: var( --fin-c1 );
+}
+
+.gdp-fin__body > *:last-child {
+	margin-bottom: 0;
+}
+
+/* Bloques. */
+.gdp-fin-section {
+	margin: 0 0 24px;
+}
+
+.gdp-front .gdp-fin-h {
+	margin: 0 0 10px;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+.gdp-front .gdp-fin-h4 {
+	margin: 14px 0 8px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.gdp-front .gdp-fin-card > .gdp-fin-h:first-child,
+.gdp-front .gdp-fin-card > .gdp-fin-h4:first-child,
+.gdp-front .gdp-fin-card > .gdp-fin-hrow:first-child {
+	margin-top: 0;
+}
+
+/* Título con su ayuda al lado (la ayuda queda fuera del encabezado). */
+.gdp-fin-hrow {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 2px;
+	margin: 0 0 10px;
+}
+
+.gdp-fin-hrow--4 {
+	margin: 14px 0 8px;
+}
+
+.gdp-front .gdp-fin-hrow > .gdp-fin-h,
+.gdp-front .gdp-fin-hrow > .gdp-fin-h4 {
+	margin: 0;
+}
+
+.gdp-fin-para {
+	margin: 0 0 10px;
+}
+
+/* Un botón con texto largo se parte en líneas antes que desbordar la pantalla. */
+.gdp-front.gdp-fin .button {
+	max-width: 100%;
+	white-space: normal;
+	overflow-wrap: anywhere;
+}
+
+.gdp-fin-muted {
+	color: var( --fin-muted );
+	font-size: 13px;
+}
+
+.gdp-fin-small {
+	font-size: 12px;
+}
+
+.gdp-fin-text-bad {
+	color: var( --fin-critical-text );
+}
+
+.gdp-fin-note {
+	margin: 8px 0 0;
+	padding: 8px 12px;
+	background: var( --fin-surface-2 );
+	border-left: 3px solid var( --fin-c3 );
+	font-size: 13px;
+}
+
+.gdp-fin-more {
+	margin: 8px 0 0;
+	font-size: 13px;
+}
+
+.gdp-fin-card {
+	min-width: 0;
+	margin: 0;
+	padding: 16px;
+	background: var( --fin-surface );
+	border: 1px solid var( --fin-line );
+}
+
+.gdp-fin-cols {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( min( 100%, 380px ), 1fr ) );
+	gap: 16px;
+	margin: 0 0 24px;
+}
+
+.gdp-fin-grid {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( min( 100%, 300px ), 1fr ) );
+	gap: 12px;
+}
+
+.gdp-fin-scroll {
+	overflow-x: auto;
+	max-width: 100%;
+}
+
+.gdp-front ul.gdp-fin-list {
+	margin: 0 0 8px;
+	padding-left: 18px;
+	list-style: disc;
+}
+
+.gdp-front ul.gdp-fin-list li {
+	margin: 0 0 4px;
+}
+
+/* Alertas. */
+.gdp-front .gdp-fin-alerts ul {
+	margin: 0 0 20px;
+	padding: 0;
+	list-style: none;
+}
+
+.gdp-front .gdp-fin-alert {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	margin: 0 0 6px;
+	padding: 8px 12px;
+	background: var( --fin-surface-2 );
+	border-left: 4px solid var( --fin-c3 );
+}
+
+.gdp-fin-alert__icon {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	margin-top: 1px;
+	border-radius: 50%;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	background: var( --fin-c1 );
+}
+
+.gdp-front .gdp-fin-alert--critical {
+	background: var( --fin-critical-tint );
+	border-left-color: var( --fin-critical );
+}
+
+.gdp-fin-alert--critical .gdp-fin-alert__icon {
+	background: var( --fin-critical );
+}
+
+.gdp-front .gdp-fin-alert--warning {
+	background: var( --fin-warning-tint );
+	border-left-color: var( --fin-warning );
+}
+
+.gdp-fin-alert--warning .gdp-fin-alert__icon {
+	color: var( --fin-ink );
+	background: var( --fin-warning );
+}
+
+.gdp-front .gdp-fin-alert--ok {
+	margin: 0 0 20px;
+	background: var( --fin-good-tint );
+	border-left-color: var( --fin-good );
+}
+
+.gdp-fin-alert--ok .gdp-fin-alert__icon {
+	background: var( --fin-good );
+}
+
+/* Cifra principal y ritmo. */
+.gdp-fin-hero {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( min( 100%, 300px ), 1fr ) );
+	gap: 16px 32px;
+	align-items: center;
+	margin: 0 0 24px;
+	padding: 16px;
+	background: var( --fin-surface );
+	border: 1px solid var( --fin-line );
+}
+
+.gdp-fin-hero__figure {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+
+.gdp-fin-hero__label {
+	font-size: 13px;
+	color: var( --fin-ink-2 );
+}
+
+.gdp-fin-hero__value {
+	font-size: clamp( 34px, 6vw, 48px );
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.01em;
+	overflow-wrap: anywhere;
+}
+
+.gdp-fin-hero__pace {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	min-width: 0;
+}
+
+.gdp-fin-pace__label {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 13px;
+}
+
+.gdp-fin-meter {
+	position: relative;
+	height: 10px;
+	background: var( --fin-c0 );
+	overflow: hidden;
+}
+
+.gdp-fin-meter > span {
+	display: block;
+	height: 100%;
+	background: var( --fin-c1 );
+	border-radius: 0 var( --fin-radius ) var( --fin-radius ) 0;
+}
+
+.gdp-fin-meter--time {
+	background: var( --fin-line-soft );
+}
+
+.gdp-fin-meter--time > span {
+	background: var( --fin-time );
+}
+
+.gdp-fin-meter--committed > span {
+	background: var( --fin-c3 );
+}
+
+.gdp-fin-meter--rendered > span {
+	background: var( --fin-c2 );
+}
+
+.gdp-fin-meter--approved > span {
+	background: var( --fin-c1d );
+}
+
+/* Cifras. */
+.gdp-fin-kpis {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( min( 100%, 168px ), 1fr ) );
+	gap: 10px;
+	margin: 0 0 16px;
+}
+
+.gdp-fin-kpis--two {
+	grid-template-columns: repeat( auto-fit, minmax( min( 100%, 150px ), 1fr ) );
+}
+
+.gdp-fin-kpi {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+	padding: 10px 12px;
+	background: var( --fin-surface );
+	border: 1px solid var( --fin-line );
+}
+
+.gdp-fin-kpi__label {
+	font-size: 12.5px;
+	color: var( --fin-ink-2 );
+}
+
+.gdp-fin-kpi__value {
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 1.25;
+	overflow-wrap: anywhere;
+}
+
+.gdp-fin-kpi__sub {
+	font-size: 12px;
+	color: var( --fin-muted );
+}
+
+/* Ayuda breve junto a una cifra. */
+.gdp-fin-tip {
+	position: relative;
+	display: inline-block;
+	margin-left: 4px;
+	vertical-align: middle;
+	font-weight: 400;
+}
+
+.gdp-fin-tip > summary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	height: 18px;
+	border: 1px solid var( --fin-line );
+	border-radius: 50%;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1;
+	color: var( --fin-ink-2 );
+	background: var( --fin-surface );
+	cursor: pointer;
+	list-style: none;
+}
+
+.gdp-fin-tip > summary::-webkit-details-marker {
+	display: none;
+}
+
+.gdp-fin-tip > summary:hover,
+.gdp-fin-tip > summary:focus-visible,
+.gdp-fin-tip[open] > summary {
+	color: #fff;
+	background: var( --fin-c1 );
+	border-color: var( --fin-c1 );
+}
+
+.gdp-fin-tip__body {
+	position: absolute;
+	z-index: 1001;
+	top: calc( 100% + 6px );
+	left: 50%;
+	display: block;
+	width: max-content;
+	max-width: min( 300px, 80vw );
+	padding: 8px 10px;
+	transform: translateX( -50% );
+	font-size: 12.5px;
+	font-weight: 400;
+	line-height: 1.45;
+	text-align: left;
+	white-space: normal;
+	color: var( --fin-ink );
+	background: var( --fin-surface );
+	border: 1px solid var( --fin-line );
+	box-shadow: 0 6px 18px rgba( 0, 0, 0, 0.12 );
+}
+
+/* Gráficos. */
+.gdp-fin-chart {
+	margin: 0 0 8px;
+	padding: 0;
+}
+
+.gdp-fin-chart__title {
+	margin: 0 0 6px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.gdp-fin-chart__title .gdp-fin-muted {
+	font-weight: 400;
+}
+
+.gdp-front ul.gdp-fin-legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 16px;
+	margin: 0 0 8px;
+	padding: 0;
+	list-style: none;
+	font-size: 13px;
+}
+
+.gdp-fin-legend li {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+}
+
+.gdp-fin-swatch {
+	display: inline-block;
+	flex: 0 0 auto;
+	width: 12px;
+	height: 12px;
+}
+
+.gdp-fin-swatch--paid,
+.gdp-fin-seg--paid {
+	background: var( --fin-c1 );
+}
+
+.gdp-fin-swatch--committed,
+.gdp-fin-seg--committed {
+	background: var( --fin-c3 );
+}
+
+.gdp-fin-swatch--free,
+.gdp-fin-seg--free,
+.gdp-fin-swatch--inst-pending,
+.gdp-fin-seg--inst-pending {
+	background: var( --fin-c0 );
+}
+
+.gdp-fin-swatch--inst-approved,
+.gdp-fin-seg--inst-approved {
+	background: var( --fin-c1d );
+}
+
+.gdp-fin-swatch--inst-rendered,
+.gdp-fin-seg--inst-rendered {
+	background: var( --fin-c1 );
+}
+
+.gdp-fin-swatch--inst-paid,
+.gdp-fin-seg--inst-paid {
+	background: var( --fin-c2 );
+}
+
+.gdp-fin-swatch--received {
+	width: 3px;
+	height: 14px;
+	background: var( --fin-ink );
+}
+
+.gdp-fin-swatch--free,
+.gdp-fin-swatch--inst-pending {
+	box-shadow: inset 0 0 0 1px var( --fin-c3 );
+}
+
+.gdp-fin-stack {
+	position: relative;
+	display: flex;
+	gap: 2px;
+	height: 20px;
+	margin: 26px 0 4px;
+	background: var( --fin-surface );
+}
+
+.gdp-fin-stack--thin {
+	height: 14px;
+	margin: 0;
+	background: var( --fin-c0 );
+}
+
+.gdp-fin-stack--future {
+	background: repeating-linear-gradient( 135deg, var( --fin-surface ) 0 6px, var( --fin-line-soft ) 6px 8px );
+	outline: 1px dashed var( --fin-c3 );
+	outline-offset: -1px;
+}
+
+.gdp-fin-seg {
+	display: block;
+	flex: 0 0 auto;
+	min-width: 2px;
+	height: 100%;
+	outline: none;
+}
+
+.gdp-fin-stack > .gdp-fin-seg:last-of-type {
+	border-radius: 0 var( --fin-radius ) var( --fin-radius ) 0;
+}
+
+.gdp-fin-seg:hover,
+.gdp-fin-seg:focus-visible {
+	filter: brightness( 1.08 );
+	box-shadow: inset 0 0 0 2px rgba( 0, 0, 0, 0.35 );
+}
+
+.gdp-fin-marker {
+	position: absolute;
+	top: -6px;
+	bottom: -6px;
+	width: 2px;
+	margin-left: -1px;
+	background: var( --fin-ink );
+	outline: none;
+}
+
+.gdp-fin-marker__label {
+	position: absolute;
+	bottom: calc( 100% + 2px );
+	left: 4px;
+	font-size: 12px;
+	white-space: nowrap;
+	color: var( --fin-ink );
+}
+
+.gdp-fin-marker--left .gdp-fin-marker__label {
+	left: auto;
+	right: 4px;
+}
+
+.gdp-fin-scale {
+	display: flex;
+	justify-content: space-between;
+	font-size: 11px;
+	color: var( --fin-muted );
+}
+
+.gdp-fin-tableview {
+	margin: 6px 0 0;
+	font-size: 13px;
+}
+
+.gdp-fin-tableview > summary {
+	display: inline-block;
+	color: var( --fin-c1d );
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.gdp-fin-tableview[open] > summary {
+	margin-bottom: 6px;
+}
+
+/* Medidores por fila (cuotas e ítems). */
+.gdp-front ul.gdp-fin-meterlist {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.gdp-fin-meterrow {
+	display: grid;
+	grid-template-columns: minmax( 140px, 1.1fr ) minmax( 140px, 2fr ) minmax( 160px, 1.5fr );
+	gap: 4px 14px;
+	align-items: center;
+	margin: 0;
+	padding: 8px 0;
+	border-bottom: 1px solid var( --fin-line-soft );
+}
+
+.gdp-fin-meterrow__name {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.gdp-fin-meterrow__nums {
+	font-size: 12.5px;
+}
+
+.gdp-fin-meterrow--over .gdp-fin-stack {
+	box-shadow: inset -3px 0 0 var( --fin-critical );
+}
+
+/* Curva de caja. */
+.gdp-fin-linewrap {
+	/* El texto del SVG escala con el ancho: sobre 960 px las marcas se verían pesadas. */
+	max-width: 960px;
+	overflow-x: auto;
+	outline: none;
+}
+
+.gdp-fin-linewrap:focus-visible {
+	box-shadow: 0 0 0 2px var( --fin-c1 );
+}
+
+.gdp-front .gdp-fin-line {
+	display: block;
+	width: 100%;
+	min-width: 560px;
+	max-width: none;
+	height: auto;
+}
+
+.gdp-fin-line__grid {
+	stroke: var( --fin-line-soft );
+	stroke-width: 1;
+}
+
+.gdp-fin-line__tick {
+	font-size: 11px;
+	fill: var( --fin-muted );
+	font-variant-numeric: tabular-nums;
+}
+
+.gdp-fin-line__area {
+	fill: var( --fin-c1 );
+	fill-opacity: 0.08;
+}
+
+.gdp-fin-line__s {
+	fill: none;
+	stroke-width: 2;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}
+
+.gdp-fin-line__s--transfers {
+	stroke: var( --fin-c3 );
+}
+
+.gdp-fin-line__s--projected {
+	stroke-dasharray: 5 4;
+}
+
+.gdp-fin-line__s--planned {
+	stroke: var( --fin-ink-2 );
+	stroke-dasharray: 2 4;
+}
+
+.gdp-fin-line__s--paid {
+	stroke: var( --fin-c1 );
+}
+
+.gdp-fin-line__dot {
+	fill: var( --fin-c1 );
+	stroke: var( --fin-surface );
+	stroke-width: 2;
+}
+
+.gdp-fin-line__today {
+	stroke: var( --fin-time );
+	stroke-width: 1;
+}
+
+.gdp-fin-line__todaylabel {
+	font-size: 11px;
+	fill: var( --fin-muted );
+}
+
+.gdp-fin-line__cross {
+	stroke: var( --fin-ink );
+	stroke-width: 1;
+	pointer-events: none;
+}
+
+.gdp-fin-line__hit {
+	fill: transparent;
+	cursor: crosshair;
+}
+
+.gdp-fin-linekey {
+	display: inline-block;
+	flex: 0 0 auto;
+	width: 20px;
+	height: 0;
+	border-top: 2px solid var( --fin-c1 );
+	vertical-align: middle;
+}
+
+.gdp-fin-linekey--transfers {
+	border-top-color: var( --fin-c3 );
+}
+
+.gdp-fin-linekey--planned {
+	border-top: 2px dotted var( --fin-ink-2 );
+}
+
+.gdp-fin-tooltip {
+	position: absolute;
+	z-index: 100000;
+	max-width: 300px;
+	padding: 6px 9px;
+	font-size: 12px;
+	line-height: 1.45;
+	color: #fff;
+	background: #1d2327;
+	border-radius: 2px;
+	pointer-events: none;
+	box-shadow: 0 4px 12px rgba( 0, 0, 0, 0.2 );
+}
+
+.gdp-fin-tooltip[hidden] {
+	display: none;
+}
+
+.gdp-fin-tooltip__head {
+	margin-bottom: 2px;
+	font-weight: 600;
+}
+
+.gdp-fin-tooltip__row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.gdp-fin-tooltip .gdp-fin-linekey--planned {
+	border-top-color: #c3c4c7;
+}
+
+/* Franja de rendiciones. */
+.gdp-front ol.gdp-fin-strip {
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( 88px, 1fr ) );
+	gap: 4px;
+	margin: 0 0 8px;
+	padding: 0;
+	list-style: none;
+}
+
+.gdp-front .gdp-fin-cell {
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
+	margin: 0;
+	padding: 6px 8px;
+	font-size: 12px;
+	line-height: 1.3;
+	background: var( --fin-surface );
+	border: 1px solid var( --fin-line );
+	border-left-width: 4px;
+	outline: none;
+}
+
+.gdp-fin-cell:focus-visible {
+	box-shadow: 0 0 0 2px var( --fin-c1 );
+}
+
+.gdp-fin-cell__icon {
+	font-weight: 700;
+}
+
+.gdp-fin-cell__month {
+	font-weight: 600;
+	text-transform: capitalize;
+}
+
+.gdp-fin-cell__label {
+	color: var( --fin-ink-2 );
+}
+
+/* Muestras de la leyenda: antes de los estados, que les dan el color. */
+.gdp-fin-legend--states .gdp-fin-cellkey {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 18px;
+	padding: 0;
+	border: 1px solid var( --fin-line );
+	border-left-width: 4px;
+	font-size: 11px;
+	font-weight: 700;
+}
+
+.gdp-front .gdp-fin-cell--ok {
+	background: var( --fin-good-tint );
+	border-left-color: var( --fin-good );
+}
+
+.gdp-fin-cell--ok .gdp-fin-cell__icon {
+	color: var( --fin-good-text );
+}
+
+.gdp-front .gdp-fin-cell--sent {
+	background: var( --fin-c0 );
+	border-left-color: var( --fin-c1 );
+}
+
+.gdp-front .gdp-fin-cell--progress {
+	background: var( --fin-surface-2 );
+	border-left-color: var( --fin-c3 );
+}
+
+.gdp-front .gdp-fin-cell--warn {
+	background: var( --fin-warning-tint );
+	border-left-color: var( --fin-warning );
+}
+
+.gdp-front .gdp-fin-cell--bad {
+	background: var( --fin-critical-tint );
+	border-left-color: var( --fin-critical );
+}
+
+.gdp-fin-cell--bad .gdp-fin-cell__icon {
+	color: var( --fin-critical-text );
+}
+
+.gdp-front .gdp-fin-cell--current {
+	border-style: dashed;
+	border-left-style: solid;
+	border-left-color: var( --fin-time );
+}
+
+.gdp-front .gdp-fin-cell--todo {
+	border-left-color: var( --fin-line );
+}
+
+/* Cuota siguiente, condiciones y acciones. */
+.gdp-front ul.gdp-fin-gaps {
+	margin: 0 0 12px;
+	padding: 0;
+	list-style: none;
+}
+
+.gdp-fin-gaps li {
+	margin: 0 0 8px;
+	font-size: 13px;
+}
+
+.gdp-front ul.gdp-fin-checks {
+	margin: 0 0 8px;
+	padding: 0;
+	list-style: none;
+}
+
+.gdp-front .gdp-fin-check {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	margin: 0 0 6px;
+	font-size: 13px;
+}
+
+.gdp-fin-check__icon {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	height: 18px;
+	margin-top: 1px;
+	border-radius: 50%;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	background: var( --fin-time );
+}
+
+.gdp-fin-check--ok .gdp-fin-check__icon {
+	background: var( --fin-good );
+}
+
+.gdp-fin-check--bad .gdp-fin-check__icon {
+	background: var( --fin-critical );
+}
+
+.gdp-fin-check__word {
+	color: var( --fin-muted );
+}
+
+.gdp-fin-flag {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 12.5px;
+	font-weight: 400;
+}
+
+.gdp-fin-flag > span[aria-hidden] {
+	font-weight: 700;
+}
+
+.gdp-fin-flag--ok > span[aria-hidden] {
+	color: var( --fin-good-text );
+}
+
+.gdp-fin-flag--bad > span[aria-hidden] {
+	color: var( --fin-critical-text );
+}
+
+.gdp-fin-flag--warn > span[aria-hidden] {
+	color: var( --fin-warning-text );
+}
+
+.gdp-fin-flag--none {
+	color: var( --fin-muted );
+}
+
+p.gdp-fin-flag {
+	display: flex;
+	margin: 6px 0;
+}
+
+.gdp-front ol.gdp-fin-actions {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.gdp-front .gdp-fin-action {
+	margin: 0 0 8px;
+	padding: 10px 12px;
+	background: var( --fin-surface );
+	border: 1px solid var( --fin-line );
+	border-left: 4px solid var( --fin-c3 );
+}
+
+.gdp-front .gdp-fin-action--critical {
+	border-left-color: var( --fin-critical );
+}
+
+.gdp-front .gdp-fin-action--warning {
+	border-left-color: var( --fin-warning );
+}
+
+.gdp-fin-action p {
+	margin: 4px 0 6px;
+}
+
+.gdp-fin-badge {
+	display: inline-block;
+	padding: 0 6px;
+	font-size: 11.5px;
+	line-height: 18px;
+	border: 1px solid var( --fin-line );
+	background: var( --fin-surface-2 );
+	vertical-align: 1px;
+}
+
+.gdp-fin-badge--critical {
+	border-color: var( --fin-critical );
+	background: var( --fin-critical-tint );
+}
+
+.gdp-fin-badge--warning {
+	border-color: var( --fin-warning );
+	background: var( --fin-warning-tint );
+}
+
+.gdp-fin-first {
+	margin-bottom: 20px;
+	border-left: 4px solid var( --fin-c1 );
+}
+
+/* Datos, tablas y pagos. */
+.gdp-front dl.gdp-fin-facts,
+.gdp-front dl.gdp-fin-fields {
+	display: grid;
+	grid-template-columns: minmax( 120px, 38% ) 1fr;
+	gap: 4px 12px;
+	margin: 0 0 8px;
+	font-size: 13px;
+}
+
+.gdp-fin-facts dt,
+.gdp-fin-fields dt {
+	color: var( --fin-ink-2 );
+	font-weight: 400;
+}
+
+.gdp-front .gdp-fin-facts dd,
+.gdp-front .gdp-fin-fields dd {
+	margin: 0;
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.gdp-front .gdp-fin-table th,
+.gdp-front .gdp-fin-table td {
+	white-space: nowrap;
+}
+
+.gdp-front .gdp-fin-table th[scope="row"] {
+	font-weight: 600;
+}
+
+.gdp-front .gdp-fin-table--num td,
+.gdp-front .gdp-fin-table .gdp-fin-num {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+}
+
+.gdp-front .gdp-fin-table tfoot th,
+.gdp-front .gdp-fin-table tfoot td {
+	font-weight: 600;
+	border-top: 1px solid var( --fin-line );
+	background: var( --fin-surface-2 );
+}
+
+.gdp-front .gdp-fin-table .gdp-fin-wrap,
+.gdp-front .gdp-fin-payments td:nth-child( 2 ) {
+	min-width: 260px;
+	white-space: normal;
+	text-align: left;
+}
+
+/* Tablas de pocas columnas: no se estiran a todo el ancho. */
+.gdp-front .gdp-fin-table--compact {
+	width: auto;
+	min-width: min( 100%, 560px );
+}
+
+.gdp-front .gdp-fin-row--bad th,
+.gdp-front .gdp-fin-row--bad td {
+	background: var( --fin-critical-tint );
+}
+
+.gdp-front .gdp-fin-row--own th,
+.gdp-front .gdp-fin-row--own td {
+	background: var( --fin-c0 );
+}
+
+.gdp-fin-pill {
+	display: inline-block;
+	padding: 1px 8px;
+	font-size: 12px;
+	border: 1px solid var( --fin-line );
+	background: var( --fin-surface-2 );
+	white-space: nowrap;
+}
+
+.gdp-fin-pill--ok {
+	border-color: var( --fin-good );
+	background: var( --fin-good-tint );
+}
+
+.gdp-fin-pill--bad {
+	border-color: var( --fin-critical );
+	background: var( --fin-critical-tint );
+}
+
+.gdp-fin-pill--pending {
+	border-color: var( --fin-c3 );
+	background: var( --fin-c0 );
+}
+
+.gdp-fin-detail,
+.gdp-fin-notes,
+.gdp-fin-item {
+	margin: 6px 0 0;
+	font-size: 13px;
+}
+
+.gdp-fin-detail > summary,
+.gdp-fin-notes > summary {
+	cursor: pointer;
+	color: var( --fin-c1d );
+}
+
+.gdp-front details.gdp-fin-item {
+	margin: 0 0 6px;
+	padding: 8px 12px;
+	border: 1px solid var( --fin-line );
+	background: var( --fin-surface );
+}
+
+.gdp-fin-item > summary {
+	cursor: pointer;
+}
+
+.gdp-fin-item[open] > summary {
+	margin-bottom: 8px;
+}
+
+.gdp-fin-issues li {
+	padding-left: 2px;
+}
+
+.gdp-fin-issue--bloquea {
+	color: var( --fin-critical-text );
+}
+
+.gdp-fin-form {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	margin: 0 0 10px;
+}
+
+.gdp-front .gdp-fin-form input[type="search"],
+.gdp-front .gdp-fin-form select {
+	min-height: 30px;
+	max-width: 100%;
+	padding: 0 8px;
+	font-size: 13px;
+	font-family: inherit;
+	color: var( --fin-ink );
+	background: #fff;
+	border: 1px solid #8c8f94;
+	border-radius: 0;
+}
+
+.gdp-front .gdp-fin-form input[type="search"] {
+	width: min( 320px, 100% );
+}
+
+/* Hojas de ejecución. */
+.gdp-front ol.gdp-fin-steps {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: gdpfinstep;
+}
+
+.gdp-front .gdp-fin-step {
+	position: relative;
+	margin: 0 0 10px;
+	padding: 10px 12px 10px 44px;
+	background: var( --fin-surface );
+	border: 1px solid var( --fin-line );
+	counter-increment: gdpfinstep;
+}
+
+.gdp-fin-step::before {
+	content: counter( gdpfinstep );
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	font-size: 12px;
+	font-weight: 700;
+	color: #fff;
+	background: var( --fin-c1 );
+}
+
+.gdp-fin-step.is-done::before {
+	content: "✓";
+	background: var( --fin-good );
+}
+
+.gdp-fin-step__head {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 10px;
+	align-items: center;
+	margin-bottom: 4px;
+	font-size: 12.5px;
+}
+
+.gdp-fin-step__actor {
+	padding: 0 6px;
+	background: var( --fin-c0 );
+	text-transform: capitalize;
+}
+
+.gdp-fin-step__screen {
+	font-weight: 600;
+}
+
+.gdp-fin-step__check {
+	margin: 6px 0 0;
+	font-size: 12.5px;
+	color: var( --fin-ink-2 );
+}
+
+.gdp-front .gdp-fin-copyvalue {
+	display: inline-block;
+	max-width: 100%;
+	padding: 2px 6px;
+	font-size: 12.5px;
+	background: var( --fin-surface-2 );
+	border: 1px solid var( --fin-line );
+	overflow-wrap: anywhere;
+	white-space: normal;
+}
+
+.gdp-front .gdp-copy--done {
+	color: var( --fin-good-text );
+	border-color: var( --fin-good );
+}
+
+.gdp-front ul.gdp-fin-guides {
+	margin: 0 0 8px;
+	padding-left: 18px;
+}
+
+.gdp-fin-guides li {
+	margin: 0 0 4px;
+}
+
+/* Reportes. */
+.gdp-fin-actionsbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0 0 10px;
+}
+
+.gdp-fin-text {
+	padding: 12px 14px;
+	background: var( --fin-surface-2 );
+	border-left: 3px solid var( --fin-c1 );
+	font-size: 13.5px;
+}
+
+.gdp-fin-report {
+	padding: 16px;
+	border: 1px solid var( --fin-line );
+	background: var( --fin-surface );
+}
+
+.gdp-fin-report__head p {
+	margin: 0 0 8px;
+	color: var( --fin-ink-2 );
+}
+
+.gdp-fin-report__foot {
+	margin-top: 12px;
+}
+
+/* Menú de ayuda. */
+.gdp-fin-help > summary {
+	list-style: none;
+}
+
+.gdp-fin-help > summary::-webkit-details-marker {
+	display: none;
+}
+
+.gdp-fin-help[open] > summary {
+	color: #fff;
+	background: var( --fin-c1 );
+}
+
+.gdp-fin-help__panel {
+	position: absolute;
+	z-index: 1000;
+	top: calc( 100% + 6px );
+	right: 0;
+	width: min( 580px, calc( 100vw - 32px ) );
+	max-height: 72vh;
+	overflow: auto;
+	padding: 16px;
+	text-align: left;
+	background: var( --fin-surface );
+	border: 1px solid var( --fin-line );
+	box-shadow: 0 10px 30px rgba( 0, 0, 0, 0.16 );
+}
+
+.gdp-fin-help__task {
+	margin: 0 0 12px;
+	padding: 0 0 12px;
+	border-bottom: 1px solid var( --fin-line-soft );
+}
+
+.gdp-fin-help__task select {
+	max-width: 100%;
+}
+
+.gdp-front details.gdp-fin-topic {
+	margin: 0;
+	border-bottom: 1px solid var( --fin-line-soft );
+}
+
+.gdp-fin-topic > summary {
+	padding: 8px 0;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.gdp-fin-topic__body {
+	padding: 0 0 10px;
+	font-size: 13px;
+}
+
+.gdp-front dl.gdp-fin-glossary {
+	margin: 0;
+}
+
+.gdp-fin-glossary dt {
+	margin-top: 6px;
+	font-weight: 600;
+}
+
+.gdp-front .gdp-fin-glossary dd {
+	margin: 0;
+}
+
+/* Pantallas angostas. */
+@media ( max-width: 782px ) {
+	.gdp-fin-meterrow {
+		grid-template-columns: 1fr;
+	}
+
+	.gdp-front dl.gdp-fin-facts,
+	.gdp-front dl.gdp-fin-fields {
+		grid-template-columns: 1fr;
+	}
+
+	.gdp-fin-facts dt,
+	.gdp-fin-fields dt {
+		margin-top: 4px;
+	}
+}
+
+@media ( max-width: 600px ) {
+	.gdp-fin-help__panel {
+		position: fixed;
+		top: 56px;
+		left: 12px;
+		right: 12px;
+		width: auto;
+		max-height: calc( 100vh - 80px );
+	}
+
+	.gdp-fin-tip__body {
+		position: fixed;
+		top: auto;
+		bottom: 16px;
+		left: 16px;
+		right: 16px;
+		width: auto;
+		max-width: none;
+		transform: none;
+	}
+
+	.gdp-fin-hero__value {
+		font-size: 34px;
+	}
+}
+
+/* Impresión. */
+@media print {
+	.gdp-fin-tabs,
+	.gdp-fin__tools,
+	.gdp-fin-form,
+	.gdp-fin-actionsbar,
+	.gdp-fin-tableview,
+	.gdp-fin-tip,
+	.gdp-fin .button,
+	.gdp-fin-more {
+		display: none !important;
+	}
+
+	.gdp-fin-card,
+	.gdp-fin-kpi,
+	.gdp-fin-chart,
+	.gdp-fin-action,
+	.gdp-fin-step {
+		break-inside: avoid;
+	}
+
+	.gdp-fin-seg,
+	.gdp-fin-meter > span,
+	.gdp-fin-cell,
+	.gdp-fin-alert,
+	.gdp-fin-check__icon {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+
+	.gdp-fin-scroll {
+		overflow: visible;
+	}
+
+	.gdp-front .gdp-fin-table th,
+	.gdp-front .gdp-fin-table td {
+		white-space: normal;
+	}
+
+	html.gdp-fin-printing-report body * {
+		visibility: hidden;
+	}
+
+	html.gdp-fin-printing-report .gdp-fin-report,
+	html.gdp-fin-printing-report .gdp-fin-report * {
+		visibility: visible;
+	}
+
+	html.gdp-fin-printing-report .gdp-fin-report {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		border: 0;
+		padding: 0;
+	}
+}

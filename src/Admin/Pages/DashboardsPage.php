@@ -16,6 +16,7 @@ use GDP\Domain\Projects\ProjectRepository;
 use GDP\Modules\Dashboards\DashboardData;
 use GDP\Modules\Dashboards\DashboardRenderer;
 use GDP\Modules\Dashboards\DashboardSettings;
+use GDP\Modules\Finance\Board\BoardShortcode;
 use GDP\Modules\Planning\ActivityRepository;
 use GDP\Modules\Planning\Views\Shortcodes;
 
@@ -375,6 +376,27 @@ final class DashboardsPage extends Page {
 			</table>
 			<p class="gdp-muted gdp-small"><?php esc_html_e( 'La navegación de calendario, carga de trabajo e informe semanal usa parámetros gdp_ en la dirección de la página, así que funciona en páginas, entradas y temas de foro. Si el tema del sitio tiene estilos muy marcados para botones o tablas, puede afinar la presentación con reglas CSS sobre el contenedor .gdp-front.', 'gestion-de-proyectos' ); ?></p>
 		</div>
+
+		<?php if ( Access::can( 'finance.view', $project_id ) ) : ?>
+		<div class="gdp-card">
+			<h2><?php esc_html_e( 'Tablero de finanzas para la página del equipo', 'gestion-de-proyectos' ); ?></h2>
+			<p><?php esc_html_e( 'Muestra en el sitio, en modo lectura, el estado financiero completo del proyecto: un resumen para el director (alertas, plazo frente a ejecución, saldo de caja, cifras por fuente, cuota siguiente con sus brechas y condiciones de giro, y gráficos de uso, cuotas, ítems, caja y rendiciones), el detalle de cuotas, ítems, pagos, rendiciones, caja y convenio, el paso a paso de cada trámite de rendición en SISREC con los valores listos para copiar, y los reportes (informe imprimible, texto para informes y planillas CSV). Un menú de ayuda lleva de la tarea a su hoja de ejecución y explica cada cifra.', 'gestion-de-proyectos' ); ?></p>
+			<p><?php esc_html_e( 'Además de la regla del tablero del equipo (sesión iniciada y, si se marca abajo, pertenencia al proyecto), exige el permiso de ver las finanzas: quien no lo tiene recibe un aviso sin ninguna cifra. Los documentos que genera el módulo siguen sus permisos: la ficha de giro, el expediente y la carta de gasto cero, con el permiso de ver las finanzas; la planilla de carga masiva, el ZIP de respaldos y la programación de caja, con el de exportar.', 'gestion-de-proyectos' ); ?></p>
+			<table class="widefat striped gdp-table gdp-dash-views">
+				<thead><tr><th><?php esc_html_e( 'Vista', 'gestion-de-proyectos' ); ?></th><th class="gdp-dash-views__code"><?php esc_html_e( 'Código corto', 'gestion-de-proyectos' ); ?></th><th><?php esc_html_e( 'Qué muestra', 'gestion-de-proyectos' ); ?></th></tr></thead>
+				<tbody>
+				<?php foreach ( BoardShortcode::snippets( (string) $project['code'] ) as $s ) : ?>
+					<tr>
+						<td><strong><?php echo esc_html( $s['label'] ); ?></strong></td>
+						<td><input type="text" class="large-text code gdp-dash-snippet" readonly value="<?php echo esc_attr( $s['shortcode'] ); ?>" onclick="this.select()" aria-label="<?php echo esc_attr( $s['label'] ); ?>"></td>
+						<td class="gdp-small"><?php echo esc_html( $s['text'] ); ?></td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+			<p class="gdp-muted gdp-small"><?php esc_html_e( 'Conviene publicarlo en una página o tema de foro visible solo para el equipo. Las pestañas, los filtros y las hojas usan parámetros gdp_ en la dirección de la página; el botón Imprimir imprime la vista abierta y el de la pestaña Reportes imprime solo el informe (o lo guarda en PDF desde el diálogo del navegador).', 'gestion-de-proyectos' ); ?></p>
+		</div>
+		<?php endif; ?>
 
 		<?php if ( Access::can( 'project.edit', $project_id ) ) : ?>
 		<div class="gdp-card">
