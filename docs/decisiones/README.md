@@ -21,3 +21,4 @@ Cada decisión estructural se registra en un archivo numerado con el formato: co
 | [0015](0015-vistas-compartidas-entre-panel-y-sitio.md) | Vistas de planificación compartidas entre el panel y los códigos cortos del sitio, parametrizadas por un contexto de presentación | aceptada |
 | [0016](0016-finanzas-rendicion-y-grupos.md) | Finanzas y rendición de cuentas con estados declarados, perfiles de fondo, hojas de ejecución y grupos de permisos a medida | aceptada |
 | [0017](0017-tablero-de-finanzas-en-el-sitio.md) | Tablero de finanzas en el sitio, de solo lectura, con ayuda por tareas y reportes que salen del navegador | aceptada |
+| [0018](0018-libro-excel-del-estado-financiero.md) | Libro Excel del estado financiero, con números reales y fórmulas que traen su valor | aceptada |

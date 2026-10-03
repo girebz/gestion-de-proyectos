@@ -332,3 +332,19 @@
 	background: #fff8e5;
 	border-left: 4px solid #dba617;
 }
+
+.gdp-fin-bar-start {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.gdp-fin-excel .dashicons {
+	width: 16px;
+	height: 16px;
+	margin: 0 2px 0 -2px;
+	font-size: 16px;
+	line-height: 1;
+	vertical-align: -3px;
+}

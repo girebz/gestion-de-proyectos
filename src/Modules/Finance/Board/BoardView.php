@@ -10,6 +10,7 @@ declare( strict_types=1 );
 namespace GDP\Modules\Finance\Board;
 
 use GDP\Admin\Pages\FinancePage;
+use GDP\Core\Workbook;
 use GDP\Modules\Finance\Assistant;
 use GDP\Modules\Finance\FinanceService;
 use GDP\Modules\Finance\GuaranteeRepository;
@@ -88,6 +89,9 @@ final class BoardView {
 		) . '</p></div>';
 		echo '<div class="gdp-fin__tools">';
 		self::help_menu( $data, $ctx );
+		if ( $ctx->export && Workbook::available() ) {
+			echo '<a class="button button-small" href="' . esc_url( FinancePage::export_url( (int) $project['id'], 'workbook' ) ) . '" title="' . esc_attr__( 'Libro Excel con todo el estado financiero, una hoja por materia', 'gestion-de-proyectos' ) . '">' . esc_html__( 'Exportar a Excel', 'gestion-de-proyectos' ) . '</a> ';
+		}
 		echo '<button type="button" class="button button-small" data-gdp-print="page">' . esc_html__( 'Imprimir', 'gestion-de-proyectos' ) . '</button>';
 		if ( $ctx->panel ) {
 			echo ' <a class="button button-small" href="' . esc_url( FinancePage::url( (int) $project['id'] ) ) . '">' . esc_html__( 'Abrir en el panel', 'gestion-de-proyectos' ) . '</a>';
@@ -1347,6 +1351,9 @@ final class BoardView {
 		unset( $route );
 		$code = sanitize_file_name( (string) $ctx->project['code'] );
 		echo '<section class="gdp-fin-section gdp-fin-reports"><h3 class="gdp-fin-h">' . esc_html__( 'Descargas y textos', 'gestion-de-proyectos' ) . '</h3><div class="gdp-fin-actionsbar">';
+		if ( $ctx->export && Workbook::available() ) {
+			echo '<a class="button button-primary" href="' . esc_url( FinancePage::export_url( (int) $ctx->project['id'], 'workbook' ) ) . '">' . esc_html__( 'Todo el estado financiero en Excel', 'gestion-de-proyectos' ) . '</a> ';
+		}
 		echo '<button type="button" class="button" data-gdp-print="report">' . esc_html__( 'Imprimir o guardar en PDF el informe', 'gestion-de-proyectos' ) . '</button> ';
 		echo self::csv_button( BoardReport::payments_csv( $data ), 'pagos-' . $code . '.csv', __( 'Pagos (CSV)', 'gestion-de-proyectos' ) ) . ' '; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML generado con escape interno.
 		echo self::csv_button( BoardReport::items_csv( $data ), 'items-' . $code . '.csv', __( 'Ítems (CSV)', 'gestion-de-proyectos' ) ) . ' '; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML generado con escape interno.

@@ -65,7 +65,8 @@
 	text-decoration: none;
 }
 
-.gdp-front .button-small {
+.gdp-front .button-small,
+.gdp-front button.button-small {
 	min-height: 26px;
 	line-height: 24px;
 	padding: 0 8px;
@@ -75,6 +76,18 @@
 .gdp-front .button.is-active {
 	background: var(--gdp-primary, #2271b1);
 	color: #fff;
+}
+
+.gdp-front .button.button-primary,
+.gdp-front .button.button-primary:hover,
+.gdp-front .button.button-primary:focus {
+	background: var(--gdp-primary, #2271b1);
+	color: #fff;
+}
+
+.gdp-front .button.button-primary:hover,
+.gdp-front .button.button-primary:focus {
+	filter: brightness(0.9);
 }
 
 .gdp-front input[type="date"],

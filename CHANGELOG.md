@@ -4,6 +4,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/); vers
 
 ## [Sin publicar]
 
+## [0.11.0] - 2026-10-02
+
+### Añadido
+- Exportación a Excel de todo el estado financiero: un libro XLSX con veinte hojas fijas, en el orden de lectura del director. **Resumen** (fuentes de financiamiento con lo recibido, pagado, comprometido, rendido, aprobado, observado, saldo de caja y por recibir; plazo y ejecución del Fondo; cuota siguiente; rendiciones vencidas y alertas por gravedad; índice con vínculos a cada hoja y notas), **Alertas** (con vínculo a la hoja del detalle), **Acciones**, **Cuota siguiente** (brechas, condiciones de giro y compromisos que cierran la brecha), **Cuotas**, **Ítems** (asignado, pagado, comprometido, rechazado, rendido y disponible por fuente, topes y respaldos exigidos), **Pagos** (documento, egreso, cuota imputada, estado, etapa, rendición, respaldos, hallazgos y si bloquean la rendición), **Pagos por estado**, **Proveedores** (con su registro en SISREC), **Rendiciones mes a mes**, **Rendiciones registradas**, **Estados y pasos** (con fecha, nota y autor), **Caja mes a mes** (transferido, programado y pagado, acumulados y caja real al cierre), **Programación de caja**, **Controles de caja**, **Cartola**, **Convenio**, **Modificaciones**, **Garantías** y **Reglas**.
+- Montos, fechas y porcentajes se guardan como valores numéricos con su formato (pesos con ceros como raya, día, mes y año, porcentaje), y los números de documento y egreso como números cuando son solo cifras. Los totales (`SUBTOTAL`, que siguen a los filtros), disponibles, porcentajes de uso, acumulados, caja real, diferencia con la cartola y resúmenes por estado, proveedor y rendición (`SUMIFS` y `COUNTIFS` sobre la hoja de pagos) son fórmulas con su valor ya calculado. Encabezados y primera columna fijos, filtros, fuente Arial, títulos de impresión y página apaisada ajustada al ancho.
+- Botón **Exportar todo a Excel** en la cabecera de la pantalla Finanzas; en el tablero del sitio, **Exportar a Excel** en la cabecera y **Todo el estado financiero en Excel** como primer botón de la pestaña Reportes. El tema de ayuda "Qué reporte usar en cada caso" y la pestaña Tablero del equipo lo mencionan.
+- Escritor de libros con formato `Core/Workbook` (sin dependencias, con la extensión zip de PHP) y hojas como función pura en `Finance/Logic/WorkbookSheets`, con pruebas. Decisión 0018 y criterios de aceptación en la especificación.
+
+### Corregido
+- En el sitio, un botón pequeño dibujado como `<button>` (Imprimir) se veía más alto que los enlaces pequeños vecinos.
+
+### Seguridad
+- La descarga del libro exige el permiso "Exportar expedientes, planillas y fichas de giro" (`finance.export`), igual que las demás planillas; quien solo ve las finanzas no recibe los botones y la descarga directa le responde con un error de permiso. La cuenta bancaria del convenio no se incluye en el libro.
+
 ## [0.10.0] - 2026-10-02
 
 ### Añadido

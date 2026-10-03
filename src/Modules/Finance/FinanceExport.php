@@ -9,10 +9,15 @@ declare( strict_types=1 );
 
 namespace GDP\Modules\Finance;
 
+use GDP\Core\Access;
 use GDP\Core\Spreadsheet;
+use GDP\Core\Workbook;
 use GDP\Domain\Projects\ProjectRepository;
+use GDP\Modules\Finance\Board\BoardData;
 use GDP\Modules\Finance\Logic\BulkLoad;
+use GDP\Modules\Finance\Logic\WorkbookSheets;
 use GDP\Modules\Finance\Profiles\Profiles;
+use GDP\Modules\Planning\ScheduleService;
 use GDP\Modules\Procurement\SupplierRepository;
 use WP_Error;
 use ZipArchive;
@@ -20,10 +25,11 @@ use ZipArchive;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Planilla y ZIP de carga masiva, programación de caja en el formato de la
- * Dirección de Investigación, expediente de una rendición, carta y carátula
- * de gasto cero y ficha de giro de una cuota. Las vistas imprimibles se
- * generan como HTML para guardarlas en PDF desde el navegador.
+ * Libro Excel con todo el estado financiero, planilla y ZIP de carga
+ * masiva, programación de caja en el formato de la Dirección de
+ * Investigación, expediente de una rendición, carta y carátula de gasto cero
+ * y ficha de giro de una cuota. Las vistas imprimibles se generan como HTML
+ * para guardarlas en PDF desde el navegador.
  */
 final class FinanceExport {
 
@@ -125,6 +131,92 @@ final class FinanceExport {
 		$zip->close();
 
 		return array( 'path' => $tmp, 'filename' => $name . '.zip', 'problems' => BulkLoad::problems( $payments, InstallmentRepository::amounts( (int) $rendition['project_id'] ) ) );
+	}
+
+	/**
+	 * Libro Excel con todo el estado financiero del proyecto: una hoja por
+	 * materia, con montos, fechas y porcentajes como valores numéricos y los
+	 * totales, disponibles y acumulados como fórmulas.
+	 *
+	 * @param int $project_id Proyecto.
+	 * @return array{content:string,filename:string,mime:string}|WP_Error
+	 */
+	public static function workbook( int $project_id ) {
+		if ( ! Workbook::available() ) {
+			return new WP_Error( 'no_zip', __( 'El servidor no tiene la extensión zip de PHP, necesaria para generar el libro Excel.', 'gestion-de-proyectos' ) );
+		}
+		$project = ProjectRepository::find( $project_id );
+		if ( ! $project ) {
+			return new WP_Error( 'not_found', __( 'El proyecto no existe.', 'gestion-de-proyectos' ) );
+		}
+		$data    = self::workbook_data( $project );
+		$line    = trim( (string) $project['code'] . ' ' . (string) $project['name'] );
+		$content = Workbook::write(
+			WorkbookSheets::build( $data ),
+			array(
+				/* translators: proyecto. */
+				'title'   => sprintf( __( 'Estado financiero de %s', 'gestion-de-proyectos' ), $line ),
+				/* translators: fecha. */
+				'subject' => sprintf( __( 'Estado al %s', 'gestion-de-proyectos' ), (string) $data['today'] ),
+				'creator' => 'Gestión de Proyectos',
+			)
+		);
+		if ( is_wp_error( $content ) ) {
+			return $content;
+		}
+		$code = sanitize_title( '' !== (string) $project['code'] ? (string) $project['code'] : (string) $project['name'] );
+
+		return array(
+			'content'  => $content,
+			'filename' => 'estado-financiero-' . ( '' !== $code ? $code . '-' : '' ) . (string) $data['today'] . '.xlsx',
+			'mime'     => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+		);
+	}
+
+	/**
+	 * Datos del libro: los del tablero más los estados y pasos con su autor,
+	 * la cartola, los hallazgos de cada pago y el registro de los proveedores
+	 * en la plataforma.
+	 *
+	 * @param array<string,mixed> $project Proyecto.
+	 * @return array<string,mixed>
+	 */
+	public static function workbook_data( array $project ): array {
+		$project_id = (int) $project['id'];
+		$data       = BoardData::build( $project );
+		$status     = (array) $data['status'];
+
+		$issues = array();
+		foreach ( (array) $data['payments'] as $p ) {
+			$issues[ (int) $p['id'] ] = FinanceService::validate_payment( $p, $status );
+		}
+		$registered = array();
+		foreach ( (array) $data['suppliers'] as $id => $s ) {
+			$registered[ (int) $id ] = is_array( $s ) && FinanceService::supplier_registered( $s );
+		}
+		$users  = array();
+		$events = array();
+		foreach ( EventRepository::for_project( $project_id, 'event_date ASC, id ASC' ) as $e ) {
+			$uid = (int) $e['user_id'];
+			if ( ! isset( $users[ $uid ] ) ) {
+				$users[ $uid ] = ScheduleService::user_name( $uid );
+			}
+			$e['user'] = $users[ $uid ];
+			$events[]  = $e;
+		}
+
+		$data['issues']     = $issues;
+		$data['registered'] = $registered;
+		$data['events']     = $events;
+		$data['ledger']     = LedgerRepository::all( $project_id );
+		$data['docs']       = Access::can( 'documents.view', $project_id );
+		$data['labels']     = array(
+			'ledger'        => LedgerRepository::labels(),
+			'guarantees'    => GuaranteeRepository::labels(),
+			'modifications' => ModificationRepository::labels(),
+		);
+
+		return $data;
 	}
 
 	/**

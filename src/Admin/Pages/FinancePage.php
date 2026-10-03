@@ -92,7 +92,7 @@ final class FinancePage extends Page {
 	 * URL de una exportación.
 	 *
 	 * @param int    $project_id Proyecto.
-	 * @param string $what       bulk_sheet, bulk_zip, zero_letter, expedient, cash_plan, installment_sheet.
+	 * @param string $what       workbook, bulk_sheet, bulk_zip, zero_letter, expedient, cash_plan, installment_sheet.
 	 * @param int    $id         Identificador de la entidad.
 	 * @return string
 	 */
@@ -351,7 +351,7 @@ final class FinancePage extends Page {
 		}
 		$what = isset( $_GET['what'] ) ? sanitize_key( wp_unslash( (string) $_GET['what'] ) ) : '';
 		$id   = isset( $_GET['id'] ) ? (int) $_GET['id'] : 0;
-		if ( in_array( $what, array( 'bulk_sheet', 'bulk_zip', 'cash_plan' ), true ) && ! Access::can( 'finance.export', $project_id ) ) {
+		if ( in_array( $what, array( 'bulk_sheet', 'bulk_zip', 'cash_plan', 'workbook' ), true ) && ! Access::can( 'finance.export', $project_id ) ) {
 			wp_die( esc_html__( 'Sin permiso para exportar.', 'gestion-de-proyectos' ), 403 );
 		}
 		$rendition = in_array( $what, array( 'bulk_sheet', 'bulk_zip', 'zero_letter', 'expedient' ), true ) ? RenditionRepository::find( $id ) : null;
@@ -360,6 +360,9 @@ final class FinancePage extends Page {
 		}
 		nocache_headers();
 		switch ( $what ) {
+			case 'workbook':
+				self::send( FinanceExport::workbook( $project_id ) );
+				break;
 			case 'bulk_sheet':
 				$file = FinanceExport::bulk_sheet( $rendition );
 				self::send( $file );
