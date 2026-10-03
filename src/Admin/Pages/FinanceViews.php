@@ -11,6 +11,7 @@ namespace GDP\Admin\Pages;
 
 use GDP\Admin\Admin;
 use GDP\Core\Access;
+use GDP\Core\Workbook;
 use GDP\Domain\Projects\ProjectRepository;
 use GDP\Modules\Documents\DocumentRepository;
 use GDP\Modules\Finance\AgreementRepository;
@@ -80,15 +81,20 @@ final class FinanceViews extends Page {
 		self::open( $titles[ $view ] ?? __( 'Finanzas', 'gestion-de-proyectos' ), sprintf( '%s · %s', $project['code'], $project['name'] ) );
 		?>
 		<div class="gdp-planning-bar">
-			<form method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" class="gdp-inline-form">
-				<input type="hidden" name="page" value="<?php echo esc_attr( Admin::SLUG . '-' . FinancePage::SLUG ); ?>">
-				<input type="hidden" name="view" value="<?php echo esc_attr( $view ); ?>">
-				<select name="project_id" onchange="this.form.submit()" aria-label="<?php esc_attr_e( 'Proyecto', 'gestion-de-proyectos' ); ?>">
-					<?php foreach ( $projects as $p ) : ?>
-						<option value="<?php echo (int) $p['id']; ?>" <?php selected( (int) $p['id'], $project_id ); ?>><?php echo esc_html( $p['code'] . ' · ' . $p['name'] ); ?></option>
-					<?php endforeach; ?>
-				</select>
-			</form>
+			<div class="gdp-fin-bar-start">
+				<form method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" class="gdp-inline-form">
+					<input type="hidden" name="page" value="<?php echo esc_attr( Admin::SLUG . '-' . FinancePage::SLUG ); ?>">
+					<input type="hidden" name="view" value="<?php echo esc_attr( $view ); ?>">
+					<select name="project_id" onchange="this.form.submit()" aria-label="<?php esc_attr_e( 'Proyecto', 'gestion-de-proyectos' ); ?>">
+						<?php foreach ( $projects as $p ) : ?>
+							<option value="<?php echo (int) $p['id']; ?>" <?php selected( (int) $p['id'], $project_id ); ?>><?php echo esc_html( $p['code'] . ' · ' . $p['name'] ); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</form>
+				<?php if ( Workbook::available() && Access::can( 'finance.export', $project_id ) ) : ?>
+					<a class="button gdp-fin-excel" href="<?php echo esc_url( FinancePage::export_url( $project_id, 'workbook' ) ); ?>" title="<?php esc_attr_e( 'Libro Excel con todo el estado financiero: resumen, alertas, acciones, cuotas, ítems, pagos, proveedores, rendiciones, caja, cartola, convenio, modificaciones, garantías y reglas.', 'gestion-de-proyectos' ); ?>"><span class="dashicons dashicons-media-spreadsheet" aria-hidden="true"></span> <?php esc_html_e( 'Exportar todo a Excel', 'gestion-de-proyectos' ); ?></a>
+				<?php endif; ?>
+			</div>
 			<nav class="nav-tab-wrapper gdp-planning-tabs">
 				<?php foreach ( $titles as $slug => $label ) : ?>
 					<a class="nav-tab <?php echo $slug === $view ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( FinancePage::url( $project_id, array( 'view' => $slug ) ) ); ?>"><?php echo esc_html( $label ); ?></a>

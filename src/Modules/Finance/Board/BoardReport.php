@@ -330,7 +330,8 @@ final class BoardReport {
 	 * Documentos que el módulo genera en el servidor, según los permisos: la
 	 * ficha de giro, el expediente y la carta de gasto cero piden ver las
 	 * finanzas (lo mismo que el tablero); la planilla, el ZIP y la programación
-	 * piden además el permiso de exportar.
+	 * piden además el permiso de exportar, igual que el libro Excel del estado
+	 * financiero, que la pestaña Reportes ofrece aparte, como primer botón.
 	 *
 	 * @param array<string,mixed> $data Datos.
 	 * @param BoardContext        $ctx  Contexto.

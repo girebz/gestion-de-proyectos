@@ -349,7 +349,8 @@ final class BoardHelp {
 				. '<li>' . esc_html__( 'Solicitud de una cuota: ficha de giro con las siete condiciones y el documento que acredita cada una (pestaña Cuotas).', 'gestion-de-proyectos' ) . '</li>'
 				. '<li>' . esc_html__( 'Oficio que pide la programación de caja: planilla en el formato de la Dirección de Investigación con los seis controles (pestaña Caja).', 'gestion-de-proyectos' ) . '</li>'
 				. '<li>' . esc_html__( 'Reunión, informe al director o correo a la contraparte: informe del estado financiero imprimible y texto para informes, ambos en la pestaña Reportes.', 'gestion-de-proyectos' ) . '</li>'
-				. '<li>' . esc_html__( 'Análisis propio: descarga en CSV de los pagos, ítems y cuotas (pestaña Reportes) para abrir en una planilla de cálculo.', 'gestion-de-proyectos' ) . '</li>'
+				. '<li>' . esc_html__( 'Cuando piden el estado financiero en Excel (la Dirección de Investigación, la contraparte o una auditoría): libro con todo el estado financiero, una hoja por materia, con montos y fechas como números y totales por fórmula. Se descarga con el botón Exportar a Excel o desde la pestaña Reportes, con el permiso de exportar.', 'gestion-de-proyectos' ) . '</li>'
+				. '<li>' . esc_html__( 'Análisis propio: el mismo libro Excel, o la descarga en CSV de los pagos, ítems y cuotas (pestaña Reportes) para abrir en una planilla de cálculo.', 'gestion-de-proyectos' ) . '</li>'
 				. '</ul>',
 		);
 

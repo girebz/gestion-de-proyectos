@@ -4,7 +4,7 @@ Tags: gestión de proyectos, investigación, mcp, planificación, rendición de 
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.10.0
+Stable tag: 0.11.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,7 +30,7 @@ Primera versión: núcleo del sistema (proyectos, equipo con perfiles por proyec
 
 = Rendición de cuentas =
 
-En Proyectos → Finanzas registre el convenio, las cuotas, los ítems con su asignado por fuente y los pagos; cada mes, la rendición agrupa los pagos y entrega la planilla y el ZIP de carga masiva para SISREC. El estado de cuentas muestra cuánto falta pagar y rendir para la cuota siguiente y el asistente abre una hoja de ejecución por tarea, con la pantalla de la plataforma y cada valor listo para copiar. El Fondo y el aporte pecuniario de la institución se muestran siempre por separado. En Proyectos → Grupos el administrador crea perfiles a medida, por ejemplo uno que ve todo salvo las finanzas.
+En Proyectos → Finanzas registre el convenio, las cuotas, los ítems con su asignado por fuente y los pagos; cada mes, la rendición agrupa los pagos y entrega la planilla y el ZIP de carga masiva para SISREC. El botón Exportar todo a Excel entrega en un solo libro todo el estado financiero, con una hoja por materia. El estado de cuentas muestra cuánto falta pagar y rendir para la cuota siguiente y el asistente abre una hoja de ejecución por tarea, con la pantalla de la plataforma y cada valor listo para copiar. El Fondo y el aporte pecuniario de la institución se muestran siempre por separado. En Proyectos → Grupos el administrador crea perfiles a medida, por ejemplo uno que ve todo salvo las finanzas.
 
 = Tableros en el sitio =
 
@@ -72,13 +72,20 @@ Quien tenga el permiso "Ver finanzas y rendición de cuentas" en el proyecto: po
 
 = ¿Puede el director ver las finanzas sin entrar al panel? =
 
-Sí: [gdp_finanzas proyecto="CODIGO"] muestra en una página privada el estado financiero completo en modo lectura, en nueve pestañas: un resumen con alertas, saldo de caja, plazo frente a ejecución, cuota siguiente y gráficos; el detalle de cuotas, ítems, pagos, rendiciones, caja y convenio; el paso a paso de cada trámite de rendición en SISREC con los valores listos para copiar; y reportes (informe imprimible, texto para informes y planillas CSV). Un menú de ayuda lleva de la tarea a su hoja de ejecución. Solo lo ve quien tiene el permiso de ver las finanzas del proyecto; los demás reciben un aviso sin cifras. Con vista="paso" (u otra pestaña) la página muestra solo esa parte.
+Sí: [gdp_finanzas proyecto="CODIGO"] muestra en una página privada el estado financiero completo en modo lectura, en nueve pestañas: un resumen con alertas, saldo de caja, plazo frente a ejecución, cuota siguiente y gráficos; el detalle de cuotas, ítems, pagos, rendiciones, caja y convenio; el paso a paso de cada trámite de rendición en SISREC con los valores listos para copiar; y reportes (libro Excel con todo el estado financiero, informe imprimible, texto para informes y planillas CSV). Un menú de ayuda lleva de la tarea a su hoja de ejecución. Solo lo ve quien tiene el permiso de ver las finanzas del proyecto; los demás reciben un aviso sin cifras. Con vista="paso" (u otra pestaña) la página muestra solo esa parte.
+
+= ¿Puedo entregar el estado financiero en Excel? =
+
+Sí. Con el permiso de exportar finanzas, el botón Exportar todo a Excel de la pantalla Finanzas (o Exportar a Excel en el tablero del sitio) descarga un libro con veinte hojas: resumen, alertas, acciones, cuota siguiente, cuotas, ítems, pagos, proveedores, rendiciones, estados y pasos, caja, programación de caja, cartola, convenio, modificaciones, garantías y reglas. Los montos y las fechas son números, de modo que se ordenan, filtran y suman; los totales, disponibles y acumulados son fórmulas que se recalculan si se corrige una cifra. El libro no vuelve al módulo: los cambios se registran en el panel.
 
 = ¿Dónde se guardan los adjuntos? =
 
 En un directorio privado dentro de wp-content/uploads, protegido contra acceso web directo y servido solo a usuarios autorizados.
 
 == Changelog ==
+
+= 0.11.0 =
+* Novedad: exportación a Excel de todo el estado financiero, con el permiso de exportar finanzas: un libro de veinte hojas (resumen con índice, alertas, acciones, cuota siguiente, cuotas, ítems, pagos, pagos por estado, proveedores, rendiciones mes a mes y registradas, estados y pasos, caja mes a mes, programación y controles de caja, cartola, convenio, modificaciones, garantías y reglas), con montos, fechas y porcentajes como números y totales, disponibles y acumulados como fórmulas. Se descarga desde la pantalla Finanzas y desde el tablero del sitio.
 
 = 0.10.0 =
 * Novedad: tablero de finanzas en el sitio con [gdp_finanzas proyecto="CODIGO"], en modo lectura y solo para quien puede ver las finanzas: resumen para el director con alertas y gráficos (uso de cada fuente, avance de las cuotas, ejecución por ítem, curva de caja y franja de rendiciones), detalle de cuotas, ítems, pagos, rendiciones, caja y convenio, paso a paso de la rendición en SISREC, reportes (informe imprimible, texto para informes, planillas CSV) y menú de ayuda por tareas. El atributo vista deja una sola pestaña. La pestaña Tablero del equipo de Proyectos → Tableros entrega los códigos.
