@@ -11,7 +11,7 @@ namespace GDP\Modules\Finance;
 
 use GDP\Admin\Pages\FinancePage;
 use GDP\Core\Access;
-use GDP\Core\Options;
+use GDP\Core\Notifications;
 use GDP\Domain\Projects\MemberRepository;
 use GDP\Domain\Projects\ProjectRepository;
 
@@ -41,7 +41,7 @@ final class FinanceCron {
 			$actions = Assistant::actions( $project_id );
 			$high    = array_values( array_filter( $actions, static fn( array $a ): bool => 'alta' === $a['severity'] ) );
 			update_option( 'gdp_finance_alerts_' . $project_id, array( 'checked_at' => current_time( 'mysql' ), 'total' => count( $actions ), 'high' => count( $high ) ), false );
-			if ( empty( $high ) || ! Options::get( 'notifications_enabled', false ) ) {
+			if ( empty( $high ) || ! Notifications::enabled( 'finance', $project_id ) ) {
 				continue;
 			}
 			$recipients = self::recipients( $project_id );

@@ -39,7 +39,9 @@ final class Options {
 			'identity_use_site'       => true,
 			'identity_overrides'      => array(),
 			'weekly_report_day'       => 'friday',
-			'notifications_enabled'   => true,
+			// Avisos por correo: interruptor general y uno por tipo, apagados por omisión (ver Notifications).
+			'notifications_enabled'   => false,
+			'notification_types'      => array(),
 		);
 	}
 

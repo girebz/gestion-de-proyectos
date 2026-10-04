@@ -10,7 +10,7 @@ declare( strict_types=1 );
 namespace GDP\Modules\Documents;
 
 use GDP\Admin\Pages\DocumentsPage;
-use GDP\Core\Options;
+use GDP\Core\Notifications;
 use GDP\Domain\Projects\MemberRepository;
 use GDP\Domain\Projects\ProjectRepository;
 
@@ -33,7 +33,7 @@ final class DocumentsCron {
 		foreach ( ProjectRepository::all( null ) as $p ) {
 			$pending = DocumentRepository::pending_responses( (int) $p['id'], 3 );
 			update_option( 'gdp_documents_pending_' . (int) $p['id'], array( 'checked_at' => current_time( 'mysql' ), 'count' => count( $pending ) ), false );
-			if ( empty( $pending ) || ! Options::get( 'notifications_enabled', false ) ) {
+			if ( empty( $pending ) || ! Notifications::enabled( 'documents', (int) $p['id'] ) ) {
 				continue;
 			}
 			$recipients = self::recipients( (int) $p['id'] );

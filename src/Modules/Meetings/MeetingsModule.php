@@ -176,7 +176,7 @@ final class MeetingsModule implements ModuleInterface {
 			$project_id = (int) $p['id'];
 			$overdue    = array_values( array_filter( AgreementRepository::for_project( $project_id, array( 'overdue' => true ) ), static fn( array $a ): bool => in_array( AgreementRepository::effective_status( $a ), AgreementRepository::OPEN, true ) ) );
 			update_option( 'gdp_meetings_overdue_' . $project_id, array( 'checked_at' => current_time( 'mysql' ), 'count' => count( $overdue ) ), false );
-			if ( empty( $overdue ) || ! Options::get( 'notifications_enabled', false ) ) {
+			if ( empty( $overdue ) || ! Notifications::enabled( 'agreements', $project_id ) ) {
 				continue;
 			}
 			$emails = array();

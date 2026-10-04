@@ -10,7 +10,7 @@ declare( strict_types=1 );
 namespace GDP\Modules\Procurement;
 
 use GDP\Admin\Pages\ProcurementPage;
-use GDP\Core\Options;
+use GDP\Core\Notifications;
 use GDP\Domain\Projects\MemberRepository;
 use GDP\Domain\Projects\ProjectRepository;
 
@@ -37,7 +37,7 @@ final class ProcurementCron {
 			$waiting    = array_values( array_filter( PurchaseRepository::for_project( $project_id, array( 'open' => true, 'limit' => 1000 ) ), array( PurchaseRepository::class, 'awaiting_decision' ) ) );
 			$pending    = QuoteRepository::pending_requests( $project_id );
 			update_option( 'gdp_procurement_alerts_' . $project_id, array( 'checked_at' => current_time( 'mysql' ), 'awaiting_decision' => count( $waiting ), 'quotes_without_reply' => count( $pending ) ), false );
-			if ( ( empty( $waiting ) && empty( $pending ) ) || ! Options::get( 'notifications_enabled', false ) ) {
+			if ( ( empty( $waiting ) && empty( $pending ) ) || ! Notifications::enabled( 'procurement', $project_id ) ) {
 				continue;
 			}
 			$recipients = self::recipients( $project_id );

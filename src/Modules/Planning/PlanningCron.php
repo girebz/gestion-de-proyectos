@@ -10,16 +10,17 @@ declare( strict_types=1 );
 namespace GDP\Modules\Planning;
 
 use GDP\Admin\Admin;
-use GDP\Core\Options;
+use GDP\Core\Notifications;
 use GDP\Domain\Projects\MemberRepository;
 use GDP\Domain\Projects\ProjectRepository;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Diariamente recalcula los cronogramas y guarda las alertas; semanalmente
- * envía por correo el resumen del informe a los directores e ingenieros de
- * cada proyecto en ejecución.
+ * Diariamente recalcula los cronogramas y guarda las alertas; si los avisos
+ * están activos, envía por correo las alertas de plazo y, semanalmente, el
+ * resumen del informe a los directores e ingenieros de cada proyecto en
+ * ejecución.
  */
 final class PlanningCron {
 
@@ -50,7 +51,7 @@ final class PlanningCron {
 				'alerts'      => array_slice( $alerts, 0, 100 ),
 			);
 
-			if ( Options::get( 'notifications_enabled', false ) && $all[ (int) $p['id'] ]['high'] > 0 ) {
+			if ( $all[ (int) $p['id'] ]['high'] > 0 && Notifications::enabled( 'deadlines', (int) $p['id'] ) ) {
 				self::notify_alerts( $p, $alerts );
 			}
 		}
@@ -76,11 +77,10 @@ final class PlanningCron {
 	 * @return void
 	 */
 	public static function weekly(): void {
-		if ( ! Options::get( 'notifications_enabled', false ) ) {
-			return;
-		}
-
 		foreach ( self::active_projects() as $p ) {
+			if ( ! Notifications::enabled( 'weekly_report', (int) $p['id'] ) ) {
+				continue;
+			}
 			$report = WeeklyReport::build( (int) $p['id'] );
 			if ( ! $report ) {
 				continue;
